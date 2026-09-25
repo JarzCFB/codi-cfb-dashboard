@@ -48,9 +48,9 @@ def key_name(s):
 
 def build_ratings(games, season, shrink=4.0, home_adv=2.5):
     """Ridge-like iterative margin-of-victory team strength estimates; no bookmaker input."""
-    now=datetime.now(timezone.utc)
     rows=[]
     for g in games:
+        if not isinstance(g, dict): continue
         a,b=g.get("home_team"),g.get("away_team")
         hs,aws=g.get("home_points"),g.get("away_points")
         if not a or not b or hs is None or aws is None: continue
@@ -99,24 +99,22 @@ TEAM_ALIASES = {
     "temple owls": "temple",
     "byu cougars": "byu",
     "tcu horned frogs": "tcu",
+    "appalachian state mountaineers": "appalachian state",
+    "ball state cardinals": "ball state",
+    "kent state golden flashes": "kent state",
 }
+
+# Normalize both sides: key_name() removes spaces and punctuation.
+NORMALIZED_TEAM_ALIASES = {key_name(full): key_name(short) for full, short in TEAM_ALIASES.items()}
 
 def find_rating(team, ratings):
     name = key_name(team)
-
-    # Try an exact match first.
     if name in ratings:
         return ratings[name]
 
-    # Normalize the aliases so they match key_name().
-    aliases = {
-        key_name(book_name): key_name(cfbd_name)
-        for book_name, cfbd_name in TEAM_ALIASES.items()
-    }
-
-    alias = aliases.get(name)
-    if alias is not None:
-        return ratings.get(alias)
+    alias = NORMALIZED_TEAM_ALIASES.get(name)
+    if alias:
+        return ratings.get(key_name(alias))
 
     return None
 
@@ -126,12 +124,15 @@ def odds_frame(data, ratings, home_adv, sd):
         if not isinstance(g, dict): continue
         h,a=g.get("home_team"),g.get("away_team")
         if not h or not a:continue
-        hr,ar=ratings.get(key_name(h)),ratings.get(key_name(a))
+        hr,ar=find_rating(h,ratings),find_rating(a,ratings)
         pred=(hr-ar+home_adv) if hr is not None and ar is not None else None
         for bk in (g.get("bookmakers") or []):
+            if not isinstance(bk, dict): continue
             for market in (bk.get("markets") or []):
+                if not isinstance(market, dict): continue
                 if market.get("key")!="spreads":continue
                 for selection in (market.get("outcomes") or []):
+                    if not isinstance(selection, dict): continue
                     name=selection.get("name")
                     point=selection.get("point")
                     price=selection.get("price")
