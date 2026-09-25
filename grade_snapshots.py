@@ -10,6 +10,7 @@ from datetime import timedelta
 from pathlib import Path
 import requests
 from snapshot_capture import utc, iso, canonical_school, match_rating, TEAM_ALIASES, normalize_team
+from cfb_division_safety import model_allowed
 
 ROOT=Path('snapshots')
 REPORTS=Path('reports')
@@ -49,6 +50,9 @@ def grade(rows,results):
     latest={}
     for r in rows:
         stats['input_rows']+=1
+        if not model_allowed(r.get('home_team'),r.get('away_team')):
+            stats['excluded_unverified_division']+=1
+            continue
         try:
             capture=utc(r['captured_at_utc']); kick=utc(r['kickoff_utc'])
             update=utc(r['market_last_update_utc'])
