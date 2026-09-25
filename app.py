@@ -39,6 +39,7 @@ def games_data(key, year):
 
 def norm_name(s):
     s = str(s).lower().replace("&", "and")
+    s = s.replace("(oh)", " ohio ").replace("(fl)", " florida ")
     s = re.sub(r"\([^)]*\)", "", s)
     s = re.sub(r"[^a-z0-9]", "", s)
     return s.replace("university", "")
@@ -109,16 +110,47 @@ TEAM_ALIASES = {
 # Normalize both sides: key_name() removes spaces and punctuation.
 NORMALIZED_TEAM_ALIASES = {key_name(full): key_name(short) for full, short in TEAM_ALIASES.items()}
 
+# Odds API team names can include mascots; CFBD ratings use school names.
+# Match explicit aliases or a unique school-name prefix, never a fuzzy guess.
+TEAM_ALIASES.update({
+    "hawaii rainbow warriors": "hawaii",
+    "liu sharks": "liu",
+    "florida international panthers": "florida international",
+    "miami (oh) redhawks": "miami ohio",
+    "miami hurricanes": "miami",
+    "ole miss rebels": "ole miss",
+    "lsu tigers": "lsu",
+    "ucf knights": "ucf",
+    "utsa roadrunners": "utsa",
+    "unlv rebels": "unlv",
+    "usc trojans": "usc",
+    "smu mustangs": "smu",
+    "uconn huskies": "connecticut",
+    "umass minutemen": "massachusetts",
+    "louisiana ragin cajuns": "louisiana",
+    "florida atlantic owls": "florida atlantic",
+    "middle tennessee blue raiders": "middle tennessee",
+    "southern miss golden eagles": "southern miss",
+    "nebraska cornhuskers": "nebraska",
+    "michigan state spartans": "michigan state",
+})
+NORMALIZED_TEAM_ALIASES = {key_name(full): key_name(short) for full, short in TEAM_ALIASES.items()}
+
 def find_rating(team, ratings):
     name = key_name(team)
     if name in ratings:
         return ratings[name]
-
     alias = NORMALIZED_TEAM_ALIASES.get(name)
-    if alias:
-        return ratings.get(key_name(alias))
-
-    return None
+    if alias and alias in ratings:
+        return ratings[alias]
+    # Prefix matching is restricted to unambiguous school names.
+    # Longer matches take priority: Georgia State must not match Georgia.
+    candidates = [school for school in ratings if len(school) >= 5 and name.startswith(school) and name != school]
+    if not candidates:
+        return None
+    longest = max(map(len, candidates))
+    winners = [school for school in candidates if len(school) == longest]
+    return ratings[winners[0]] if len(winners) == 1 else None
 
 def odds_frame(data, ratings, home_adv, sd):
     out=[]
@@ -1148,6 +1180,6 @@ if snapshot_files:
             st.warning("The source captures quote and rating request time, not a verified historical result-publication timestamp. No profit or cover-rate claim is made before games settle and actual bettable prices are verified.")
     except Exception as exc:st.error(f"Could not validate snapshots: {exc}")
 
-from prospective_results import render
 
+from prospective_results import render
 render()
