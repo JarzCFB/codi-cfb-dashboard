@@ -207,7 +207,7 @@ if ok_odds:
             df=df[df["Book"].isin(selected)].copy()
             tab1,tab2,tab3=st.tabs(["Model comparisons","Best available price by team","All quoted lines"])
             with tab1:
-                st.warning("UNVALIDATED: Expected ROI and cover probabilities below use an illustrative normal-margin assumption. Independent historical testing has not established a betting advantage. Do not interpret positive ROI as a verified opportunity.")
+                st.warning("RESEARCH ONLY: Original cover probabilities and expected ROI are unvalidated. The 2023–2025 audit did not establish a betting advantage; do not treat the ranking below as betting recommendations.")
                 st.caption("Research screen only. Missing team ratings are excluded.")
                 candidates=df[df["Expected ROI"].notna() & (df["Expected ROI"]>=min_roi)].sort_values("Expected ROI",ascending=False)
                 st.dataframe(candidates,hide_index=True,use_container_width=True)
@@ -705,6 +705,84 @@ with st.expander("Run 3-season validation",expanded=False):
                     file_name="cfb_independent_season_audit_2023_2025.csv",mime="text/csv")
                 st.warning("Reference spreads are not confirmed pre-kickoff quotes, and no historical spread prices "
                            "are known. Do not interpret these scores as verified profit. The live model remains uncalibrated.")
+
+
+# Research lab: strictly chronological, season-held-out comparisons against market.
+# Uses user-supplied historical audit; no additional API credits required.
+def model_lab_frame(raw):
+    required=["Season","Game ID","Predicted home margin","Actual home margin","Home spread"]
+    missing=[c for c in required if c not in raw.columns]
+    if missing: raise ValueError("Missing required audit columns: "+", ".join(missing))
+    d=raw.copy()
+    for c in ["Season","Predicted home margin","Actual home margin","Home spread"]:
+        d[c]=pd.to_numeric(d[c],errors="coerce")
+    d=d.dropna(subset=required).copy()
+    d=d[d["Season"].isin([2023,2024,2025])].copy()
+    d["Game ID"]=d["Game ID"].astype(str)
+    # One game per season and ID; reject contradictory duplicates rather than selecting favorable quotes.
+    contradictory=d.groupby(["Season","Game ID"])[["Actual home margin","Predicted home margin"]].nunique()
+    bad=contradictory[(contradictory>1).any(axis=1)].index
+    if len(bad):
+        d=d.set_index(["Season","Game ID"]).drop(index=bad).reset_index()
+    d=d.drop_duplicates(["Season","Game ID"]).copy()
+    d["Market home margin"]=-d["Home spread"]
+    d["Model minus market"]=d["Predicted home margin"]-d["Market home margin"]
+    return d
+
+def model_lab_fit(train):
+    # Fit a single regularized blend coefficient; market-only is alpha=0,
+    # original model is alpha=1. Nonnegative constrained blending avoids
+    # inverting a model just because a past season was noisy.
+    gap=train["Model minus market"].to_numpy(dtype=float)
+    residual=(train["Actual home margin"]-train["Market home margin"]).to_numpy(dtype=float)
+    alpha=float(np.clip(np.dot(gap,residual)/(np.dot(gap,gap)+250.0),0,1))
+    return alpha
+
+def model_lab_score(d,alpha,label):
+    prediction=d["Market home margin"]+alpha*d["Model minus market"]
+    actual=d["Actual home margin"]
+    # Settlement of selection against reference spread, not historical bets.
+    selected_home=(prediction-d["Market home margin"])>=0
+    selected_margin=np.where(selected_home,actual-d["Market home margin"],d["Market home margin"]-actual)
+    wins=int((selected_margin>0).sum()); losses=int((selected_margin<0).sum()); pushes=int((selected_margin==0).sum())
+    return {"Evaluation":label,"Games":len(d),"Margin MAE":float((prediction-actual).abs().mean()),
+            "Margin RMSE":float(np.sqrt(np.mean((prediction-actual)**2))),
+            "Winner accuracy":float(np.mean((prediction>0)==(actual>0))),
+            "Reference ATS W":wins,"Reference ATS L":losses,"Pushes":pushes,
+            "Reference cover rate":wins/(wins+losses) if wins+losses else float('nan')}
+
+st.divider()
+st.subheader("Model development lab · market baseline")
+st.caption("Compare the original rating model with the historical market and a regularized blend. "
+           "Train on 2023, check 2024, and report 2025 separately. Historical market spreads may not have been available before kickoff; this is a retrospective benchmark, not verified betting performance.")
+with st.expander("Compare models using the 2023–2025 audit",expanded=False):
+    lab_upload=st.file_uploader("Upload cfb_independent_season_audit_2023_2025.csv",type="csv",key="model_lab_csv")
+    if lab_upload is not None:
+        try:
+            lab=model_lab_frame(pd.read_csv(lab_upload))
+            counts=lab.groupby("Season").size()
+            st.write("Unique matched games by season")
+            st.dataframe(counts.rename("Games").reset_index(),hide_index=True,use_container_width=True)
+            if not all(counts.get(y,0)>=100 for y in (2023,2024,2025)):
+                st.warning("Need at least 100 matched games in each of 2023, 2024 and 2025 to run this comparison.")
+            else:
+                train=lab[lab["Season"]==2023]
+                validation=lab[lab["Season"]==2024]
+                holdout=lab[lab["Season"]==2025]
+                a23=model_lab_fit(train)
+                # Predeclared refit using all earlier seasons for 2025; 2025 is not used in the fit.
+                a24=model_lab_fit(lab[lab["Season"].isin([2023,2024])])
+                rows=[]
+                for season,part,alpha in [(2024,validation,a23),(2025,holdout,a24)]:
+                    for name,a in [("Market reference",0.0),("Original ratings",1.0),("Past-season blend",alpha)]:
+                        row=model_lab_score(part,a,name);row["Season"]=season;row["Model weight"]=a;rows.append(row)
+                result=pd.DataFrame(rows)[["Season","Evaluation","Games","Model weight","Margin MAE","Margin RMSE","Winner accuracy","Reference ATS W","Reference ATS L","Pushes","Reference cover rate"]]
+                st.write("2024 evaluation: blend trained on 2023 only. 2025 evaluation: blend refitted on 2023–2024 only.")
+                st.dataframe(result.style.format({"Model weight":"{:.3f}","Margin MAE":"{:.2f}","Margin RMSE":"{:.2f}","Winner accuracy":"{:.1%}","Reference cover rate":"{:.1%}"}),hide_index=True,use_container_width=True)
+                st.download_button("Download model comparison",result.to_csv(index=False),file_name="cfb_model_lab_comparison.csv",mime="text/csv",key="model_lab_download")
+                st.info("The market baseline is the benchmark, not an executable strategy. Its ATS record is not meaningful: at zero gap it selects the home team by convention. Compare ATS only for original ratings and the blend when its gap is nonzero.")
+                st.warning("2025 results have already been viewed during development, so this is not a pristine holdout for choosing the overall model. Keep live ROI unvalidated until prospective, timestamped tests establish otherwise.")
+        except Exception as exc:st.error(f"Model lab could not read the audit: {exc}")
 
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
