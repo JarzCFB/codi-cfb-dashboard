@@ -216,6 +216,77 @@ if ok_odds:
         else:st.info("No upcoming spread lines returned by the provider.")
     except Exception as exc:st.error(f"Odds feed unavailable: {exc}")
 
+
+# Historical validation: fit on earlier weeks only; never train on the game being predicted.
+def historical_backtest(games, shrink, home_adv, sd, first_test_week=5):
+    from collections import defaultdict
+    weeks=defaultdict(list)
+    for raw in games:
+        if not isinstance(raw,dict): continue
+        g=dict(raw)
+        g["home_team"]=g.get("homeTeam",g.get("home_team"))
+        g["away_team"]=g.get("awayTeam",g.get("away_team"))
+        g["home_points"]=g.get("homePoints",g.get("home_points"))
+        g["away_points"]=g.get("awayPoints",g.get("away_points"))
+        if not g.get("completed") or g.get("home_points") is None or g.get("away_points") is None: continue
+        if str(g.get("seasonType",g.get("season_type","regular"))).lower() != "regular": continue
+        try: w=int(g.get("week")); float(g["home_points"]);float(g["away_points"])
+        except (TypeError,ValueError): continue
+        if not g.get("home_team") or not g.get("away_team"):continue
+        weeks[w].append(g)
+    past=[];rows=[]
+    for week in sorted(weeks):
+        if week >= first_test_week and past:
+            ratings,_=build_ratings(past,0,shrink,home_adv)
+            for g in weeks[week]:
+                hr=find_rating(g["home_team"],ratings);ar=find_rating(g["away_team"],ratings)
+                if hr is None or ar is None: continue
+                predicted=hr-ar+home_adv
+                actual=float(g["home_points"])-float(g["away_points"])
+                rows.append({"Week":week,"Matchup":f'{g["away_team"]} @ {g["home_team"]}',
+                             "Predicted home margin":round(predicted,2),"Actual home margin":actual,
+                             "Absolute error":abs(predicted-actual),
+                             "Home win probability":float(norm.cdf(predicted/sd)),
+                             "Home won":int(actual>0) if actual != 0 else None,
+                             "Home team":g["home_team"],"Away team":g["away_team"]})
+        past.extend(weeks[week])
+    return pd.DataFrame(rows)
+
+st.divider()
+st.subheader("Historical model validation")
+st.caption("Walk-forward test: each week's predictions use only results from earlier weeks. "
+           "This evaluates game-margin and winner forecasts, not betting profitability; historical bookmaker spreads are not included.")
+with st.expander("Run historical backtest",expanded=False):
+    test_year=st.number_input("Completed season to test",min_value=2020,max_value=2025,value=2025,step=1)
+    first_week=st.slider("First evaluation week",3,10,5)
+    if st.button("Run backtest"):
+        if not ok_cfbd:
+            st.error("Add CFBD_API_KEY to Streamlit Secrets first.")
+        else:
+            try:
+                hist=games_data(secret("CFBD_API_KEY"),int(test_year))
+                bt=historical_backtest(hist,shrink,home_adv,sd,first_week)
+                if bt.empty:
+                    st.warning("No eligible historical games. Check season, data coverage, and first evaluation week.")
+                else:
+                    evaluated=bt[bt["Home won"].notna()].copy()
+                    mae=bt["Absolute error"].mean()
+                    winner_accuracy=((evaluated["Predicted home margin"]>0)==(evaluated["Home won"]==1)).mean() if len(evaluated) else float("nan")
+                    baseline=bt["Actual home margin"].abs().mean() # predicts 0 margin for every game
+                    brier=((evaluated["Home win probability"]-evaluated["Home won"])**2).mean() if len(evaluated) else float("nan")
+                    c1,c2,c3,c4=st.columns(4)
+                    c1.metric("Games tested",len(bt))
+                    c2.metric("Margin MAE",f"{mae:.1f} pts")
+                    c3.metric("Winner accuracy",f"{winner_accuracy:.1%}")
+                    c4.metric("Brier score",f"{brier:.3f}")
+                    st.caption(f"Zero-margin baseline MAE: {baseline:.1f} points. Lower MAE/Brier is better. "
+                               "The historical test uses current slider settings; no tuning or calibration is performed.")
+                    st.dataframe(bt,hide_index=True,use_container_width=True)
+                    st.download_button("Download backtest results",bt.to_csv(index=False),
+                                       file_name=f"cfb_backtest_{test_year}.csv",mime="text/csv")
+            except Exception as exc:
+                st.error(f"Backtest unavailable: {exc}")
+
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
 upload=st.file_uploader("Load previous journal (CSV)",type="csv")
