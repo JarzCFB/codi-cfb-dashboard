@@ -6,6 +6,8 @@ import hashlib
 import json
 import math
 import os
+import re
+from datetime import timedelta
 from datetime import datetime, timezone
 from pathlib import Path
 import requests
@@ -26,28 +28,100 @@ def fetch(url, **kw):
     r.raise_for_status()
     return r.json(),r.headers
 
+# Explicit, unambiguous Odds API names -> CFBD school names.
+# Unknown names are left unmatched rather than assigned a possibly wrong rating.
+TEAM_ALIASES = {
+    'army black knights':'army', 'temple owls':'temple',
+    'miami hurricanes':'miami', 'miami (oh) redhawks':'miami (oh)',
+    'ole miss rebels':'ole miss', 'lsu tigers':'lsu',
+    'ucf knights':'ucf', 'utsa roadrunners':'utsa',
+    'unlv rebels':'unlv', 'usc trojans':'usc',
+    'byu cougars':'byu', 'tcu horned frogs':'tcu',
+    'nc state wolfpack':'nc state', 'smu mustangs':'smu',
+    'uconn huskies':'uconn', 'umass minutemen':'umass',
+    'hawaii rainbow warriors':'hawaii',
+    'louisiana ragin cajuns':'louisiana',
+    'appalachian state mountaineers':'appalachian state',
+    'penn state nittany lions':'penn state',
+    'notre dame fighting irish':'notre dame',
+    'texas a&m aggies':'texas a&m',
+    'florida international panthers':'fiu',
+    'florida atlantic owls':'florida atlantic',
+    'middle tennessee blue raiders':'middle tennessee',
+    'southern miss golden eagles':'southern miss',
+}
+# Equivalent school names (not mascots). Add only when identity is unambiguous.
+SCHOOL_EQUIVALENTS = {
+    'miami ohio':'miami (oh)', 'miami oh':'miami (oh)',
+    'miami fl':'miami', 'miami florida':'miami',
+    'mississippi':'ole miss', 'mississippi rebels':'ole miss',
+    'louisiana lafayette':'louisiana', 'ul lafayette':'louisiana',
+    'southern california':'usc', 'central florida':'ucf',
+    'texas san antonio':'utsa', 'nevada las vegas':'unlv',
+    'connecticut':'uconn', 'massachusetts':'umass',
+    'florida international':'fiu', 'brigham young':'byu',
+    'southern methodist':'smu',
+}
+
+def normalize_team(name):
+    name=str(name or '').lower().replace('&',' and ')
+    name=re.sub(r'[^a-z0-9]+',' ',name)
+    return ' '.join(name.split())
+
+def canonical_school(name):
+    n=normalize_team(name)
+    return normalize_team(SCHOOL_EQUIVALENTS.get(n,n))
+
+def match_rating(team, ratings):
+    """Exact/explicit alias first, then unique longest school-name prefix.
+
+    Never match a short ambiguous prefix (e.g. Miami vs Miami Ohio,
+    Georgia vs Georgia State) or guess a school for an unknown mascot.
+    """
+    normalized=normalize_team(team)
+    alias=TEAM_ALIASES.get(normalized)
+    if alias:
+        k=canonical_school(alias)
+        if k in ratings: return ratings[k],k,'alias'
+    exact=canonical_school(normalized)
+    if exact in ratings:return ratings[exact],exact,'exact'
+    candidates=[]
+    for school in ratings:
+        if normalized.startswith(school+' '):
+            candidates.append(school)
+    if not candidates:return None,None,'unmatched'
+    longest=max(len(k) for k in candidates)
+    longest_candidates=[k for k in candidates if len(k)==longest]
+    if len(longest_candidates)!=1:return None,None,'ambiguous'
+    selected=longest_candidates[0]
+    # Reject an ambiguous shorter school if another school name is a
+    # prefix of the quoted name (e.g. Miami vs Miami Ohio).
+    return ratings[selected],selected,'school_prefix'
+
 def ratings_from_prior_games(games, now, home_adv=2.5, shrink=4.0):
-    # Match the live app's ridge rating design. Avoid using results of future or in-progress games.
+    # Use only completed regular-season games that kicked off at least six
+    # hours before capture. This is a conservative publication-time proxy.
     import numpy as np
     eligible=[]
+    cutoff=now-timedelta(hours=6)
     for g in games:
         kick=utc(g.get('startDate') or g.get('start_date'))
-        h=g.get('homeTeam') or g.get('home_team'); a=g.get('awayTeam') or g.get('away_team')
-        hp=g.get('homePoints',g.get('home_points')); ap=g.get('awayPoints',g.get('away_points'))
-        if not kick or kick>=now or not g.get('completed') or not h or not a or hp is None or ap is None: continue
-        if str(g.get('seasonType','regular')).lower()!='regular': continue
-        if float(hp)==0 and float(ap)==0: continue
-        eligible.append((str(h).lower().strip(),str(a).lower().strip(),float(hp)-float(ap),str(g.get('id'))))
-    # Do not pretend game results were available immediately at kickoff: exclude games started in past 6h.
-    eligible=[] if not eligible else [row for row in eligible if next((utc(g.get('startDate') or g.get('start_date')) for g in games if str(g.get('id'))==row[3]),now) <= now.replace() and next((utc(g.get('startDate') or g.get('start_date')) for g in games if str(g.get('id'))==row[3]),now).timestamp() <= now.timestamp()-6*3600]
+        h=g.get('homeTeam') or g.get('home_team')
+        a=g.get('awayTeam') or g.get('away_team')
+        hp=g.get('homePoints',g.get('home_points'))
+        ap=g.get('awayPoints',g.get('away_points'))
+        if not kick or kick>cutoff or not g.get('completed') or not h or not a or hp is None or ap is None:continue
+        if str(g.get('seasonType',g.get('season_type','regular'))).lower()!='regular':continue
+        if float(hp)==0 and float(ap)==0:continue
+        eligible.append((canonical_school(h),canonical_school(a),float(hp)-float(ap),str(g.get('id'))))
     payload=json.dumps(sorted(eligible),separators=(',',':'))
     digest=hashlib.sha256(payload.encode()).hexdigest()
     teams=sorted(set(t for h,a,_,_ in eligible for t in (h,a)))
     if not teams:return {},0,digest
     ix={t:i for i,t in enumerate(teams)}
-    A=np.zeros((len(eligible)+1,len(teams))); y=np.zeros(len(eligible)+1)
+    A=np.zeros((len(eligible)+1,len(teams)));y=np.zeros(len(eligible)+1)
     for j,(h,a,margin,_) in enumerate(eligible):
-        A[j,ix[h]]=1; A[j,ix[a]]=-1; y[j]=margin-home_adv
+        A[j,ix[h]]=1;A[j,ix[a]]=-1;y[j]=margin-home_adv
     A[-1,:]=1/len(teams)
     values=np.linalg.solve(A.T@A+np.eye(len(teams))*shrink,A.T@y)
     return dict(zip(teams,map(float,values))),len(eligible),digest
@@ -62,14 +136,19 @@ def capture(now=None, odds=None, games=None, output_dir='snapshots', season=None
     if games is None:
         games,_=fetch(CFBD,params={'year':season,'seasonType':'regular'},headers={'Authorization':'Bearer '+os.environ['CFBD_API_KEY']})
     ratings,n_train,digest=ratings_from_prior_games(games,now)
-    # Ratings are snapshotted here, but team-name aliases may require future improvement.
     rows=[]
+    matched_games=set(); unmatched_teams=set()
     for g in odds:
         kick=utc(g.get('commence_time'))
         if not kick or kick<=now:continue
         home=g.get('home_team');away=g.get('away_team')
         if not home or not away:continue
-        hr=ratings.get(home.lower().strip());ar=ratings.get(away.lower().strip())
+        hr,hkey,hmethod=match_rating(home,ratings)
+        ar,akey,amethod=match_rating(away,ratings)
+        if hr is not None and ar is not None:matched_games.add(g.get('id'))
+        else:
+            if hr is None:unmatched_teams.add(home)
+            if ar is None:unmatched_teams.add(away)
         projected=hr-ar+2.5 if hr is not None and ar is not None else None
         for bk in g.get('bookmakers',[]):
             for m in bk.get('markets',[]):
@@ -88,7 +167,8 @@ def capture(now=None, odds=None, games=None, output_dir='snapshots', season=None
     with temp.open('w',newline='',encoding='utf-8') as f:
         writer=csv.DictWriter(f,fieldnames=COLUMNS);writer.writeheader();writer.writerows(rows)
     temp.replace(path)
-    print(f'Saved {len(rows)} pregame quotes; {n_train} completed rating inputs; file {path}')
+    print(f'Saved {len(rows)} pregame quotes; {n_train} completed rating inputs; {len(matched_games)} games with both ratings; file {path}')
+    if unmatched_teams:print('Unmatched sportsbook team names:',', '.join(sorted(unmatched_teams)))
     return rows,path
 
 if __name__=='__main__':capture()
