@@ -49,6 +49,7 @@ TEAM_ALIASES = {
     'florida atlantic owls':'florida atlantic',
     'middle tennessee blue raiders':'middle tennessee',
     'southern miss golden eagles':'southern miss',
+    'liu sharks':'liu',
 }
 # Equivalent school names (not mascots). Add only when identity is unambiguous.
 SCHOOL_EQUIVALENTS = {
@@ -61,6 +62,9 @@ SCHOOL_EQUIVALENTS = {
     'connecticut':'uconn', 'massachusetts':'umass',
     'florida international':'fiu', 'brigham young':'byu',
     'southern methodist':'smu',
+    'app state':'appalachian state', 'appalachian st':'appalachian state',
+    'hawai i':'hawaii', 'hawaii manoa':'hawaii',
+    'long island':'liu', 'long island university':'liu',
 }
 
 def normalize_team(name):
@@ -168,7 +172,13 @@ def capture(now=None, odds=None, games=None, output_dir='snapshots', season=None
         writer=csv.DictWriter(f,fieldnames=COLUMNS);writer.writeheader();writer.writerows(rows)
     temp.replace(path)
     print(f'Saved {len(rows)} pregame quotes; {n_train} completed rating inputs; {len(matched_games)} games with both ratings; file {path}')
-    if unmatched_teams:print('Unmatched sportsbook team names:',', '.join(sorted(unmatched_teams)))
+    if unmatched_teams:
+        print('Teams missing ratings (name mismatch OR no eligible prior games):')
+        for team in sorted(unmatched_teams):
+            alias=TEAM_ALIASES.get(normalize_team(team),team)
+            candidate=canonical_school(alias)
+            print(f'  {team!r} -> {candidate!r}; in training={candidate in ratings}; method={match_rating(team,ratings)[2]}')
+        print('No rating is fabricated for teams absent from the training set.')
     return rows,path
 
 if __name__=='__main__':capture()
