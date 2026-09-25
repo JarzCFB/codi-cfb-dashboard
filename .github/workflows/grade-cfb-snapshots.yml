@@ -1,0 +1,33 @@
+name: Grade CFB archived snapshots
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 13 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: cfb-grading
+  cancel-in-progress: false
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests numpy
+      - name: Grade against completed games
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python grade_snapshots.py
+      - name: Commit grading reports
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update graded CFB snapshot reports'
+            git pull --rebase origin main
+            git push
+          fi
