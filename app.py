@@ -38,6 +38,7 @@ def games_data(key, year):
     return data
 
 from cfb_team_matching import canonical_school, match_rating
+from cfb_division_safety import matchup_status, model_allowed
 
 def key_name(s):
     return canonical_school(s)
@@ -90,7 +91,8 @@ def odds_frame(data, ratings, home_adv, sd):
         h,a=g.get("home_team"),g.get("away_team")
         if not h or not a:continue
         hr,ar=find_rating(h,ratings),find_rating(a,ratings)
-        pred=(hr-ar+home_adv) if hr is not None and ar is not None else None
+        status=matchup_status(h,a)
+        pred=(hr-ar+home_adv) if model_allowed(h,a) and hr is not None and ar is not None else None
         for bk in (g.get("bookmakers") or []):
             if not isinstance(bk, dict): continue
             for market in (bk.get("markets") or []):
@@ -114,7 +116,7 @@ def odds_frame(data, ratings, home_adv, sd):
                     model_margin=(pred if is_home else -pred) if pred is not None else None
                     p_cover=float(norm.cdf((model_margin+float(point))/sd)) if pred is not None else None
                     ev=p_cover*profit_per_dollar(price)-(1-p_cover) if p_cover is not None else None
-                    out.append({"Kickoff UTC":g.get("commence_time"),"Matchup":f"{a} @ {h}","Team":name,"Book":bk.get("title"),"Spread":point,"Odds":price,"Projected home margin":round(pred,1) if pred is not None else None,"Cover probability":round(p_cover,3) if p_cover is not None else None,"Break-even":round(implied,3),"Expected ROI":round(ev,3) if ev is not None else None,"Model edge (pp)":round(100*(p_cover-implied),1) if p_cover is not None else None})
+                    out.append({"Division status":status,"Kickoff UTC":g.get("commence_time"),"Matchup":f"{a} @ {h}","Team":name,"Book":bk.get("title"),"Spread":point,"Odds":price,"Projected home margin":round(pred,1) if pred is not None else None,"Cover probability":round(p_cover,3) if p_cover is not None else None,"Break-even":round(implied,3),"Expected ROI":round(ev,3) if ev is not None else None,"Model edge (pp)":round(100*(p_cover-implied),1) if p_cover is not None else None})
     return pd.DataFrame(out)
 
 with st.sidebar:
@@ -173,6 +175,9 @@ if ok_odds:
             books=sorted(df["Book"].dropna().unique())
             selected=st.multiselect("Bookmakers",books,default=books)
             df=df[df["Book"].isin(selected)].copy()
+            excluded=df[df["Division status"]!="FBS vs FBS"]
+            if not excluded.empty:
+                st.warning(f"Safety filter: {excluded['Matchup'].nunique()} matchup(s) have unverified/FCS division status. Their model predictions, cover probabilities and estimated ROI are suppressed; sportsbook quotes remain visible in All quoted lines.")
             tab1,tab2,tab3=st.tabs(["Model comparisons","Best available price by team","All quoted lines"])
             with tab1:
                 st.warning("RESEARCH ONLY: Original cover probabilities and expected ROI are unvalidated. Results are sorted by kickoff, not projected ROI; no betting advantage has been established.")
@@ -180,7 +185,7 @@ if ok_odds:
                 candidates=df[df["Expected ROI"].notna() & (df["Expected ROI"]>=min_roi)].sort_values(["Kickoff UTC","Matchup","Team"])
                 st.dataframe(candidates,hide_index=True,use_container_width=True)
             with tab2:
-                best=df.assign(_has_roi=df["Expected ROI"].notna()).sort_values(["Matchup","Team","_has_roi","Expected ROI"],ascending=[True,True,False,False]).drop_duplicates(["Matchup","Team"]).drop(columns="_has_roi")
+                best=df[df["Expected ROI"].notna()].assign(_has_roi=True).sort_values(["Matchup","Team","_has_roi","Expected ROI"],ascending=[True,True,False,False]).drop_duplicates(["Matchup","Team"]).drop(columns="_has_roi")
                 st.dataframe(best,hide_index=True,use_container_width=True)
             with tab3:st.dataframe(df,hide_index=True,use_container_width=True)
             st.download_button("Export odds and model calculations",df.to_csv(index=False),file_name="cfb_odds_snapshot.csv",mime="text/csv")
