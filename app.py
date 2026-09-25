@@ -112,17 +112,6 @@ def find_rating(team, ratings):
 
     return None
 
-def find_rating(team, ratings):
-    name = key_name(team)
-    if name in ratings:
-        return ratings[name]
-
-    alias = TEAM_ALIASES.get(name)
-    if alias:
-        return ratings.get(key_name(alias))
-
-    return None
-
 def odds_frame(data, ratings, home_adv, sd):
     out=[]
     for g in data:
