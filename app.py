@@ -37,40 +37,37 @@ def games_data(key, year):
     data,_ = api_get(f"{CFBD_URL}/games", params={"year":year,"seasonType":"regular"}, headers={"Authorization":f"Bearer {key}"})
     return data
 
-def norm_name(s):
-    s = str(s).lower().replace("&", "and")
-    s = s.replace("(oh)", " ohio ").replace("(fl)", " florida ")
-    s = re.sub(r"\([^)]*\)", "", s)
-    s = re.sub(r"[^a-z0-9]", "", s)
-    return s.replace("university", "")
+from cfb_team_matching import canonical_school, match_rating
 
-ALIASES = {"mississippi":"olemiss","mississippist":"mississippistate","miamifl":"miami","miamioh":"miamiohio","ucf":"centralflorida","utsa":"texassanantonio","unlv":"nevadalasvegas","southerncalifornia":"usc","texasam":"texasam","pennst":"pennstate","ohiost":"ohiostate","iowast":"iowastate","kansasst":"kansasstate","michiganst":"michiganstate","floridast":"floridastate","coloradost":"coloradostate","georgiast":"georgiastate","georgiasouthern":"georgiasouthern","coastalcarolina":"coastalcarolina","old dominion":"olddominion"}
 def key_name(s):
-    x=norm_name(s)
-    return ALIASES.get(x,x)
+    return canonical_school(s)
 
-def build_ratings(games, season, shrink=4.0, home_adv=2.5):
-    """Ridge-like iterative margin-of-victory team strength estimates; no bookmaker input."""
+def build_ratings(games, season, shrink=4.0, home_adv=2.5, asof=None):
+    """Same ridge ratings as capture, with an optional strict as-of cutoff."""
     rows=[]
+    cutoff=(asof-timedelta(hours=6)) if asof is not None else None
     for g in games:
-        if not isinstance(g, dict): continue
-        a,b=g.get("home_team"),g.get("away_team")
-        hs,aws=g.get("home_points"),g.get("away_points")
-        if not a or not b or hs is None or aws is None or g.get("completed") is False: continue
+        if not isinstance(g,dict) or not g.get("completed"): continue
+        if str(g.get("seasonType",g.get("season_type","regular"))).lower()!="regular": continue
+        if cutoff is not None:
+            kick=pd.to_datetime(g.get("startDate",g.get("start_date")),utc=True,errors="coerce")
+            if pd.isna(kick) or kick.to_pydatetime()>cutoff: continue
+        a=g.get("home_team",g.get("homeTeam"));b=g.get("away_team",g.get("awayTeam"))
+        hs=g.get("home_points",g.get("homePoints"));aws=g.get("away_points",g.get("awayPoints"))
+        if not a or not b or hs is None or aws is None:continue
         try: margin=float(hs)-float(aws)
-        except (TypeError,ValueError): continue
+        except (TypeError,ValueError):continue
+        if not math.isfinite(margin) or (float(hs)==0 and float(aws)==0):continue
         rows.append((key_name(a),key_name(b),margin))
     teams=sorted(set(t for a,b,_ in rows for t in (a,b)))
-    if not teams: return {},0
+    if not teams:return {},0
     idx={t:i for i,t in enumerate(teams)}
-    A=np.zeros((len(rows)+1,len(teams)))
-    y=np.zeros(len(rows)+1)
+    A=np.zeros((len(rows)+1,len(teams)));y=np.zeros(len(rows)+1)
     for j,(a,b,m) in enumerate(rows):
-        A[j,idx[a]]=1; A[j,idx[b]]=-1; y[j]=m-home_adv
+        A[j,idx[a]]=1;A[j,idx[b]]=-1;y[j]=m-home_adv
     A[-1,:]=1/len(teams)
-    reg=np.eye(len(teams))*shrink
-    vals=np.linalg.solve(A.T@A+reg,A.T@y)
-    return dict(zip(teams,vals)),len(rows)
+    vals=np.linalg.solve(A.T@A+np.eye(len(teams))*shrink,A.T@y)
+    return dict(zip(teams,map(float,vals))),len(rows)
 
 def american_prob(price):
     p=float(price)
@@ -82,75 +79,9 @@ def profit_per_dollar(price):
     if p == 0: raise ValueError("American odds cannot be zero")
     return p/100 if p>0 else 100/-p
 
-TEAM_ALIASES = {
-    "alabama crimson tide": "alabama",
-    "auburn tigers": "auburn",
-    "georgia bulldogs": "georgia",
-    "ohio state buckeyes": "ohio state",
-    "michigan wolverines": "michigan",
-    "tennessee volunteers": "tennessee",
-    "texas longhorns": "texas",
-    "penn state nittany lions": "penn state",
-    "notre dame fighting irish": "notre dame",
-    "nevada wolf pack": "nevada",
-    "air force falcons": "air force",
-    "mississippi state bulldogs": "mississippi state",
-    "nc state wolfpack": "nc state",
-    "arizona wildcats": "arizona",
-    "washington state cougars": "washington state",
-    "army black knights": "army",
-    "temple owls": "temple",
-    "byu cougars": "byu",
-    "tcu horned frogs": "tcu",
-    "appalachian state mountaineers": "appalachian state",
-    "ball state cardinals": "ball state",
-    "kent state golden flashes": "kent state",
-}
-
-# Normalize both sides: key_name() removes spaces and punctuation.
-NORMALIZED_TEAM_ALIASES = {key_name(full): key_name(short) for full, short in TEAM_ALIASES.items()}
-
-# Odds API team names can include mascots; CFBD ratings use school names.
-# Match explicit aliases or a unique school-name prefix, never a fuzzy guess.
-TEAM_ALIASES.update({
-    "hawaii rainbow warriors": "hawaii",
-    "liu sharks": "liu",
-    "florida international panthers": "florida international",
-    "miami (oh) redhawks": "miami ohio",
-    "miami hurricanes": "miami",
-    "ole miss rebels": "ole miss",
-    "lsu tigers": "lsu",
-    "ucf knights": "ucf",
-    "utsa roadrunners": "utsa",
-    "unlv rebels": "unlv",
-    "usc trojans": "usc",
-    "smu mustangs": "smu",
-    "uconn huskies": "connecticut",
-    "umass minutemen": "massachusetts",
-    "louisiana ragin cajuns": "louisiana",
-    "florida atlantic owls": "florida atlantic",
-    "middle tennessee blue raiders": "middle tennessee",
-    "southern miss golden eagles": "southern miss",
-    "nebraska cornhuskers": "nebraska",
-    "michigan state spartans": "michigan state",
-})
-NORMALIZED_TEAM_ALIASES = {key_name(full): key_name(short) for full, short in TEAM_ALIASES.items()}
-
 def find_rating(team, ratings):
-    name = key_name(team)
-    if name in ratings:
-        return ratings[name]
-    alias = NORMALIZED_TEAM_ALIASES.get(name)
-    if alias and alias in ratings:
-        return ratings[alias]
-    # Prefix matching is restricted to unambiguous school names.
-    # Longer matches take priority: Georgia State must not match Georgia.
-    candidates = [school for school in ratings if len(school) >= 5 and name.startswith(school) and name != school]
-    if not candidates:
-        return None
-    longest = max(map(len, candidates))
-    winners = [school for school in candidates if len(school) == longest]
-    return ratings[winners[0]] if len(winners) == 1 else None
+    value, school, method = match_rating(team, ratings)
+    return value
 
 def odds_frame(data, ratings, home_adv, sd):
     out=[]
@@ -216,7 +147,7 @@ if ok_cfbd:
                 game["home_points"] = game.get("homePoints")
                 game["away_points"] = game.get("awayPoints")
                 game["season_type"] = game.get("seasonType")
-        ratings,n_games=build_ratings(games,int(year),shrink,home_adv)
+        ratings,n_games=build_ratings(games,int(year),shrink,home_adv,asof=datetime.now(timezone.utc))
         st.caption(f"CFBD diagnostic: {len(games)} games returned; {sum(g.get('home_points') is not None and g.get('away_points') is not None for g in games if isinstance(g,dict))} have both scores.")
         if n_games == 0 and games:
             sample=next((g for g in games if isinstance(g,dict)),{})
@@ -231,6 +162,11 @@ if ok_odds:
         data,remaining=odds_data(secret("ODDS_API_KEY"),"spreads")
         st.caption(f"Odds cached for four hours · API credits remaining: {remaining} · Refresh uses additional credits")
         df=odds_frame(data,ratings,home_adv,sd)
+        missing_names=sorted({team for game in data if isinstance(game,dict) for team in (game.get("home_team"),game.get("away_team")) if team and find_rating(team,ratings) is None})
+        if missing_names:
+            with st.expander(f"Missing model ratings: {len(missing_names)} teams (diagnostic)"):
+                st.caption("An unmatched team may be absent from the eligible training games, or its sportsbook name may not map to the CFBD school name.")
+                st.dataframe(pd.DataFrame([{"Sportsbook team":name,"Canonical school":canonical_school(name),"Matching method":match_rating(name,ratings)[2]} for name in missing_names]),hide_index=True,use_container_width=True)
         if df.empty and data:
             st.warning("The odds API returned events but no usable spread quotes. Some bookmakers may not have posted spreads yet.")
         if not df.empty:
