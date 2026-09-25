@@ -1147,3 +1147,7 @@ if snapshot_files:
                 st.download_button("Download audited pregame snapshots",valid.to_csv(index=False),file_name="cfb_prospective_pregame_quotes.csv",mime="text/csv",key="prospective_export")
             st.warning("The source captures quote and rating request time, not a verified historical result-publication timestamp. No profit or cover-rate claim is made before games settle and actual bettable prices are verified.")
     except Exception as exc:st.error(f"Could not validate snapshots: {exc}")
+
+from prospective_results import render
+
+render()
