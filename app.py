@@ -8,6 +8,8 @@ import pandas as pd
 import requests
 import streamlit as st
 from scipy.stats import norm
+from scipy.optimize import minimize_scalar
+from scipy.special import expit
 
 st.set_page_config(page_title="Codi's CFB Dashboard", page_icon="🏈", layout="wide")
 st.title("College football · Odds & value dashboard")
@@ -513,6 +515,105 @@ with st.expander("Fetch 2025 spreads and compare against my predictions",expande
                 st.download_button("Download CFBD spread comparison",compared.to_csv(index=False),
                                    file_name=f"cfbd_spread_comparison_{cfbd_year}.csv",mime="text/csv")
         except Exception as exc:st.error(f"Spread comparison failed: {exc}")
+
+# Optional retrospective probability calibration using a separate, prior-season
+# comparison export. Never use the same games to fit and score a calibration.
+def prepare_calibration(df, sd):
+    required={"Week","Game ID","Predicted home margin","Actual home margin","Home spread"}
+    missing=required-set(df.columns)
+    if missing:raise ValueError("Missing columns: "+", ".join(sorted(missing)))
+    d=df.copy()
+    for c in ["Week","Game ID","Predicted home margin","Actual home margin","Home spread"]:
+        d[c]=pd.to_numeric(d[c],errors="coerce")
+    d=d.dropna(subset=list(required)).drop_duplicates("Game ID")
+    d=d[np.isfinite(d["Predicted home margin"]) & np.isfinite(d["Actual home margin"]) & np.isfinite(d["Home spread"])].copy()
+    d["Model gap"]=d["Predicted home margin"]+d["Home spread"]
+    d=d[d["Model gap"]!=0].copy()
+    d["Signed gap"]=d["Model gap"].abs()
+    d["Selected margin"]=np.where(d["Model gap"]>0,d["Actual home margin"],-d["Actual home margin"])
+    d["Selected line"]=np.where(d["Model gap"]>0,d["Home spread"],-d["Home spread"])
+    d["Settlement margin"]=d["Selected margin"]+d["Selected line"]
+    d["Outcome"]=np.where(d["Settlement margin"]>0,1,np.where(d["Settlement margin"]<0,0,np.nan))
+    d["Raw probability"]=norm.cdf(d["Signed gap"]/sd)
+    return d
+
+def fit_cover_slope(training):
+    t=training.dropna(subset=["Outcome"])
+    if len(t)<100 or t["Outcome"].nunique()<2:
+        raise ValueError("Need at least 100 settled training games with both covers and misses.")
+    x=t["Signed gap"].to_numpy(dtype=float)
+    y=t["Outcome"].to_numpy(dtype=float)
+    # A one-parameter monotone model, with neutral 50% at zero model/market gap.
+    # Fit only on the earlier-week training partition.
+    def loss(beta):
+        p=np.clip(expit(beta*x),1e-7,1-1e-7)
+        return float(-np.mean(y*np.log(p)+(1-y)*np.log1p(-p)))
+    result=minimize_scalar(loss,bounds=(0.0,0.5),method="bounded")
+    if not result.success:raise ValueError("Calibration optimizer did not converge")
+    return float(result.x)
+
+def calibration_metrics(df, col):
+    d=df.dropna(subset=["Outcome",col])
+    if d.empty:return float("nan"),float("nan")
+    y=d["Outcome"].to_numpy(dtype=float)
+    p=np.clip(d[col].to_numpy(dtype=float),1e-7,1-1e-7)
+    return float(np.mean((p-y)**2)),float(-np.mean(y*np.log(p)+(1-y)*np.log1p(-p)))
+
+st.divider()
+st.subheader("Spread-cover probability calibration")
+st.caption("Upload your prior-season CFBD comparison CSV. Fit on earlier weeks and test on later, untouched weeks. "
+           "Reference spreads have unverified quote times; this is a retrospective probability check, not proven bettable ROI.")
+with st.expander("Calibrate against historical spread results",expanded=False):
+    calibration_upload=st.file_uploader("Historical CFBD comparison CSV (use your 2025 export)",type="csv",key="calibration_csv")
+    training_last_week=st.slider("Last training week (later weeks held out)",7,12,9,key="calibration_train_week")
+    if calibration_upload is not None:
+        try:
+            source=pd.read_csv(calibration_upload)
+            d=prepare_calibration(source,sd)
+            # A comparison CSV may already have been filtered by an edge threshold.
+            min_observed=float(d["Signed gap"].min()) if len(d) else float("nan")
+            training=d[d["Week"]<=training_last_week].copy()
+            testing=d[d["Week"]>training_last_week].copy()
+            st.caption(f"Distinct games: {len(d):,} · Earlier-week training: {len(training):,} · "
+                       f"Later-week holdout: {len(testing):,} · Smallest included gap: {min_observed:.2f} pts")
+            if len(training)<100 or len(testing)<60:
+                st.warning("Insufficient training or holdout sample. Use a broader export with a zero-point minimum gap and a suitable split.")
+            else:
+                slope=fit_cover_slope(training)
+                training["Calibrated probability"]=expit(slope*training["Signed gap"])
+                testing["Calibrated probability"]=expit(slope*testing["Signed gap"])
+                raw_brier,raw_log=calibration_metrics(testing,"Raw probability")
+                cal_brier,cal_log=calibration_metrics(testing,"Calibrated probability")
+                a,b,c,dcol=st.columns(4)
+                a.metric("Held-out settled games",int(testing["Outcome"].notna().sum()))
+                b.metric("Raw Brier (lower better)",f"{raw_brier:.4f}")
+                c.metric("Calibrated Brier",f"{cal_brier:.4f}",delta=f"{raw_brier-cal_brier:+.4f}",delta_color="normal")
+                dcol.metric("Calibrated slope",f"{slope:.4f}")
+                st.caption(f"Held-out log loss: raw {raw_log:.4f}; calibrated {cal_log:.4f}. "
+                           "These metrics exclude pushes and use only the untouched later-week partition.")
+                testing["Probability bucket"]=pd.cut(testing["Calibrated probability"],
+                    bins=[0,.55,.60,.65,.70,.75,.80,.90,1.0],include_lowest=True)
+                buckets=testing.dropna(subset=["Outcome"]).groupby("Probability bucket",observed=True).agg(
+                    Games=("Outcome","size"),Observed_cover_rate=("Outcome","mean"),
+                    Mean_predicted=("Calibrated probability","mean")).reset_index()
+                buckets["Probability bucket"]=buckets["Probability bucket"].astype(str)
+                st.dataframe(buckets,hide_index=True,use_container_width=True)
+                st.download_button("Download held-out calibration audit",testing.to_csv(index=False),
+                    file_name="cfb_cover_calibration_holdout.csv",mime="text/csv")
+                if min_observed>1.0:
+                    st.warning("Your uploaded comparison excludes near-zero model/market differences. "
+                               "For a less selected calibration sample, rerun the CFBD comparison with minimum difference 0 and upload that export.")
+                if slope < 0.001:
+                    st.warning("The fitted slope is effectively zero: on the training weeks, larger model/market gaps did not reliably imply higher cover probability. The fitted model stays near 50%; do not treat this as a betting signal.")
+                if cal_brier < raw_brier and cal_log < raw_log:
+                    st.success("The fitted probabilities improved both held-out scores in this split. "
+                               "Repeat across other seasons and training splits before using them in live ROI estimates.")
+                else:
+                    st.warning("Calibration did not improve both held-out scores. Keep the live model's "
+                               "probabilities labeled illustrative; do not apply this fitted slope automatically.")
+                st.info("A probability model fitted to median historical reference spreads is not a "
+                        "verified betting edge. Prices, line availability, and independent season tests remain necessary.")
+        except Exception as exc:st.error(f"Calibration failed: {exc}")
 
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
