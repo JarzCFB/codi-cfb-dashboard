@@ -385,6 +385,125 @@ with st.expander("Audit existing backtest and test historical spreads"):
                     except Exception as exc:st.error(f"Historical odds validation failed: {exc}")
         except Exception as exc:st.error(f"Backtest audit failed: {exc}")
 
+# CFBD historical spreads: free-tier /lines data generally has no quote timestamps
+# or spread-side prices. Treat these as historical reference lines, NOT verified
+# pre-kickoff offers. Never report realized betting ROI from this source.
+@st.cache_data(ttl=86400, show_spinner="Fetching CFBD historical spreads…")
+def cfbd_historical_spreads(key, season):
+    response, _ = api_get(f"{CFBD_URL}/lines", params={"year": int(season), "seasonType": "regular"},
+                          headers={"Authorization": f"Bearer {key}"})
+    if not isinstance(response, list):
+        raise ValueError("CFBD returned an unexpected response for /lines")
+    return response
+
+def match_cfbd_spreads(predictions, games_with_lines, min_edge=3.0, provider="All providers (median)"):
+    required={"Game ID","Predicted home margin","Actual home margin","Home team","Away team"}
+    missing=required-set(predictions.columns)
+    if missing: raise ValueError("Backtest is missing: "+", ".join(sorted(missing)))
+    # Match on CFBD's game ID; do not guess matches using similarly named teams.
+    preds=predictions.copy()
+    preds["Game ID"]=pd.to_numeric(preds["Game ID"],errors="coerce")
+    preds=preds.dropna(subset=["Game ID","Predicted home margin","Actual home margin"])
+    preds=preds.drop_duplicates("Game ID",keep="first")
+    raw=[]
+    for game in games_with_lines:
+        if not isinstance(game,dict): continue
+        gid=game.get("gameId",game.get("game_id"))
+        for quote in (game.get("lines") or []):
+            if not isinstance(quote,dict):continue
+            spread=quote.get("spread")
+            if spread is None:continue
+            try: spread=float(spread)
+            except (ValueError,TypeError):continue
+            if not math.isfinite(spread):continue
+            raw.append({"Game ID":gid,"Provider":str(quote.get("provider") or "Unknown"),
+                        "Home spread":spread,"Opening home spread":quote.get("spreadOpen"),
+                        "Home moneyline":quote.get("homeMoneyline"),"Away moneyline":quote.get("awayMoneyline")})
+    quotes=pd.DataFrame(raw)
+    if quotes.empty:return pd.DataFrame(),quotes
+    quotes["Game ID"]=pd.to_numeric(quotes["Game ID"],errors="coerce")
+    quotes=quotes.dropna(subset=["Game ID"]).drop_duplicates(["Game ID","Provider"],keep="last")
+    if provider != "All providers (median)":
+        quotes=quotes[quotes.Provider==provider].copy()
+    if quotes.empty:return pd.DataFrame(),quotes
+    # A single representative spread per game avoids counting several correlated
+    # sportsbook listings as independent betting opportunities.
+    grouped=quotes.groupby("Game ID",as_index=False).agg({"Home spread":"median","Provider":"first"})
+    if provider=="All providers (median)":grouped["Provider"]="Median of available providers"
+    joined=preds.merge(grouped,on="Game ID",how="inner",validate="one_to_one")
+    if joined.empty:return joined,quotes
+    joined["Market-implied home margin"]=-joined["Home spread"]
+    joined["Model vs market (pts)"]=joined["Predicted home margin"]-joined["Market-implied home margin"]
+    joined["Model selection"]=np.where(joined["Model vs market (pts)"]>0,joined["Home team"],joined["Away team"])
+    joined["Selected spread"]=np.where(joined["Model vs market (pts)"]>0,joined["Home spread"],-joined["Home spread"])
+    joined["Selected final margin"]=np.where(joined["Model vs market (pts)"]>0,joined["Actual home margin"],-joined["Actual home margin"])
+    joined["Against-spread result"]=np.select(
+        [joined["Selected final margin"]+joined["Selected spread"]>0,
+         joined["Selected final margin"]+joined["Selected spread"]<0],
+        ["Cover","Miss"],default="Push")
+    joined["Absolute market edge (pts)"]=joined["Model vs market (pts)"].abs()
+    joined=joined[joined["Absolute market edge (pts)"]>=float(min_edge)].copy()
+    return joined,quotes
+
+st.divider()
+st.subheader("Automatic CFBD historical spread comparison")
+st.caption("Uses the free-tier CFBD /lines endpoint and matches game IDs to your walk-forward backtest. "
+           "CFBD's reference spreads are not guaranteed to be timestamped pre-kickoff quotes. "
+           "No historical spread-side prices are assumed and no realized ROI is claimed.")
+with st.expander("Fetch 2025 spreads and compare against my predictions",expanded=False):
+    cfbd_year=st.number_input("Season to compare",min_value=2020,max_value=2025,value=2025,step=1,key="cfbd_lines_year")
+    cfbd_first_week=st.slider("First evaluation week for new backtest",3,10,5,key="cfbd_lines_first_week")
+    cfbd_edge=st.slider("Minimum model-versus-market difference (points)",0.0,14.0,3.0,0.5,key="cfbd_lines_edge")
+    cfbd_uploaded=st.file_uploader("Optional: use your existing backtest CSV instead of rerunning",type="csv",key="cfbd_bt_upload")
+    if st.button("Fetch CFBD spreads and evaluate",key="cfbd_lines_run"):
+        if not ok_cfbd:st.error("Add CFBD_API_KEY to Streamlit Secrets first.")
+        else:
+            try:
+                if cfbd_uploaded is not None:
+                    model_predictions=pd.read_csv(cfbd_uploaded)
+                    if "Season" in model_predictions:
+                        model_predictions=model_predictions[pd.to_numeric(model_predictions["Season"],errors="coerce")==int(cfbd_year)]
+                else:
+                    historical_games=games_data(secret("CFBD_API_KEY"),int(cfbd_year))
+                    model_predictions=historical_backtest(historical_games,shrink,home_adv,sd,cfbd_first_week)
+                if model_predictions.empty:
+                    st.warning("No eligible predictions for this season. Upload a matching backtest CSV or rerun.")
+                else:
+                    fetched=cfbd_historical_spreads(secret("CFBD_API_KEY"),int(cfbd_year))
+                    all_providers=sorted({str(q.get("provider")) for g in fetched if isinstance(g,dict)
+                                         for q in (g.get("lines") or []) if isinstance(q,dict) and q.get("provider")})
+                    st.session_state["cfbd_fetched"]=fetched
+                    st.session_state["cfbd_predictions"]=model_predictions
+                    st.success(f"Retrieved {len(fetched):,} CFBD game records with historical line data.")
+                    st.caption("Available providers: "+(", ".join(all_providers) if all_providers else "none returned"))
+            except requests.HTTPError as exc:
+                st.error(f"CFBD /lines request failed: {exc}. Check the key, endpoint access and monthly call allowance.")
+            except Exception as exc:st.error(f"Historical spread import failed: {exc}")
+    if "cfbd_fetched" in st.session_state and "cfbd_predictions" in st.session_state:
+        stored=st.session_state["cfbd_fetched"]
+        options=["All providers (median)"]+sorted({str(q.get("provider")) for g in stored if isinstance(g,dict)
+                           for q in (g.get("lines") or []) if isinstance(q,dict) and q.get("provider")})
+        chosen=st.selectbox("Historical line provider",options,key="cfbd_provider_choice")
+        try:
+            compared,raw_quotes=match_cfbd_spreads(st.session_state["cfbd_predictions"],stored,cfbd_edge,chosen)
+            if compared.empty:
+                st.warning("No games matched the selected provider and minimum edge. Try a lower threshold or a different provider.")
+            else:
+                decided=compared[compared["Against-spread result"]!="Push"]
+                a,b,c,d=st.columns(4)
+                a.metric("Games with qualifying differences",len(compared))
+                b.metric("Cover rate (excluding pushes)",f"{(decided['Against-spread result']=='Cover').mean():.1%}" if len(decided) else "N/A")
+                c.metric("Pushes",int((compared["Against-spread result"]=="Push").sum()))
+                d.metric("Average model/market gap",f"{compared['Absolute market edge (pts)'].mean():.1f} pts")
+                st.warning("Exploratory comparison only: CFBD does not establish that each reference spread "
+                           "was offered before kickoff at a bettable price. These are not verified historical wagers or ROI.")
+                cols=["Week","Matchup","Game ID","Provider","Predicted home margin","Actual home margin",
+                      "Home spread","Model selection","Selected spread","Absolute market edge (pts)","Against-spread result"]
+                st.dataframe(compared[[c for c in cols if c in compared.columns]],hide_index=True,use_container_width=True)
+                st.download_button("Download CFBD spread comparison",compared.to_csv(index=False),
+                                   file_name=f"cfbd_spread_comparison_{cfbd_year}.csv",mime="text/csv")
+        except Exception as exc:st.error(f"Spread comparison failed: {exc}")
+
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
 upload=st.file_uploader("Load previous journal (CSV)",type="csv")
