@@ -30,77 +30,7 @@ def fetch(url, **kw):
 
 # Explicit, unambiguous Odds API names -> CFBD school names.
 # Unknown names are left unmatched rather than assigned a possibly wrong rating.
-TEAM_ALIASES = {
-    'army black knights':'army', 'temple owls':'temple',
-    'miami hurricanes':'miami', 'miami (oh) redhawks':'miami (oh)',
-    'ole miss rebels':'ole miss', 'lsu tigers':'lsu',
-    'ucf knights':'ucf', 'utsa roadrunners':'utsa',
-    'unlv rebels':'unlv', 'usc trojans':'usc',
-    'byu cougars':'byu', 'tcu horned frogs':'tcu',
-    'nc state wolfpack':'nc state', 'smu mustangs':'smu',
-    'uconn huskies':'uconn', 'umass minutemen':'umass',
-    'hawaii rainbow warriors':'hawaii',
-    'louisiana ragin cajuns':'louisiana',
-    'appalachian state mountaineers':'appalachian state',
-    'penn state nittany lions':'penn state',
-    'notre dame fighting irish':'notre dame',
-    'texas a&m aggies':'texas a&m',
-    'florida international panthers':'fiu',
-    'florida atlantic owls':'florida atlantic',
-    'middle tennessee blue raiders':'middle tennessee',
-    'southern miss golden eagles':'southern miss',
-    'liu sharks':'liu',
-}
-# Equivalent school names (not mascots). Add only when identity is unambiguous.
-SCHOOL_EQUIVALENTS = {
-    'miami ohio':'miami (oh)', 'miami oh':'miami (oh)',
-    'miami fl':'miami', 'miami florida':'miami',
-    'mississippi':'ole miss', 'mississippi rebels':'ole miss',
-    'louisiana lafayette':'louisiana', 'ul lafayette':'louisiana',
-    'southern california':'usc', 'central florida':'ucf',
-    'texas san antonio':'utsa', 'nevada las vegas':'unlv',
-    'connecticut':'uconn', 'massachusetts':'umass',
-    'florida international':'fiu', 'brigham young':'byu',
-    'southern methodist':'smu',
-    'app state':'appalachian state', 'appalachian st':'appalachian state',
-    'hawai i':'hawaii', 'hawaii manoa':'hawaii',
-    'long island':'liu', 'long island university':'liu',
-}
-
-def normalize_team(name):
-    name=str(name or '').lower().replace('&',' and ')
-    name=re.sub(r'[^a-z0-9]+',' ',name)
-    return ' '.join(name.split())
-
-def canonical_school(name):
-    n=normalize_team(name)
-    return normalize_team(SCHOOL_EQUIVALENTS.get(n,n))
-
-def match_rating(team, ratings):
-    """Exact/explicit alias first, then unique longest school-name prefix.
-
-    Never match a short ambiguous prefix (e.g. Miami vs Miami Ohio,
-    Georgia vs Georgia State) or guess a school for an unknown mascot.
-    """
-    normalized=normalize_team(team)
-    alias=TEAM_ALIASES.get(normalized)
-    if alias:
-        k=canonical_school(alias)
-        if k in ratings: return ratings[k],k,'alias'
-    exact=canonical_school(normalized)
-    if exact in ratings:return ratings[exact],exact,'exact'
-    candidates=[]
-    for school in ratings:
-        if normalized.startswith(school+' '):
-            candidates.append(school)
-    if not candidates:return None,None,'unmatched'
-    longest=max(len(k) for k in candidates)
-    longest_candidates=[k for k in candidates if len(k)==longest]
-    if len(longest_candidates)!=1:return None,None,'ambiguous'
-    selected=longest_candidates[0]
-    # Reject an ambiguous shorter school if another school name is a
-    # prefix of the quoted name (e.g. Miami vs Miami Ohio).
-    return ratings[selected],selected,'school_prefix'
+from cfb_team_matching import canonical_school, normalize as normalize_team, match_rating, ALIASES as TEAM_ALIASES
 
 def ratings_from_prior_games(games, now, home_adv=2.5, shrink=4.0):
     # Use only completed regular-season games that kicked off at least six
