@@ -408,7 +408,7 @@ def match_cfbd_spreads(predictions, games_with_lines, min_edge=3.0, provider="Al
     raw=[]
     for game in games_with_lines:
         if not isinstance(game,dict): continue
-        gid=game.get("gameId",game.get("game_id"))
+        gid=game.get("id") or game.get("gameId") or game.get("game_id")
         for quote in (game.get("lines") or []):
             if not isinstance(quote,dict):continue
             spread=quote.get("spread")
@@ -486,8 +486,18 @@ with st.expander("Fetch 2025 spreads and compare against my predictions",expande
         chosen=st.selectbox("Historical line provider",options,key="cfbd_provider_choice")
         try:
             compared,raw_quotes=match_cfbd_spreads(st.session_state["cfbd_predictions"],stored,cfbd_edge,chosen)
+            # Diagnose the join separately from the edge threshold so an ID/schema
+            # mismatch is not mistaken for a lack of model/market opportunities.
+            baseline, all_quotes = match_cfbd_spreads(st.session_state["cfbd_predictions"],stored,0.0,chosen)
+            st.caption(f"Backtest predictions: {len(st.session_state['cfbd_predictions']):,} · "
+                       f"Valid provider quotes: {len(all_quotes):,} · "
+                       f"Matched games before edge filter: {len(baseline):,} · "
+                       f"Qualifying games: {len(compared):,}")
             if compared.empty:
-                st.warning("No games matched the selected provider and minimum edge. Try a lower threshold or a different provider.")
+                if baseline.empty:
+                    st.warning("No games matched by CFBD game ID. Check the season, uploaded backtest, and returned game IDs.")
+                else:
+                    st.warning("Games matched, but none reached the minimum model/market difference. Lower the threshold.")
             else:
                 decided=compared[compared["Against-spread result"]!="Push"]
                 a,b,c,d=st.columns(4)
