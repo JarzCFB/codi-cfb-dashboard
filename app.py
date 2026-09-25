@@ -784,6 +784,129 @@ with st.expander("Compare models using the 2023–2025 audit",expanded=False):
                 st.warning("2025 results have already been viewed during development, so this is not a pristine holdout for choosing the overall model. Keep live ROI unvalidated until prospective, timestamped tests establish otherwise.")
         except Exception as exc:st.error(f"Model lab could not read the audit: {exc}")
 
+
+# Market-residual research lab: every historical feature uses earlier kickoffs only.
+def residual_lab_features(raw):
+    d=model_lab_frame(raw)
+    needed=["Kickoff UTC","Home team","Away team"]
+    missing=[c for c in needed if c not in d.columns]
+    if missing: raise ValueError("Missing columns: "+", ".join(missing))
+    d["Kickoff parsed"]=pd.to_datetime(d["Kickoff UTC"],utc=True,errors="coerce")
+    d=d.dropna(subset=["Kickoff parsed"]).sort_values(["Kickoff parsed","Game ID"]).copy()
+    # Games with identical kickoffs are featurized before any of their results enter history.
+    history={}
+    records=[]
+    for kickoff, group in d.groupby("Kickoff parsed",sort=True):
+        for _,g in group.iterrows():
+            h,a=str(g["Home team"]),str(g["Away team"])
+            def previous(team):
+                old=[x for x in history.get(team,[]) if x[0]<kickoff and (kickoff-x[0]).days<=365]
+                recent=old[-5:]
+                if not recent:return (0.,0.,0.,0.)
+                residuals=[x[1] for x in recent]
+                margins=[x[2] for x in recent]
+                rest=float(min((kickoff-recent[-1][0]).days,21))
+                return (float(np.mean(residuals)),float(np.mean(margins)),float(len(recent))/5,rest)
+            hr,hm,hcount,hrest=previous(h)
+            ar,am,acount,arest=previous(a)
+            r=g.to_dict()
+            r.update({"rating_gap":float(g["Model minus market"]),
+                      "recent_residual_gap":hr-ar,"recent_margin_gap":hm-am,
+                      "recent_sample_gap":hcount-acount,"rest_gap":hrest-arest,
+                      "history_min":min(hcount,acount),
+                      "market_margin":float(g["Market home margin"]),
+                      "target_residual":float(g["Actual home margin"]-g["Market home margin"])})
+            records.append(r)
+        for _,g in group.iterrows():
+            h,a=str(g["Home team"]),str(g["Away team"])
+            margin=float(g["Actual home margin"])
+            residual=margin-float(g["Market home margin"])
+            history.setdefault(h,[]).append((kickoff,residual,margin))
+            history.setdefault(a,[]).append((kickoff,-residual,-margin))
+    return pd.DataFrame(records)
+
+RESIDUAL_FEATURES=["rating_gap","recent_residual_gap","recent_margin_gap","recent_sample_gap","rest_gap","history_min","market_margin"]
+
+def fit_residual_ridge(training, penalty=100.0):
+    x=training[RESIDUAL_FEATURES].to_numpy(float)
+    y=training["target_residual"].to_numpy(float)
+    center=x.mean(axis=0)
+    scale=np.maximum(x.std(axis=0),1.0)
+    z=np.column_stack([np.ones(len(x)),(x-center)/scale])
+    reg=np.diag([0.0]+[penalty]*len(RESIDUAL_FEATURES))
+    coef=np.linalg.solve(z.T@z+reg,z.T@y)
+    return center,scale,coef
+
+def predict_residual_ridge(test, fitted):
+    center,scale,coef=fitted
+    x=test[RESIDUAL_FEATURES].to_numpy(float)
+    return np.column_stack([np.ones(len(x)),(x-center)/scale])@coef
+
+def residual_lab_evaluate(test,predictions,label,season,threshold=2.0):
+    actual=test["Actual home margin"].to_numpy(float)
+    market=test["Market home margin"].to_numpy(float)
+    gap=predictions-market
+    # A predicted gap of exactly zero means no selection, not a home bet.
+    selected=np.abs(gap)>=threshold
+    ats=np.sign(gap[selected])*(actual[selected]-market[selected])
+    w=int((ats>0).sum());l=int((ats<0).sum());p=int((ats==0).sum())
+    return {"Season":season,"Model":label,"Games":len(test),
+            "Margin MAE":float(np.mean(np.abs(predictions-actual))),
+            "Margin RMSE":float(np.sqrt(np.mean((predictions-actual)**2))),
+            "Winner accuracy":float(np.mean((predictions>0)==(actual>0))),
+            "Selected reference games":int(selected.sum()),"ATS wins":w,"ATS losses":l,
+            "ATS pushes":p,"Reference cover rate":w/(w+l) if w+l else np.nan,
+            "Illustrative ROI at -110":(w*(100/110)-l)/(w+l+p) if (w+l+p) else np.nan}
+
+st.divider()
+st.subheader("Market-residual research lab · pregame form")
+st.caption("Research whether your ratings, earlier opponent-relative results, recent margins and rest explain errors in the historical market line. "
+           "Features are constructed in kickoff order; simultaneous games cannot use one another's results. "
+           "Historical CFBD median lines are not verified pregame quotes, so results are retrospective, not executable returns.")
+with st.expander("Evaluate past-only residual model on 2024 and 2025",expanded=False):
+    residual_upload=st.file_uploader("Upload cfb_independent_season_audit_2023_2025.csv",type="csv",key="residual_lab_upload")
+    min_pred_gap=st.number_input("Minimum predicted difference for illustrative ATS selections (points)",min_value=0.5,max_value=20.0,value=2.0,step=0.5,key="residual_min_gap")
+    if residual_upload is not None:
+        try:
+            feature_data=residual_lab_features(pd.read_csv(residual_upload))
+            counts=feature_data.groupby("Season").size()
+            st.dataframe(counts.rename("Matched games").reset_index(),hide_index=True,use_container_width=True)
+            if not all(counts.get(y,0)>=100 for y in (2023,2024,2025)):
+                st.warning("Need at least 100 valid matched games in each of 2023–2025.")
+            else:
+                score_rows=[]; detail=[]
+                for season,train_years in [(2024,[2023]),(2025,[2023,2024])]:
+                    train=feature_data[feature_data["Season"].isin(train_years)]
+                    test=feature_data[feature_data["Season"]==season].copy()
+                    fitted=fit_residual_ridge(train)
+                    residual=predict_residual_ridge(test,fitted)
+                    market=test["Market home margin"].to_numpy(float)
+                    rating=test["Predicted home margin"].to_numpy(float)
+                    blend_weight=model_lab_fit(train)
+                    models={"Market reference":market,"Original ratings":rating,
+                            "Past-season blend":market+blend_weight*(rating-market),
+                            "Past-season residual ridge":market+residual}
+                    for name,pred in models.items():
+                        score_rows.append(residual_lab_evaluate(test,pred,name,season,min_pred_gap))
+                        out=test[["Season","Week","Game ID","Kickoff UTC","Home team","Away team","Actual home margin","Home spread"]].copy()
+                        out["Model"]=name;out["Predicted home margin"]=pred
+                        out["Model vs reference gap"]=pred-market
+                        out["Illustrative selection"]=np.where(np.abs(pred-market)>=min_pred_gap,
+                            np.where(pred>market,"Home","Away"),"No selection")
+                        detail.append(out)
+                scores=pd.DataFrame(score_rows)
+                st.dataframe(scores.style.format({"Margin MAE":"{:.2f}","Margin RMSE":"{:.2f}",
+                    "Winner accuracy":"{:.1%}","Reference cover rate":"{:.1%}",
+                    "Illustrative ROI at -110":"{:.1%}"}),hide_index=True,use_container_width=True)
+                st.download_button("Download residual model comparison",scores.to_csv(index=False),
+                    file_name="cfb_residual_model_comparison.csv",mime="text/csv",key="residual_scores_download")
+                st.download_button("Download game-by-game predictions",pd.concat(detail,ignore_index=True).to_csv(index=False),
+                    file_name="cfb_residual_game_predictions.csv",mime="text/csv",key="residual_games_download")
+                st.warning("This audit does not establish a betting edge. Median CFBD lines may be closing or postgame references; "
+                    "the 2025 season has already informed development. Rest-day and recent-form features require accurate kickoff timestamps. "
+                    "For a genuine live model, capture timestamped pre-kickoff lines and run forward without changing parameters after viewing results.")
+        except Exception as exc:st.error(f"Residual lab failed: {exc}")
+
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
 upload=st.file_uploader("Load previous journal (CSV)",type="csv")
