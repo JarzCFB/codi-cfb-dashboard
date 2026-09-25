@@ -79,6 +79,50 @@ def profit_per_dollar(price):
     if p == 0: raise ValueError("American odds cannot be zero")
     return p/100 if p>0 else 100/-p
 
+TEAM_ALIASES = {
+    "alabama crimson tide": "alabama",
+    "auburn tigers": "auburn",
+    "georgia bulldogs": "georgia",
+    "ohio state buckeyes": "ohio state",
+    "michigan wolverines": "michigan",
+    "tennessee volunteers": "tennessee",
+    "texas longhorns": "texas",
+    "penn state nittany lions": "penn state",
+    "notre dame fighting irish": "notre dame",
+    "nevada wolf pack": "nevada",
+    "air force falcons": "air force",
+    "mississippi state bulldogs": "mississippi state",
+    "nc state wolfpack": "nc state",
+    "arizona wildcats": "arizona",
+    "washington state cougars": "washington state",
+    "army black knights": "army",
+    "temple owls": "temple",
+    "byu cougars": "byu",
+    "tcu horned frogs": "tcu",
+}
+
+def find_rating(team, ratings):
+    name = key_name(team)
+    if name in ratings:
+        return ratings[name]
+
+    alias = TEAM_ALIASES.get(name)
+    if alias:
+        return ratings.get(key_name(alias))
+
+    return None
+
+def find_rating(team, ratings):
+    name = key_name(team)
+    if name in ratings:
+        return ratings[name]
+
+    alias = TEAM_ALIASES.get(name)
+    if alias:
+        return ratings.get(key_name(alias))
+
+    return None
+
 def odds_frame(data, ratings, home_adv, sd):
     out=[]
     for g in data:
