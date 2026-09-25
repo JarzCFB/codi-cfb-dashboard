@@ -103,12 +103,20 @@ TEAM_ALIASES = {
 
 def find_rating(team, ratings):
     name = key_name(team)
+
+    # Try an exact match first.
     if name in ratings:
         return ratings[name]
 
-    alias = TEAM_ALIASES.get(name)
-    if alias:
-        return ratings.get(key_name(alias))
+    # Normalize the aliases so they match key_name().
+    aliases = {
+        key_name(book_name): key_name(cfbd_name)
+        for book_name, cfbd_name in TEAM_ALIASES.items()
+    }
+
+    alias = aliases.get(name)
+    if alias is not None:
+        return ratings.get(alias)
 
     return None
 
