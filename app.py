@@ -207,9 +207,9 @@ if ok_odds:
             df=df[df["Book"].isin(selected)].copy()
             tab1,tab2,tab3=st.tabs(["Model comparisons","Best available price by team","All quoted lines"])
             with tab1:
-                st.warning("RESEARCH ONLY: Original cover probabilities and expected ROI are unvalidated. The 2023–2025 audit did not establish a betting advantage; do not treat the ranking below as betting recommendations.")
+                st.warning("RESEARCH ONLY: Original cover probabilities and expected ROI are unvalidated. Results are sorted by kickoff, not projected ROI; no betting advantage has been established.")
                 st.caption("Research screen only. Missing team ratings are excluded.")
-                candidates=df[df["Expected ROI"].notna() & (df["Expected ROI"]>=min_roi)].sort_values("Expected ROI",ascending=False)
+                candidates=df[df["Expected ROI"].notna() & (df["Expected ROI"]>=min_roi)].sort_values(["Kickoff UTC","Matchup","Team"])
                 st.dataframe(candidates,hide_index=True,use_container_width=True)
             with tab2:
                 best=df.assign(_has_roi=df["Expected ROI"].notna()).sort_values(["Matchup","Team","_has_roi","Expected ROI"],ascending=[True,True,False,False]).drop_duplicates(["Matchup","Team"]).drop(columns="_has_roi")
@@ -906,6 +906,69 @@ with st.expander("Evaluate past-only residual model on 2024 and 2025",expanded=F
                     "the 2025 season has already informed development. Rest-day and recent-form features require accurate kickoff timestamps. "
                     "For a genuine live model, capture timestamped pre-kickoff lines and run forward without changing parameters after viewing results.")
         except Exception as exc:st.error(f"Residual lab failed: {exc}")
+
+
+# Strict model audit: inspect exported predictions before promoting any live model.
+st.divider()
+st.subheader("Strict model audit · sign, bias and walk-forward checks")
+st.caption("Upload the two CSVs exported by the Market-residual research lab. This audit uses exported predictions, never refits on the evaluation games, and does not imply historical lines were bettable.")
+with st.expander("Audit model predictions and spread selections", expanded=False):
+    audit_games_upload=st.file_uploader("cfb_residual_game_predictions.csv", type="csv", key="strict_audit_games")
+    audit_summary_upload=st.file_uploader("cfb_residual_model_comparison.csv (optional)", type="csv", key="strict_audit_summary")
+    if audit_games_upload is not None:
+        try:
+            detail=pd.read_csv(audit_games_upload)
+            required={"Season","Week","Game ID","Kickoff UTC","Home team","Away team","Actual home margin","Home spread","Model","Predicted home margin"}
+            missing=required-set(detail.columns)
+            if missing: raise ValueError("Missing columns: "+", ".join(sorted(missing)))
+            for c in ("Season","Week","Actual home margin","Home spread","Predicted home margin"):
+                detail[c]=pd.to_numeric(detail[c],errors="coerce")
+            detail["Kickoff parsed"]=pd.to_datetime(detail["Kickoff UTC"],utc=True,errors="coerce")
+            bad_numeric=detail[list(("Season","Week","Actual home margin","Home spread","Predicted home margin"))].isna().any(axis=1)
+            bad_kickoff=detail["Kickoff parsed"].isna()
+            duplicate=detail.duplicated(["Season","Game ID","Model"],keep=False)
+            st.write({"Rows":len(detail),"Invalid numeric rows":int(bad_numeric.sum()),"Missing kickoff timestamps":int(bad_kickoff.sum()),"Duplicate game/model rows":int(duplicate.sum())})
+            clean=detail[~bad_numeric & ~bad_kickoff & ~duplicate].copy()
+            clean["Market home margin"]=-clean["Home spread"]
+            clean["Model gap"]=clean["Predicted home margin"]-clean["Market home margin"]
+            clean["Market residual"]=clean["Actual home margin"]-clean["Market home margin"]
+            clean["Model error"]=clean["Predicted home margin"]-clean["Actual home margin"]
+            clean["Market error"]=clean["Market home margin"]-clean["Actual home margin"]
+            clean["Home pick"]=clean["Model gap"]>0
+            clean["ATS signed result"]=np.sign(clean["Model gap"])*clean["Market residual"]
+            clean["Home actual cover"]=clean["Market residual"]>0
+            clean["Home actual loss"]=clean["Market residual"]<0
+            # A selection exists only when the predicted gap is nonzero and exceeds the chosen threshold.
+            threshold=st.number_input("Minimum absolute model/market gap",0.5,20.0,2.0,0.5,key="strict_audit_gap")
+            selected=clean[(clean["Model gap"].abs()>=threshold)&(clean["Model"]!="Market reference")].copy()
+            selected["ATS outcome"]=np.select([selected["ATS signed result"]>0,selected["ATS signed result"]<0],["Win","Loss"],default="Push")
+            audit_rows=[]
+            for (season,model),g in clean.groupby(["Season","Model"],sort=True):
+                picks=selected[(selected["Season"]==season)&(selected["Model"]==model)]
+                w=int((picks["ATS outcome"]=="Win").sum());l=int((picks["ATS outcome"]=="Loss").sum());p=int((picks["ATS outcome"]=="Push").sum())
+                home_picks=int(picks["Home pick"].sum())
+                audit_rows.append({"Season":int(season),"Model":model,"Games":len(g),"Margin MAE":g["Model error"].abs().mean(),"Market MAE":g["Market error"].abs().mean(),"Home-margin bias (pts)":g["Model error"].mean(),"Mean predicted gap (pts)":g["Model gap"].mean(),"Selections":len(picks),"Home selections":home_picks,"Home selection %":home_picks/len(picks) if len(picks) else np.nan,"W":w,"L":l,"P":p,"Cover rate":w/(w+l) if w+l else np.nan,"Illustrative ROI at -110":(w*100/110-l)/len(picks) if len(picks) else np.nan})
+            audit_table=pd.DataFrame(audit_rows)
+            st.dataframe(audit_table.style.format({"Margin MAE":"{:.3f}","Market MAE":"{:.3f}","Home-margin bias (pts)":"{:+.2f}","Mean predicted gap (pts)":"{:+.2f}","Home selection %":"{:.1%}","Cover rate":"{:.1%}","Illustrative ROI at -110":"{:+.1%}"}),hide_index=True,use_container_width=True)
+            st.download_button("Download strict audit summary",audit_table.to_csv(index=False),file_name="cfb_strict_audit_summary.csv",mime="text/csv",key="strict_summary_dl")
+            # Sign-consistency check on every game: home spread plus actual home margin decides home cover.
+            sign_checks=clean[(clean["Model"]=="Past-season residual ridge") & (clean["Model gap"].abs()>=threshold)].copy()
+            sign_checks["Predicted side"]=np.where(sign_checks["Model gap"]>0,"Home","Away")
+            sign_checks["Correct signed ATS margin"]=np.sign(sign_checks["Model gap"])*(sign_checks["Actual home margin"]+sign_checks["Home spread"])
+            sign_checks["Opposite-side ATS margin"]=-sign_checks["Correct signed ATS margin"]
+            if "Illustrative selection" in sign_checks:
+                mismatch=(sign_checks["Illustrative selection"]!=sign_checks["Predicted side"]).sum()
+                st.metric("Exported selection/sign mismatches",int(mismatch))
+                if mismatch:st.error("Selection labels disagree with the independently recomputed model-versus-market sign.")
+            st.caption("A positive model gap selects the home side. Settlement is sign(gap) × (actual home margin + home spread). Pushes return the illustrative stake.")
+            st.dataframe(sign_checks[["Season","Week","Game ID","Home team","Away team","Home spread","Predicted side","Correct signed ATS margin"]].head(100),hide_index=True,use_container_width=True)
+            st.download_button("Download signed selection audit",sign_checks.drop(columns=["Kickoff parsed"]).to_csv(index=False),file_name="cfb_signed_selection_audit.csv",mime="text/csv",key="strict_selection_dl")
+            if audit_summary_upload is not None:
+                reported=pd.read_csv(audit_summary_upload)
+                st.caption("Original model lab summary, for comparison with independently recomputed results:")
+                st.dataframe(reported,hide_index=True,use_container_width=True)
+            st.warning("Integrity limit: these exports cannot prove that CFBD historical spreads or the original ratings were known before kickoff. To certify that, archive each odds quote with its retrieval timestamp and each rating snapshot before games start. Do not use the 2025 results for further parameter tuning and then call 2025 an untouched test.")
+        except Exception as exc:st.error(f"Strict audit could not complete: {exc}")
 
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
