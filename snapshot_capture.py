@@ -14,7 +14,7 @@ import requests
 
 ODDS = 'https://api.the-odds-api.com/v4/sports/americanfootball_ncaaf/odds/'
 CFBD = 'https://api.collegefootballdata.com/games'
-COLUMNS = ['captured_at_utc','game_id','kickoff_utc','home_team','away_team','sportsbook_key','sportsbook','bookmaker_last_update_utc','market_last_update_utc','selection','spread','american_odds','season','ratings_asof_utc','ratings_training_games','home_rating','away_rating','projected_home_margin','ratings_input_sha256','capture_status']
+COLUMNS = ['captured_at_utc','game_id','kickoff_utc','home_team','away_team','sportsbook_key','sportsbook','bookmaker_last_update_utc','market_last_update_utc','selection','spread','american_odds','season','ratings_asof_utc','ratings_training_games','home_rating','away_rating','projected_home_margin','ratings_input_sha256','capture_status','division_status']
 
 def utc(dt):
     if not dt: return None
@@ -31,6 +31,7 @@ def fetch(url, **kw):
 # Explicit, unambiguous Odds API names -> CFBD school names.
 # Unknown names are left unmatched rather than assigned a possibly wrong rating.
 from cfb_team_matching import canonical_school, normalize as normalize_team, match_rating, ALIASES as TEAM_ALIASES
+from cfb_division_safety import matchup_status, model_allowed
 
 def ratings_from_prior_games(games, now, home_adv=2.5, shrink=4.0):
     # Use only completed regular-season games that kicked off at least six
@@ -83,7 +84,10 @@ def capture(now=None, odds=None, games=None, output_dir='snapshots', season=None
         else:
             if hr is None:unmatched_teams.add(home)
             if ar is None:unmatched_teams.add(away)
-        projected=hr-ar+2.5 if hr is not None and ar is not None else None
+        division_status=matchup_status(home,away)
+        allowed=model_allowed(home,away)
+        projected=hr-ar+2.5 if allowed and hr is not None and ar is not None else None
+        if not allowed: matched_games.discard(g.get('id'))
         for bk in g.get('bookmakers',[]):
             for m in bk.get('markets',[]):
                 if m.get('key')!='spreads':continue
@@ -93,7 +97,7 @@ def capture(now=None, odds=None, games=None, output_dir='snapshots', season=None
                         spread=float(o['point']);price=float(o['price'])
                         if not math.isfinite(spread) or not math.isfinite(price) or price==0:continue
                     except (KeyError,ValueError,TypeError):continue
-                    rows.append(dict(captured_at_utc=iso(now),game_id=g.get('id'),kickoff_utc=iso(kick),home_team=home,away_team=away,sportsbook_key=bk.get('key'),sportsbook=bk.get('title'),bookmaker_last_update_utc=bk.get('last_update'),market_last_update_utc=m.get('last_update'),selection=o['name'],spread=spread,american_odds=price,season=season,ratings_asof_utc=iso(now),ratings_training_games=n_train,home_rating=hr,away_rating=ar,projected_home_margin=projected,ratings_input_sha256=digest,capture_status='timestamped_live_quote'))
+                    rows.append(dict(captured_at_utc=iso(now),game_id=g.get('id'),kickoff_utc=iso(kick),home_team=home,away_team=away,sportsbook_key=bk.get('key'),sportsbook=bk.get('title'),bookmaker_last_update_utc=bk.get('last_update'),market_last_update_utc=m.get('last_update'),selection=o['name'],spread=spread,american_odds=price,season=season,ratings_asof_utc=iso(now),ratings_training_games=n_train,home_rating=hr if allowed else None,away_rating=ar if allowed else None,projected_home_margin=projected,ratings_input_sha256=digest,capture_status='timestamped_live_quote' if allowed else 'division_safety_suppressed',division_status=division_status))
     folder=Path(output_dir)/str(season);folder.mkdir(parents=True,exist_ok=True)
     path=folder/(now.strftime('%Y%m%dT%H%M%SZ')+'.csv')
     # Atomic write: no partially written snapshots.
