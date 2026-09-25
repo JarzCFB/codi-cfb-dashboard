@@ -134,7 +134,12 @@ if ok_cfbd:
             st.error(f"CFBD returned {type(games).__name__} rather than a list of games. Check your API plan and response.")
             games=[]
         if games:
-            st.write("CFBD response field names:", list(games[0].keys()))
+            for game in games:
+                game["home_team"] = game.get("homeTeam")
+                game["away_team"] = game.get("awayTeam")
+                game["home_points"] = game.get("homePoints")
+                game["away_points"] = game.get("awayPoints")
+                game["season_type"] = game.get("seasonType")
         ratings,n_games=build_ratings(games,int(year),shrink,home_adv)
         st.caption(f"CFBD diagnostic: {len(games)} games returned; {sum(g.get('home_points') is not None and g.get('away_points') is not None for g in games if isinstance(g,dict))} have both scores.")
         if n_games == 0 and games:
