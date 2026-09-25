@@ -1,11 +1,12 @@
 {
+  "excluded_unverified_division": 840,
   "graded_games": 0,
   "graded_quotes": 0,
-  "input_rows": 3580,
+  "input_rows": 5964,
   "losses": 0,
-  "missing_prediction_or_price": 1240,
+  "missing_prediction_or_price": 1062,
   "pushes": 0,
-  "ungraded_not_final_or_ambiguous": 1194,
-  "unique_latest_quotes": 1194,
+  "ungraded_not_final_or_ambiguous": 1026,
+  "unique_latest_quotes": 1026,
   "wins": 0
 }
