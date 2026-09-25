@@ -104,7 +104,7 @@ def odds_frame(data, ratings, home_adv, sd):
                         continue
                     is_home=name==h
                     # Team cover if (team margin + point) > 0. For a normal margin distribution.
-                    model_margin=pred if is_home else -pred
+                    model_margin=(pred if is_home else -pred) if pred is not None else None
                     p_cover=float(norm.cdf((model_margin+float(point))/sd)) if pred is not None else None
                     ev=p_cover*profit_per_dollar(price)-(1-p_cover) if p_cover is not None else None
                     out.append({"Kickoff UTC":g.get("commence_time"),"Matchup":f"{a} @ {h}","Team":name,"Book":bk.get("title"),"Spread":point,"Odds":price,"Projected home margin":round(pred,1) if pred is not None else None,"Cover probability":round(p_cover,3) if p_cover is not None else None,"Break-even":round(implied,3),"Expected ROI":round(ev,3) if ev is not None else None,"Model edge (pp)":round(100*(p_cover-implied),1) if p_cover is not None else None})
@@ -130,7 +130,14 @@ ratings={}; n_games=0
 if ok_cfbd:
     try:
         games=games_data(secret("CFBD_API_KEY"),int(year))
+        if not isinstance(games, list):
+            st.error(f"CFBD returned {type(games).__name__} rather than a list of games. Check your API plan and response.")
+            games=[]
         ratings,n_games=build_ratings(games,int(year),shrink,home_adv)
+        st.caption(f"CFBD diagnostic: {len(games)} games returned; {sum(g.get('home_points') is not None and g.get('away_points') is not None for g in games if isinstance(g,dict))} have both scores.")
+        if n_games == 0 and games:
+            sample=next((g for g in games if isinstance(g,dict)),{})
+            st.info(f"Sample game (no credentials): {sample.get('home_team','?')} vs {sample.get('away_team','?')}; completed={sample.get('completed','?')}; home_points={sample.get('home_points','?')}; away_points={sample.get('away_points','?')}. Check whether the API provides scores for your chosen season.")
         if n_games == 0:
             st.warning("CFBD returned no completed regular-season games with scores for this season. Verify the season and the returned game data. Model probabilities are unavailable until results load.")
         st.caption(f"Ratings fitted to {n_games} completed regular-season games. Refreshed daily.")
