@@ -970,6 +970,121 @@ with st.expander("Audit model predictions and spread selections", expanded=False
             st.warning("Integrity limit: these exports cannot prove that CFBD historical spreads or the original ratings were known before kickoff. To certify that, archive each odds quote with its retrieval timestamp and each rating snapshot before games start. Do not use the 2025 results for further parameter tuning and then call 2025 an untouched test.")
         except Exception as exc:st.error(f"Strict audit could not complete: {exc}")
 
+# Conservative home-bias correction and walk-forward audit.
+# Historical CFBD reference spreads have no verified quote timestamp; these
+# results must never be described as executable historical wagers.
+def conservative_walkforward(raw, fbs_names=None, threshold=2.0, ridge_penalty=100.0):
+    d=residual_lab_features(raw)
+    if d.empty: raise ValueError("No valid historical games")
+    if fbs_names is not None:
+        fbs={key_name(x) for x in fbs_names if str(x).strip()}
+        d=d[d["Home team"].map(lambda x:key_name(x) in fbs) &
+            d["Away team"].map(lambda x:key_name(x) in fbs)].copy()
+    if d.empty: raise ValueError("No games remain after division filter")
+    d=d.sort_values(["Kickoff parsed","Game ID"]).copy()
+    rows=[]; diagnostics=[]
+    for season in (2024,2025):
+        test=d[d["Season"]==season].copy()
+        if test.empty: continue
+        for week in sorted(test["Week"].dropna().unique()):
+            block=test[test["Week"]==week].copy()
+            # All games in the evaluation week are withheld from training,
+            # including earlier kickoffs in the same week.
+            first=block["Kickoff parsed"].min()
+            prior=d[(d["Kickoff parsed"]<first)&
+                    ((d["Season"]<season)|((d["Season"]==season)&(d["Week"]<week)))].copy()
+            if len(prior)<150:continue
+            # Remove the learned unconditional home residual offset, then fit
+            # regularized, centered slopes using past results only.
+            fitted=fit_residual_ridge(prior, penalty=ridge_penalty)
+            raw_res=predict_residual_ridge(block,fitted)
+            # Intercept-free correction is an experimental alternative, not
+            # assumed to be better. Evaluate against uncorrected ridge and market.
+            centered_res=raw_res-fitted[2][0]
+            market=block["Market home margin"].to_numpy(float)
+            actual=block["Actual home margin"].to_numpy(float)
+            predictions={"Market reference":market,
+                         "Residual ridge":market+raw_res,
+                         "Intercept-free ridge":market+centered_res}
+            for name,pred in predictions.items():
+                gap=pred-market
+                signed=np.sign(gap)*(actual-market)
+                chosen=(np.abs(gap)>=threshold)&(gap!=0) if name!="Market reference" else np.zeros(len(block),bool)
+                part=block[["Season","Week","Game ID","Kickoff UTC","Home team","Away team","Actual home margin","Home spread"]].copy()
+                part["Model"]=name
+                part["Market home margin"]=market
+                part["Predicted home margin"]=pred
+                part["Predicted gap"]=gap
+                part["Signed reference ATS margin"]=signed
+                part["Selected"]=chosen
+                part["Side"]=np.where(chosen,np.where(gap>0,"Home","Away"),"None")
+                part["Training games"]=len(prior)
+                part["Training cutoff UTC"]=first.isoformat()
+                rows.append(part)
+            diagnostics.append({"Season":season,"Week":week,"Evaluation games":len(block),
+                                "Prior training games":len(prior),"Training cutoff UTC":first.isoformat(),
+                                "Fitted intercept":float(fitted[2][0])})
+    if not rows:raise ValueError("Insufficient prior data to evaluate 2024–2025")
+    details=pd.concat(rows,ignore_index=True)
+    summary=[]
+    for (season,model),g in details.groupby(["Season","Model"]):
+        selected=g[g["Selected"]]
+        signed=selected["Signed reference ATS margin"]
+        w=int((signed>0).sum());l=int((signed<0).sum());push=int((signed==0).sum())
+        errors=g["Predicted home margin"]-g["Actual home margin"]
+        market_errors=g["Market home margin"]-g["Actual home margin"]
+        summary.append({"Season":season,"Model":model,"Games":len(g),
+                        "Margin MAE":float(errors.abs().mean()),
+                        "Market MAE":float(market_errors.abs().mean()),
+                        "Home-margin error bias":float(errors.mean()),
+                        "Mean model-market gap":float(g["Predicted gap"].mean()),
+                        "Selected":len(selected),"Home selections":int((selected["Side"]=="Home").sum()),
+                        "Away selections":int((selected["Side"]=="Away").sum()),
+                        "Wins":w,"Losses":l,"Pushes":push,
+                        "Reference cover rate":w/(w+l) if w+l else np.nan,
+                        "Illustrative ROI -110":(w*100/110-l)/len(selected) if len(selected) else np.nan})
+    return pd.DataFrame(summary),details,pd.DataFrame(diagnostics)
+
+st.divider()
+st.subheader("Conservative bias correction · weekly walk-forward")
+st.caption("Compares the original residual model against an intercept-free variant. Fits on earlier games only, "
+           "withholds the entire evaluation week, and keeps the sportsbook market as a baseline. "
+           "This is retrospective research, not verified betting performance.")
+with st.expander("Audit home bias and test a corrected model",expanded=False):
+    corrected_upload=st.file_uploader("Upload cfb_independent_season_audit_2023_2025.csv",type="csv",key="corrected_raw")
+    fbs_upload=st.file_uploader("Optional FBS team names CSV (column: team)",type="csv",key="fbs_team_names")
+    threshold_corrected=st.number_input("Minimum model-versus-market difference",min_value=0.5,max_value=20.0,value=2.0,step=0.5,key="corrected_threshold")
+    penalty_corrected=st.number_input("Ridge regularization (fixed before evaluation)",min_value=1.0,max_value=1000.0,value=100.0,step=25.0,key="corrected_penalty")
+    if corrected_upload is not None and st.button("Run conservative walk-forward audit",key="corrected_run"):
+        try:
+            raw=pd.read_csv(corrected_upload)
+            teams=None
+            if fbs_upload is not None:
+                teams_df=pd.read_csv(fbs_upload)
+                if "team" not in teams_df:raise ValueError("FBS team CSV must contain a 'team' column")
+                teams=teams_df["team"].dropna().tolist()
+            summary,detail,diagnostics=conservative_walkforward(raw,teams,threshold_corrected,penalty_corrected)
+            st.session_state["corrected_audit"]=(summary,detail,diagnostics)
+        except Exception as exc:st.error(f"Audit failed: {exc}")
+    if "corrected_audit" in st.session_state:
+        summary,detail,diagnostics=st.session_state["corrected_audit"]
+        st.dataframe(summary.style.format({"Margin MAE":"{:.2f}","Market MAE":"{:.2f}",
+            "Home-margin error bias":"{:+.2f}","Mean model-market gap":"{:+.2f}",
+            "Reference cover rate":"{:.1%}","Illustrative ROI -110":"{:+.1%}"}),
+            hide_index=True,use_container_width=True)
+        st.dataframe(diagnostics,hide_index=True,use_container_width=True)
+        st.download_button("Download corrected model summary",summary.to_csv(index=False),
+            file_name="cfb_corrected_model_summary.csv",mime="text/csv",key="corrected_summary_dl")
+        st.download_button("Download corrected game predictions",detail.to_csv(index=False),
+            file_name="cfb_corrected_game_predictions.csv",mime="text/csv",key="corrected_detail_dl")
+        st.download_button("Download training cutoff diagnostics",diagnostics.to_csv(index=False),
+            file_name="cfb_training_cutoff_audit.csv",mime="text/csv",key="corrected_cutoff_dl")
+        if fbs_upload is None:st.info("All divisions included. Upload a verified season-appropriate FBS team list to run the FBS-only comparison.")
+        st.warning("Integrity remains unverified: CFBD historical median spreads may not have been available before kickoff, "
+            "and exported original ratings lack pregame snapshot timestamps. Weekly cutoffs prevent fitting on evaluation-week "
+            "results but cannot certify the source data. 2025 has already influenced development; use future archived quotes "
+            "and ratings for an untouched prospective test. Do not promote this model to live ROI based on these results.")
+
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
 upload=st.file_uploader("Load previous journal (CSV)",type="csv")
