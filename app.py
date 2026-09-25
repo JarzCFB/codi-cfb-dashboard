@@ -2,7 +2,7 @@
 import io
 import math
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import numpy as np
 import pandas as pd
 import requests
@@ -53,7 +53,7 @@ def build_ratings(games, season, shrink=4.0, home_adv=2.5):
         if not isinstance(g, dict): continue
         a,b=g.get("home_team"),g.get("away_team")
         hs,aws=g.get("home_points"),g.get("away_points")
-        if not a or not b or hs is None or aws is None: continue
+        if not a or not b or hs is None or aws is None or g.get("completed") is False: continue
         try: margin=float(hs)-float(aws)
         except (TypeError,ValueError): continue
         rows.append((key_name(a),key_name(b),margin))
@@ -229,11 +229,21 @@ def historical_backtest(games, shrink, home_adv, sd, first_test_week=5):
         g["home_points"]=g.get("homePoints",g.get("home_points"))
         g["away_points"]=g.get("awayPoints",g.get("away_points"))
         if not g.get("completed") or g.get("home_points") is None or g.get("away_points") is None: continue
+        if g.get("home_points") == 0 and g.get("away_points") == 0: continue
         if str(g.get("seasonType",g.get("season_type","regular"))).lower() != "regular": continue
         try: w=int(g.get("week")); float(g["home_points"]);float(g["away_points"])
         except (TypeError,ValueError): continue
         if not g.get("home_team") or not g.get("away_team"):continue
         weeks[w].append(g)
+    # Deduplicate by provider game ID where available; otherwise by week and teams.
+    seen=set()
+    for week in sorted(weeks):
+        unique=[]
+        for g in weeks[week]:
+            identifier=("id",g["id"]) if g.get("id") is not None else ("teams",week,key_name(g["home_team"]),key_name(g["away_team"]))
+            if identifier in seen: continue
+            seen.add(identifier);unique.append(g)
+        weeks[week]=unique
     past=[];rows=[]
     for week in sorted(weeks):
         if week >= first_test_week and past:
@@ -248,7 +258,9 @@ def historical_backtest(games, shrink, home_adv, sd, first_test_week=5):
                              "Absolute error":abs(predicted-actual),
                              "Home win probability":float(norm.cdf(predicted/sd)),
                              "Home won":int(actual>0) if actual != 0 else None,
-                             "Home team":g["home_team"],"Away team":g["away_team"]})
+                             "Home team":g["home_team"],"Away team":g["away_team"],
+                             "Game ID":g.get("id"),"Kickoff UTC":g.get("startDate",g.get("start_date")),
+                             "Season":g.get("season") })
         past.extend(weeks[week])
     return pd.DataFrame(rows)
 
@@ -287,6 +299,92 @@ with st.expander("Run historical backtest",expanded=False):
             except Exception as exc:
                 st.error(f"Backtest unavailable: {exc}")
 
+
+# Historical odds must be supplied with a pre-kickoff capture timestamp.
+# Current Odds API prices must NEVER be substituted for historical prices.
+def validate_historical_lines(lines, predictions, season):
+    required={"season","week","home_team","away_team","selection","spread","american_odds","captured_at_utc","kickoff_utc","sportsbook"}
+    missing=required-set(lines.columns)
+    if missing: raise ValueError("Historical odds CSV missing columns: "+", ".join(sorted(missing)))
+    lines=lines.copy()
+    lines["season"]=pd.to_numeric(lines["season"],errors="coerce")
+    lines["week"]=pd.to_numeric(lines["week"],errors="coerce")
+    lines["spread"]=pd.to_numeric(lines["spread"],errors="coerce")
+    lines["american_odds"]=pd.to_numeric(lines["american_odds"],errors="coerce")
+    lines["captured_at_utc"]=pd.to_datetime(lines["captured_at_utc"],utc=True,errors="coerce")
+    lines["kickoff_utc"]=pd.to_datetime(lines["kickoff_utc"],utc=True,errors="coerce")
+    initial=len(lines)
+    lines=lines[(lines.season==int(season)) & lines.week.notna() & lines.spread.notna() & lines.american_odds.notna() &
+                (lines.american_odds!=0) & lines.captured_at_utc.notna() & lines.kickoff_utc.notna() &
+                (lines.captured_at_utc < lines.kickoff_utc)].copy()
+    lines["hkey"]=lines.home_team.map(key_name);lines["akey"]=lines.away_team.map(key_name)
+    lines["skey"]=lines.selection.map(key_name)
+    lines=lines[lines.skey.isin(set(lines.hkey).union(set(lines.akey)))].copy()
+    # One quote per sportsbook/market/selection/game: most recent strictly pre-kickoff snapshot.
+    lines=lines.sort_values("captured_at_utc").drop_duplicates(["season","week","hkey","akey","sportsbook","skey"],keep="last")
+    preds=predictions.copy()
+    preds["hkey"]=preds["Home team"].map(key_name);preds["akey"]=preds["Away team"].map(key_name)
+    joined=lines.merge(preds,on=["hkey","akey"],how="inner",suffixes=("","_prediction"))
+    joined=joined[joined.week==joined.Week].copy()
+    if "Kickoff UTC" in joined:
+        pred_kick=pd.to_datetime(joined["Kickoff UTC"],utc=True,errors="coerce")
+        joined=joined[pred_kick.notna() & ((pred_kick-joined.kickoff_utc).abs()<=pd.Timedelta(hours=3))].copy()
+    joined=joined[joined.skey.eq(joined.hkey)|joined.skey.eq(joined.akey)].copy()
+    if joined.empty: return joined,initial,len(lines)
+    joined["Actual selection margin"]=np.where(joined.skey==joined.hkey,joined["Actual home margin"],-joined["Actual home margin"])
+    joined["Predicted selection margin"]=np.where(joined.skey==joined.hkey,joined["Predicted home margin"],-joined["Predicted home margin"])
+    joined["Result margin"]=joined["Actual selection margin"]+joined.spread
+    joined["Settlement"]=np.select([joined["Result margin"]>0,joined["Result margin"]<0],["Win","Loss"],default="Push")
+    joined["Break-even probability"]=joined.american_odds.map(american_prob)
+    joined["Model cover probability"]=norm.cdf((joined["Predicted selection margin"]+joined.spread)/sd)
+    joined["Estimated EV per $1"]=joined["Model cover probability"]*joined.american_odds.map(profit_per_dollar)-(1-joined["Model cover probability"])
+    joined["Net per $1"]=np.where(joined.Settlement=="Win",joined.american_odds.map(profit_per_dollar),np.where(joined.Settlement=="Loss",-1.0,0.0))
+    return joined,initial,len(lines)
+
+st.divider()
+st.subheader("Historical sportsbook validation")
+st.caption("Upload real, timestamped historical spreads. Only quotes captured before kickoff are eligible. No paid historical API required; this does not fetch or fabricate historical prices.")
+st.download_button("Download historical odds CSV template",
+    "season,week,home_team,away_team,selection,spread,american_odds,captured_at_utc,kickoff_utc,sportsbook\n",
+    "historical_odds_template.csv",mime="text/csv")
+with st.expander("Audit existing backtest and test historical spreads"):
+    uploaded_predictions=st.file_uploader("Upload walk-forward backtest CSV (or rerun above)",type="csv",key="pred_csv")
+    uploaded_lines=st.file_uploader("Upload timestamped historical sportsbook odds CSV",type="csv",key="hist_lines")
+    audit_year=st.number_input("Historical odds season",2020,2025,2025,key="audit_year")
+    if uploaded_predictions is not None:
+        try:
+            preds=pd.read_csv(uploaded_predictions)
+            required_pred={"Week","Home team","Away team","Predicted home margin","Actual home margin","Kickoff UTC"}
+            missing=required_pred-set(preds.columns)
+            if missing:
+                st.error("Backtest CSV missing: "+", ".join(sorted(missing))+". Rerun and download using this updated app.")
+            else:
+                duplicated=preds.duplicated(["Week","Home team","Away team"],keep=False)
+                invalid=preds["Actual home margin"].isna() | preds["Predicted home margin"].isna()
+                suspicious=(preds["Actual home margin"]==0)
+                a,b,c=st.columns(3)
+                a.metric("Duplicate matchup rows",int(duplicated.sum()))
+                b.metric("Missing margin rows",int(invalid.sum()))
+                c.metric("Zero-margin rows to inspect",int(suspicious.sum()))
+                if duplicated.any():st.dataframe(preds.loc[duplicated].sort_values("Week"),hide_index=True)
+                st.info("Week-by-week predictions use earlier weeks, not the evaluated week. However, this audit cannot independently prove source data was available before each kickoff or exclude earlier-week corrections published later.")
+                if uploaded_lines is not None:
+                    try:
+                        odds=pd.read_csv(uploaded_lines)
+                        joined,total,eligible=validate_historical_lines(odds,preds,audit_year)
+                        st.caption(f"Historical odds: {total} uploaded rows; {eligible} valid distinct pre-kickoff quotes; {len(joined)} matched predictions.")
+                        if joined.empty:st.warning("No eligible matched historical odds. Check exact teams, season, week, kickoff and capture timestamps.")
+                        else:
+                            st.warning("Each sportsbook quote is correlated with other quotes for the same game. These results are descriptive, not an independent sample of bets. No selection strategy was optimized or validated here.")
+                            c1,c2,c3=st.columns(3)
+                            c1.metric("Matched quotes",len(joined))
+                            c2.metric("All-quote flat-stake ROI",f"{joined['Net per $1'].mean():.1%}")
+                            c3.metric("Pushes",int((joined.Settlement=="Push").sum()))
+                            st.dataframe(joined[["Week","Matchup","sportsbook","selection","spread","american_odds","captured_at_utc","Settlement","Net per $1","Estimated EV per $1"]],hide_index=True)
+                            st.download_button("Download historical quote audit",joined.to_csv(index=False),"cfb_historical_quote_audit.csv",mime="text/csv")
+                    except Exception as exc:st.error(f"Historical odds validation failed: {exc}")
+        except Exception as exc:st.error(f"Backtest audit failed: {exc}")
+
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
 upload=st.file_uploader("Load previous journal (CSV)",type="csv")
@@ -320,4 +418,4 @@ if len(journal):
     st.metric("Recorded net P/L",f"${net:,.2f}")
     st.metric("Return on settled stakes",f"{100*net/risk:.1f}%" if risk else "N/A")
 st.download_button("Download updated journal (save this file)",journal.to_csv(index=False),file_name="my_cfb_bet_journal.csv",mime="text/csv")
-st.caption("Model limitation: season-only margin ratings, basic home field and assumed uncertainty. No injury, roster, weather or closing-line adjustments. Not validated against historical out-of-sample results.")
+st.caption("Model limitation: season-only margin ratings, basic home field and assumed uncertainty. No injury, roster, weather or closing-line adjustments. Historical ROI requires genuine timestamped sportsbook quotes.")
