@@ -161,7 +161,7 @@ with st.sidebar:
     shrink=st.slider("Early-season rating shrinkage",0.5,12.0,4.0,0.5)
     sd=st.slider("Game-margin uncertainty (points)",8.0,22.0,14.0,0.5)
     min_roi=st.slider("Minimum estimated ROI to display",0,20,3,1)/100
-    st.caption("Assumptions are illustrative and not calibrated to historical out-of-sample results.")
+    st.caption("Illustrative, uncalibrated probabilities. Historical spread tests have not demonstrated positive betting returns.")
     if st.button("Refresh now"):
         odds_data.clear();games_data.clear();st.rerun()
 
@@ -207,7 +207,8 @@ if ok_odds:
             df=df[df["Book"].isin(selected)].copy()
             tab1,tab2,tab3=st.tabs(["Model comparisons","Best available price by team","All quoted lines"])
             with tab1:
-                st.caption("Research screen only. Positive modeled ROI is not a verified profitable bet. Missing team ratings are excluded.")
+                st.warning("UNVALIDATED: Expected ROI and cover probabilities below use an illustrative normal-margin assumption. Independent historical testing has not established a betting advantage. Do not interpret positive ROI as a verified opportunity.")
+                st.caption("Research screen only. Missing team ratings are excluded.")
                 candidates=df[df["Expected ROI"].notna() & (df["Expected ROI"]>=min_roi)].sort_values("Expected ROI",ascending=False)
                 st.dataframe(candidates,hide_index=True,use_container_width=True)
             with tab2:
@@ -614,6 +615,96 @@ with st.expander("Calibrate against historical spread results",expanded=False):
                 st.info("A probability model fitted to median historical reference spreads is not a "
                         "verified betting edge. Prices, line availability, and independent season tests remain necessary.")
         except Exception as exc:st.error(f"Calibration failed: {exc}")
+
+# Independent-season validation: prior seasons fit calibration; the latest season
+# is evaluated exactly once. This is a research audit, not verified betting ROI.
+def independent_season_audit(season_data, sd, first_week):
+    prepared=[]; diagnostics=[]
+    for season in sorted(season_data):
+        games, lines = season_data[season]
+        predictions=historical_backtest(games,shrink,home_adv,sd,first_week)
+        if predictions.empty:
+            diagnostics.append({"Season":season,"Backtest games":0,"Valid quotes":0,"Matched":0,"Settled":0})
+            continue
+        matched, quotes=match_cfbd_spreads(predictions,lines,0.0,"All providers (median)")
+        diagnostics.append({"Season":season,"Backtest games":len(predictions),"Valid quotes":len(quotes),
+                            "Matched":len(matched),"Settled":int((matched.get("Against-spread result",pd.Series(dtype=str))!="Push").sum()) if len(matched) else 0})
+        if matched.empty:continue
+        d=prepare_calibration(matched,sd)
+        d["Season"]=season
+        prepared.append(d)
+    if not prepared:return pd.DataFrame(),pd.DataFrame(diagnostics)
+    return pd.concat(prepared,ignore_index=True),pd.DataFrame(diagnostics)
+
+def season_score(d, col):
+    settled=d.dropna(subset=["Outcome",col])
+    if settled.empty:return {"Settled":0,"Cover rate":float("nan"),"Brier":float("nan"),"Log loss":float("nan")}
+    brier,log=calibration_metrics(settled,col)
+    return {"Settled":len(settled),"Cover rate":settled["Outcome"].mean(),"Brier":brier,"Log loss":log}
+
+st.divider()
+st.subheader("Independent-season model audit")
+st.caption("Fetch 2023–2025 results and CFBD reference spreads. Fit calibration on 2023–2024; "
+           "evaluate on 2025 without fitting to 2025 outcomes. This checks probabilities, not verified bettable ROI. "
+           "Your rating settings may already have been chosen after viewing 2025, so 2025 is not a pristine holdout for rating-model selection.")
+with st.expander("Run 3-season validation",expanded=False):
+    audit_first_week=st.slider("First evaluation week (all seasons)",3,10,5,key="independent_first_week")
+    st.info("Uses six CFBD requests across three seasons (games and lines), with cached responses where available. "
+            "The median historical line has no verified pre-kickoff timestamp or spread-side price.")
+    if st.button("Fetch and validate 2023–2025",key="independent_run"):
+        if not ok_cfbd:st.error("Add CFBD_API_KEY to Streamlit Secrets first.")
+        else:
+            try:
+                season_data={}
+                progress=st.progress(0,text="Fetching historical data")
+                for i,season in enumerate((2023,2024,2025)):
+                    games=games_data(secret("CFBD_API_KEY"),season)
+                    lines=cfbd_historical_spreads(secret("CFBD_API_KEY"),season)
+                    season_data[season]=(games,lines)
+                    progress.progress((i+1)/3,text=f"Fetched {season}")
+                full,coverage=independent_season_audit(season_data,sd,audit_first_week)
+                st.session_state["independent_audit"]=(full,coverage,audit_first_week)
+            except requests.HTTPError as exc:st.error(f"CFBD request failed: {exc}. Check your plan and call allowance.")
+            except Exception as exc:st.error(f"Audit failed: {exc}")
+    if "independent_audit" in st.session_state:
+        full,coverage,used_week=st.session_state["independent_audit"]
+        st.write(f"Evaluation starts week {used_week}; each game's team ratings use only earlier weeks.")
+        st.dataframe(coverage,hide_index=True,use_container_width=True)
+        if full.empty:st.warning("No matching games. Review season coverage and CFBD IDs.")
+        else:
+            # Training on past seasons only; 2025 never influences the fitted slope.
+            train=full[full["Season"].isin([2023,2024])].copy()
+            holdout=full[full["Season"]==2025].copy()
+            if train["Outcome"].notna().sum()<100 or holdout["Outcome"].notna().sum()<60:
+                st.warning("Not enough settled matched games for a prior-season fit and 2025 holdout.")
+            else:
+                slope=fit_cover_slope(train)
+                full["Prior-season calibrated probability"]=expit(slope*full["Signed gap"])
+                summary=[]
+                for season,part in full.groupby("Season"):
+                    raw=season_score(part,"Raw probability")
+                    calibrated=season_score(part,"Prior-season calibrated probability")
+                    summary.append({"Season":int(season),"Role":"Holdout" if season==2025 else "Calibration training",
+                                    "Settled":raw["Settled"],"Observed cover rate":raw["Cover rate"],
+                                    "Raw Brier":raw["Brier"],"Calibrated Brier":calibrated["Brier"],
+                                    "Raw log loss":raw["Log loss"],"Calibrated log loss":calibrated["Log loss"]})
+                st.metric("Prior-season calibration slope",f"{slope:.5f}")
+                st.dataframe(pd.DataFrame(summary).style.format({"Observed cover rate":"{:.1%}","Raw Brier":"{:.4f}",
+                    "Calibrated Brier":"{:.4f}","Raw log loss":"{:.4f}","Calibrated log loss":"{:.4f}"}),
+                    hide_index=True,use_container_width=True)
+                holdout=full[full["Season"]==2025].copy()
+                holdout=holdout.dropna(subset=["Outcome"])
+                holdout["Gap bucket"]=pd.cut(holdout["Signed gap"],bins=[0,3,5,7,10,14,20,float("inf")],include_lowest=True)
+                buckets=holdout.groupby("Gap bucket",observed=True).agg(
+                    Games=("Outcome","size"),Observed_cover_rate=("Outcome","mean"),
+                    Raw_probability=("Raw probability","mean"),Calibrated_probability=("Prior-season calibrated probability","mean")).reset_index()
+                buckets["Gap bucket"]=buckets["Gap bucket"].astype(str)
+                st.write("2025 holdout by model/market gap (descriptive; not thresholds optimized for betting)")
+                st.dataframe(buckets,hide_index=True,use_container_width=True)
+                st.download_button("Download independent-season audit",full.to_csv(index=False),
+                    file_name="cfb_independent_season_audit_2023_2025.csv",mime="text/csv")
+                st.warning("Reference spreads are not confirmed pre-kickoff quotes, and no historical spread prices "
+                           "are known. Do not interpret these scores as verified profit. The live model remains uncalibrated.")
 
 st.divider();st.subheader("Bet journal")
 st.caption("Upload your existing journal CSV, add bets, then DOWNLOAD the updated CSV. Free cloud hosting does not guarantee persistent local storage.")
