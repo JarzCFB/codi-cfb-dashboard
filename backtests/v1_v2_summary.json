@@ -1,0 +1,27 @@
+{
+  "method": "weekly walk-forward, first kickoff minus 6 hours; paired FBS-only games; margins only; no betting ROI",
+  "caveat": "V2 parameters were developed before this audit, but historical tuning provenance is not verified; do not treat this as untouched prospective validation.",
+  "overall": {
+    "paired_games": 1329,
+    "v1_mae": 13.201,
+    "v2_mae": 12.89,
+    "v1_lower_error_games": 614,
+    "v2_lower_error_games": 715
+  },
+  "by_season": {
+    "2024": {
+      "paired_games": 660,
+      "v1_mae": 13.262,
+      "v2_mae": 13.076,
+      "v1_lower_error_games": 308,
+      "v2_lower_error_games": 352
+    },
+    "2025": {
+      "paired_games": 669,
+      "v1_mae": 13.141,
+      "v2_mae": 12.707,
+      "v1_lower_error_games": 306,
+      "v2_lower_error_games": 363
+    }
+  }
+}
