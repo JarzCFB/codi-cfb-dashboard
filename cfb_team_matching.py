@@ -25,6 +25,7 @@ ALIASES = {
  'uconn huskies':'uconn','umass minutemen':'umass',
  'louisiana ragin cajuns':'louisiana','florida atlantic owls':'florida atlantic',
  'middle tennessee blue raiders':'middle tennessee',
+ 'southern mississippi golden eagles':'southern miss',
  'southern miss golden eagles':'southern miss',
  'alabama crimson tide':'alabama','auburn tigers':'auburn',
  'georgia bulldogs':'georgia','tennessee volunteers':'tennessee',
