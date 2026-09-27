@@ -1,0 +1,30 @@
+name: Backtest V1 vs V2 historical
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy requests
+      - name: Run backtest tests
+        run: python -m unittest -v test_backtest_v1_v2.py
+      - name: Historical 2024-25 backtest
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python backtest_v1_v2.py
+      - name: Commit historical reports
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backtests/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add historical V1 vs V2 backtest reports'
+            git pull --rebase origin main
+            git push
+          fi
