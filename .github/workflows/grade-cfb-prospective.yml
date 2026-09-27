@@ -1,28 +1,42 @@
+
 name: Grade CFB prospective selections V1 and V2
+
 on:
   workflow_dispatch:
   schedule:
     - cron: '58 13 * * *'
+
 permissions:
   contents: write
+
 concurrency:
   group: cfb-prospective-grading
   cancel-in-progress: false
+
 jobs:
   grade:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install requests numpy
+
+      - name: Install dependencies
+        run: pip install requests numpy
+
       - name: Test prospective grading
         run: python -m unittest test_prospective_grade.py -v
+
       - name: Grade frozen selections
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: python prospective_grade.py
+
       - name: Commit results without modifying original selections
         run: |
           git config user.name 'github-actions[bot]'
