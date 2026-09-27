@@ -1,4 +1,4 @@
-Grade CFB prospective selections V1 and V2
+name: Grade CFB prospective selections V1 and V2
 
 on:
   workflow_dispatch:
