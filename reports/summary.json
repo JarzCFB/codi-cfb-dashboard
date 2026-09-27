@@ -1,10 +1,13 @@
 {
+  "ambiguous_score_match": 0,
   "excluded_unverified_division": 1540,
   "graded_games": 9,
   "graded_quotes": 160,
   "input_rows": 13302,
   "losses": 78,
   "missing_prediction_or_price": 1384,
+  "no_matching_cfbd_game": 794,
+  "not_final_in_cfbd": 122,
   "pushes": 4,
   "ungraded_not_final_or_ambiguous": 916,
   "unique_latest_quotes": 1076,
