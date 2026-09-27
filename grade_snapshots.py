@@ -6,11 +6,11 @@ import csv
 import json
 import os
 from collections import defaultdict
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 from pathlib import Path
 import requests
 from snapshot_capture import utc, iso, canonical_school, match_rating, TEAM_ALIASES, normalize_team
-from cfb_division_safety import model_allowed
+from cfb_division_safety import model_allowed, matchup_status
 
 ROOT=Path('snapshots')
 REPORTS=Path('reports')
@@ -72,6 +72,7 @@ def grade(rows,results):
         dt=utc(g.get('startDate') or g.get('start_date'))
         if dt:
             all_idx[(school(g.get('homeTeam') or g.get('home_team')),school(g.get('awayTeam') or g.get('away_team')))].append((dt,g))
+    now=datetime.now(timezone.utc)
     for r in latest.values():
         h=school(r['home_team']);a=school(r['away_team']);kick=utc(r['kickoff_utc'])
         matches=[g for dt,g in idx.get((h,a),[]) if abs(dt-kick)<=timedelta(hours=36)]
@@ -79,6 +80,8 @@ def grade(rows,results):
             candidates=[g for dt,g in all_idx.get((h,a),[]) if abs(dt-kick)<=timedelta(hours=36)]
             if len(matches)>1 or len(candidates)>1: reason='ambiguous_score_match'
             elif len(candidates)==1: reason='not_final_in_cfbd'
+            elif kick>now: reason='upcoming_game'
+            elif now-kick<timedelta(hours=6): reason='awaiting_score_feed'
             else: reason='no_matching_cfbd_game'
             stats[reason]+=1
             gamekey=(r['season'],r['game_id'])
@@ -102,7 +105,7 @@ def grade(rows,results):
     stats['pushes']=sum(r['selection_result']=='push' for r in graded)
     # Descriptive grading only: these are all available quoted sides, not
     # an implementable strategy or independently placed bets.
-    stats['ungraded_not_final_or_ambiguous']=sum(stats[k] for k in ('ambiguous_score_match','not_final_in_cfbd','no_matching_cfbd_game'))
+    stats['ungraded_not_final_or_ambiguous']=sum(stats[k] for k in ('ambiguous_score_match','not_final_in_cfbd','no_matching_cfbd_game','upcoming_game','awaiting_score_feed'))
     return graded,dict(stats),list(diagnostics.values())
 
 def main():
@@ -114,11 +117,23 @@ def main():
     seasons=sorted({int(r['season']) for r in rows if r.get('season','').isdigit()})
     results=[g for year in seasons for g in fetch_results(year)]
     graded,stats,diagnostics=grade(rows,results)
+    # Audit each unique matchup, including rows excluded before quote selection.
+    matchups={}
+    for r in rows:
+        key=(r.get('season',''),r.get('game_id',''))
+        if key not in matchups:
+            h,a=r.get('home_team',''),r.get('away_team','')
+            matchups[key]={'season':key[0],'game_id':key[1],'kickoff_utc':r.get('kickoff_utc',''),'home_team':h,'away_team':a,'division_status':matchup_status(h,a),'home_canonical':school(h),'away_canonical':school(a)}
+    stats['unique_games_in_snapshots']=len(matchups)
+    stats['unique_games_division_suppressed']=sum(v['division_status']!='FBS vs FBS' for v in matchups.values())
     REPORTS.mkdir(exist_ok=True)
     with (REPORTS/'graded_quotes.csv').open('w',newline='',encoding='utf-8') as f:
         writer=csv.DictWriter(f,fieldnames=FIELDS);writer.writeheader();writer.writerows(graded)
     with (REPORTS/'ungraded_games.csv').open('w',newline='',encoding='utf-8') as f:
         writer=csv.DictWriter(f,fieldnames=['season','game_id','kickoff_utc','home_team','away_team','reason']);writer.writeheader();writer.writerows(sorted(diagnostics,key=lambda x:(x['kickoff_utc'],x['home_team'])))
+    with (REPORTS/'division_review.csv').open('w',newline='',encoding='utf-8') as f:
+        cols=['season','game_id','kickoff_utc','home_team','away_team','division_status','home_canonical','away_canonical']
+        writer=csv.DictWriter(f,fieldnames=cols);writer.writeheader();writer.writerows(sorted(matchups.values(),key=lambda x:(x['kickoff_utc'],x['home_team'])))
     with (REPORTS/'summary.json').open('w',encoding='utf-8') as f:json.dump(stats,f,indent=2,sort_keys=True)
     print(json.dumps(stats,indent=2,sort_keys=True))
 
