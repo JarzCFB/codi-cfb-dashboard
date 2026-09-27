@@ -1,0 +1,35 @@
+name: Grade CFB prospective selections
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '58 13 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: cfb-prospective-grading
+  cancel-in-progress: false
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests numpy
+      - name: Test prospective grading
+        run: python -m unittest test_prospective_grade.py -v
+      - name: Grade frozen selections
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python prospective_grade.py
+      - name: Commit results without modifying original selections
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add prospective/graded_selections.csv prospective/results_summary.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update prospective model results'
+            git pull --rebase origin main
+            git push
+          fi
