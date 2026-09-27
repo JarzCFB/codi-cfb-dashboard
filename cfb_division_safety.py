@@ -2,12 +2,22 @@
 Unknown schools are suppressed, not assumed FCS. Review when FBS membership changes.
 This does not improve or validate the underlying rating model.
 """
-from cfb_team_matching import match_rating
+from cfb_team_matching import match_rating, canonical_school, ALIASES, normalize
 
 FBS_SCHOOLS = frozenset('air force,akron,alabama,appalachian state,arizona,arizona state,arkansas,arkansas state,army,auburn,ball state,baylor,boise state,boston college,bowling green,buffalo,byu,california,central michigan,charlotte,cincinnati,clemson,coastal carolina,colorado,colorado state,duke,east carolina,eastern michigan,fiu,florida,florida atlantic,florida state,fresno state,georgia,georgia southern,georgia state,georgia tech,hawaii,houston,illinois,indiana,iowa,iowa state,jacksonville state,james madison,kansas,kansas state,kent state,kentucky,kennesaw state,liberty,louisiana,louisiana tech,louisville,lsu,marshall,maryland,memphis,miami,miami (oh),michigan,michigan state,middle tennessee,minnesota,mississippi state,missouri,navy,nc state,nebraska,nevada,new mexico,new mexico state,north carolina,north texas,northern illinois,northwestern,notre dame,ohio,ohio state,oklahoma,oklahoma state,old dominion,ole miss,oregon,oregon state,penn state,pittsburgh,purdue,rice,rutgers,sam houston,san diego state,san jose state,smu,south alabama,south carolina,south florida,southern miss,stanford,syracuse,temple,tennessee,texas,texas a&m,texas state,texas tech,tcu,toledo,troy,tulane,tulsa,uab,ucf,ucla,uconn,ul monroe,umass,unlv,usc,utah,utah state,utep,utsa,vanderbilt,virginia,virginia tech,wake forest,washington,washington state,west virginia,western kentucky,western michigan,wisconsin,wyoming,delaware,missouri state'.split(','))
 
+# These FCS names can otherwise be mistaken for FBS by a broad school-prefix match.
+# This is a denylist of verified examples, not a comprehensive FCS registry.
+KNOWN_FCS = frozenset({'north carolina central', 'houston christian', 'houston baptist'})
+
+def _known_fcs(name):
+    n=normalize(name)
+    return canonical_school(ALIASES.get(n,n)) in KNOWN_FCS or any(n == k or n.startswith(k+' ') for k in KNOWN_FCS)
+
 def matchup_status(home, away):
     # Shared matcher resolves sportsbook mascot names and CFBD school aliases.
+    if _known_fcs(home) or _known_fcs(away):
+        return 'Unverified division / FCS: model suppressed'
     dummy = {school: 0 for school in FBS_SCHOOLS}
     _, h, _ = match_rating(home, dummy)
     _, a, _ = match_rating(away, dummy)
