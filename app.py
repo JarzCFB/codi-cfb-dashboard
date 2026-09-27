@@ -172,14 +172,14 @@ if ok_odds:
                     from cfb_v2_experimental import build_v2, projected_margin
                     prior_games=games_data(secret("CFBD_API_KEY"),int(year)-1)
                     v2_ratings,info=build_v2(prior_games,games,datetime.now(timezone.utc),home_adv,shrink)
-                    comparisons=[]
-                    for event in data:
-                        home=event.get("home_team");away=event.get("away_team")
-                        if not home or not away or not model_allowed(home,away):continue
-                        h=find_rating(home,ratings);a=find_rating(away,ratings)
-                        v1=h-a+home_adv if h is not None and a is not None else None
-                        v2=projected_margin(home,away,v2_ratings,home_adv)
-                        comparisons.append({"Matchup":f"{away} @ {home}","V1 home margin":round(v1,1) if v1 is not None else None,"V2 home margin":round(v2,1) if v2 is not None else None})
+                    from cfb_v2_comparison import comparison_rows
+                    comparisons, suppressed = comparison_rows(data, ratings, v2_ratings, home_adv)
+                    if suppressed:
+                        st.warning(f"Division safety: {len(suppressed)} FCS/unverified matchup(s) excluded from BOTH V1 and V2 comparisons.")
+                        with st.expander("View excluded matchups"):
+                            st.dataframe(pd.DataFrame(suppressed), hide_index=True, use_container_width=True)
+                    if not comparisons:
+                        st.info("No verified FBS vs FBS matchups available for comparison.")
                     st.write(f"V2 training: {info['previous_games']} prior-season and {info['current_games']} eligible current-season FBS games.")
                     st.dataframe(pd.DataFrame(comparisons),hide_index=True,use_container_width=True)
                 except Exception as exc:st.error(f"V2 comparison unavailable: {exc}")
