@@ -1,0 +1,27 @@
+name: Audit archived CFB spreads
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  spread-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run spread audit tests
+        run: python -m unittest -v test_spread_audit.py
+      - name: Audit archived pregame quotes
+        run: python spread_audit.py
+      - name: Commit audit reports
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backtests/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update archived spread audit reports'
+            git pull --rebase origin main
+            git push
+          fi
