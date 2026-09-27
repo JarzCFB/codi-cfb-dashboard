@@ -20,9 +20,17 @@ class DivisionSafetyTests(unittest.TestCase):
             ('Rutgers Scarlet Knights', 'Howard Bison'),
             ('UMass Minutemen', 'Sacramento State Hornets'),
             ('Eastern Michigan Eagles', 'Lindenwood Lions'),
+            ('East Carolina Pirates','North Carolina Central Eagles'),
+            ('North Texas Mean Green','Houston Baptist Huskies'),
+            ('North Texas Mean Green','Houston Christian Huskies'),
         ]:
             with self.subTest(home=home, away=away):
                 self.assertNotEqual(matchup_status(home, away), 'FBS vs FBS')
+
+    def test_known_fcs_cannot_be_matched_as_fbs_prefix(self):
+        from cfb_division_safety import model_allowed
+        self.assertFalse(model_allowed('East Carolina Pirates','North Carolina Central Eagles'))
+        self.assertFalse(model_allowed('North Texas Mean Green','Houston Baptist Huskies'))
 
     def test_southern_miss_rating_alias(self):
         self.assertEqual(match_rating('Southern Mississippi Golden Eagles', {'southern miss': 3.0})[0], 3.0)
