@@ -24,3 +24,14 @@ class GradingDiagnosticsTests(unittest.TestCase):
         self.assertEqual(rows[0]['selection_result'],'win')
 
 if __name__=='__main__':unittest.main()
+
+class CanonicalScoreMatchingTests(unittest.TestCase):
+    def test_mascot_and_cfbd_names_agree(self):
+        from grade_snapshots import school
+        for sportsbook,cfbd in [('Indiana Hoosiers','Indiana'),('Northwestern Wildcats','Northwestern'),('California Golden Bears','California'),('Clemson Tigers','Clemson'),('Purdue Boilermakers','Purdue'),('Notre Dame Fighting Irish','Notre Dame'),('Ohio State Buckeyes','Ohio State'),('Illinois Fighting Illini','Illinois')]:
+            with self.subTest(sportsbook=sportsbook):
+                self.assertEqual(school(sportsbook),school(cfbd))
+    def test_fcs_not_misidentified_as_fbs(self):
+        from grade_snapshots import school
+        self.assertEqual(school('North Carolina Central Eagles'),'north carolina central')
+        self.assertEqual(school('Houston Baptist Huskies'),'houston christian')
