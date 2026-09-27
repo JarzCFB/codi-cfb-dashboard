@@ -35,8 +35,13 @@ ALIASES = {
  'byu cougars':'byu','tcu horned frogs':'tcu',
  'ball state cardinals':'ball state','kent state golden flashes':'kent state',
  'texas a&m aggies':'texas a&m',
+ 'north carolina central eagles':'north carolina central',
+ 'houston baptist huskies':'houston christian',
+ 'houston christian huskies':'houston christian',
 }
 EQUIVALENTS = {
+ 'houston baptist':'houston christian',
+ 'north carolina central':'north carolina central',
  'florida international':'fiu','long island':'liu','long island university':'liu',
  'app state':'appalachian state','appalachian st':'appalachian state',
  'hawaii manoa':'hawaii','hawai i':'hawaii',
