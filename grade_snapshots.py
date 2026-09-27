@@ -44,7 +44,7 @@ def index_results(games):
 
 def grade(rows,results):
     idx=index_results(results)
-    graded=[];stats=defaultdict(int)
+    graded=[];stats=defaultdict(int);diagnostics={}
     # The last available quote for each game, sportsbook and selection; do not
     # pretend that multiple 4-hour captures are independent wagers.
     latest={}
@@ -66,11 +66,24 @@ def grade(rows,results):
         key=(r['season'],r['game_id'],r['sportsbook_key'],r['selection'])
         if key not in latest or capture>utc(latest[key]['captured_at_utc']):latest[key]=r
     stats['unique_latest_quotes']=len(latest)
+    # A separate complete-game index distinguishes pending results from name mismatches.
+    all_idx=defaultdict(list)
+    for g in results:
+        dt=utc(g.get('startDate') or g.get('start_date'))
+        if dt:
+            all_idx[(school(g.get('homeTeam') or g.get('home_team')),school(g.get('awayTeam') or g.get('away_team')))].append((dt,g))
     for r in latest.values():
         h=school(r['home_team']);a=school(r['away_team']);kick=utc(r['kickoff_utc'])
         matches=[g for dt,g in idx.get((h,a),[]) if abs(dt-kick)<=timedelta(hours=36)]
         if len(matches)!=1:
-            stats['ungraded_not_final_or_ambiguous']+=1;continue
+            candidates=[g for dt,g in all_idx.get((h,a),[]) if abs(dt-kick)<=timedelta(hours=36)]
+            if len(matches)>1 or len(candidates)>1: reason='ambiguous_score_match'
+            elif len(candidates)==1: reason='not_final_in_cfbd'
+            else: reason='no_matching_cfbd_game'
+            stats[reason]+=1
+            gamekey=(r['season'],r['game_id'])
+            diagnostics[gamekey]={'season':r['season'],'game_id':r['game_id'],'kickoff_utc':r['kickoff_utc'],'home_team':r['home_team'],'away_team':r['away_team'],'reason':reason}
+            continue
         g=matches[0]
         actual=float(g.get('homePoints',g.get('home_points')))-float(g.get('awayPoints',g.get('away_points')))
         if r['selection']==r['home_team']:selection_margin=actual
@@ -89,7 +102,8 @@ def grade(rows,results):
     stats['pushes']=sum(r['selection_result']=='push' for r in graded)
     # Descriptive grading only: these are all available quoted sides, not
     # an implementable strategy or independently placed bets.
-    return graded,dict(stats)
+    stats['ungraded_not_final_or_ambiguous']=sum(stats[k] for k in ('ambiguous_score_match','not_final_in_cfbd','no_matching_cfbd_game'))
+    return graded,dict(stats),list(diagnostics.values())
 
 def main():
     paths=sorted(ROOT.glob('*/*.csv'))
@@ -99,10 +113,12 @@ def main():
         with path.open(newline='',encoding='utf-8') as f:rows.extend(csv.DictReader(f))
     seasons=sorted({int(r['season']) for r in rows if r.get('season','').isdigit()})
     results=[g for year in seasons for g in fetch_results(year)]
-    graded,stats=grade(rows,results)
+    graded,stats,diagnostics=grade(rows,results)
     REPORTS.mkdir(exist_ok=True)
     with (REPORTS/'graded_quotes.csv').open('w',newline='',encoding='utf-8') as f:
         writer=csv.DictWriter(f,fieldnames=FIELDS);writer.writeheader();writer.writerows(graded)
+    with (REPORTS/'ungraded_games.csv').open('w',newline='',encoding='utf-8') as f:
+        writer=csv.DictWriter(f,fieldnames=['season','game_id','kickoff_utc','home_team','away_team','reason']);writer.writeheader();writer.writerows(sorted(diagnostics,key=lambda x:(x['kickoff_utc'],x['home_team'])))
     with (REPORTS/'summary.json').open('w',encoding='utf-8') as f:json.dump(stats,f,indent=2,sort_keys=True)
     print(json.dumps(stats,indent=2,sort_keys=True))
 
