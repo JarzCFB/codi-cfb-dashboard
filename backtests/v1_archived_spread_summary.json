@@ -1,0 +1,11 @@
+{
+  "rule": "One selection/game: latest snapshot >=6h before kickoff, maximum model edge >=3 pts, odds -200..+200; one unit per bet",
+  "selected_games": 3,
+  "settled": 3,
+  "wins": 3,
+  "losses": 0,
+  "pushes": 0,
+  "units_profit": 2.74,
+  "roi_per_settled_bet": 0.9132,
+  "warning": "Retrospective rule; not a prespecified prospective betting strategy. V1 only; no 2024-25 historical odds provided."
+}
