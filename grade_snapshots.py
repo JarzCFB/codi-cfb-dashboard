@@ -10,7 +10,8 @@ from datetime import timedelta, datetime, timezone
 from pathlib import Path
 import requests
 from snapshot_capture import utc, iso, canonical_school, match_rating, TEAM_ALIASES, normalize_team
-from cfb_division_safety import model_allowed, matchup_status
+from cfb_division_safety import model_allowed, matchup_status, FBS_SCHOOLS, KNOWN_FCS
+from cfb_team_matching import ALIASES, normalize
 
 ROOT=Path('snapshots')
 REPORTS=Path('reports')
@@ -23,8 +24,19 @@ def fetch_results(season):
     return response.json()
 
 def school(name):
-    n=normalize_team(name)
-    return canonical_school(TEAM_ALIASES.get(n,n))
+    """Canonicalize both sportsbook mascot names and CFBD school-only names.
+
+    Never infer a school from an ambiguous prefix (e.g. North Carolina Central).
+    """
+    n=normalize(name)
+    canonical=canonical_school(ALIASES.get(n,n))
+    if canonical in KNOWN_FCS:
+        return canonical
+    # Known FCS names must be resolved before trying FBS prefixes.
+    if any(n == x or n.startswith(x+' ') for x in KNOWN_FCS):
+        return next(x for x in sorted(KNOWN_FCS,key=len,reverse=True) if n==x or n.startswith(x+' '))
+    _, matched, _ = match_rating(name, {x: 1 for x in FBS_SCHOOLS})
+    return matched if matched is not None else canonical
 
 def finished(g):
     hp=g.get('homePoints',g.get('home_points'))
