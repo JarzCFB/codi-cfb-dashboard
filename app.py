@@ -3,6 +3,7 @@ import io
 import math
 import re
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 import requests
@@ -17,6 +18,11 @@ st.caption("Independent rating model • live bookmaker comparisons • personal
 
 ODDS_URL = "https://api.the-odds-api.com/v4/sports/americanfootball_ncaaf/odds/"
 CFBD_URL = "https://api.collegefootballdata.com"
+CENTRAL_TZ = ZoneInfo("America/Chicago")
+
+def format_central(series):
+    """Format timezone-aware timestamps for the dashboard in U.S. Central Time."""
+    return pd.to_datetime(series, utc=True, errors="coerce").dt.tz_convert(CENTRAL_TZ).dt.strftime("%a %b %d · %I:%M %p CT")
 
 def secret(name):
     try: return st.secrets.get(name, "")
@@ -355,11 +361,17 @@ else:
                 "Kickoff UTC","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)"
             ]].copy()
-            headline["Kickoff UTC"]=headline["Kickoff UTC"].dt.strftime("%a %b %d · %I:%M %p UTC")
+            headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
+            headline=headline.drop(columns=["Kickoff UTC"])[[
+                "Kickoff CT","Matchup","Final model projection",
+                "Market line","Model edge team","Model edge (pts)"
+            ]]
+            export_final=final_projections.copy()
+            export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
             st.dataframe(headline,hide_index=True,use_container_width=True)
             st.download_button(
                 "Download complete final model projections",
-                final_projections.to_csv(index=False),
+                export_final.to_csv(index=False),
                 file_name="cfb_complete_model_projections.csv",
                 mime="text/csv",
                 key="download_complete_final_model_projections"
@@ -1408,9 +1420,7 @@ else:
                 ["kickoff_utc", "Matchup", "Model"]
             )
 
-            display["Kickoff"] = display["kickoff_utc"].dt.strftime(
-                "%a %b %d · %I:%M %p UTC"
-            )
+            display["Kickoff"] = format_central(display["kickoff_utc"])
 
             display["Result"] = display["selection_result"].replace(
                 {"win": "WIN", "loss": "LOSS", "push": "PUSH"}
@@ -1484,9 +1494,7 @@ else:
                 & agreement["V2"].eq(agreement["V3"])
             )
 
-            agreement["Kickoff"] = agreement["kickoff_utc"].dt.strftime(
-                "%a %b %d · %I:%M %p UTC"
-            )
+            agreement["Kickoff"] = format_central(agreement["kickoff_utc"])
 
             st.write("Model agreement")
             st.dataframe(
