@@ -1,5 +1,6 @@
 """Shared, conservative Odds API -> CFBD school matching for dashboard and snapshots."""
 import re
+import unicodedata
 
 # Map known sportsbook full names to CFBD's common school names.
 ALIASES = {
@@ -62,6 +63,7 @@ EQUIVALENTS = {
 }
 def normalize(name):
     value=str(name or '').lower().replace('&',' and ')
+    value=unicodedata.normalize('NFKD',value).encode('ascii','ignore').decode('ascii')
     return ' '.join(re.sub(r'[^a-z0-9]+',' ',value).split())
 _NORMALIZED_EQUIVALENTS={normalize(k):normalize(v) for k,v in EQUIVALENTS.items()}
 _NORMALIZED_ALIASES={normalize(k):normalize(v) for k,v in ALIASES.items()}
