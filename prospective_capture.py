@@ -1,6 +1,6 @@
-"""Freeze V1 and V2 paper selections at capture time, never from graded reports.
+"""Freeze V1, V2 and V3 shadow paper selections at capture time, never from graded reports.
 
-Fixed rule v1: 3+ point edge; v2: 3+ point edge (margin only, not cover probability).
+Fixed rule v1/v2/v3: 3+ point edge (margin only, not cover probability).
 One pick per game and model, first qualifying capture >=6h before kickoff.
 Odds -200..+200; quote timestamps cannot be later than capture.
 Selections are research-only, never claims of actual bets or guaranteed immutable storage.
@@ -21,6 +21,10 @@ FIELDS = ['rule_version','model_version','season','game_id','kickoff_utc','captu
           'spread','american_odds','projected_home_margin','edge_points',
           'market_last_update_utc','v2_previous_games','v2_current_games','v2_inputs_sha256']
 RULE = 'prospective_v1_20260927_edge3_cutoff6h_price200_first_qualifying'
+V3_RULE = 'prospective_v3_20260929_blend25v1_75v2_calibrated_edge3_cutoff6h_price200_first_qualifying'
+V3_V2_WEIGHT = 0.75
+V3_INTERCEPT = 0.56891
+V3_SLOPE = 1.11323
 
 def dt(value):
     if not value: return None
@@ -50,10 +54,15 @@ def pick_rows(rows, v2_ratings, existing=None):
             if price is None or price==0 or not -200<=price<=200 or spread is None:continue
             if r['selection'] not in (r['home_team'],r['away_team']):continue
             season=str(r['season']);gid=str(r['game_id'])
-            for version in ('v1','v2'):
+            v1_margin=number(r.get('projected_home_margin'))
+            v2_margin=projected_margin(r['home_team'],r['away_team'],v2_ratings)
+            margins={'v1':v1_margin,'v2':v2_margin}
+            if v1_margin is not None and v2_margin is not None:
+                blend=(1.0-V3_V2_WEIGHT)*v1_margin+V3_V2_WEIGHT*v2_margin
+                margins['v3']=V3_INTERCEPT+V3_SLOPE*blend
+            for version in ('v1','v2','v3'):
                 if (season,gid,version) in existing:continue
-                margin=(number(r.get('projected_home_margin')) if version=='v1'
-                        else projected_margin(r['home_team'],r['away_team'],v2_ratings))
+                margin=margins.get(version)
                 if margin is None:continue
                 edge=(margin if r['selection']==r['home_team'] else -margin)+spread
                 if edge<3.0:continue
@@ -73,16 +82,16 @@ def freeze(rows, v2_ratings, ledger, meta):
     picks=pick_rows(rows,v2_ratings,existing)
     new=[]
     for (season,gid,version),(_,r,margin,edge) in sorted(picks.items()):
-        new.append({'rule_version':RULE,'model_version':version,'season':season,'game_id':gid,
+        new.append({'rule_version':V3_RULE if version=='v3' else RULE,'model_version':version,'season':season,'game_id':gid,
             'kickoff_utc':r['kickoff_utc'],'captured_at_utc':r['captured_at_utc'],
             'home_team':r['home_team'],'away_team':r['away_team'],'division_status':r['division_status'],
             'selection':r['selection'],'sportsbook_key':r['sportsbook_key'],'sportsbook':r['sportsbook'],
             'spread':r['spread'],'american_odds':r['american_odds'],
             'projected_home_margin':round(margin,5),'edge_points':round(edge,5),
             'market_last_update_utc':r.get('market_last_update_utc') or '',
-            'v2_previous_games':meta.get('previous_games','') if version=='v2' else '',
-            'v2_current_games':meta.get('current_games','') if version=='v2' else '',
-            'v2_inputs_sha256':meta.get('inputs_sha256','') if version=='v2' else ''})
+            'v2_previous_games':meta.get('previous_games','') if version in ('v2','v3') else '',
+            'v2_current_games':meta.get('current_games','') if version in ('v2','v3') else '',
+            'v2_inputs_sha256':meta.get('inputs_sha256','') if version in ('v2','v3') else ''})
     if new:
         tmp=ledger.with_suffix('.tmp')
         with tmp.open('w',newline='',encoding='utf-8') as f:
@@ -110,5 +119,6 @@ def capture_prospective(snapshot_rows, season, ledger='prospective/selections.cs
     new=freeze(snapshot_rows,ratings,ledger,meta)
     print(json.dumps({'prospective_new_v1':sum(x['model_version']=='v1' for x in new),
                       'prospective_new_v2':sum(x['model_version']=='v2' for x in new),
-                      'ledger':str(ledger),'rule':RULE},indent=2))
+                      'prospective_new_v3':sum(x['model_version']=='v3' for x in new),
+                      'ledger':str(ledger),'rule_v1_v2':RULE,'rule_v3':V3_RULE},indent=2))
     return new
