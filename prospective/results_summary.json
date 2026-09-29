@@ -2,9 +2,9 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 38,
+      "selections": 42,
       "settled": 0,
-      "pending": 38,
+      "pending": 42,
       "invalid_or_ambiguous": 0,
       "wins": 0,
       "losses": 0,
@@ -13,9 +13,20 @@
       "roi_per_settled_selection": null
     },
     "v2": {
-      "selections": 38,
+      "selections": 40,
       "settled": 0,
-      "pending": 38,
+      "pending": 40,
+      "invalid_or_ambiguous": 0,
+      "wins": 0,
+      "losses": 0,
+      "pushes": 0,
+      "net_units": 0,
+      "roi_per_settled_selection": null
+    },
+    "v3": {
+      "selections": 36,
+      "settled": 0,
+      "pending": 36,
       "invalid_or_ambiguous": 0,
       "wins": 0,
       "losses": 0,
