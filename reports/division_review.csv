@@ -125,3 +125,5 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,f73081099f845f23ea7f41ef09128cdd,2026-10-04T02:30:00Z,San Diego State Aztecs,Texas State Bobcats,FBS vs FBS,san diego state,texas state
 2026,63dded0ee467d6f6d03c41673569238d,2026-10-04T03:00:00Z,Arizona Wildcats,Cincinnati Bearcats,FBS vs FBS,arizona,cincinnati
 2026,4d9e59b57798afb31927c84e1f6dc25e,2026-10-04T03:59:00Z,Hawaii Rainbow Warriors,San Jose State Spartans,FBS vs FBS,hawaii,san jose state
+2026,82b83ec87fc2be5faa2e9f26ac50edef,2026-10-10T19:30:00Z,Oklahoma Sooners,Texas Longhorns,FBS vs FBS,oklahoma,texas
+2026,3ad908e99942c191b72d855b6f1b508f,2026-10-10T23:00:00Z,Oregon Ducks,UCLA Bruins,FBS vs FBS,oregon,ucla
