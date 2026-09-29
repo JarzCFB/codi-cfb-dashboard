@@ -366,9 +366,41 @@ else:
                 "Kickoff CT","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)"
             ]]
+
+            sort_view=st.radio(
+                "Table order",
+                ["Biggest model edges first","Kickoff time"],
+                horizontal=True,
+                key="final_projection_sort"
+            )
+            if sort_view=="Biggest model edges first":
+                headline=headline.sort_values(
+                    "Model edge (pts)",ascending=False,na_position="last"
+                ).reset_index(drop=True)
+
+            def highlight_model_edges(row):
+                edge=pd.to_numeric(row.get("Model edge (pts)"),errors="coerce")
+                if pd.isna(edge) or edge<3.0:
+                    return [""]*len(row)
+                if edge>=7.0:
+                    bg="#b7f7c5"
+                    weight="font-weight:700;"
+                elif edge>=5.0:
+                    bg="#fff1a8"
+                    weight="font-weight:700;"
+                else:
+                    bg="#fff8d6"
+                    weight=""
+                return [f"background-color:{bg};color:#111827;{weight}" for _ in row]
+
+            st.caption("Highlighted rows: 3.0–4.9 pt edge = light · 5.0–6.9 = medium · 7.0+ = strongest.")
+            styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
+                {"Model edge (pts)":"{:.1f}"},na_rep=""
+            )
+
             export_final=final_projections.copy()
             export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
-            st.dataframe(headline,hide_index=True,use_container_width=True)
+            st.dataframe(styled_headline,hide_index=True,use_container_width=True)
             st.download_button(
                 "Download complete final model projections",
                 export_final.to_csv(index=False),
