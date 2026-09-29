@@ -319,11 +319,29 @@ if ok_odds:
                 st.warning("RESEARCH ONLY: Original cover probabilities and expected ROI are unvalidated. Results are sorted by kickoff, not projected ROI; no betting advantage has been established.")
                 st.caption("Research screen only. Missing team ratings are excluded.")
                 candidates=df[df["Expected ROI"].notna() & (df["Expected ROI"]>=min_roi)].sort_values(["Kickoff UTC","Matchup","Team"])
-                st.dataframe(candidates,hide_index=True,use_container_width=True)
+                candidates_display=candidates.copy()
+                candidates_display["Kickoff CT"]=format_central(candidates_display["Kickoff UTC"])
+                candidates_display=candidates_display.drop(columns=["Kickoff UTC"])
+                cols=["Division status","Kickoff CT"]+[c for c in candidates_display.columns if c not in ("Division status","Kickoff CT")]
+                candidates_display=candidates_display[cols]
+                st.dataframe(candidates_display,hide_index=True,use_container_width=True)
+
             with tab2:
                 best=df[df["Expected ROI"].notna()].assign(_has_roi=True).sort_values(["Matchup","Team","_has_roi","Expected ROI"],ascending=[True,True,False,False]).drop_duplicates(["Matchup","Team"]).drop(columns="_has_roi")
-                st.dataframe(best,hide_index=True,use_container_width=True)
-            with tab3:st.dataframe(df,hide_index=True,use_container_width=True)
+                best_display=best.copy()
+                best_display["Kickoff CT"]=format_central(best_display["Kickoff UTC"])
+                best_display=best_display.drop(columns=["Kickoff UTC"])
+                cols=["Division status","Kickoff CT"]+[c for c in best_display.columns if c not in ("Division status","Kickoff CT")]
+                best_display=best_display[cols]
+                st.dataframe(best_display,hide_index=True,use_container_width=True)
+
+            with tab3:
+                all_lines_display=df.copy()
+                all_lines_display["Kickoff CT"]=format_central(all_lines_display["Kickoff UTC"])
+                all_lines_display=all_lines_display.drop(columns=["Kickoff UTC"])
+                cols=["Division status","Kickoff CT"]+[c for c in all_lines_display.columns if c not in ("Division status","Kickoff CT")]
+                all_lines_display=all_lines_display[cols]
+                st.dataframe(all_lines_display,hide_index=True,use_container_width=True)
             st.download_button("Export odds and model calculations",df.to_csv(index=False),file_name="cfb_odds_snapshot.csv",mime="text/csv")
         else:st.info("No upcoming spread lines returned by the provider.")
     except Exception as exc:st.error(f"Odds feed unavailable: {exc}")
