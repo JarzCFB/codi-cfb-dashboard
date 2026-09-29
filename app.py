@@ -1144,3 +1144,194 @@ if snapshot_files:
 
 from prospective_results import render
 render()
+
+# Frozen prospective V1 / V2 / V3 selections
+st.divider()
+st.subheader("Frozen prospective selections · V1 vs V2 vs V3")
+st.caption(
+    "First qualifying pregame selections frozen by GitHub Actions. "
+    "Selections are never recreated after results are known. "
+    "V3 is the live shadow model and is being evaluated prospectively against V1 and V2."
+)
+
+from pathlib import Path
+
+prospective_file = Path("prospective/selections.csv")
+graded_file = Path("prospective/graded_selections.csv")
+
+if not prospective_file.exists():
+    st.info("No frozen prospective selections have been recorded yet.")
+else:
+    try:
+        prospective = pd.read_csv(prospective_file)
+
+        required = {
+            "model_version", "season", "game_id", "kickoff_utc",
+            "home_team", "away_team", "selection", "spread",
+            "american_odds", "projected_home_margin", "edge_points"
+        }
+
+        missing = required - set(prospective.columns)
+
+        if missing:
+            st.error(
+                "Prospective selections file is missing columns: "
+                + ", ".join(sorted(missing))
+            )
+        else:
+            prospective["kickoff_utc"] = pd.to_datetime(
+                prospective["kickoff_utc"], utc=True, errors="coerce"
+            )
+            prospective["spread"] = pd.to_numeric(
+                prospective["spread"], errors="coerce"
+            )
+            prospective["american_odds"] = pd.to_numeric(
+                prospective["american_odds"], errors="coerce"
+            )
+            prospective["projected_home_margin"] = pd.to_numeric(
+                prospective["projected_home_margin"], errors="coerce"
+            )
+            prospective["edge_points"] = pd.to_numeric(
+                prospective["edge_points"], errors="coerce"
+            )
+
+            prospective["Model"] = prospective["model_version"].str.upper()
+            prospective["Matchup"] = (
+                prospective["away_team"] + " @ " + prospective["home_team"]
+            )
+
+            # Attach grading results when available.
+            if graded_file.exists():
+                graded = pd.read_csv(graded_file)
+
+                grade_cols = [
+                    "season", "game_id", "model_version",
+                    "selection_result", "one_unit_profit", "grading_status"
+                ]
+
+                if set(grade_cols).issubset(graded.columns):
+                    prospective = prospective.merge(
+                        graded[grade_cols],
+                        on=["season", "game_id", "model_version"],
+                        how="left"
+                    )
+
+            for col in ["selection_result", "one_unit_profit", "grading_status"]:
+                if col not in prospective.columns:
+                    prospective[col] = ""
+
+            counts = (
+                prospective.groupby("Model")
+                .size()
+                .reindex(["V1", "V2", "V3"], fill_value=0)
+            )
+
+            c1, c2, c3, c4 = st.columns(4)
+
+            c1.metric("V1 frozen picks", int(counts["V1"]))
+            c2.metric("V2 frozen picks", int(counts["V2"]))
+            c3.metric("V3 frozen picks", int(counts["V3"]))
+            c4.metric("Total frozen picks", len(prospective))
+
+            st.caption(
+                "Current ledger totals include selections from every captured week. "
+                "Use the table below to compare the models game by game."
+            )
+
+            model_filter = st.multiselect(
+                "Models",
+                ["V1", "V2", "V3"],
+                default=["V1", "V2", "V3"],
+                key="prospective_model_filter"
+            )
+
+            display = prospective[
+                prospective["Model"].isin(model_filter)
+            ].copy()
+
+            display = display.sort_values(
+                ["kickoff_utc", "Matchup", "Model"]
+            )
+
+            display["Kickoff"] = display["kickoff_utc"].dt.strftime(
+                "%a %b %d · %I:%M %p UTC"
+            )
+
+            display["Result"] = display["selection_result"].replace(
+                {"win": "WIN", "loss": "LOSS", "push": "PUSH"}
+            )
+
+            display["Status"] = display["grading_status"].replace(
+                {
+                    "pending": "Pending",
+                    "settled": "Settled",
+                    "invalid_selection": "Invalid",
+                    "ambiguous_result": "Ambiguous"
+                }
+            )
+
+            table = display[
+                [
+                    "Kickoff",
+                    "Matchup",
+                    "Model",
+                    "selection",
+                    "spread",
+                    "american_odds",
+                    "projected_home_margin",
+                    "edge_points",
+                    "Status",
+                    "Result"
+                ]
+            ].rename(
+                columns={
+                    "selection": "Selection",
+                    "spread": "Spread",
+                    "american_odds": "Odds",
+                    "projected_home_margin": "Projected home margin",
+                    "edge_points": "Model edge"
+                }
+            )
+
+            st.dataframe(
+                table,
+                hide_index=True,
+                use_container_width=True
+            )
+
+            # Compare which models agree on the same game.
+            agreement = (
+                prospective.pivot_table(
+                    index=["season", "game_id", "Matchup", "kickoff_utc"],
+                    columns="Model",
+                    values="selection",
+                    aggfunc="first"
+                )
+                .reset_index()
+            )
+
+            for version in ["V1", "V2", "V3"]:
+                if version not in agreement.columns:
+                    agreement[version] = ""
+
+            agreement["All 3 agree"] = (
+                agreement["V1"].ne("")
+                & agreement["V1"].eq(agreement["V2"])
+                & agreement["V2"].eq(agreement["V3"])
+            )
+
+            agreement["Kickoff"] = agreement["kickoff_utc"].dt.strftime(
+                "%a %b %d · %I:%M %p UTC"
+            )
+
+            st.write("Model agreement")
+            st.dataframe(
+                agreement[
+                    ["Kickoff", "Matchup", "V1", "V2", "V3", "All 3 agree"]
+                ].sort_values("Kickoff"),
+                hide_index=True,
+                use_container_width=True
+            )
+
+    except Exception as exc:
+        st.error(f"Could not load frozen prospective selections: {exc}")
