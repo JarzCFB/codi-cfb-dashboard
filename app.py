@@ -490,6 +490,76 @@ else:
         st.error(f"Complete final projections unavailable: {exc}")
 
 
+
+# Prospective investigation performance: read the reports committed by the
+# automatic GitHub cohort grader. No game result is used until that report settles it.
+st.divider()
+st.subheader("Investigation performance")
+st.caption(
+    "Prospective-only audit of the automatic PASS / CAUTION / UNSTABLE classifications. "
+    "These files are produced by the scheduled cohort grader; pending games do not count as settled."
+)
+
+try:
+    from pathlib import Path as _Path
+    _cohort_path = _Path("prospective/investigation_cohort.csv")
+    _summary_path = _Path("prospective/investigation_summary.json")
+
+    if not _cohort_path.exists():
+        st.info("Investigation report has not been generated yet.")
+    else:
+        _cohort = pd.read_csv(_cohort_path)
+        _status_col = next((c for c in ["investigation_status", "Investigation status", "status"] if c in _cohort.columns), None)
+        _settled_col = next((c for c in ["settled", "is_settled", "Settled"] if c in _cohort.columns), None)
+        _winner_col = next((c for c in ["winner_correct", "correct_winner", "Winner correct"] if c in _cohort.columns), None)
+        _error_col = next((c for c in ["margin_error", "absolute_margin_error", "Absolute margin error"] if c in _cohort.columns), None)
+        _within7_col = next((c for c in ["within_7", "within_7_points", "Within 7 pts"] if c in _cohort.columns), None)
+
+        if _status_col is None:
+            st.warning("Investigation cohort report is present, but its status column was not recognized.")
+        else:
+            _work = _cohort.copy()
+            if _settled_col is not None:
+                _settled_mask = _work[_settled_col].astype(str).str.lower().isin(["true","1","yes","settled"])
+                _work = _work[_settled_mask].copy()
+            elif _winner_col is not None:
+                _work = _work[_work[_winner_col].notna()].copy()
+
+            if _work.empty:
+                st.info("The investigation tracker is active. No classified prospective games have settled yet.")
+            else:
+                _rows = []
+                for _status in ["PASS", "CAUTION", "UNSTABLE"]:
+                    _g = _work[_work[_status_col].astype(str).str.upper() == _status]
+                    if _g.empty:
+                        _rows.append({"Status":_status,"Settled games":0,"Winner accuracy":None,"Margin MAE":None,"Within 7 pts":None})
+                        continue
+                    _winner_acc = pd.to_numeric(_g[_winner_col], errors="coerce").mean() if _winner_col else float("nan")
+                    _mae = pd.to_numeric(_g[_error_col], errors="coerce").mean() if _error_col else float("nan")
+                    _within7 = pd.to_numeric(_g[_within7_col], errors="coerce").mean() if _within7_col else float("nan")
+                    _rows.append({
+                        "Status":_status,
+                        "Settled games":len(_g),
+                        "Winner accuracy":_winner_acc,
+                        "Margin MAE":_mae,
+                        "Within 7 pts":_within7,
+                    })
+                _perf = pd.DataFrame(_rows)
+                _display = _perf.copy()
+                _display["Winner accuracy"] = _display["Winner accuracy"].map(lambda x: f"{x:.1%}" if pd.notna(x) else "—")
+                _display["Margin MAE"] = _display["Margin MAE"].map(lambda x: f"{x:.1f} pts" if pd.notna(x) else "—")
+                _display["Within 7 pts"] = _display["Within 7 pts"].map(lambda x: f"{x:.1%}" if pd.notna(x) else "—")
+                st.dataframe(_display, hide_index=True, use_container_width=True)
+
+                _total = int(_perf["Settled games"].sum())
+                st.caption(
+                    f"{_total:,} settled classified prospective games. "
+                    "Small samples can move sharply; use this report to learn whether the investigation labels separate forecast quality over time."
+                )
+except Exception as _exc:
+    st.warning(f"Investigation performance report unavailable: {_exc}")
+
+
 # Historical validation: fit on earlier weeks only; never train on the game being predicted.
 def historical_backtest(games, shrink, home_adv, sd, first_test_week=5):
     from collections import defaultdict
