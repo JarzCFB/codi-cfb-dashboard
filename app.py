@@ -375,14 +375,49 @@ else:
                 f"V2 training: {final_v2_info.get('previous_games',0)} prior-season and "
                 f"{final_v2_info.get('current_games',0)} current-season eligible games."
             )
+            # Automatic model sanity check: investigate large V1/V2 disagreements.
+            # This is diagnostic only and does not change the locked V3/final projection.
+            final_projections["V1/V2 disagreement (pts)"]=(
+                final_projections["V1 margin"]-final_projections["V2 margin"]
+            ).abs().round(1)
+            final_projections["Model check"]=np.select(
+                [
+                    final_projections["V1/V2 disagreement (pts)"]>=10.0,
+                    final_projections["V1/V2 disagreement (pts)"]>=5.0,
+                ],
+                [
+                    "HIGH DISAGREEMENT - inspect",
+                    "Moderate disagreement",
+                ],
+                default="Strong agreement",
+            )
+            # Escalate especially large market edges when the underlying models disagree.
+            final_projections["Automatic investigation"]=np.select(
+                [
+                    (final_projections["Model edge (pts)"]>=7.0) &
+                    (final_projections["V1/V2 disagreement (pts)"]>=10.0),
+                    (final_projections["Model edge (pts)"]>=7.0) &
+                    (final_projections["V1/V2 disagreement (pts)"]>=5.0),
+                    (final_projections["Model edge (pts)"]>=7.0),
+                ],
+                [
+                    "REVIEW: big edge + high model disagreement",
+                    "CHECK: big edge + moderate disagreement",
+                    "Big edge with model agreement",
+                ],
+                default="",
+            )
+
             headline=final_projections[[
                 "Kickoff UTC","Matchup","Final model projection",
-                "Market line","Model edge team","Model edge (pts)"
+                "Market line","Model edge team","Model edge (pts)",
+                "V1/V2 disagreement (pts)","Model check","Automatic investigation"
             ]].copy()
             headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
             headline=headline.drop(columns=["Kickoff UTC"])[[
                 "Kickoff CT","Matchup","Final model projection",
-                "Market line","Model edge team","Model edge (pts)"
+                "Market line","Model edge team","Model edge (pts)",
+                "V1/V2 disagreement (pts)","Model check","Automatic investigation"
             ]]
 
             sort_view=st.radio(
@@ -411,7 +446,11 @@ else:
                     weight=""
                 return [f"background-color:{bg};color:#111827;{weight}" for _ in row]
 
-            st.caption("Highlighted rows: 3.0–4.9 pt edge = light · 5.0–6.9 = medium · 7.0+ = strongest.")
+            st.caption(
+                "Highlighted rows show model-vs-market gap. The automatic investigation separately checks V1/V2 agreement: "
+                "under 5 pts = strong agreement · 5–9.9 = moderate disagreement · 10+ = high disagreement. "
+                "These checks are diagnostic and do not alter the locked final projection."
+            )
             styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
                 {"Model edge (pts)":"{:.1f}"},na_rep=""
             )
