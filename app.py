@@ -119,6 +119,89 @@ def odds_frame(data, ratings, home_adv, sd):
                     out.append({"Division status":status,"Kickoff UTC":g.get("commence_time"),"Matchup":f"{a} @ {h}","Team":name,"Book":bk.get("title"),"Spread":point,"Odds":price,"Projected home margin":round(pred,1) if pred is not None else None,"Cover probability":round(p_cover,3) if p_cover is not None else None,"Break-even":round(implied,3),"Expected ROI":round(ev,3) if ev is not None else None,"Model edge (pp)":round(100*(p_cover-implied),1) if p_cover is not None else None})
     return pd.DataFrame(out)
 
+
+# Final headline model: the locked V3 calibrated blend, calculated for every
+# upcoming eligible FBS-vs-FBS game rather than only games that qualify as picks.
+FINAL_V2_WEIGHT = 0.75
+FINAL_INTERCEPT = 0.56891
+FINAL_SLOPE = 1.11323
+
+def final_model_projection(v1_margin, v2_margin):
+    blend=(1.0-FINAL_V2_WEIGHT)*float(v1_margin)+FINAL_V2_WEIGHT*float(v2_margin)
+    return FINAL_INTERCEPT+FINAL_SLOPE*blend
+
+def current_market_home_spreads(odds_events):
+    """Median currently quoted home spread by canonical matchup."""
+    found={}
+    for event in odds_events or []:
+        if not isinstance(event,dict): continue
+        home,away=event.get("home_team"),event.get("away_team")
+        if not home or not away: continue
+        key=(key_name(home),key_name(away))
+        points=[]
+        for bk in event.get("bookmakers") or []:
+            if not isinstance(bk,dict): continue
+            for market in bk.get("markets") or []:
+                if not isinstance(market,dict) or market.get("key")!="spreads": continue
+                for outcome in market.get("outcomes") or []:
+                    if not isinstance(outcome,dict) or outcome.get("name")!=home: continue
+                    try:
+                        p=float(outcome.get("point"))
+                        if math.isfinite(p): points.append(p)
+                    except (TypeError,ValueError):
+                        pass
+        found[key]=float(np.median(points)) if points else None
+    return found
+
+def final_projection_rows(schedule_games, v1_ratings, v2_ratings, home_adv, odds_events):
+    now=pd.Timestamp.now(tz="UTC")
+    markets=current_market_home_spreads(odds_events)
+    rows=[]
+    seen=set()
+    for raw in schedule_games or []:
+        if not isinstance(raw,dict): continue
+        home=raw.get("homeTeam",raw.get("home_team"))
+        away=raw.get("awayTeam",raw.get("away_team"))
+        if not home or not away or not model_allowed(home,away): continue
+        kickoff=pd.to_datetime(raw.get("startDate",raw.get("start_date")),utc=True,errors="coerce")
+        if pd.isna(kickoff) or kickoff<=now: continue
+        gid=raw.get("id")
+        ident=(str(gid) if gid is not None else f"{key_name(away)}@{key_name(home)}@{kickoff.isoformat()}")
+        if ident in seen: continue
+        seen.add(ident)
+        v1h,v1a=find_rating(home,v1_ratings),find_rating(away,v1_ratings)
+        v2h,v2a=find_rating(home,v2_ratings),find_rating(away,v2_ratings)
+        if None in (v1h,v1a,v2h,v2a): continue
+        v1=float(v1h)-float(v1a)+float(home_adv)
+        v2=float(v2h)-float(v2a)+float(home_adv)
+        final=final_model_projection(v1,v2)
+        favorite=home if final>=0 else away
+        projection=f"{favorite} {(-abs(final)):+.1f}"
+        home_spread=markets.get((key_name(home),key_name(away)))
+        if home_spread is None:
+            market=""; edge_team=""; edge_points=np.nan
+        else:
+            market=f"{home} {home_spread:+.1f}"
+            market_home_margin=-float(home_spread)
+            signed_edge=final-market_home_margin
+            edge_team=home if signed_edge>0 else away if signed_edge<0 else "Even"
+            edge_points=abs(signed_edge)
+        rows.append({
+            "Kickoff UTC":kickoff,
+            "Matchup":f"{away} @ {home}",
+            "Final model projection":projection,
+            "Projected home margin":round(final,1),
+            "Market home spread":round(home_spread,1) if home_spread is not None else np.nan,
+            "Market line":market,
+            "Model edge team":edge_team,
+            "Model edge (pts)":round(edge_points,1) if pd.notna(edge_points) else np.nan,
+            "V1 margin":round(v1,1),
+            "V2 margin":round(v2,1),
+            "V3/final margin":round(final,1),
+            "Game ID":gid
+        })
+    return pd.DataFrame(rows).sort_values(["Kickoff UTC","Matchup"]) if rows else pd.DataFrame()
+
 with st.sidebar:
     st.header("Settings")
     year=st.number_input("Season",min_value=2020,max_value=2030,value=2026,step=1)
@@ -136,6 +219,8 @@ if not ok_odds or not ok_cfbd:
     st.info("Your API keys belong in private server-side secrets, never in this app's public code.")
 
 ratings={}; n_games=0
+games=[]
+data=[]
 if ok_cfbd:
     try:
         games=games_data(secret("CFBD_API_KEY"),int(year))
@@ -211,6 +296,51 @@ if ok_odds:
             st.download_button("Export odds and model calculations",df.to_csv(index=False),file_name="cfb_odds_snapshot.csv",mime="text/csv")
         else:st.info("No upcoming spread lines returned by the provider.")
     except Exception as exc:st.error(f"Odds feed unavailable: {exc}")
+
+
+st.divider()
+st.subheader("Final model projections · every upcoming FBS game")
+st.caption(
+    "One headline projection per eligible FBS-vs-FBS game. The final projection uses the locked V3 calibrated "
+    "blend of V1 and V2. A game appears even when it does not meet the frozen-selection edge threshold. "
+    "Market line and edge are shown only when a current spread is available."
+)
+
+if not ok_cfbd:
+    st.info("CFBD data is required to build the complete upcoming projection slate.")
+else:
+    try:
+        from cfb_v2_experimental import build_v2
+        prior_games=games_data(secret("CFBD_API_KEY"),int(year)-1)
+        final_v2_ratings,final_v2_info=build_v2(
+            prior_games,games,datetime.now(timezone.utc),home_adv,shrink
+        )
+        final_projections=final_projection_rows(
+            games,ratings,final_v2_ratings,home_adv,data
+        )
+        if final_projections.empty:
+            st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
+        else:
+            st.caption(
+                f"{len(final_projections):,} upcoming games projected · "
+                f"V2 training: {final_v2_info.get('previous_games',0)} prior-season and "
+                f"{final_v2_info.get('current_games',0)} current-season eligible games."
+            )
+            headline=final_projections[[
+                "Kickoff UTC","Matchup","Final model projection",
+                "Market line","Model edge team","Model edge (pts)"
+            ]].copy()
+            headline["Kickoff UTC"]=headline["Kickoff UTC"].dt.strftime("%a %b %d · %I:%M %p UTC")
+            st.dataframe(headline,hide_index=True,use_container_width=True)
+            st.download_button(
+                "Download complete final model projections",
+                final_projections.to_csv(index=False),
+                file_name="cfb_complete_model_projections.csv",
+                mime="text/csv",
+                key="download_complete_final_model_projections"
+            )
+    except Exception as exc:
+        st.error(f"Complete final projections unavailable: {exc}")
 
 
 # Historical validation: fit on earlier weeks only; never train on the game being predicted.
