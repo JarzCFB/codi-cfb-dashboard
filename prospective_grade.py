@@ -40,7 +40,7 @@ def grade_selections(rows, games):
 
 def summarize(rows):
     result={}
-    for version in ('v1','v2'):
+for version in ('v1','v2','v3'):
         subset=[r for r in rows if r['model_version']==version]
         settled=[r for r in subset if r['grading_status']=='settled']
         counts=Counter(r['selection_result'] for r in settled)
