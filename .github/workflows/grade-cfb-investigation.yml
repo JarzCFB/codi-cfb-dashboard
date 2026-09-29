@@ -1,0 +1,37 @@
+name: Grade CFB investigation cohorts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '18 14 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cfb-investigation
+  cancel-in-progress: false
+
+jobs:
+  grade-investigation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Test investigation logic
+        run: python -m unittest -v test_prospective_investigation.py
+      - name: Update frozen investigation cohorts and report
+        run: python prospective_investigation.py
+      - name: Commit investigation results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prospective/investigation_cohort.csv prospective/investigation_summary.json
+          if git diff --cached --quiet; then
+            echo "No investigation changes to commit."
+          else
+            git commit -m "Update prospective investigation report"
+            git push
+          fi
