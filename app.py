@@ -1260,7 +1260,8 @@ else:
             display["Result"] = display["selection_result"].replace(
                 {"win": "WIN", "loss": "LOSS", "push": "PUSH"}
             )
-
+            display["projected_home_margin"] = display["projected_home_margin"].round(1)
+            display["edge_points"] = display["edge_points"].round(1)
             display["Status"] = display["grading_status"].replace(
                 {
                     "pending": "Pending",
