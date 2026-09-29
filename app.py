@@ -189,7 +189,7 @@ def final_projection_rows(schedule_games, v1_ratings, v2_ratings, home_adv, odds
         away=raw.get("awayTeam",raw.get("away_team"))
         if not home or not away or not model_allowed(home,away): continue
         kickoff=pd.to_datetime(raw.get("startDate",raw.get("start_date")),utc=True,errors="coerce")
-        if pd.isna(kickoff) or kickoff<=now: continue
+        if pd.isna(kickoff) or kickoff<=now or kickoff>now+pd.Timedelta(days=7): continue
         gid=raw.get("id")
         ident=(str(gid) if gid is not None else f"{key_name(away)}@{key_name(home)}@{kickoff.isoformat()}")
         if ident in seen: continue
@@ -324,9 +324,9 @@ if ok_odds:
 
 
 st.divider()
-st.subheader("Final model projections · every upcoming FBS game")
+st.subheader("Final model projections · next 7 days")
 st.caption(
-    "One headline projection per eligible FBS-vs-FBS game. The final projection uses the locked V3 calibrated "
+    "One headline projection per eligible FBS-vs-FBS game kicking off in the next 7 days. The final projection uses the locked V3 calibrated "
     "blend of V1 and V2. A game appears even when it does not meet the frozen-selection edge threshold. "
     "Market line and edge are shown only when a current spread is available."
 )
@@ -347,7 +347,7 @@ else:
             st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
         else:
             st.caption(
-                f"{len(final_projections):,} upcoming games projected · "
+                f"{len(final_projections):,} games projected in the next 7 days · "
                 f"V2 training: {final_v2_info.get('previous_games',0)} prior-season and "
                 f"{final_v2_info.get('current_games',0)} current-season eligible games."
             )
