@@ -1299,13 +1299,15 @@ else:
                 hide_index=True,
                 use_container_width=True
             )
-                        st.download_button(
+
+            st.download_button(
                 "Download V1 V2 V3 projections",
                 prospective.to_csv(index=False),
                 file_name="cfb_v1_v2_v3_projections.csv",
                 mime="text/csv",
                 key="download_v1_v2_v3_projections"
             )
+
             # Compare which models agree on the same game.
             agreement = (
                 prospective.pivot_table(
