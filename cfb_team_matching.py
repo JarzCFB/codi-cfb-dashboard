@@ -61,15 +61,19 @@ EQUIVALENTS = {
  'georgia st':'georgia state','utah st':'utah state',
  'oregon st':'oregon state','fresno st':'fresno state',
 }
+
 def normalize(name):
     value=str(name or '').lower().replace('&',' and ')
     value=unicodedata.normalize('NFKD',value).encode('ascii','ignore').decode('ascii')
     return ' '.join(re.sub(r'[^a-z0-9]+',' ',value).split())
+
 _NORMALIZED_EQUIVALENTS={normalize(k):normalize(v) for k,v in EQUIVALENTS.items()}
 _NORMALIZED_ALIASES={normalize(k):normalize(v) for k,v in ALIASES.items()}
+
 def canonical_school(name):
     n=normalize(name)
     return _NORMALIZED_EQUIVALENTS.get(n,n)
+
 def match_rating(name, ratings):
     """Return (value, matched school, method); no guessing when a school is absent."""
     n=normalize(name)
