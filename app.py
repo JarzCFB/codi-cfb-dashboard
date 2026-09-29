@@ -130,28 +130,53 @@ def final_model_projection(v1_margin, v2_margin):
     blend=(1.0-FINAL_V2_WEIGHT)*float(v1_margin)+FINAL_V2_WEIGHT*float(v2_margin)
     return FINAL_INTERCEPT+FINAL_SLOPE*blend
 
+def same_school_name(provider_name, cfbd_name):
+    """Conservatively match a sportsbook team label to a CFBD school label."""
+    target=key_name(cfbd_name)
+    if key_name(provider_name)==target:
+        return True
+    # Reuse the shared alias/prefix matcher with a one-school rating dictionary.
+    # This handles labels such as "Western Kentucky Hilltoppers" vs
+    # "Western Kentucky" without allowing a match to a different school.
+    value, school, method=match_rating(provider_name,{target:1.0})
+    return school==target and value is not None
+
+
 def current_market_home_spreads(odds_events):
-    """Median currently quoted home spread by canonical matchup."""
+    """Median currently quoted home spread by sportsbook matchup."""
     found={}
     for event in odds_events or []:
         if not isinstance(event,dict): continue
         home,away=event.get("home_team"),event.get("away_team")
         if not home or not away: continue
-        key=(key_name(home),key_name(away))
         points=[]
         for bk in event.get("bookmakers") or []:
             if not isinstance(bk,dict): continue
             for market in bk.get("markets") or []:
                 if not isinstance(market,dict) or market.get("key")!="spreads": continue
                 for outcome in market.get("outcomes") or []:
-                    if not isinstance(outcome,dict) or outcome.get("name")!=home: continue
+                    if not isinstance(outcome,dict): continue
+                    name=outcome.get("name")
+                    if not name or not same_school_name(name,home): continue
                     try:
                         p=float(outcome.get("point"))
                         if math.isfinite(p): points.append(p)
                     except (TypeError,ValueError):
                         pass
-        found[key]=float(np.median(points)) if points else None
+        if points:
+            found[(str(home),str(away))]=float(np.median(points))
     return found
+
+
+def market_home_spread_for_game(home, away, markets, odds_events):
+    """Resolve a spread when CFBD and sportsbook team labels use different suffixes."""
+    for event in odds_events or []:
+        if not isinstance(event,dict): continue
+        eh,ea=event.get("home_team"),event.get("away_team")
+        if not eh or not ea: continue
+        if same_school_name(eh,home) and same_school_name(ea,away):
+            return markets.get((str(eh),str(ea)))
+    return None
 
 def final_projection_rows(schedule_games, v1_ratings, v2_ratings, home_adv, odds_events):
     now=pd.Timestamp.now(tz="UTC")
@@ -177,7 +202,7 @@ def final_projection_rows(schedule_games, v1_ratings, v2_ratings, home_adv, odds
         final=final_model_projection(v1,v2)
         favorite=home if final>=0 else away
         projection=f"{favorite} {(-abs(final)):+.1f}"
-        home_spread=markets.get((key_name(home),key_name(away)))
+        home_spread=market_home_spread_for_game(home,away,markets,odds_events)
         if home_spread is None:
             market=""; edge_team=""; edge_points=np.nan
         else:
