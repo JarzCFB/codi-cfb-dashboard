@@ -391,33 +391,53 @@ else:
                 ],
                 default="Strong agreement",
             )
-            # Escalate especially large market edges when the underlying models disagree.
+            # Automatic investigation. The dashboard makes the stability assessment itself.
+            edge = pd.to_numeric(final_projections["Model edge (pts)"], errors="coerce")
+            disagree = pd.to_numeric(final_projections["V1/V2 disagreement (pts)"], errors="coerce")
+            v1 = pd.to_numeric(final_projections["V1 margin"], errors="coerce")
+            v2 = pd.to_numeric(final_projections["V2 margin"], errors="coerce")
+            same_winner = ((v1 >= 0) & (v2 >= 0)) | ((v1 < 0) & (v2 < 0))
+
             final_projections["Automatic investigation"]=np.select(
                 [
-                    (final_projections["Model edge (pts)"]>=7.0) &
-                    (final_projections["V1/V2 disagreement (pts)"]>=10.0),
-                    (final_projections["Model edge (pts)"]>=7.0) &
-                    (final_projections["V1/V2 disagreement (pts)"]>=5.0),
-                    (final_projections["Model edge (pts)"]>=7.0),
+                    edge.isna(),
+                    ~same_winner,
+                    disagree >= 10.0,
+                    disagree >= 5.0,
+                    (edge >= 7.0) & (disagree < 5.0),
+                    (edge >= 3.0) & (disagree < 5.0),
                 ],
                 [
-                    "REVIEW: big edge + high model disagreement",
-                    "CHECK: big edge + moderate disagreement",
-                    "Big edge with model agreement",
+                    "NO MARKET - projection only",
+                    "UNSTABLE - models disagree on winner",
+                    "UNSTABLE - large model disagreement",
+                    "CAUTION - moderate model disagreement",
+                    "PASS - large edge with model agreement",
+                    "PASS - model agreement",
                 ],
-                default="",
+                default="PASS - no disagreement warning",
+            )
+
+            final_projections["Investigation status"]=np.select(
+                [
+                    edge.isna(),
+                    (~same_winner) | (disagree >= 10.0),
+                    disagree >= 5.0,
+                ],
+                ["NO MARKET", "UNSTABLE", "CAUTION"],
+                default="PASS",
             )
 
             headline=final_projections[[
                 "Kickoff UTC","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Model check","Automatic investigation"
+                "V1/V2 disagreement (pts)","Investigation status","Automatic investigation"
             ]].copy()
             headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
             headline=headline.drop(columns=["Kickoff UTC"])[[
                 "Kickoff CT","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Model check","Automatic investigation"
+                "V1/V2 disagreement (pts)","Investigation status","Automatic investigation"
             ]]
 
             sort_view=st.radio(
@@ -433,23 +453,24 @@ else:
 
             def highlight_model_edges(row):
                 edge=pd.to_numeric(row.get("Model edge (pts)"),errors="coerce")
-                if pd.isna(edge) or edge<3.0:
-                    return [""]*len(row)
-                if edge>=7.0:
-                    bg="#b7f7c5"
-                    weight="font-weight:700;"
-                elif edge>=5.0:
-                    bg="#fff1a8"
-                    weight="font-weight:700;"
+                status=str(row.get("Investigation status",""))
+                if status=="UNSTABLE":
+                    bg="#ffd6d6"; weight="font-weight:700;"
+                elif status=="CAUTION":
+                    bg="#fff1a8"; weight="font-weight:700;"
+                elif status=="PASS" and pd.notna(edge) and edge>=7.0:
+                    bg="#b7f7c5"; weight="font-weight:700;"
+                elif status=="PASS" and pd.notna(edge) and edge>=3.0:
+                    bg="#fff8d6"; weight=""
                 else:
-                    bg="#fff8d6"
-                    weight=""
+                    return [""]*len(row)
                 return [f"background-color:{bg};color:#111827;{weight}" for _ in row]
 
             st.caption(
-                "Highlighted rows show model-vs-market gap. The automatic investigation separately checks V1/V2 agreement: "
-                "under 5 pts = strong agreement · 5–9.9 = moderate disagreement · 10+ = high disagreement. "
-                "These checks are diagnostic and do not alter the locked final projection."
+                "Automatic investigation runs on every game: PASS = models agree; CAUTION = moderate V1/V2 disagreement; "
+                "UNSTABLE = large disagreement or the models disagree on the projected winner. "
+                "Green = large edge that passes; yellow = caution; red/pink = unstable. "
+                "The investigation does not rewrite the locked V3/final projection."
             )
             styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
                 {"Model edge (pts)":"{:.1f}"},na_rep=""
