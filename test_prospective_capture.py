@@ -16,9 +16,9 @@ class ProspectiveTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             ledger=Path(d)/'picks.csv'
             r=self.row();first=freeze([r,r],{'alabama':4,'georgia':0},ledger,{'previous_games':1,'current_games':2})
-            self.assertEqual(len(first),2)
+            self.assertEqual(len(first),3)
             self.assertEqual(freeze([r],{'alabama':4,'georgia':0},ledger,{}),[])
-            self.assertEqual(len(ledger.read_text().splitlines()),3)
+            self.assertEqual(len(ledger.read_text().splitlines()),4)
     def test_kickoff_cutoff(self):
         self.assertEqual(pick_rows([self.row(captured_at_utc='2026-10-03T13:00:00Z')],{}),{})
     def test_future_market_quote_rejected(self):
@@ -27,8 +27,15 @@ class ProspectiveTests(unittest.TestCase):
         self.assertEqual(pick_rows([self.row(away_team='Houston Baptist Huskies',selection='Houston Baptist Huskies')],{}),{})
     def test_missing_v2_no_fake_projection(self):
         self.assertEqual(set(k[2] for k in pick_rows([self.row()],{})),{'v1'})
+    def test_v3_is_calibrated_blend(self):
+        r=self.row(selection='Alabama Crimson Tide',spread=0,projected_home_margin=10)
+        picks=pick_rows([r],{'alabama':4,'georgia':0})
+        margin=picks[('2026','g1','v3')][2]
+        expected=0.56891+1.11323*(0.25*10+0.75*6.5)
+        self.assertAlmostEqual(margin,expected)
+
     def test_no_final_score_used(self):
         r=self.row(actual_home_margin=-50)
-        self.assertEqual(len(pick_rows([r],{'alabama':4,'georgia':0})),2)
+        self.assertEqual(len(pick_rows([r],{'alabama':4,'georgia':0})),3)
 
 if __name__=='__main__':unittest.main()
