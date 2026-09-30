@@ -45,6 +45,7 @@ def games_data(key, year):
 
 from cfb_team_matching import canonical_school, match_rating
 from cfb_division_safety import matchup_status, model_allowed
+from power_rankings import build_power_rankings
 
 def key_name(s):
     return canonical_school(s)
@@ -489,6 +490,66 @@ else:
     except Exception as exc:
         st.error(f"Complete final projections unavailable: {exc}")
 
+
+
+# Predictive FBS power rankings using the same V2 ratings that feed the final model.
+# Ratings are neutral-field team strength in points and do not alter game projections.
+st.divider()
+st.subheader("Codi Model Power Rankings")
+st.caption(
+    "Predictive rankings based on the current V2 neutral-field team strength ratings. "
+    "Higher is stronger. A +10 rating means roughly 10 points better than an average "
+    "FBS team on a neutral field. These rankings do not change V1, V2, V3, frozen "
+    "selections, or the Final Model."
+)
+
+try:
+    power_rows = build_power_rankings(final_v2_ratings)
+    power_df = pd.DataFrame(power_rows)
+
+    if power_df.empty:
+        st.info("Power rankings are not available yet.")
+    else:
+        power_df["Team"] = power_df["team"].map(
+            lambda x: str(x).title()
+        )
+        power_df["Power Rating"] = pd.to_numeric(
+            power_df["power_rating"], errors="coerce"
+        ).round(1)
+        power_df["Rank"] = power_df["rank"]
+
+        power_display = power_df[
+            ["Rank", "Team", "Power Rating"]
+        ].copy()
+
+        st.caption(
+            f"{power_display['Power Rating'].notna().sum():,} FBS teams currently rated."
+        )
+
+        st.dataframe(
+            power_display,
+            hide_index=True,
+            use_container_width=True,
+            column_config={
+                "Rank": st.column_config.NumberColumn("Rank", format="%d"),
+                "Power Rating": st.column_config.NumberColumn(
+                    "Power Rating", format="%.1f"
+                ),
+            },
+        )
+
+        st.download_button(
+            "Download power rankings",
+            power_display.to_csv(index=False),
+            file_name="codi_cfb_power_rankings.csv",
+            mime="text/csv",
+            key="download_power_rankings",
+        )
+
+except NameError:
+    st.info("Power rankings will appear when the current V2 ratings are available.")
+except Exception as exc:
+    st.warning(f"Power rankings unavailable: {exc}")
 
 
 # Prospective investigation performance: classification rows are tracked first;
