@@ -19,11 +19,14 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,a77fd3143159a9d16a75685528d9960b,2026-10-03T19:30:00Z,NC State Wolfpack,Louisville Cardinals,2026-09-27T04:31:59Z,4.24546,-3.01849,-0.04821,7.264,false,UNSTABLE,models disagree on projected winner
 2026,afbc95d529430ef9797b428b2a9db1ab,2026-10-03T19:30:00Z,Central Michigan Chippewas,Akron Zips,2026-09-28T20:32:22Z,3.50897,9.35488,,5.846,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,b163da8a283ade5bd6428a3ca01da8b8,2026-10-03T19:30:00Z,Iowa Hawkeyes,Ohio State Buckeyes,2026-09-27T03:51:32Z,-0.83953,-6.99654,-5.52802,6.157,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,b36c1d83299d019b7833660a29e9da9c,2026-10-03T19:30:00Z,North Dakota State Bison,Wyoming Cowboys,2026-09-30T03:32:39Z,15.41878,14.54746,,0.871,true,PASS,V1/V2 agreement under 5 pts
 2026,c1c548c80e674e3a37dcc2551beba599,2026-10-03T19:30:00Z,Kent State Golden Flashes,Ohio Bobcats,2026-09-28T04:34:33Z,-7.02874,-10.30163,-9.9883,3.273,true,PASS,V1/V2 agreement under 5 pts
 2026,e4f058459f5ee64f3cff3ac1aed79e64,2026-10-03T19:30:00Z,Georgia State Panthers,Old Dominion Monarchs,2026-09-27T08:31:59Z,12.1885,4.04862,7.34087,8.14,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,7e365956ef23823565a044a5af18736a,2026-10-03T19:45:00Z,James Madison Dukes,Marshall Thundering Herd,2026-09-27T08:31:59Z,20.96073,17.86067,21.31472,3.1,true,PASS,V1/V2 agreement under 5 pts
 2026,0e62429ed73f84f87f603d376477749c,2026-10-03T20:00:00Z,Nebraska Cornhuskers,Maryland Terrapins,2026-09-28T16:35:03Z,12.23003,19.33515,20.11584,7.105,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,b30387175520051e2889230030365494,2026-10-03T22:00:00Z,Colorado State Rams,Oregon State Beavers,2026-09-27T08:31:59Z,-0.94629,0.96283,1.10892,1.909,false,UNSTABLE,models disagree on projected winner
+2026,b3c132063b4d14cf750801c633237b9e,2026-10-03T22:00:00Z,Florida Atlantic Owls,Texas Southern Tigers,2026-09-30T00:42:52Z,13.94605,-15.954,-8.87015,29.9,false,UNSTABLE,models disagree on projected winner
+2026,5efdb3515c882453d9abcd27db28f78b,2026-10-03T23:00:00Z,Coastal Carolina Chanticleers,Georgia Southern Eagles,2026-09-30T03:32:39Z,1.74124,0.76339,1.44993,0.978,true,PASS,V1/V2 agreement under 5 pts
 2026,ff98b80b07e2f42c76c2c255e6611247,2026-10-03T23:00:00Z,Texas A&M Aggies,Arkansas Razorbacks,2026-09-27T16:31:52Z,7.24695,17.67263,17.34123,10.426,true,UNSTABLE,large V1/V2 disagreement (10+ pts)
 2026,a2f7df0b000c054abd3cbc6f4a4b2432,2026-10-03T23:30:00Z,Boise State Broncos,Utah State Aggies,2026-09-27T16:31:52Z,12.90264,11.46471,13.73196,1.438,true,PASS,V1/V2 agreement under 5 pts
 2026,9dcccf34095cde7b0fe36250bb5be6f6,2026-10-04T00:00:00Z,Rutgers Scarlet Knights,Indiana Hoosiers,2026-09-28T00:41:49Z,-10.06932,-20.77173,-19.5763,10.702,true,UNSTABLE,large V1/V2 disagreement (10+ pts)
