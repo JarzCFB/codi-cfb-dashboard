@@ -63,7 +63,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,891673ae39457f51a701ca482c2f7280,2026-09-27T00:00:00Z,Arkansas Razorbacks,Tulsa Golden Hurricane,FBS vs FBS,arkansas,tulsa
 2026,8fd491e65439f5d6b6a1edc9da7f036b,2026-09-27T00:00:00Z,UL Monroe Warhawks,Florida Atlantic Owls,FBS vs FBS,ul monroe,florida atlantic
 2026,4d76388c84fc859e6bae8ff267266872,2026-09-27T01:00:00Z,SMU Mustangs,Missouri State Bears,FBS vs FBS,smu,missouri state
-2026,dc2fd7526ea0bba9adc09a5627b637bf,2026-09-27T01:00:00Z,Sacramento State Hornets,UMass Minutemen,Unverified division / FCS: model suppressed,sacramento state hornets,umass
+2026,dc2fd7526ea0bba9adc09a5627b637bf,2026-09-27T01:00:00Z,Sacramento State Hornets,UMass Minutemen,FBS vs FBS,sacramento state,umass
 2026,a48c4a759a03a93bf42e23d2f8bf769e,2026-09-27T01:00:00Z,UTEP Miners,Oregon State Beavers,FBS vs FBS,utep,oregon state
 2026,271438149d3f0afb2ff01736101b5e20,2026-09-27T02:00:00Z,Fresno State Bulldogs,Rice Owls,FBS vs FBS,fresno state,rice
 2026,e972bb2c0291b991de32cc0188c9d338,2026-09-27T02:30:00Z,Nevada Wolf Pack,Air Force Falcons,FBS vs FBS,nevada,air force
@@ -98,8 +98,9 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,c1c548c80e674e3a37dcc2551beba599,2026-10-03T19:30:00Z,Kent State Golden Flashes,Ohio Bobcats,FBS vs FBS,kent state,ohio
 2026,766a0470521ac4a0fad476df45c1438b,2026-10-03T19:30:00Z,Miami (OH) RedHawks,Bowling Green Falcons,FBS vs FBS,miami,bowling green
 2026,6d39ea01c532535edf756b8086656518,2026-10-03T19:30:00Z,Missouri Tigers,Florida Gators,FBS vs FBS,missouri,florida
-2026,b36c1d83299d019b7833660a29e9da9c,2026-10-03T19:30:00Z,North Dakota State Bison,Wyoming Cowboys,Unverified division / FCS: model suppressed,north dakota state bison,wyoming
+2026,b36c1d83299d019b7833660a29e9da9c,2026-10-03T19:30:00Z,North Dakota State Bison,Wyoming Cowboys,FBS vs FBS,north dakota state,wyoming
 2026,f2defdeeb6cb3aa4a86b01a7a5b1ece4,2026-10-03T19:30:00Z,Tennessee Volunteers,Auburn Tigers,FBS vs FBS,tennessee,auburn
+2026,3086203ed472e204ff7f3ba6241bb43c,2026-10-03T19:30:00Z,UAB Blazers,Samford Bulldogs,Unverified division / FCS: model suppressed,uab,samford bulldogs
 2026,7e0abfe1077b7d41d61b918ef53d247b,2026-10-03T19:30:00Z,UMass Minutemen,Eastern Michigan Eagles,FBS vs FBS,umass,eastern michigan
 2026,f28938b05f7d4b4187e879917f6e583a,2026-10-03T19:30:00Z,UNLV Rebels,California Golden Bears,FBS vs FBS,unlv,california
 2026,7e365956ef23823565a044a5af18736a,2026-10-03T19:45:00Z,James Madison Dukes,Marshall Thundering Herd,FBS vs FBS,james madison,marshall
@@ -108,6 +109,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,0cdf52fe0d6bfe0664b76a2102f8b605,2026-10-03T20:15:00Z,Illinois Fighting Illini,Purdue Boilermakers,FBS vs FBS,illinois,purdue
 2026,59abc1d6262d2ea6a72c4daad4c83af2,2026-10-03T20:15:00Z,South Carolina Gamecocks,Kentucky Wildcats,FBS vs FBS,south carolina,kentucky
 2026,b30387175520051e2889230030365494,2026-10-03T22:00:00Z,Colorado State Rams,Oregon State Beavers,FBS vs FBS,colorado state,oregon state
+2026,b3c132063b4d14cf750801c633237b9e,2026-10-03T22:00:00Z,Florida Atlantic Owls,Texas Southern Tigers,FBS vs FBS,florida atlantic,texas
 2026,5efdb3515c882453d9abcd27db28f78b,2026-10-03T23:00:00Z,Coastal Carolina Chanticleers,Georgia Southern Eagles,FBS vs FBS,coastal carolina,georgia southern
 2026,279230b2d38c4e97187c3f065501a4cf,2026-10-03T23:00:00Z,Rice Owls,UTSA Roadrunners,FBS vs FBS,rice,utsa
 2026,4c84a699496b71ee1e626e3c7f5689c9,2026-10-03T23:00:00Z,South Alabama Jaguars,UL Monroe Warhawks,FBS vs FBS,south alabama,ul monroe
@@ -118,6 +120,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,6246661a676eeaa850a3e36e311fce63,2026-10-03T23:30:00Z,Louisiana Tech Bulldogs,Army Black Knights,FBS vs FBS,louisiana tech,army
 2026,6338f8a71aba32414791add2d358472d,2026-10-03T23:30:00Z,South Florida Bulls,Temple Owls,FBS vs FBS,south florida,temple
 2026,f981648dba0e71d8517d47d31aa2633d,2026-10-03T23:30:00Z,USC Trojans,Washington Huskies,FBS vs FBS,usc,washington
+2026,833bd3a9f5a0da5b303a6a4304e2c6a3,2026-10-03T23:45:00Z,LSU Tigers,McNeese State Cowboys,Unverified division / FCS: model suppressed,lsu,mcneese state cowboys
 2026,1d3756ab74c013c39510958b5a632b74,2026-10-04T00:00:00Z,Louisiana Ragin Cajuns,Arkansas State Red Wolves,FBS vs FBS,louisiana,arkansas state
 2026,9dcccf34095cde7b0fe36250bb5be6f6,2026-10-04T00:00:00Z,Rutgers Scarlet Knights,Indiana Hoosiers,FBS vs FBS,rutgers,indiana
 2026,23025b717a93bdd8f30424e90a97d68f,2026-10-04T01:30:00Z,Washington State Cougars,Fresno State Bulldogs,FBS vs FBS,washington state,fresno state
