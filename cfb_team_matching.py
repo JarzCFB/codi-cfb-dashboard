@@ -39,7 +39,9 @@ ALIASES = {
  'texas a&m aggies':'texas a&m',
  'north carolina central eagles':'north carolina central',
  'houston baptist huskies':'houston christian',
- 'houston christian huskies':'houston christian',
+'houston christian huskies':'houston christian',
+'north dakota state bison':'north dakota state',
+'sacramento state hornets':'sacramento state',
 }
 EQUIVALENTS = {
  'houston baptist':'houston christian',
