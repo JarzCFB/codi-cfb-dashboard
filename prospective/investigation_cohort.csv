@@ -41,5 +41,6 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,55d9636153ca5741d460ef2f78b663d9,2026-10-10T02:15:00Z,BYU Cougars,Iowa State Cyclones,2026-10-01T00:44:12Z,4.55676,4.0314,5.203,0.525,true,PASS,V1/V2 agreement under 5 pts
 2026,3e691b53c660a64495a44816768176e8,2026-10-10T16:00:00Z,Nebraska Cornhuskers,Indiana Hoosiers,2026-09-30T20:33:27Z,1.7334,-2.60269,-1.12171,4.336,false,UNSTABLE,models disagree on projected winner
 2026,4462f1fa168ab2a5a25fe2807ebec8ac,2026-10-10T16:00:00Z,Penn State Nittany Lions,USC Trojans,2026-10-01T00:44:12Z,5.53319,5.81366,6.96279,0.28,true,PASS,V1/V2 agreement under 5 pts
+2026,9383cbbbb905d9ee50a3341f6945eae7,2026-10-10T17:00:00Z,Florida Gators,South Carolina Gamecocks,2026-10-02T00:42:03Z,11.65696,9.46727,11.71756,2.19,true,PASS,V1/V2 agreement under 5 pts
 2026,82b83ec87fc2be5faa2e9f26ac50edef,2026-10-10T19:30:00Z,Oklahoma Sooners,Texas Longhorns,2026-09-28T20:32:22Z,-5.26874,-4.55513,-4.7006,0.714,true,PASS,V1/V2 agreement under 5 pts
 2026,3ad908e99942c191b72d855b6f1b508f,2026-10-10T23:00:00Z,Oregon Ducks,UCLA Bruins,2026-09-28T20:32:22Z,2.6269,2.76431,3.60798,0.137,true,PASS,V1/V2 agreement under 5 pts
