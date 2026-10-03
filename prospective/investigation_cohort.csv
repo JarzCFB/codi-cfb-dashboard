@@ -8,6 +8,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,4fcb5b7ec04cad7acc5d048bdd24be4c,2026-10-03T16:00:00Z,Air Force Falcons,Navy Midshipmen,2026-09-27T08:31:59Z,6.16211,4.18925,,1.973,true,PASS,V1/V2 agreement under 5 pts
 2026,6b22daf46195be6b3748584efe89dac1,2026-10-03T16:00:00Z,Mississippi State Bulldogs,Alabama Crimson Tide,2026-09-27T03:51:32Z,3.01542,-0.62873,-2.63332,3.644,false,UNSTABLE,models disagree on projected winner
 2026,7bdd5ae18979fa3af61625a21d757987,2026-10-03T16:00:00Z,Iowa State Cyclones,West Virginia Mountaineers,2026-09-27T08:31:59Z,3.75598,11.87249,11.52284,8.117,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,8ef32c906348e926ca0fabcc25635c11,2026-10-03T16:00:00Z,Wake Forest Demon Deacons,Stanford Cardinal,2026-10-03T00:40:52Z,10.37568,11.32729,,0.952,true,PASS,V1/V2 agreement under 5 pts
 2026,932c7f6dfe06be77192fe000e9f3ac9d,2026-10-03T16:00:00Z,Clemson Tigers,Miami Hurricanes,2026-09-27T03:51:32Z,-11.97768,-11.00132,,0.976,true,PASS,V1/V2 agreement under 5 pts
 2026,94769faaa7a5aba0474291fc9c2d3d6d,2026-10-03T16:00:00Z,UConn Huskies,Syracuse Orange,2026-09-27T08:31:59Z,1.35331,7.83805,7.48962,6.485,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,a2f01448219e39fd44e3d98ea5c7f482,2026-10-03T16:00:00Z,Minnesota Golden Gophers,Michigan Wolverines,2026-09-27T12:36:42Z,3.94294,-3.18281,-0.88656,7.126,false,UNSTABLE,models disagree on projected winner
