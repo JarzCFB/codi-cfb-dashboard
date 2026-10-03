@@ -1,8 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,a39f3695781e9b2f76011e921d63b124,2026-10-02T23:00:00Z,Delaware Blue Hens,Liberty Flames,not_final_in_cfbd
-2026,e61c74f0e28b46ad83270a6234b425f4,2026-10-02T23:00:00Z,Virginia Tech Hokies,Pittsburgh Panthers,not_final_in_cfbd
-2026,0469a451e58ca81723a7760d4bede173,2026-10-03T00:00:00Z,Northwestern Wildcats,Penn State Nittany Lions,not_final_in_cfbd
-2026,9b2bcb758c7d7f4cb25d5102e4e9068e,2026-10-03T15:00:00Z,Charlotte 49ers,Memphis Tigers,not_final_in_cfbd
 2026,4fcb5b7ec04cad7acc5d048bdd24be4c,2026-10-03T16:00:00Z,Air Force Falcons,Navy Midshipmen,not_final_in_cfbd
 2026,11c2108f1d7c8fb56c8a6c7fcd9b62bf,2026-10-03T16:00:00Z,Houston Cougars,UCF Knights,not_final_in_cfbd
 2026,7bdd5ae18979fa3af61625a21d757987,2026-10-03T16:00:00Z,Iowa State Cyclones,West Virginia Mountaineers,not_final_in_cfbd
@@ -56,6 +52,7 @@ season,game_id,kickoff_utc,home_team,away_team,reason
 2026,4d9e59b57798afb31927c84e1f6dc25e,2026-10-04T03:59:00Z,Hawaii Rainbow Warriors,San Jose State Spartans,not_final_in_cfbd
 2026,57ad14afc7db1843fd56f5971dadb058,2026-10-07T00:00:00Z,Troy Trojans,Southern Mississippi Golden Eagles,not_final_in_cfbd
 2026,c89488b9c83038e85e02e92481d093fe,2026-10-07T23:00:00Z,Kennesaw State Owls,Jacksonville State Gamecocks,not_final_in_cfbd
+2026,9aa0a267b153a6cc0d6c3e5746e78213,2026-10-07T23:30:00Z,Florida International Panthers,New Mexico State Aggies,not_final_in_cfbd
 2026,a168f1bed30ce7d56dc2b77dbfe37705,2026-10-10T01:00:00Z,Washington Huskies,Iowa Hawkeyes,not_final_in_cfbd
 2026,55d9636153ca5741d460ef2f78b663d9,2026-10-10T02:15:00Z,BYU Cougars,Iowa State Cyclones,not_final_in_cfbd
 2026,3e691b53c660a64495a44816768176e8,2026-10-10T16:00:00Z,Nebraska Cornhuskers,Indiana Hoosiers,not_final_in_cfbd
