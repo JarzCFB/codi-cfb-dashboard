@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Test investigation logic
-        run: python -m unittest -v test_prospective_investigation.py
+        run: python -m unittest discover -v
       - name: Update frozen investigation cohorts and report
         run: python prospective_investigation.py
       - name: Commit investigation results
@@ -33,5 +33,6 @@ jobs:
             echo "No investigation changes to commit."
           else
             git commit -m "Update prospective investigation report"
+            git pull --rebase origin main
             git push
           fi

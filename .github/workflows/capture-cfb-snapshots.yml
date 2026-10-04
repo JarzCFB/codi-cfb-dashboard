@@ -18,7 +18,7 @@ jobs:
           python-version: '3.11'
       - run: pip install requests numpy
       - name: Test prospective selection rules
-        run: python -m unittest -v test_prospective_capture.py
+        run: python -m unittest discover -v
       - name: Capture live odds and freeze prospective selections
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
@@ -38,5 +38,6 @@ jobs:
           git add snapshots/ prospective/
           if ! git diff --cached --quiet; then
             git commit -m 'Archive pregame snapshot and freeze prospective picks'
+            git pull --rebase origin main
             git push
           fi

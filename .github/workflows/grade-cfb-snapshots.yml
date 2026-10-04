@@ -17,6 +17,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install requests numpy
+      - name: Run full regression suite
+        run: python -m unittest discover -v
       - name: Grade against completed games
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
