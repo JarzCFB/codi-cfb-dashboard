@@ -2,37 +2,81 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 83,
+      "selections": 89,
       "settled": 44,
-      "pending": 39,
-      "invalid_or_ambiguous": 0,
       "wins": 23,
       "losses": 21,
       "pushes": 0,
       "net_units": 0.120591,
-      "roi_per_settled_selection": 0.002741
+      "roi_per_settled_selection": 0.002741,
+      "pending": 45,
+      "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 80,
+      "selections": 84,
       "settled": 46,
-      "pending": 34,
-      "invalid_or_ambiguous": 0,
       "wins": 26,
       "losses": 20,
       "pushes": 0,
       "net_units": 3.77295,
-      "roi_per_settled_selection": 0.082021
+      "roi_per_settled_selection": 0.082021,
+      "pending": 38,
+      "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 72,
+      "selections": 78,
       "settled": 41,
-      "pending": 31,
-      "invalid_or_ambiguous": 0,
       "wins": 25,
       "losses": 15,
       "pushes": 1,
       "net_units": 7.711376,
-      "roi_per_settled_selection": 0.188082
+      "roi_per_settled_selection": 0.188082,
+      "pending": 37,
+      "invalid_or_ambiguous": 0
     }
+  },
+  "v3_edge_buckets": {
+    "3_to_lt5": {
+      "settled": 14,
+      "wins": 7,
+      "losses": 7,
+      "pushes": 0,
+      "net_units": -0.618438,
+      "roi_per_settled_selection": -0.044174
+    },
+    "5_to_lt7": {
+      "settled": 18,
+      "wins": 14,
+      "losses": 3,
+      "pushes": 1,
+      "net_units": 9.801212,
+      "roi_per_settled_selection": 0.544512
+    },
+    "7_to_lt10": {
+      "settled": 5,
+      "wins": 3,
+      "losses": 2,
+      "pushes": 0,
+      "net_units": 0.576221,
+      "roi_per_settled_selection": 0.115244
+    },
+    "10_plus": {
+      "settled": 4,
+      "wins": 1,
+      "losses": 3,
+      "pushes": 0,
+      "net_units": -2.047619,
+      "roi_per_settled_selection": -0.511905
+    }
+  },
+  "pipeline_health": {
+    "total_frozen_selections": 251,
+    "settled": 131,
+    "pending": 120,
+    "invalid_selection": 0,
+    "ambiguous_result": 0,
+    "missing_price": 0,
+    "missing_market_timestamp": 0,
+    "non_fbs_matchup": 0
   }
 }
