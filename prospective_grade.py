@@ -38,15 +38,49 @@ def grade_selections(rows, games):
         out.append(x)
     return out
 
+def _edge_bucket(value):
+    try:
+        edge=float(value)
+    except (TypeError, ValueError):
+        return 'missing'
+    if edge < 5: return '3_to_lt5'
+    if edge < 7: return '5_to_lt7'
+    if edge < 10: return '7_to_lt10'
+    return '10_plus'
+
+def _performance(rows):
+    counts=Counter(r['selection_result'] for r in rows)
+    net=round(sum(float(r['one_unit_profit']) for r in rows),6)
+    return {'settled':len(rows),'wins':counts['win'],'losses':counts['loss'],'pushes':counts['push'],
+            'net_units':net,'roi_per_settled_selection':round(net/len(rows),6) if rows else None}
+
 def summarize(rows):
     result={}
     for version in ('v1','v2','v3'):
         subset=[r for r in rows if r['model_version']==version]
         settled=[r for r in subset if r['grading_status']=='settled']
-        counts=Counter(r['selection_result'] for r in settled)
-        net=round(sum(float(r['one_unit_profit']) for r in settled),6)
-        result[version]={'selections':len(subset),'settled':len(settled),'pending':sum(r['grading_status']=='pending' for r in subset),'invalid_or_ambiguous':sum(r['grading_status'] in ('invalid_selection','ambiguous_result') for r in subset),'wins':counts['win'],'losses':counts['loss'],'pushes':counts['push'],'net_units':net,'roi_per_settled_selection':round(net/len(settled),6) if settled else None}
-    return {'method':'frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake','models':result}
+        perf=_performance(settled)
+        result[version]={'selections':len(subset),**perf,
+            'pending':sum(r['grading_status']=='pending' for r in subset),
+            'invalid_or_ambiguous':sum(r['grading_status'] in ('invalid_selection','ambiguous_result') for r in subset)}
+    v3_settled=[r for r in rows if r['model_version']=='v3' and r['grading_status']=='settled']
+    buckets={}
+    for label in ('3_to_lt5','5_to_lt7','7_to_lt10','10_plus','missing'):
+        bucket=[r for r in v3_settled if _edge_bucket(r.get('edge_points'))==label]
+        if bucket or label != 'missing': buckets[label]=_performance(bucket)
+    status_counts=Counter(r.get('grading_status','') for r in rows)
+    health={
+        'total_frozen_selections':len(rows),
+        'settled':status_counts['settled'],
+        'pending':status_counts['pending'],
+        'invalid_selection':status_counts['invalid_selection'],
+        'ambiguous_result':status_counts['ambiguous_result'],
+        'missing_price':sum(not str(r.get('american_odds','')).strip() for r in rows),
+        'missing_market_timestamp':sum(not str(r.get('market_last_update_utc','')).strip() for r in rows),
+        'non_fbs_matchup':sum(r.get('division_status')!='FBS vs FBS' for r in rows),
+    }
+    return {'method':'frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake',
+            'models':result,'v3_edge_buckets':buckets,'pipeline_health':health}
 
 def main():
     if not INPUT.exists():

@@ -20,6 +20,8 @@ class Tests(unittest.TestCase):
   rows=grade_selections([BASE,{**BASE,'model_version':'v2'}],[GAME]);self.assertEqual(summarize(rows)['models']['v2']['wins'],1)
  def test_v3_summary(self):
   rows=grade_selections([{**BASE,'model_version':'v3'}],[GAME]);self.assertEqual(summarize(rows)['models']['v3']['wins'],1)
+ def test_v3_edge_bucket_and_health(self):
+  rows=grade_selections([{**BASE,'model_version':'v3','edge_points':'5.5'}],[GAME]);summary=summarize(rows);self.assertEqual(summary['v3_edge_buckets']['5_to_lt7']['wins'],1);self.assertEqual(summary['pipeline_health']['settled'],1)
  def test_fcs(self):
   self.assertEqual(grade_selections([{**BASE,'division_status':'unverified'}],[GAME])[0]['grading_status'],'invalid_selection')
  def test_future_market(self):

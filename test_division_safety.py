@@ -11,6 +11,8 @@ class DivisionSafetyTests(unittest.TestCase):
             ('Tulane Green Wave', 'Southern Mississippi Golden Eagles'),
             ('Miami Hurricanes', 'Central Michigan Chippewas'),
             ('Miami (OH) RedHawks', 'UConn Huskies'),
+            ('UMass Minutemen', 'Sacramento State Hornets'),
+            ('Sacramento State Hornets', 'North Dakota State Bison'),
         ]:
             with self.subTest(home=home, away=away):
                 self.assertEqual(matchup_status(home, away), 'FBS vs FBS')
@@ -18,7 +20,6 @@ class DivisionSafetyTests(unittest.TestCase):
     def test_fcs_suppression(self):
         for home, away in [
             ('Rutgers Scarlet Knights', 'Howard Bison'),
-            ('UMass Minutemen', 'Sacramento State Hornets'),
             ('Eastern Michigan Eagles', 'Lindenwood Lions'),
             ('East Carolina Pirates','North Carolina Central Eagles'),
             ('North Texas Mean Green','Houston Baptist Huskies'),
