@@ -1,9 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,7556739cc30a38511b7f631581a416e4,2026-10-09T23:00:00Z,Louisville Cardinals,Florida State Seminoles,not_final_in_cfbd
-2026,23614f055733537fb79ab73e68040eca,2026-10-10T01:00:00Z,San Jose State Spartans,Wyoming Cowboys,not_final_in_cfbd
-2026,2ec27bbe3b14c521ba8a3f3f6e46f4ac,2026-10-10T01:00:00Z,Utah State Aggies,Washington State Cougars,not_final_in_cfbd
-2026,a168f1bed30ce7d56dc2b77dbfe37705,2026-10-10T01:00:00Z,Washington Huskies,Iowa Hawkeyes,not_final_in_cfbd
-2026,55d9636153ca5741d460ef2f78b663d9,2026-10-10T02:15:00Z,BYU Cougars,Iowa State Cyclones,not_final_in_cfbd
 2026,3350fb5023fd4b47b86d34fcc5f47c17,2026-10-10T16:00:00Z,Army Black Knights,Tulane Green Wave,not_final_in_cfbd
 2026,5a88faaeb5fcbb11e975498eca213c27,2026-10-10T16:00:00Z,Bowling Green Falcons,Sacramento State Hornets,not_final_in_cfbd
 2026,9e243e91f8f94e6431da5cc5c3cc8fda,2026-10-10T16:00:00Z,Missouri Tigers,Texas A&M Aggies,not_final_in_cfbd
