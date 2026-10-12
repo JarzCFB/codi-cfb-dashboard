@@ -76,19 +76,55 @@ def canonical_school(name):
     n=normalize(name)
     return _NORMALIZED_EQUIVALENTS.get(n,n)
 
+# A school-name prefix is permitted only when the remaining words are a
+# recognized team nickname. Never infer a school from an arbitrary suffix:
+# "Texas Southern" is NOT "Texas", and "Florida Atlantic" is NOT "Florida".
+# Unknown nicknames fail closed until added as explicit ALIASES above.
+KNOWN_NICKNAMES = frozenset({
+    'aggies', 'anteaters', 'aztecs', 'badgers', 'bearcats', 'bears', 'beavers',
+    'big green', 'bison', 'black bears', 'black knights', 'blazers', 'blue devils',
+    'blue hens', 'blue raiders', 'bobcats', 'boilermakers', 'broncos', 'bruin',
+    'bruins', 'buckeyes', 'buffaloes', 'bulldogs', 'bulls', 'cardinals',
+    'cavaliers', 'chanticleers', 'chippewas', 'commodores', 'cougars', 'cowboys',
+    'cyclones', 'demon deacons', 'ducks', 'eagles', 'falcons', 'fighting hawks',
+    'fighting illini', 'fighting irish', 'flames', 'flyers', 'friars', 'gamecocks',
+    'golden eagles', 'golden flashes', 'golden gophers', 'golden hurricane',
+    'governors', 'green wave', 'greyhounds', 'grizzlies', 'hawkeyes', 'hilltoppers',
+    'hokies', 'horned frogs', 'hornets', 'hurricanes', 'huskies', 'jaguars',
+    'jayhawks', 'knights', 'lobos', 'longhorns', 'lumberjacks', 'mean green',
+    'minutemen', 'monarchs', 'mountaineers', 'musketeers', 'mustangs', 'nittany lions',
+    'owls', 'panthers', 'pirates', 'rainbow warriors', 'ragin cajuns', 'rams',
+    'rattlers', 'razorbacks', 'red raiders', 'redhawks', 'rebels', 'roadrunners',
+    'rockets', 'scarlet knights', 'seawolves', 'shockers', 'skyhawks', 'sooners',
+    'spartans', 'sun devils', 'tar heels', 'terrapins', 'thundering herd',
+    'tigers', 'trojans', 'tulane green wave', 'utes', 'vandals', 'vikings',
+    'volunteers', 'warhawks', 'warriors', 'wildcats', 'wolf pack', 'wolfpack',
+    'wolverines', 'yellow jackets', 'zips',
+})
+_NORMALIZED_NICKNAMES = frozenset(normalize(x) for x in KNOWN_NICKNAMES)
+
+
 def match_rating(name, ratings):
-    """Return (value, matched school, method); no guessing when a school is absent."""
-    n=normalize(name)
-    target=canonical_school(_NORMALIZED_ALIASES.get(n,n))
+    """Return (value, canonical school, method), rejecting uncertain matches."""
+    n = normalize(name)
+    target = canonical_school(_NORMALIZED_ALIASES.get(n, n))
     if target in ratings:
-        return ratings[target],target,'alias' if n in _NORMALIZED_ALIASES else 'exact'
-    # School-name prefix requires a word boundary and a unique longest match.
-    # Do not accept e.g. Georgia Bulldogs as Georgia State.
-    candidates=[school for school in ratings if len(school)>=5 and n.startswith(school+' ')]
+        return ratings[target], target, 'alias' if n in _NORMALIZED_ALIASES else 'exact'
+
+    # Match an approved school followed by an approved *complete* nickname.
+    # Longest-match selection prevents e.g. Georgia Southern Eagles -> Georgia.
+    candidates = []
+    for raw_school in ratings:
+        school = normalize(raw_school)
+        if len(school) < 5 or not n.startswith(school + ' '):
+            continue
+        suffix = n[len(school) + 1:]
+        if suffix in _NORMALIZED_NICKNAMES:
+            candidates.append(raw_school)
     if candidates:
-        longest=max(map(len,candidates))
-        matches=[s for s in candidates if len(s)==longest]
-        if len(matches)==1:
-            return ratings[matches[0]],matches[0],'school_prefix'
-        return None,None,'ambiguous'
-    return None,None,'missing_rating_or_alias'
+        longest = max(len(normalize(s)) for s in candidates)
+        matches = [s for s in candidates if len(normalize(s)) == longest]
+        if len(matches) == 1:
+            return ratings[matches[0]], matches[0], 'verified_nickname'
+        return None, None, 'ambiguous'
+    return None, None, 'missing_rating_or_alias'
