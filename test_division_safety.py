@@ -11,11 +11,18 @@ class DivisionSafetyTests(unittest.TestCase):
             ('Tulane Green Wave', 'Southern Mississippi Golden Eagles'),
             ('Miami Hurricanes', 'Central Michigan Chippewas'),
             ('Miami (OH) RedHawks', 'UConn Huskies'),
+        ]:
+            with self.subTest(home=home, away=away):
+                self.assertEqual(matchup_status(home, away), 'FBS vs FBS')
+
+    def test_provisional_fbs_requires_verification(self):
+        # Do not silently allow transition teams until season-specific status is verified.
+        for home, away in [
             ('UMass Minutemen', 'Sacramento State Hornets'),
             ('Sacramento State Hornets', 'North Dakota State Bison'),
         ]:
             with self.subTest(home=home, away=away):
-                self.assertEqual(matchup_status(home, away), 'FBS vs FBS')
+                self.assertEqual(matchup_status(home, away), 'Season-specific FBS status requires verification')
 
     def test_fcs_suppression(self):
         for home, away in [
