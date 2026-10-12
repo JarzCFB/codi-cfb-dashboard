@@ -381,6 +381,18 @@ else:
         final_v2_ratings,final_v2_info=build_v2(
             prior_games,games,datetime.now(timezone.utc),home_adv,shrink
         )
+        # Use the last published weekly V2 strength for forward projections.
+        # Live sportsbook odds remain independently refreshable.
+        published_snapshot = load_published_power_rankings()
+        if published_snapshot and int(published_snapshot.get("season", -1)) == int(year):
+            frozen_v2 = {
+                row["team"]: float(row["power_rating"])
+                for row in published_snapshot["rankings"]
+                if row.get("power_rating") is not None
+            }
+            if frozen_v2:
+                final_v2_ratings = frozen_v2
+                st.caption("V2 power ratings frozen to the published Sunday snapshot; sportsbook odds remain live.")
         final_projections=final_projection_rows(
             games,ratings,final_v2_ratings,home_adv,data
         )
