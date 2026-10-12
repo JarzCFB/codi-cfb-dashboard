@@ -43,6 +43,22 @@ ALIASES = {
 'north dakota state bison':'north dakota state',
 'sacramento state hornets':'sacramento state',
 }
+# Complete, verified school-name + nickname pairs for common feed labels.
+ALIASES.update({
+ 'arkansas state red wolves': 'arkansas state',
+ 'florida state seminoles': 'florida state',
+ 'charlotte 49ers': 'charlotte',
+ 'syracuse orange': 'syracuse',
+ 'stanford cardinal': 'stanford',
+ 'california golden bears': 'california',
+ 'indiana hoosiers': 'indiana',
+ 'sam houston state bearkats': 'sam houston',
+ 'sam houston bearkats': 'sam houston',
+ 'james madison dukes': 'james madison',
+ 'louisville cardinals': 'louisville',
+ 'virginia tech hokies': 'virginia tech',
+ 'south carolina gamecocks': 'south carolina',
+})
 EQUIVALENTS = {
  'houston baptist':'houston christian',
  'north carolina central':'north carolina central',
@@ -99,7 +115,8 @@ KNOWN_NICKNAMES = frozenset({
     'spartans', 'sun devils', 'tar heels', 'terrapins', 'thundering herd',
     'tigers', 'trojans', 'tulane green wave', 'utes', 'vandals', 'vikings',
     'volunteers', 'warhawks', 'warriors', 'wildcats', 'wolf pack', 'wolfpack',
-    'wolverines', 'yellow jackets', 'zips',
+    'wolverines',     'yellow jackets', 'zips', 'red wolves', 'seminoles', 'orange', 'gators',
+    '49ers', 'bearkats', 'cardinal', 'golden bears', 'hoosiers', 'gators',
 })
 _NORMALIZED_NICKNAMES = frozenset(normalize(x) for x in KNOWN_NICKNAMES)
 
@@ -110,6 +127,11 @@ def match_rating(name, ratings):
     target = canonical_school(_NORMALIZED_ALIASES.get(n, n))
     if target in ratings:
         return ratings[target], target, 'alias' if n in _NORMALIZED_ALIASES else 'exact'
+    # The FBS registry may spell punctuation variants differently (Miami OH).
+    exact_matches = [key for key in ratings if canonical_school(key) == target]
+    if len(exact_matches) == 1:
+        key = exact_matches[0]
+        return ratings[key], key, 'canonical_exact'
 
     # Match an approved school followed by an approved *complete* nickname.
     # Longest-match selection prevents e.g. Georgia Southern Eagles -> Georgia.
