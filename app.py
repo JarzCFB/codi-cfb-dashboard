@@ -1546,6 +1546,93 @@ if snapshot_files:
 from prospective_results import render
 render()
 
+# Read-only official prospective performance reconciliation.
+# All grading is sourced from the committed frozen-selection files; this view
+# never recomputes, replaces, or grades selections from current odds.
+st.divider()
+st.subheader("JarzCFB · Official prospective performance")
+st.caption("Frozen first qualifying selection per game/model · hypothetical flat 1-unit stakes. Status cohorts are descriptive, not a betting rule.")
+try:
+    from pathlib import Path as _ReportPath
+    _graded_path = _ReportPath("prospective/graded_selections.csv")
+    _cohorts_path = _ReportPath("prospective/investigation_cohort.csv")
+    _selections_path = _ReportPath("prospective/selections.csv")
+    if not _graded_path.exists():
+        st.info("Run the prospective grading workflow to generate the official results file.")
+    else:
+        _graded = pd.read_csv(_graded_path)
+        _required = {"season", "game_id", "model_version", "kickoff_utc", "edge_points", "selection_result", "one_unit_profit", "grading_status"}
+        if not _required.issubset(_graded.columns):
+            st.warning("Graded results missing columns: " + ", ".join(sorted(_required - set(_graded.columns))))
+        else:
+            _graded["model_version"] = _graded["model_version"].astype(str).str.lower()
+            _graded["season"] = pd.to_numeric(_graded["season"], errors="coerce")
+            _graded["game_id"] = _graded["game_id"].astype(str)
+            _graded["one_unit_profit"] = pd.to_numeric(_graded["one_unit_profit"], errors="coerce")
+            _graded["edge_points"] = pd.to_numeric(_graded["edge_points"], errors="coerce")
+            _graded["kickoff_dt"] = pd.to_datetime(_graded["kickoff_utc"], utc=True, errors="coerce")
+            _graded["result"] = _graded["selection_result"].fillna("").astype(str).str.lower()
+            _graded["settled"] = _graded["grading_status"].fillna("").astype(str).str.lower().eq("settled") & _graded["result"].isin(["win", "loss", "push"])
+            _dupes = int(_graded.duplicated(["season", "game_id", "model_version"]).sum())
+            if _dupes:
+                st.error(f"Audit warning: {_dupes} duplicate game/model keys in graded results; check the grading pipeline.")
+            if _selections_path.exists():
+                _original = pd.read_csv(_selections_path)
+                _keys = ["season", "game_id", "model_version"]
+                _original["season"] = pd.to_numeric(_original["season"], errors="coerce")
+                _original["game_id"] = _original["game_id"].astype(str)
+                _original["model_version"] = _original["model_version"].astype(str).str.lower()
+                _missing_grades = len(_original[_keys].drop_duplicates().merge(_graded[_keys].drop_duplicates(), on=_keys, how="left", indicator=True).query("_merge == 'left_only'"))
+                if _missing_grades:
+                    st.warning(f"{_missing_grades} frozen selections have no corresponding graded record.")
+            def _summarize_bets(_frame):
+                _done = _frame[_frame["settled"]]
+                _n = len(_done)
+                _units = float(_done["one_unit_profit"].sum())
+                return {"Selections": len(_frame), "Settled": _n, "Pending": len(_frame) - _n,
+                        "W": int((_done["result"] == "win").sum()),
+                        "L": int((_done["result"] == "loss").sum()),
+                        "P": int((_done["result"] == "push").sum()),
+                        "Units": round(_units, 3), "ROI": round(100 * _units / _n, 2) if _n else float("nan")}
+            _model_rows = [{"Model": _model.upper(), **_summarize_bets(_graded[_graded["model_version"] == _model])} for _model in ("v1", "v2", "v3")]
+            st.markdown("**Official V1 / V2 / V3 results**")
+            st.dataframe(pd.DataFrame(_model_rows), hide_index=True, use_container_width=True)
+            _v3 = _graded[_graded["model_version"] == "v3"].copy()
+            _v3["Edge bucket"] = pd.cut(_v3["edge_points"], bins=[-float("inf"), 5, 7, 10, float("inf")], right=False, labels=["Below 5", "5 to <7", "7 to <10", "10+"])
+            _edge_summary = [{"Edge bucket": str(_bucket), **_summarize_bets(_group)} for _bucket, _group in _v3.groupby("Edge bucket", observed=True)]
+            _t1, _t2, _t3 = st.tabs(["V3 edge buckets", "V3 investigation ATS", "Weekly results & audit"])
+            with _t1:
+                st.dataframe(pd.DataFrame(_edge_summary), hide_index=True, use_container_width=True)
+            with _t2:
+                if not _cohorts_path.exists():
+                    st.info("Run the investigation workflow to populate cohort classifications.")
+                else:
+                    _cohort = pd.read_csv(_cohorts_path)
+                    _ckeys = ["season", "game_id"]
+                    if not set(_ckeys + ["investigation_status"]).issubset(_cohort.columns):
+                        st.warning("Investigation cohort file is missing required join/status columns.")
+                    else:
+                        _cohort["season"] = pd.to_numeric(_cohort["season"], errors="coerce")
+                        _cohort["game_id"] = _cohort["game_id"].astype(str)
+                        _cohort = _cohort.sort_values("classified_at_utc" if "classified_at_utc" in _cohort else "game_id").drop_duplicates(_ckeys, keep="first")
+                        _joined = _v3.merge(_cohort[_ckeys + ["investigation_status"]], on=_ckeys, how="left", validate="many_to_one")
+                        _joined["Status"] = _joined["investigation_status"].fillna("NOT CLASSIFIED")
+                        _status_rows = [{"Status": _status, **_summarize_bets(_g)} for _status, _g in _joined.groupby("Status")]
+                        st.dataframe(pd.DataFrame(_status_rows), hide_index=True, use_container_width=True)
+                        _unclassified = _joined[_joined["Status"] == "NOT CLASSIFIED"]
+                        st.caption(f"{len(_unclassified)} V3 selections have no frozen investigation classification. They remain unclassified; no retrospective labels are assigned.")
+                        st.download_button("Download V3 ATS cohort audit", _joined.drop(columns=["kickoff_dt"]).to_csv(index=False), "jarzcfb_v3_cohort_audit.csv", mime="text/csv", key="download_v3_cohort_audit")
+            with _t3:
+                _graded["Week starting (CT)"] = _graded["kickoff_dt"].dt.tz_convert(CENTRAL_TZ).dt.to_period("W-SUN").astype(str)
+                _weekly = [{"Week (CT)": _week, "Model": _model.upper(), **_summarize_bets(_g)} for (_week, _model), _g in _graded.groupby(["Week starting (CT)", "model_version"], dropna=False)]
+                st.dataframe(pd.DataFrame(_weekly).sort_values(["Week (CT)", "Model"], ascending=[False, True]), hide_index=True, use_container_width=True)
+                _pending = _graded[~_graded["settled"]].copy()
+                st.caption(f"Pending/unsettled: {len(_pending)} selections. These are not automatically assumed to be future games.")
+                st.dataframe(_pending[[c for c in ["model_version", "kickoff_utc", "away_team", "home_team", "selection", "grading_status"] if c in _pending.columns]], hide_index=True, use_container_width=True)
+                st.download_button("Download official weekly results", pd.DataFrame(_weekly).to_csv(index=False), "jarzcfb_weekly_results.csv", mime="text/csv", key="download_weekly_official")
+except Exception as _report_exc:
+    st.warning(f"Official prospective report unavailable: {_report_exc}")
+
 # Frozen prospective V1 / V2 / V3 selections
 st.divider()
 st.subheader("Frozen prospective selections · V1 vs V2 vs V3")
