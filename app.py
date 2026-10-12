@@ -2263,3 +2263,100 @@ with st.expander("Inspect pending picks and export review queue", expanded=False
             st.info("Before placing any wager, verify the matchup and division, confirm the current available sportsbook line, and check major roster/news changes. Early-week frozen lines may no longer be available.")
         except Exception as _board_exc:
             st.error(f"Decision board failed: {_board_exc}")
+
+
+# --- Research-only fresh-market revalidation of frozen V3 selections ---
+# Quotes are fetched only on request; original captured prices and predictions are never changed.
+def _fresh_market_revalidation(frozen, odds_events, checked_at):
+    rows=[]
+    for _, pick in frozen.iterrows():
+        home, away, selected = str(pick.get("home_team", "")), str(pick.get("away_team", "")), str(pick.get("selection", ""))
+        original_book_key = str(pick.get("sportsbook_key", ""))
+        original_book = str(pick.get("sportsbook", ""))
+        kickoff = pd.to_datetime(pick.get("kickoff_utc"), utc=True, errors="coerce")
+        projection = pd.to_numeric(pick.get("projected_home_margin"), errors="coerce")
+        original_point = pd.to_numeric(pick.get("spread"), errors="coerce")
+        original_edge = pd.to_numeric(pick.get("edge_points"), errors="coerce")
+        base={"game_id":pick.get("game_id"),"kickoff_utc":pick.get("kickoff_utc"),"home_team":home,
+              "away_team":away,"selection":selected,"original_sportsbook":original_book,
+              "original_spread":original_point,"original_edge_points":original_edge,
+              "frozen_projected_home_margin":projection,"checked_at_utc":checked_at,
+              "current_sportsbook":None,"current_spread":float("nan"),"current_american_odds":float("nan"),
+              "current_edge_points":float("nan"),"edge_change_points":float("nan"),
+              "quote_last_update_utc":None,"match_status":"No verified matching live quote"}
+        if not (same_school_name(selected,home) or same_school_name(selected,away)):
+            base["match_status"]="Selection team identity unresolved";rows.append(base);continue
+        if pd.isna(projection) or pd.isna(kickoff):
+            base["match_status"]="Missing frozen projection or kickoff";rows.append(base);continue
+        found=[]
+        for event in odds_events or []:
+            if not isinstance(event,dict):continue
+            eh,ea=event.get("home_team"),event.get("away_team")
+            if not eh or not ea or not (same_school_name(eh,home) and same_school_name(ea,away)):continue
+            event_kick=pd.to_datetime(event.get("commence_time"),utc=True,errors="coerce")
+            if pd.isna(event_kick) or abs((event_kick-kickoff).total_seconds())>6*3600:continue
+            for bk in event.get("bookmakers") or []:
+                if not isinstance(bk,dict):continue
+                # Never silently substitute another sportsbook's line.
+                if str(bk.get("key", "")) != original_book_key:continue
+                for market in bk.get("markets") or []:
+                    if not isinstance(market,dict) or market.get("key")!="spreads":continue
+                    for outcome in market.get("outcomes") or []:
+                        if not isinstance(outcome,dict) or not same_school_name(str(outcome.get("name","")),selected):continue
+                        try:
+                            point=float(outcome["point"]);price=float(outcome["price"])
+                            if not (math.isfinite(point) and math.isfinite(price) and price != 0):continue
+                        except (KeyError,ValueError,TypeError):continue
+                        last=pd.to_datetime(market.get("last_update",bk.get("last_update")),utc=True,errors="coerce")
+                        found.append((last,point,price,str(bk.get("title",original_book))))
+        if found:
+            # Prefer the most recently updated valid quote from the original bookmaker.
+            last,point,price,book=max(found,key=lambda v: v[0].timestamp() if pd.notna(v[0]) else -1)
+            is_home=same_school_name(selected,home)
+            current_edge=(float(projection) if is_home else -float(projection))+point
+            base.update({"current_sportsbook":book,"current_spread":point,"current_american_odds":price,
+                         "current_edge_points":round(current_edge,5),
+                         "edge_change_points":round(current_edge-float(original_edge),5) if pd.notna(original_edge) else float("nan"),
+                         "quote_last_update_utc":last.isoformat() if pd.notna(last) else None,
+                         "match_status":"MATCHED — original sportsbook"})
+        rows.append(base)
+    return pd.DataFrame(rows)
+
+st.divider()
+st.subheader("Research · Revalidate frozen V3 against fresh sportsbook lines")
+st.caption("Read-only. Compares the ORIGINAL frozen V3 projection to a newly fetched spread at the SAME sportsbook; it does not rerun today's model or rewrite the captured selection. A positive edge is not a proven profitable bet.")
+with st.expander("Fetch current sportsbook lines and export revalidation",expanded=False):
+    st.info("Requires ODDS_API_KEY in Streamlit secrets and prospective/graded_selections.csv. Live sportsbook availability varies. Quotes may change immediately after retrieval.")
+    if st.button("Fetch fresh spreads and revalidate pending V3 picks",key="fresh_v3_revalidate"):
+        try:
+            from pathlib import Path as _FreshPath
+            _graded_path=_FreshPath("prospective/graded_selections.csv")
+            if not _graded_path.exists():
+                st.error("Missing prospective/graded_selections.csv")
+            elif not secret("ODDS_API_KEY"):
+                st.error("ODDS_API_KEY is not configured in Streamlit secrets")
+            else:
+                _graded=pd.read_csv(_graded_path)
+                _cohort_path=_FreshPath("prospective/investigation_cohort.csv")
+                _cohort=pd.read_csv(_cohort_path) if _cohort_path.exists() else None
+                _pending=_weekly_decision_board(_graded,_cohort)
+                _frozen_cols=["game_id","captured_at_utc","sportsbook_key","sportsbook","spread","projected_home_margin","model_version"]
+                _frozen=_graded[_frozen_cols].drop_duplicates(subset=["game_id","captured_at_utc"])
+                _pending=_pending.drop(columns=[c for c in _frozen_cols if c not in ["game_id","captured_at_utc"] and c in _pending.columns])
+                _pending=_pending.merge(_frozen,on=["game_id","captured_at_utc"],how="left",validate="many_to_one")
+                _pending=_pending.loc[_pending["model_version"].astype(str).str.lower().eq("v3")].copy()
+                _raw,_headers=api_get(ODDS_URL,params={"apiKey":secret("ODDS_API_KEY"),"regions":"us","markets":"spreads","oddsFormat":"american","dateFormat":"iso"})
+                _checked=datetime.now(timezone.utc).isoformat()
+                _result=_fresh_market_revalidation(_pending,_raw,_checked)
+                _result=_result.merge(_pending[["game_id","review_priority","division_check_current","investigation_status"]].drop_duplicates("game_id"),on="game_id",how="left")
+                _matched=_result["match_status"].eq("MATCHED — original sportsbook")
+                a,b,c=st.columns(3)
+                a.metric("Pending frozen V3 picks",len(_result))
+                b.metric("Matched original-book quotes",int(_matched.sum()))
+                c.metric("Unmatched / unresolved",int((~_matched).sum()))
+                st.caption(f"Fetched at {_checked} · API credits remaining: {_headers.get('x-requests-remaining','unknown')}. Unmatched rows are NOT zero-edge picks.")
+                st.dataframe(_result,hide_index=True,use_container_width=True)
+                st.download_button("Download fresh V3 market revalidation CSV",_result.to_csv(index=False),file_name="JarzCFB_fresh_market_revalidation.csv",mime="text/csv",key="download_fresh_v3_revalidation")
+                st.warning("Frozen projection and original sportsbook only. Do not treat this as a new official pick, and independently check injuries, eligibility and bet availability.")
+        except Exception as _fresh_exc:
+            st.error(f"Fresh market revalidation failed: {_fresh_exc}")
