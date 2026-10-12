@@ -2361,6 +2361,67 @@ def _fresh_market_revalidation(frozen, odds_events, checked_at):
         finish("MATCHED_ORIGINAL_BOOK", "Verified same matchup, kickoff, original sportsbook and selected-team spread")
     return pd.DataFrame(rows)
 
+# --- Research-only authoritative kickoff reconciliation (2026 Week 7) ---
+# A verified event kickoff may resolve a stale frozen kickoff, but NEVER overwrites it.
+# Exact home/away matching and a 90-minute tolerance to the independently verified kickoff
+# are still required; no blanket widening of the six-hour matching rule.
+_KICKOFF_RECONCILIATION_2026 = {
+    ("nebraska", "oregon"): ("2026-10-18T03:00:00Z", "https://www.cornnation.com/football/103316/fox-and-nebraska-announce-nu-oregon-as-late-10-pm-kickoff"),
+    ("kent state", "south florida"): ("2026-10-17T23:00:00Z", "https://fbschedules.com/college-football-schedule-tv-selections-for-october-17-2026/"),
+    ("louisville", "syracuse"): ("2026-10-17T23:30:00Z", "https://www.nunesmagician.com/syracuse-orange-football-fran/113814/syracuse-football-orange-will-host-louisville-in-primetime"),
+    ("ohio state", "indiana"): ("2026-10-17T16:00:00Z", "https://ohiostatebuckeyes.com/sports/football/schedule/print"),
+}
+
+def _verified_kickoff_for_pick(pick):
+    season = pd.to_numeric(pick.get("season"), errors="coerce")
+    if pd.isna(season) or int(season) != 2026:
+        return None
+    for (away_name, home_name), (kickoff, source) in _KICKOFF_RECONCILIATION_2026.items():
+        if same_school_name(str(pick.get("away_team", "")), away_name) and same_school_name(str(pick.get("home_team", "")), home_name):
+            return kickoff, source
+    return None
+
+_fresh_market_revalidation_unreconciled = _fresh_market_revalidation
+
+def _fresh_market_revalidation(frozen, odds_events, checked_at):
+    # Work on an ephemeral copy only. The frozen records and stored kickoff remain intact.
+    adjusted = frozen.copy()
+    adjustments = {}
+    for position, (_, pick) in enumerate(adjusted.iterrows()):
+        verification = _verified_kickoff_for_pick(pick)
+        if not verification:
+            continue
+        verified_time, source = verification
+        original = pick.get("kickoff_utc")
+        # Do not repair an already-consistent kickoff.
+        old_dt = pd.to_datetime(original, utc=True, errors="coerce")
+        new_dt = pd.to_datetime(verified_time, utc=True)
+        if pd.isna(old_dt) or abs((old_dt-new_dt).total_seconds()) <= 90*60:
+            continue
+        # Only reconcile if the odds feed itself independently agrees with the schedule.
+        matching = [ev for ev in (odds_events if isinstance(odds_events, list) else [])
+                    if isinstance(ev, dict)
+                    and same_school_name(str(ev.get("home_team", "")), str(pick.get("home_team", "")))
+                    and same_school_name(str(ev.get("away_team", "")), str(pick.get("away_team", "")))
+                    and pd.notna(pd.to_datetime(ev.get("commence_time"), utc=True, errors="coerce"))
+                    and abs((pd.to_datetime(ev.get("commence_time"), utc=True)-new_dt).total_seconds()) <= 90*60]
+        if matching:
+            adjusted.iloc[position, adjusted.columns.get_loc("kickoff_utc")] = verified_time
+            adjustments[position] = (str(original), verified_time, source)
+    result = _fresh_market_revalidation_unreconciled(adjusted, odds_events, checked_at)
+    result["frozen_kickoff_utc"] = frozen["kickoff_utc"].to_numpy()
+    result["schedule_reconciliation"] = "NOT_NEEDED_OR_UNVERIFIED"
+    result["verified_kickoff_utc"] = None
+    result["schedule_source"] = None
+    for position, (original, verified, source) in adjustments.items():
+        result.at[position, "kickoff_utc"] = original
+        result.at[position, "verified_kickoff_utc"] = verified
+        result.at[position, "schedule_source"] = source
+        result.at[position, "schedule_reconciliation"] = "VERIFIED_WITH_SCHEDULE_AND_ODDS_EVENT"
+        if result.at[position, "match_status"] == "MATCHED_ORIGINAL_BOOK":
+            result.at[position, "coverage_detail"] += "; frozen kickoff differs from independently verified schedule; original preserved"
+    return result
+
 st.divider()
 st.subheader("Research · Complete market coverage for frozen V3")
 st.caption("Read-only: every pending frozen V3 selection receives a market-coverage status. No original pick, line, grade or model parameter is modified. A model edge is not a guarantee of profitability.")
