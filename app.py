@@ -451,7 +451,7 @@ else:
                     raise ValueError("Final projection count changed during confidence overlay")
                 final_projections = final_projections.drop(columns=["_game_key"])
             else:
-                st.info("To populate confidence and same-book verification in this table, run Complete V3 Market Coverage below once. Live projections remain visible in the meantime.")
+                st.caption("Fresh sportsbook and confidence data load automatically; pending the first refresh, these fields may be blank.")
                 for _name in ["Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook", "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line", "Frozen edge movement", "Market verification", "Division check", "Confidence notes"]:
                     final_projections[_name] = pd.NA
 
@@ -2536,8 +2536,65 @@ def _jarz_weekly_confidence(coverage):
     data["confidence_scale_validated"] = False
     return data
 
+# Automatic same-book coverage for the inline Final Projections table.
+# Runs on first page load and refreshes at most once every 15 minutes per session.
+# Never writes to prospective files, modifies model predictions, or changes grades.
+from pathlib import Path as _AutoCoveragePath
+import time as _jarz_time
+_auto_now = _jarz_time.time()
+_auto_last = st.session_state.get("jarz_auto_coverage_attempt_at", 0.0)
+_auto_ttl = 900  # seconds; avoid burning Odds API credits on every Streamlit rerun
+if _auto_now - _auto_last >= _auto_ttl:
+    st.session_state["jarz_auto_coverage_attempt_at"] = _auto_now
+    _auto_file = _AutoCoveragePath("prospective/graded_selections.csv")
+    _auto_key = secret("ODDS_API_KEY")
+    if not _auto_file.exists():
+        st.session_state["jarz_auto_coverage_error"] = "Frozen selection file missing; live projections still work."
+    elif not _auto_key:
+        st.session_state["jarz_auto_coverage_error"] = "ODDS_API_KEY missing; fresh same-book fields unavailable."
+    else:
+        try:
+            with st.spinner("Automatically refreshing verified sportsbook lines and confidence…"):
+                _auto_graded = pd.read_csv(_auto_file)
+                _auto_cohort_file = _AutoCoveragePath("prospective/investigation_cohort.csv")
+                _auto_cohort = pd.read_csv(_auto_cohort_file) if _auto_cohort_file.exists() else None
+                _auto_pending = _weekly_decision_board(_auto_graded, _auto_cohort)
+                _auto_v3 = _auto_graded.loc[_auto_graded["model_version"].astype(str).str.lower().eq("v3")].copy()
+                _auto_v3["captured_at_utc"] = pd.to_datetime(_auto_v3["captured_at_utc"], utc=True, errors="coerce")
+                _auto_v3 = (_auto_v3.sort_values("captured_at_utc", kind="stable")
+                            .drop_duplicates(["season", "game_id", "model_version"], keep="first"))
+                _auto_pending["captured_at_utc"] = pd.to_datetime(_auto_pending["captured_at_utc"], utc=True, errors="coerce")
+                _auto_join = ["season", "game_id", "captured_at_utc"]
+                _auto_original = ["sportsbook_key", "sportsbook", "spread", "projected_home_margin", "model_version"]
+                _auto_pending = _auto_pending.drop(columns=[c for c in _auto_original if c in _auto_pending.columns])
+                _auto_pending = _auto_pending.merge(_auto_v3[_auto_join + _auto_original], on=_auto_join,
+                                                    how="left", validate="one_to_one", indicator=True)
+                _auto_pending["frozen_record_match"] = _auto_pending.pop("_merge").astype(str)
+                _auto_events, _auto_headers = api_get(ODDS_URL, params={
+                    "apiKey": _auto_key, "regions": "us", "markets": "spreads",
+                    "oddsFormat": "american", "dateFormat": "iso"})
+                _auto_checked = datetime.now(timezone.utc).isoformat()
+                _auto_result = _fresh_market_revalidation(_auto_pending, _auto_events, _auto_checked)
+                _auto_result["frozen_record_match"] = _auto_pending["frozen_record_match"].to_numpy()
+                _auto_result.loc[_auto_result["frozen_record_match"].ne("both"), "match_status"] = "FROZEN_RECORD_JOIN_FAILED"
+                for _auto_col in ["review_priority", "division_check_current", "investigation_status", "review_notes", "edge_band"]:
+                    if _auto_col in _auto_pending.columns:
+                        _auto_result[_auto_col] = _auto_pending[_auto_col].to_numpy()
+                if len(_auto_result) != len(_auto_pending):
+                    raise ValueError("Auto coverage row-count invariant failed")
+                st.session_state["jarz_latest_confidence_coverage"] = _jarz_weekly_confidence(_auto_result)
+                st.session_state["jarz_latest_confidence_checked"] = _auto_checked
+                st.session_state.pop("jarz_auto_coverage_error", None)
+            st.rerun()  # Populate inline columns at the top on the next pass
+        except Exception as _auto_exc:
+            st.session_state["jarz_auto_coverage_error"] = str(_auto_exc)
+
 st.divider()
 st.subheader("Research · Complete market coverage for frozen V3")
+if st.session_state.get("jarz_auto_coverage_error"):
+    st.warning("Automatic market refresh unavailable: " + str(st.session_state["jarz_auto_coverage_error"]))
+elif st.session_state.get("jarz_latest_confidence_checked"):
+    st.caption("Automatic market check: " + str(st.session_state["jarz_latest_confidence_checked"]) + " · refreshes at most every 15 minutes per session; manual refresh remains optional.")
 st.caption("Read-only: every pending frozen V3 selection receives a market-coverage status. No original pick, line, grade or model parameter is modified. A model edge is not a guarantee of profitability.")
 with st.expander("Fetch sportsbook quotes, diagnose missing markets, and export all pending V3 picks", expanded=False):
     st.info("Requires ODDS_API_KEY in Streamlit secrets and prospective/graded_selections.csv. The Odds API may not offer every matchup or sportsbook at the time of the request.")
