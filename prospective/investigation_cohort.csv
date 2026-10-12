@@ -88,6 +88,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,f9cb1259d9221016efb7646258f2acd5,2026-10-17T16:00:00Z,Syracuse Orange,Louisville Cardinals,2026-10-11T08:35:58Z,0.40537,-7.95536,-5.96038,8.361,false,UNSTABLE,models disagree on projected winner
 2026,7d7f757d2bf4cb7b6d8bbfe9589d25a2,2026-10-17T17:00:00Z,Buffalo Bulls,UMass Minutemen,2026-10-11T20:34:43Z,-3.39673,5.55846,,8.955,false,UNSTABLE,models disagree on projected winner
 2026,f10a59f9dd66cb1aa169a293326449d9,2026-10-17T17:00:00Z,Temple Owls,Charlotte 49ers,2026-10-11T16:35:07Z,16.99854,17.67706,20.05871,0.679,true,PASS,V1/V2 agreement under 5 pts
+2026,2851c11a3831feac527b6df0b34b2a2a,2026-10-17T19:30:00Z,Georgia Bulldogs,Auburn Tigers,2026-10-12T21:03:21Z,16.79734,17.32535,,0.528,true,PASS,V1/V2 agreement under 5 pts
 2026,43959d4bb3927439ced7a6bf26cc3c00,2026-10-17T19:30:00Z,Air Force Falcons,UNLV Rebels,2026-10-11T20:34:43Z,5.16521,2.17607,3.82328,2.989,true,PASS,V1/V2 agreement under 5 pts
 2026,5d09c85c1d67e8f9db8db560cb038027,2026-10-17T19:30:00Z,Ole Miss Rebels,Missouri Tigers,2026-10-06T20:35:54Z,-5.79364,-1.87623,-2.61001,3.917,true,PASS,V1/V2 agreement under 5 pts
 2026,8e5b5fc6829c6204c73178807614cd97,2026-10-17T19:30:00Z,Texas Tech Red Raiders,Arizona State Sun Devils,2026-10-12T08:43:12Z,11.51619,19.5871,20.12767,8.071,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
