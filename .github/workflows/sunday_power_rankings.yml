@@ -1,8 +1,10 @@
 name: Publish Sunday power rankings
 on:
   schedule:
-    # 1 PM America/Chicago is 18:00 UTC in CDT, 19:00 UTC in CST.
-    - cron: "0 18,19 * * 0"
+    # Timezone-aware retries avoid DST ambiguity and top-of-hour queue congestion.
+    # Publisher is idempotent and refuses to overwrite an existing weekly snapshot.
+    - cron: "5,20,35,50 13 * * 0"
+      timezone: "America/Chicago"
   workflow_dispatch:
 permissions:
   contents: write
