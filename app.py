@@ -2041,3 +2041,97 @@ with st.expander("Run shadow V3 comparison (research only)", expanded=False):
                         file_name=f"JarzCFB_shadow_v3_audit_{shadow_year}.csv", mime="text/csv", key="shadow_v3_download")
             except Exception as exc:
                 st.error(f"Shadow V3 audit failed: {exc}")
+
+
+# --- Research-only: frozen V3 edge reliability audit ---
+# Reads historical frozen selections and optional existing classification snapshot.
+# Does not modify, regrade, or filter production records.
+def _edge_reliability_research(graded, cohort=None):
+    x = graded.copy()
+    required = {"season", "game_id", "model_version", "edge_points", "grading_status", "selection_result", "one_unit_profit"}
+    missing = required - set(x.columns)
+    if missing:
+        raise ValueError("Missing required graded columns: " + ", ".join(sorted(missing)))
+    x = x[x["model_version"].astype(str).str.lower().eq("v3")].copy()
+    x["edge_points"] = pd.to_numeric(x["edge_points"], errors="coerce").abs()
+    x["one_unit_profit"] = pd.to_numeric(x["one_unit_profit"], errors="coerce")
+    x["captured_at_utc"] = pd.to_datetime(x.get("captured_at_utc", pd.Series(index=x.index, dtype="object")), utc=True, errors="coerce")
+    # Preserve the first frozen qualifying quote for each game/model, rather than cherry-picking later lines.
+    x = x.sort_values("captured_at_utc", kind="stable").drop_duplicates(["season", "game_id", "model_version"], keep="first")
+    x["result"] = x["selection_result"].astype(str).str.lower().str.strip()
+    x["settled"] = x["grading_status"].astype(str).str.lower().eq("settled") & x["result"].isin(["win", "loss", "push"])
+    x["edge_band"] = pd.cut(x["edge_points"], [-0.00001, 3, 5, 7, 10, float("inf")], labels=["0–3", "3–5", "5–7", "7–10", "10+"]) 
+    x["market_age_hours"] = (x["captured_at_utc"] - pd.to_datetime(x.get("market_last_update_utc", pd.Series(index=x.index, dtype="object")), utc=True, errors="coerce")).dt.total_seconds() / 3600
+    if cohort is not None and not cohort.empty and {"season", "game_id"}.issubset(cohort.columns):
+        c = cohort.copy()
+        keep = [v for v in ["season", "game_id", "investigation_status", "v1_v2_disagreement"] if v in c.columns]
+        c = c[keep].drop_duplicates(["season", "game_id"], keep="first")
+        x = x.merge(c, on=["season", "game_id"], how="left", suffixes=("", "_audit"))
+        for field in ["investigation_status", "v1_v2_disagreement"]:
+            if field + "_audit" in x:
+                if field in x:
+                    x[field] = x[field].combine_first(x[field + "_audit"])
+                else:
+                    x[field] = x[field + "_audit"]
+                x.drop(columns=[field + "_audit"], inplace=True)
+    if "v1_v2_disagreement" in x:
+        x["v1_v2_disagreement"] = pd.to_numeric(x["v1_v2_disagreement"], errors="coerce")
+        x["agreement_band"] = pd.cut(x["v1_v2_disagreement"], [-0.00001, 3, 7, float("inf")], labels=["Close (≤3)", "Moderate (3–7)", "Wide (>7)"])
+        x["agreement_band"] = x["agreement_band"].astype("object").fillna("Unknown")
+    else:
+        x["agreement_band"] = "Unknown"
+    x["investigation_status"] = x.get("investigation_status", pd.Series("Unknown", index=x.index)).fillna("Unknown").astype(str).str.upper()
+    return x
+
+
+def _edge_audit_summary(data, groups):
+    rows = []
+    for group, part in data.groupby(groups, observed=True, dropna=False):
+        if not isinstance(group, tuple):
+            group = (group,)
+        done = part[part["settled"]]
+        wins = int((done["result"] == "win").sum())
+        losses = int((done["result"] == "loss").sum())
+        pushes = int((done["result"] == "push").sum())
+        units = done["one_unit_profit"].sum(min_count=1)
+        rows.append(dict(zip(groups, group)) | {"Frozen picks": len(part), "Settled": len(done), "Wins": wins,
+            "Losses": losses, "Pushes": pushes, "Win % (ex push)": 100*wins/(wins+losses) if wins+losses else float("nan"),
+            "Units": units, "ROI %": 100*units/len(done) if len(done) and pd.notna(units) else float("nan")})
+    return pd.DataFrame(rows)
+
+st.divider()
+st.subheader("Research audit · Extreme-edge reliability (frozen V3)")
+st.caption("Read-only analysis of first frozen V3 selection per game. No retroactive reclassification, pick deletion, or production filter changes. Small cohorts are descriptive, not validated betting strategies.")
+with st.expander("Analyze edge bands, V1/V2 agreement, and market freshness", expanded=False):
+    from pathlib import Path as _EdgePath
+    _edge_graded_path = _EdgePath("prospective/graded_selections.csv")
+    _edge_cohort_path = _EdgePath("prospective/investigation_cohort.csv")
+    if not _edge_graded_path.exists():
+        st.info("No local prospective/graded_selections.csv found. The research audit requires your frozen grading data.")
+    elif st.button("Run frozen V3 edge audit", key="run_frozen_v3_edge_audit"):
+        try:
+            _edge_graded = pd.read_csv(_edge_graded_path)
+            _edge_cohort = pd.read_csv(_edge_cohort_path) if _edge_cohort_path.exists() else None
+            _edge_data = _edge_reliability_research(_edge_graded, _edge_cohort)
+            _edge_settled = _edge_data[_edge_data["settled"]]
+            st.write(f"Frozen V3 games: **{len(_edge_data)}** · Settled: **{len(_edge_settled)}** · Pending/unsettled: **{len(_edge_data)-len(_edge_settled)}**")
+            if len(_edge_settled) < 30:
+                st.warning("Fewer than 30 settled V3 games. Treat all subgroup results as highly uncertain.")
+            st.markdown("**By edge magnitude**")
+            st.dataframe(_edge_audit_summary(_edge_data, ["edge_band"]), hide_index=True, use_container_width=True)
+            st.markdown("**Extreme edges (10+) by model agreement**")
+            _edge_extreme = _edge_data[_edge_data["edge_points"] >= 10]
+            st.dataframe(_edge_audit_summary(_edge_extreme, ["agreement_band"]), hide_index=True, use_container_width=True)
+            st.markdown("**Extreme edges (10+) by existing investigation status**")
+            st.dataframe(_edge_audit_summary(_edge_extreme, ["investigation_status"]), hide_index=True, use_container_width=True)
+            st.markdown("**By V1/V2 agreement (all edge sizes)**")
+            st.dataframe(_edge_audit_summary(_edge_data, ["agreement_band"]), hide_index=True, use_container_width=True)
+            st.markdown("**Market freshness diagnostic**")
+            _edge_data["freshness_band"] = pd.cut(_edge_data["market_age_hours"], [-float("inf"), 0, 1, 6, 24, float("inf")], labels=["Future timestamp", "≤1 hour", "1–6 hours", "6–24 hours", ">24 hours"])
+            _edge_data["freshness_band"] = _edge_data["freshness_band"].astype("object").fillna("Unknown")
+            st.dataframe(_edge_audit_summary(_edge_data, ["freshness_band"]), hide_index=True, use_container_width=True)
+            st.caption("Market freshness is calculated from captured_at_utc minus market_last_update_utc; missing timestamps are Unknown. The research does not assume the quoted spread was available at another time.")
+            _edge_export_cols = [c for c in ["season", "game_id", "kickoff_utc", "captured_at_utc", "home_team", "away_team", "selection", "sportsbook", "spread", "edge_points", "edge_band", "v1_v2_disagreement", "agreement_band", "investigation_status", "market_age_hours", "freshness_band", "selection_result", "one_unit_profit", "grading_status", "settled"] if c in _edge_data.columns]
+            st.download_button("Download frozen V3 edge reliability audit CSV", _edge_data[_edge_export_cols].to_csv(index=False), file_name="JarzCFB_frozen_V3_edge_reliability.csv", mime="text/csv", key="edge_audit_csv")
+        except Exception as _edge_exc:
+            st.error(f"Edge audit failed: {_edge_exc}")
