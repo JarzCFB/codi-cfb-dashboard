@@ -2169,7 +2169,7 @@ def _weekly_quality_monitor(graded, cohort=None):
 
 st.divider()
 st.subheader("Research monitor · Weekly frozen V3 pick quality")
-st.caption("Read-only diagnostics. Extreme edges are review flags, not exclusions; the 5–7 band is descriptive, not a proven strategy. Historical division membership is not independently verified.")
+st.caption("Read-only diagnostics. Extreme edges are review flags, not exclusions; the 5–7 band is descriptive, not a proven strategy. Historical division membership is not independently verified. North Dakota State and Sacramento State are conservatively flagged for season-specific review.")
 with st.expander("Review frozen picks, kickoff timing, and data-quality flags", expanded=False):
     from pathlib import Path as _QualityPath
     _quality_graded_path = _QualityPath("prospective/graded_selections.csv")
