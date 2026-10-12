@@ -2202,3 +2202,64 @@ with st.expander("Review frozen picks, kickoff timing, and data-quality flags", 
             st.download_button("Download weekly pick quality monitor CSV", _quality_data[_quality_cols].to_csv(index=False), file_name="JarzCFB_weekly_pick_quality.csv", mime="text/csv", key="weekly_pick_quality_csv")
         except Exception as _quality_exc:
             st.error(f"Weekly pick quality monitor failed: {_quality_exc}")
+
+
+# --- Research-only weekly betting decision board ---
+# Never alters, filters, or overwrites frozen prospective records.
+def _weekly_decision_board(graded, cohort=None):
+    q = _weekly_quality_monitor(graded, cohort).copy()
+    q = q.loc[~q["settled"].fillna(False)].copy()
+    q["kickoff_at"] = pd.to_datetime(q["kickoff_utc"], utc=True, errors="coerce")
+    q["division_alert"] = q["division_check_current"].ne("FBS vs FBS")
+    q["extreme_alert"] = pd.to_numeric(q["edge_points"], errors="coerce").ge(10)
+    q["timing_alert"] = (q["hours_before_kickoff"].isna() | q["hours_before_kickoff"].lt(0)
+                          | q["market_age_hours"].isna() | q["market_age_hours"].lt(0))
+    q["early_capture"] = q["hours_before_kickoff"].gt(72)
+    q["review_priority"] = q.apply(lambda r: (
+        "VERIFY DIVISION / HOLD" if r["division_alert"] else
+        "VERIFY TIMESTAMPS" if r["timing_alert"] else
+        "REVIEW EXTREME EDGE" if r["extreme_alert"] else
+        "STANDARD REVIEW"), axis=1)
+    q["observed_edge_band"] = q["edge_points"].between(5, 7, inclusive="left")
+    q["review_notes"] = q.apply(lambda r: "; ".join(z for ok,z in [
+        (r["division_alert"], "Team eligibility unresolved; do not treat as verified FBS"),
+        (r["timing_alert"], "Check capture and market timestamps"),
+        (r["extreme_alert"], "10+ edge: independently confirm teams, injuries and spread"),
+        (r["early_capture"], "Captured >72h before kickoff; compare fresh market before betting"),
+        (r["observed_edge_band"], "5–7 band: historically positive, not a validated advantage")
+    ] if ok) or "Standard pre-bet checks", axis=1)
+    q["review_sort"] = q["review_priority"].map({"VERIFY DIVISION / HOLD":0,
+        "VERIFY TIMESTAMPS":1,"REVIEW EXTREME EDGE":2,"STANDARD REVIEW":3})
+    return q.sort_values(["review_sort","kickoff_at","edge_points"], ascending=[True,True,False])
+
+st.divider()
+st.subheader("Research board · Upcoming frozen V3 decisions")
+st.caption("Read-only review queue, NOT a betting recommendation or confidence score. No production selections, spreads, model weights or grading are changed. Review statuses do not prove a positive expected value.")
+with st.expander("Inspect pending picks and export review queue", expanded=False):
+    from pathlib import Path as _DecisionPath
+    _decision_graded_path = _DecisionPath("prospective/graded_selections.csv")
+    _decision_cohort_path = _DecisionPath("prospective/investigation_cohort.csv")
+    if not _decision_graded_path.exists():
+        st.info("The board requires prospective/graded_selections.csv.")
+    elif st.button("Build upcoming decision board", key="build_v3_decision_board"):
+        try:
+            _dg = pd.read_csv(_decision_graded_path)
+            _dc = pd.read_csv(_decision_cohort_path) if _decision_cohort_path.exists() else None
+            _board = _weekly_decision_board(_dg, _dc)
+            st.write(f"**{len(_board)} pending frozen V3 selections**")
+            _bc1,_bc2,_bc3,_bc4 = st.columns(4)
+            _bc1.metric("Division holds", int((_board["review_priority"] == "VERIFY DIVISION / HOLD").sum()))
+            _bc2.metric("Timestamp reviews", int((_board["review_priority"] == "VERIFY TIMESTAMPS").sum()))
+            _bc3.metric("Extreme edge reviews", int((_board["review_priority"] == "REVIEW EXTREME EDGE").sum()))
+            _bc4.metric("Standard review", int((_board["review_priority"] == "STANDARD REVIEW").sum()))
+            st.caption("Priority counts are mutually exclusive. An item can have multiple flags, shown in review notes. No automatic betting approval is given.")
+            _weeks = sorted(_board["kickoff_week_utc"].dropna().unique().tolist())
+            _week_filter = st.selectbox("Kickoff week (UTC)", ["All pending weeks"] + _weeks, key="decision_week_filter")
+            _view = _board if _week_filter == "All pending weeks" else _board[_board["kickoff_week_utc"] == _week_filter]
+            _columns = [c for c in ["kickoff_week_utc","kickoff_utc","home_team","away_team","selection","edge_points","edge_band","investigation_status","division_check_current","review_priority","hours_before_kickoff","market_age_hours","review_notes","game_id"] if c in _view.columns]
+            st.dataframe(_view[_columns], hide_index=True, use_container_width=True)
+            st.download_button("Download pending V3 decision board CSV", _board[_columns].to_csv(index=False),
+                file_name="JarzCFB_upcoming_decision_board.csv", mime="text/csv", key="download_v3_decision_board")
+            st.info("Before placing any wager, verify the matchup and division, confirm the current available sportsbook line, and check major roster/news changes. Early-week frozen lines may no longer be available.")
+        except Exception as _board_exc:
+            st.error(f"Decision board failed: {_board_exc}")
