@@ -14,7 +14,17 @@ def _known_fcs(name):
     n=normalize(name)
     return canonical_school(ALIASES.get(n,n)) in KNOWN_FCS or any(n == k or n.startswith(k+' ') for k in KNOWN_FCS)
 
+# Provisional-transition teams require an independently verified season roster.
+# The research monitor fails closed; no historical pick is modified.
+PROVISIONAL_FBS_REVIEW = frozenset({'north dakota state', 'sacramento state'})
+
+def _provisional(name):
+    n = normalize(name)
+    return any(n == s or n.startswith(s + ' ') for s in PROVISIONAL_FBS_REVIEW)
+
 def matchup_status(home, away):
+    if _provisional(home) or _provisional(away):
+        return 'Season-specific FBS status requires verification'
     # Shared matcher resolves sportsbook mascot names and CFBD school aliases.
     if _known_fcs(home) or _known_fcs(away):
         return 'Unverified division / FCS: model suppressed'
