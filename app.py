@@ -632,11 +632,11 @@ else:
             # Full frozen-market diagnostics remain in the CSV export, not
             # crowded into the main projection view.
             headline = final_projections[[
-                "Kickoff UTC", "Matchup", "Final model projection", "Market line",
-                "Model edge team", "Model edge (pts)", "Live confidence (1–10)",
-                "Investigation status", "Winner disagreement", "Official frozen pick status",
+                "Live confidence (1–10)", "Final model projection", "Investigation status",
+                "Kickoff UTC", "Matchup", "Market line", "Model edge team",
+                "Model edge (pts)", "Winner disagreement", "Official frozen pick status",
             ]].copy()
-            headline.insert(0, "Kickoff CT", format_central(headline["Kickoff UTC"]))
+            headline.insert(3, "Kickoff CT", format_central(headline["Kickoff UTC"]))
             headline = headline.drop(columns=["Kickoff UTC"])
             st.caption("LIVE confidence: experimental 1–7/10 scale for every game; "
                        "not an ATS win probability, guarantee, or suggested unit stake. "
@@ -644,14 +644,23 @@ else:
 
             sort_view=st.radio(
                 "Table order",
-                ["Biggest model edges first","Kickoff time"],
+                ["Highest confidence first", "Biggest model edges first", "Kickoff time"],
                 horizontal=True,
-                key="final_projection_sort"
+                key="final_projection_sort_v2"
             )
-            if sort_view=="Biggest model edges first":
-                headline=headline.assign(_sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")).sort_values(
-                    "_sort_edge",ascending=False,na_position="last"
+            if sort_view == "Highest confidence first":
+                headline = headline.assign(
+                    _sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")
+                ).sort_values(
+                    ["Live confidence (1–10)", "_sort_edge"],
+                    ascending=[False, False], na_position="last"
                 ).drop(columns="_sort_edge").reset_index(drop=True)
+            elif sort_view == "Biggest model edges first":
+                headline = headline.assign(
+                    _sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")
+                ).sort_values("_sort_edge", ascending=False, na_position="last").drop(
+                    columns="_sort_edge"
+                ).reset_index(drop=True)
 
             def highlight_model_edges(row):
                 edge=pd.to_numeric(row.get("Model edge (pts)"),errors="coerce")
