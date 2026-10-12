@@ -2343,6 +2343,10 @@ with st.expander("Fetch current sportsbook lines and export revalidation",expand
                 _frozen_cols=["game_id","captured_at_utc","sportsbook_key","sportsbook","spread","projected_home_margin","model_version"]
                 _frozen=_graded[_frozen_cols].drop_duplicates(subset=["game_id","captured_at_utc"])
                 _pending=_pending.drop(columns=[c for c in _frozen_cols if c not in ["game_id","captured_at_utc"] and c in _pending.columns])
+                # CSV reads timestamps as strings; the decision board parses them to UTC datetimes.
+                # Normalize both merge keys so pandas does not merge datetime64[ns, UTC] with object.
+                _pending["captured_at_utc"] = pd.to_datetime(_pending["captured_at_utc"], utc=True, errors="coerce")
+                _frozen["captured_at_utc"] = pd.to_datetime(_frozen["captured_at_utc"], utc=True, errors="coerce")
                 _pending=_pending.merge(_frozen,on=["game_id","captured_at_utc"],how="left",validate="many_to_one")
                 _pending=_pending.loc[_pending["model_version"].astype(str).str.lower().eq("v3")].copy()
                 _raw,_headers=api_get(ODDS_URL,params={"apiKey":secret("ODDS_API_KEY"),"regions":"us","markets":"spreads","oddsFormat":"american","dateFormat":"iso"})
