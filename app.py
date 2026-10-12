@@ -2135,3 +2135,70 @@ with st.expander("Analyze edge bands, V1/V2 agreement, and market freshness", ex
             st.download_button("Download frozen V3 edge reliability audit CSV", _edge_data[_edge_export_cols].to_csv(index=False), file_name="JarzCFB_frozen_V3_edge_reliability.csv", mime="text/csv", key="edge_audit_csv")
         except Exception as _edge_exc:
             st.error(f"Edge audit failed: {_edge_exc}")
+
+
+# --- Research-only weekly pick quality monitor ---
+# Existing frozen selections remain unchanged. This view never writes source CSVs.
+def _weekly_quality_monitor(graded, cohort=None):
+    x = _edge_reliability_research(graded, cohort)
+    x["kickoff_at"] = pd.to_datetime(x.get("kickoff_utc", pd.Series(index=x.index, dtype="object")), utc=True, errors="coerce")
+    x["hours_before_kickoff"] = (x["kickoff_at"] - x["captured_at_utc"]).dt.total_seconds() / 3600
+    x["capture_timing"] = pd.cut(x["hours_before_kickoff"],
+        [-float("inf"), 0, 1, 6, 24, 72, float("inf")],
+        labels=["After kickoff / invalid", "0–1h before", "1–6h before", "6–24h before", "1–3 days before", ">3 days before"])
+    x["capture_timing"] = x["capture_timing"].astype("object").fillna("Unknown")
+    x["quote_freshness"] = pd.cut(x["market_age_hours"],
+        [-float("inf"), -0.001, 1, 6, 24, float("inf")],
+        labels=["Future update / invalid", "≤1h old at capture", "1–6h old", "6–24h old", ">24h old"])
+    x["quote_freshness"] = x["quote_freshness"].astype("object").fillna("Unknown")
+    x["division_check_current"] = x.apply(lambda r: matchup_status(str(r.get("home_team", "")), str(r.get("away_team", ""))), axis=1)
+    x["division_review"] = x["division_check_current"].ne("FBS vs FBS")
+    # Current eligibility gate is NOT a season-specific historical membership registry.
+    x["season_membership_verified"] = False
+    x["edge_10plus_review"] = x["edge_points"].ge(10)
+    x["edge_5to7_observation"] = x["edge_points"].ge(5) & x["edge_points"].lt(7)
+    x["timestamp_review"] = x["hours_before_kickoff"].lt(0) | x["market_age_hours"].lt(-0.001) | x["hours_before_kickoff"].isna()
+    x["review_reasons"] = x.apply(lambda r: "; ".join(v for condition,v in [
+        (r["edge_10plus_review"], "Extreme edge ≥10: review"),
+        (r["division_review"], "Division match unresolved by current gate"),
+        (r["timestamp_review"], "Invalid or missing timestamp"),
+        (pd.isna(r["market_age_hours"]), "Missing market-update time")
+    ] if condition) or "No automatic alert", axis=1)
+    x["kickoff_week_utc"] = x["kickoff_at"].dt.strftime("%G-W%V")
+    return x
+
+st.divider()
+st.subheader("Research monitor · Weekly frozen V3 pick quality")
+st.caption("Read-only diagnostics. Extreme edges are review flags, not exclusions; the 5–7 band is descriptive, not a proven strategy. Historical division membership is not independently verified.")
+with st.expander("Review frozen picks, kickoff timing, and data-quality flags", expanded=False):
+    from pathlib import Path as _QualityPath
+    _quality_graded_path = _QualityPath("prospective/graded_selections.csv")
+    _quality_cohort_path = _QualityPath("prospective/investigation_cohort.csv")
+    if not _quality_graded_path.exists():
+        st.info("No prospective/graded_selections.csv found; frozen selection data is required.")
+    elif st.button("Run weekly pick quality monitor", key="run_weekly_pick_quality"):
+        try:
+            _quality_graded = pd.read_csv(_quality_graded_path)
+            _quality_cohort = pd.read_csv(_quality_cohort_path) if _quality_cohort_path.exists() else None
+            _quality_data = _weekly_quality_monitor(_quality_graded, _quality_cohort)
+            _quality_settled = _quality_data[_quality_data["settled"]]
+            st.write(f"Frozen V3 games: **{len(_quality_data)}** · Settled: **{len(_quality_settled)}** · Pending: **{len(_quality_data)-len(_quality_settled)}**")
+            a,b,c = st.columns(3)
+            a.metric("Extreme-edge review flags", int(_quality_data["edge_10plus_review"].sum()))
+            b.metric("Current division-gate alerts", int(_quality_data["division_review"].sum()))
+            c.metric("Timestamp review flags", int(_quality_data["timestamp_review"].sum()))
+            st.warning("Division check uses the current FBS school gate, not a verified season-by-season registry. A 'FBS vs FBS' result does not certify historical membership.")
+            st.markdown("**Results by edge band (observational)**")
+            st.dataframe(_edge_audit_summary(_quality_data, ["edge_band"]), hide_index=True, use_container_width=True)
+            st.markdown("**Results by kickoff week**")
+            st.dataframe(_edge_audit_summary(_quality_data, ["kickoff_week_utc"]), hide_index=True, use_container_width=True)
+            st.markdown("**Results by time from capture to kickoff**")
+            st.dataframe(_edge_audit_summary(_quality_data, ["capture_timing"]), hide_index=True, use_container_width=True)
+            st.markdown("**Results by quote freshness at capture**")
+            st.dataframe(_edge_audit_summary(_quality_data, ["quote_freshness"]), hide_index=True, use_container_width=True)
+            st.markdown("**Review queue (includes pending and settled; no picks are removed)**")
+            _quality_cols = [v for v in ["season","game_id","kickoff_week_utc","kickoff_utc","home_team","away_team","selection","edge_points","edge_band","investigation_status","division_check_current","hours_before_kickoff","market_age_hours","capture_timing","quote_freshness","review_reasons","grading_status","selection_result","one_unit_profit"] if v in _quality_data.columns]
+            st.dataframe(_quality_data.loc[_quality_data["review_reasons"].ne("No automatic alert"), _quality_cols], hide_index=True, use_container_width=True)
+            st.download_button("Download weekly pick quality monitor CSV", _quality_data[_quality_cols].to_csv(index=False), file_name="JarzCFB_weekly_pick_quality.csv", mime="text/csv", key="weekly_pick_quality_csv")
+        except Exception as _quality_exc:
+            st.error(f"Weekly pick quality monitor failed: {_quality_exc}")
