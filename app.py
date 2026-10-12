@@ -425,35 +425,76 @@ else:
             # Research overlay INSIDE the existing final-projections table.
             # Left join: never filter or remove a live projection (including Nebraska).
             # Frozen confidence and refreshed same-book spreads are distinct from live V3.
+            # IMPORTANT: CFBD uses numeric game IDs, while the frozen Odds API
+            # journal uses UUIDs. Never join these two providers on game_id.
+            # Use BOTH independently matched home/away identities and kickoff.
             _coverage = st.session_state.get("jarz_latest_confidence_coverage")
-            if _coverage is not None and not _coverage.empty:
-                _coverage = _coverage.copy()
-                _coverage["_game_key"] = _coverage["game_id"].astype(str).str.replace(r"\.0$", "", regex=True)
-                final_projections["_game_key"] = final_projections["Game ID"].astype(str).str.replace(r"\.0$", "", regex=True)
-                _extra = {
-                    "selection": "Frozen V3 selection",
-                    "experimental_confidence_1_to_10": "Confidence (1–10)",
-                    "decision_status": "Bet review status",
-                    "current_sportsbook": "Verified sportsbook",
-                    "current_spread": "Fresh frozen-pick spread",
-                    "current_american_odds": "Fresh odds",
-                    "current_edge_points": "Frozen V3 edge at fresh line",
-                    "edge_change_points": "Frozen edge movement",
-                    "match_status": "Market verification",
-                    "division_check_current": "Division check",
-                    "confidence_explanation": "Confidence notes",
-                }
-                _overlay = _coverage[["_game_key"] + [c for c in _extra if c in _coverage.columns]].copy()
-                _overlay = _overlay.drop_duplicates("_game_key", keep="first").rename(columns=_extra)
-                _before = len(final_projections)
-                final_projections = final_projections.merge(_overlay, on="_game_key", how="left", validate="many_to_one")
-                if len(final_projections) != _before:
-                    raise ValueError("Final projection count changed during confidence overlay")
-                final_projections = final_projections.drop(columns=["_game_key"])
+            _extra = {
+                "selection": "Frozen V3 selection",
+                "experimental_confidence_1_to_10": "Confidence (1–10)",
+                "decision_status": "Bet review status",
+                "current_sportsbook": "Verified sportsbook",
+                "current_spread": "Fresh frozen-pick spread",
+                "current_american_odds": "Fresh odds",
+                "current_edge_points": "Frozen V3 edge at fresh line",
+                "edge_change_points": "Frozen edge movement",
+                "match_status": "Market verification",
+                "division_check_current": "Division check",
+                "confidence_explanation": "Confidence notes",
+            }
+            for _display_name in _extra.values():
+                final_projections[_display_name] = pd.NA
+            if isinstance(_coverage, pd.DataFrame) and not _coverage.empty:
+                _matched = 0
+                _ambiguous = 0
+                for _idx, _projection in final_projections.iterrows():
+                    _matchup = str(_projection.get("Matchup", ""))
+                    if " @ " not in _matchup:
+                        continue
+                    _away, _home = _matchup.rsplit(" @ ", 1)
+                    _kick = pd.to_datetime(_projection["Kickoff UTC"], utc=True, errors="coerce")
+                    if pd.isna(_kick):
+                        continue
+                    _candidates = []
+                    _team_matches = []
+                    for _, _frozen in _coverage.iterrows():
+                        if not (same_school_name(str(_frozen.get("home_team", "")), _home)
+                                and same_school_name(str(_frozen.get("away_team", "")), _away)):
+                            continue
+                        _team_matches.append(_frozen)
+                        _verified = pd.to_datetime(_frozen.get("verified_kickoff_utc"), utc=True, errors="coerce")
+                        _frozen_kick = pd.to_datetime(_frozen.get("kickoff_utc"), utc=True, errors="coerce")
+                        _times = [_verified] if pd.notna(_verified) else [_frozen_kick]
+                        if any(pd.notna(_t) and abs((_t - _kick).total_seconds()) <= 3 * 3600 for _t in _times):
+                            _candidates.append(_frozen)
+                    # Ambiguous or repeated matches must not silently attach a rating.
+                    if len(_candidates) == 1:
+                        _frozen = _candidates[0]
+                        for _source, _display_name in _extra.items():
+                            if _source in _frozen.index:
+                                final_projections.at[_idx, _display_name] = _frozen[_source]
+                        _matched += 1
+                    elif len(_candidates) > 1:
+                        final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_MATCH"
+                        _ambiguous += 1
+                    elif len(_team_matches) == 1:
+                        # Show the data-quality issue without assigning a misleading
+                        # rating or spread to a game with conflicting kickoff dates.
+                        final_projections.at[_idx, "Market verification"] = "KICKOFF_CONFLICT — REVIEW"
+                        final_projections.at[_idx, "Bet review status"] = "HOLD — schedule mismatch"
+                    elif len(_team_matches) > 1:
+                        final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_TEAM_MATCH"
+                        _ambiguous += 1
+                st.caption(f"Automatic confidence overlay: {_matched} of {len(final_projections)} live projections "
+                           f"matched to a frozen V3 selection; {_ambiguous} ambiguous. "
+                           "Other games remain in the table without an invented rating.")
             else:
-                st.caption("Fresh sportsbook and confidence data load automatically; pending the first refresh, these fields may be blank.")
-                for _name in ["Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook", "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line", "Frozen edge movement", "Market verification", "Division check", "Confidence notes"]:
-                    final_projections[_name] = pd.NA
+                _err = st.session_state.get("jarz_auto_coverage_error")
+                if _err:
+                    st.warning("Automatic market coverage failed: " + str(_err))
+                else:
+                    st.caption("Automatic sportsbook check is pending. Refreshing after first load; "
+                               "unmatched live games will have blank frozen-pick fields.")
 
             headline=final_projections[[
                 "Kickoff UTC","Matchup","Final model projection",
@@ -2570,9 +2611,9 @@ if _auto_now - _auto_last >= _auto_ttl:
                 _auto_pending = _auto_pending.merge(_auto_v3[_auto_join + _auto_original], on=_auto_join,
                                                     how="left", validate="one_to_one", indicator=True)
                 _auto_pending["frozen_record_match"] = _auto_pending.pop("_merge").astype(str)
-                _auto_events, _auto_headers = api_get(ODDS_URL, params={
-                    "apiKey": _auto_key, "regions": "us", "markets": "spreads",
-                    "oddsFormat": "american", "dateFormat": "iso"})
+                # Reuse the existing four-hour odds cache; do not spend an extra
+                # API request every 15 minutes just to populate the inline board.
+                _auto_events, _auto_remaining = odds_data(_auto_key, "spreads")
                 _auto_checked = datetime.now(timezone.utc).isoformat()
                 _auto_result = _fresh_market_revalidation(_auto_pending, _auto_events, _auto_checked)
                 _auto_result["frozen_record_match"] = _auto_pending["frozen_record_match"].to_numpy()
