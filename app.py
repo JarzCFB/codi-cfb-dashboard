@@ -467,6 +467,28 @@ else:
                         _times = [_verified] if pd.notna(_verified) else [_frozen_kick]
                         if any(pd.notna(_t) and abs((_t - _kick).total_seconds()) <= 3 * 3600 for _t in _times):
                             _candidates.append(_frozen)
+                        else:
+                            # Reconcile only when the independent live Odds API event
+                            # agrees with CFBD's kickoff, AND the frozen selection has
+                            # a verified same-book market match. Do not use team names
+                            # alone to override conflicting dates.
+                            _matching_events = [
+                                _ev for _ev in (data if isinstance(data, list) else [])
+                                if isinstance(_ev, dict)
+                                and same_school_name(str(_ev.get("home_team", "")), _home)
+                                and same_school_name(str(_ev.get("away_team", "")), _away)
+                                and pd.notna(pd.to_datetime(_ev.get("commence_time"), utc=True, errors="coerce"))
+                                and abs((pd.to_datetime(_ev.get("commence_time"), utc=True) - _kick).total_seconds()) <= 90 * 60
+                            ]
+                            if (len(_matching_events) == 1
+                                    and str(_frozen.get("match_status", "")) == "MATCHED_ORIGINAL_BOOK"):
+                                _reconciled = _frozen.copy()
+                                _reconciled["match_status"] = "RECONCILED — CFBD + LIVE ODDS AGREE"
+                                _reconciled["decision_status"] = "REVIEW — frozen kickoff differs"
+                                _reconciled["confidence_explanation"] = (
+                                    str(_frozen.get("confidence_explanation", ""))
+                                    + "; frozen kickoff differs; live CFBD and Odds API event agree")
+                                _candidates.append(_reconciled)
                     # Ambiguous or repeated matches must not silently attach a rating.
                     if len(_candidates) == 1:
                         _frozen = _candidates[0]
@@ -482,6 +504,16 @@ else:
                         # rating or spread to a game with conflicting kickoff dates.
                         final_projections.at[_idx, "Market verification"] = "KICKOFF_CONFLICT — REVIEW"
                         final_projections.at[_idx, "Bet review status"] = "HOLD — schedule mismatch"
+                        _frozen_only = _team_matches[0]
+                        _frozen_date = pd.to_datetime(_frozen_only.get("kickoff_utc"), utc=True, errors="coerce")
+                        _verified_date = pd.to_datetime(_frozen_only.get("verified_kickoff_utc"), utc=True, errors="coerce")
+                        _cfbd_date = _kick.strftime("%Y-%m-%d %H:%M UTC")
+                        _notes = ["CFBD " + _cfbd_date]
+                        if pd.notna(_frozen_date):
+                            _notes.append("frozen " + _frozen_date.strftime("%Y-%m-%d %H:%M UTC"))
+                        if pd.notna(_verified_date):
+                            _notes.append("verified " + _verified_date.strftime("%Y-%m-%d %H:%M UTC"))
+                        final_projections.at[_idx, "Confidence notes"] = " | ".join(_notes)
                     elif len(_team_matches) > 1:
                         final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_TEAM_MATCH"
                         _ambiguous += 1
