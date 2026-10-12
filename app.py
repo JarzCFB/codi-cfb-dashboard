@@ -543,6 +543,44 @@ else:
                     st.caption("Automatic sportsbook check is pending. Refreshing after first load; "
                                "unmatched live games will have blank frozen-pick fields.")
 
+            # Independent LIVE slate confidence for EVERY projected game. This is
+            # an experimental ordinal research score, not a frozen-pick score,
+            # probability, staking instruction, or backtested betting signal.
+            # No modification to locked V3, frozen selection, or grading.
+            def _live_confidence(row):
+                e = pd.to_numeric(row.get("Model edge (pts)"), errors="coerce")
+                gap = pd.to_numeric(row.get("V1/V2 disagreement (pts)"), errors="coerce")
+                v1m = pd.to_numeric(row.get("V1 margin"), errors="coerce")
+                v2m = pd.to_numeric(row.get("V2 margin"), errors="coerce")
+                if pd.isna(e):
+                    return 1, "No current spread; provisional 1/10 (not actionable)"
+                # Edge rewards are intentionally bounded. Larger edges alone
+                # cannot produce a high confidence rating.
+                score = 2 + min(4, int(float(e) // 2.5))
+                if pd.notna(gap):
+                    if gap >= 10:
+                        score -= 3
+                    elif gap >= 5:
+                        score -= 2
+                    elif gap >= 3:
+                        score -= 1
+                if pd.notna(v1m) and pd.notna(v2m) and (v1m >= 0) != (v2m >= 0):
+                    score -= 1
+                score = max(1, min(7, score))
+                note = (f"Live V3 edge {float(e):.1f} pts; "
+                        f"V1/V2 gap {float(gap):.1f} pts" if pd.notna(gap)
+                        else f"Live V3 edge {float(e):.1f} pts; V1/V2 gap unavailable")
+                return score, note + "; experimental, not validated"
+
+            _live_ratings = final_projections.apply(_live_confidence, axis=1)
+            final_projections["Live confidence (1–10)"] = _live_ratings.map(lambda x: x[0]).astype(int)
+            final_projections["Live confidence basis"] = _live_ratings.map(lambda x: x[1])
+            final_projections["Official frozen pick status"] = final_projections["Frozen V3 selection"].map(
+                lambda x: "Official frozen V3 pick" if pd.notna(x) and str(x).strip() else "Projection only"
+            )
+            # Preserve original frozen confidence distinctly from the new live score.
+            final_projections = final_projections.rename(columns={"Confidence (1–10)": "Frozen pick confidence (1–10)"})
+
             # Every projection gets an explicit data-availability explanation.
             # Missing frozen picks are NOT manufactured, and absent market
             # prices are NOT presented as executable offers.
@@ -555,11 +593,11 @@ else:
                     if pd.isna(_row.get("Bet review status")):
                         final_projections.at[_idx, "Bet review status"] = "PROJECTION ONLY — not a frozen bet"
                     final_projections.at[_idx, "Frozen V3 selection"] = "NOT SELECTED"
-                    final_projections.at[_idx, "Confidence (1–10)"] = "NOT RATED — no frozen pick"
+                    final_projections.at[_idx, "Frozen pick confidence (1–10)"] = "NOT RATED — no frozen pick"
                     if pd.isna(_row.get("Confidence notes")):
                         final_projections.at[_idx, "Confidence notes"] = "No frozen V3 selection for this matchup; confidence cannot be validated"
-                if _has_pick and pd.isna(_row.get("Confidence (1–10)")):
-                    final_projections.at[_idx, "Confidence (1–10)"] = "NOT RATED — verification hold"
+                if _has_pick and pd.isna(_row.get("Frozen pick confidence (1–10)")):
+                    final_projections.at[_idx, "Frozen pick confidence (1–10)"] = "NOT RATED — verification hold"
                 if _has_pick and pd.isna(_row.get("Bet review status")):
                     final_projections.at[_idx, "Bet review status"] = "HOLD — incomplete market verification"
                 if _has_pick and pd.isna(_row.get("Market verification")):
@@ -590,23 +628,19 @@ else:
             st.caption("Availability audit: all games have explicit statuses. NOT SELECTED is not a new wager; "
                        "NOT AVAILABLE means no verified same-book quote. No odds or confidence are fabricated.")
 
-            headline=final_projections[[
-                "Kickoff UTC","Matchup","Kickoff verification","Final model projection",
-                "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation",
-                "Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook",
-                "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line",
-                "Frozen edge movement", "Market verification", "Division check", "Confidence notes"
+            # Clean, single 7-day table: every game has a LIVE rating.
+            # Full frozen-market diagnostics remain in the CSV export, not
+            # crowded into the main projection view.
+            headline = final_projections[[
+                "Kickoff UTC", "Matchup", "Final model projection", "Market line",
+                "Model edge team", "Model edge (pts)", "Live confidence (1–10)",
+                "Investigation status", "Winner disagreement", "Official frozen pick status",
             ]].copy()
-            headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
-            headline=headline.drop(columns=["Kickoff UTC"])[[
-                "Kickoff CT","Matchup","Kickoff verification","Final model projection",
-                "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation",
-                "Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook",
-                "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line",
-                "Frozen edge movement", "Market verification", "Division check", "Confidence notes"
-            ]]
+            headline.insert(0, "Kickoff CT", format_central(headline["Kickoff UTC"]))
+            headline = headline.drop(columns=["Kickoff UTC"])
+            st.caption("LIVE confidence: experimental 1–7/10 scale for every game; "
+                       "not an ATS win probability, guarantee, or suggested unit stake. "
+                       "Frozen V3 picks are identified separately; full verification details are in the CSV.")
 
             sort_view=st.radio(
                 "Table order",
@@ -615,9 +649,9 @@ else:
                 key="final_projection_sort"
             )
             if sort_view=="Biggest model edges first":
-                headline=headline.sort_values(
-                    "Model edge (pts)",ascending=False,na_position="last"
-                ).reset_index(drop=True)
+                headline=headline.assign(_sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")).sort_values(
+                    "_sort_edge",ascending=False,na_position="last"
+                ).drop(columns="_sort_edge").reset_index(drop=True)
 
             def highlight_model_edges(row):
                 edge=pd.to_numeric(row.get("Model edge (pts)"),errors="coerce")
@@ -647,10 +681,7 @@ else:
             export_final=final_projections.copy()
             export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
             st.dataframe(styled_headline,hide_index=True,use_container_width=True)
-            st.caption("Confidence and refreshed sportsbook fields are research-only and appear directly in the table above. "
-                       "Blank confidence fields mean no corresponding frozen V3 pick was found or market coverage has not been refreshed. "
-                       "The live V3 edge and frozen V3 edge at a fresh line are intentionally different calculations. "
-                       "Ratings are provisional, capped at 7/10, and are not recommended cash stakes.")
+            st.caption("All projected games have a live confidence score. Frozen-pick research and market verification details are retained in the downloadable CSV.")
             st.download_button(
                 "Download complete final model projections",
                 export_final.to_csv(index=False),
