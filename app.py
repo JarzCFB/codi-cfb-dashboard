@@ -1922,3 +1922,122 @@ with st.expander("Compare V1 training eligibility (research only)", expanded=Fal
                         file_name=f"JarzCFB_v1_fbs_audit_{audit_season}.csv", mime="text/csv", key="v1_audit_download")
             except Exception as exc:
                 st.error(f"V1 eligibility audit failed: {exc}")
+
+
+# ---------------------------------------------------------------------------
+# SHADOW V3 research audit. Production V3 and frozen records are NOT modified.
+# Both variants use identical historical V2, 25/75 blend and fixed calibration.
+# ---------------------------------------------------------------------------
+def _shadow_v3_walkforward(prior_season_games, season_games, first_test_week, shrinkage, home_field):
+    from collections import defaultdict
+    from cfb_v2_experimental import build_v2
+    grouped = defaultdict(list)
+    seen = set()
+    for raw in season_games:
+        if not isinstance(raw, dict) or not raw.get("completed"):
+            continue
+        if str(raw.get("seasonType", raw.get("season_type", "regular"))).lower() != "regular":
+            continue
+        h = raw.get("homeTeam", raw.get("home_team"))
+        a = raw.get("awayTeam", raw.get("away_team"))
+        hp = raw.get("homePoints", raw.get("home_points"))
+        ap = raw.get("awayPoints", raw.get("away_points"))
+        kickoff = pd.to_datetime(raw.get("startDate", raw.get("start_date")), utc=True, errors="coerce")
+        try:
+            week = int(raw.get("week"))
+            hp, ap = float(hp), float(ap)
+        except (ValueError, TypeError):
+            continue
+        if not h or not a or pd.isna(kickoff) or not np.isfinite(hp) or not np.isfinite(ap) or (hp == 0 and ap == 0):
+            continue
+        gid = raw.get("id")
+        identity = ("id", gid) if gid is not None else ("match", week, key_name(h), key_name(a))
+        if identity in seen:
+            continue
+        seen.add(identity)
+        grouped[week].append(raw)
+
+    past = []
+    results = []
+    training_counts = []
+    for week in sorted(grouped):
+        week_games = grouped[week]
+        if week >= first_test_week and past:
+            first_kickoff = min(pd.to_datetime(g.get("startDate", g.get("start_date")), utc=True) for g in week_games)
+            asof = first_kickoff.to_pydatetime()
+            eligible_past = [g for g in past if model_allowed(
+                g.get("homeTeam", g.get("home_team")),
+                g.get("awayTeam", g.get("away_team")))]
+            v1_base, base_count = build_ratings(past, 0, shrinkage, home_field, asof=asof)
+            v1_fbs, fbs_count = build_ratings(eligible_past, 0, shrinkage, home_field, asof=asof)
+            # Build historical V2 at the same as-of timestamp for BOTH challengers.
+            v2, info = build_v2(prior_season_games, past, asof, home_field, shrinkage)
+            training_counts.append({"Week": week, "V1 all training": base_count,
+                "V1 FBS-only training": fbs_count, "V2 current training": info["current_games"]})
+            for g in week_games:
+                h = g.get("homeTeam", g.get("home_team"))
+                a = g.get("awayTeam", g.get("away_team"))
+                if not model_allowed(h, a):
+                    continue
+                ratings = [find_rating(h, r) for r in (v1_base, v1_fbs, v2)] + [find_rating(a, r) for r in (v1_base, v1_fbs, v2)]
+                if any(x is None or not np.isfinite(float(x)) for x in ratings):
+                    continue
+                bh, fh, vh, ba, fa, va = map(float, ratings)
+                old_v1 = bh-ba+home_field
+                new_v1 = fh-fa+home_field
+                v2_margin = vh-va+home_field
+                old_v3 = final_model_projection(old_v1, v2_margin)
+                new_v3 = final_model_projection(new_v1, v2_margin)
+                actual = float(g.get("homePoints", g.get("home_points")))-float(g.get("awayPoints", g.get("away_points")))
+                results.append({"Week": week, "Game ID": g.get("id"), "Matchup": f"{a} @ {h}",
+                    "Kickoff UTC": g.get("startDate", g.get("start_date")),
+                    "Actual home margin": actual, "Current V1 margin": old_v1,
+                    "FBS-only V1 margin": new_v1, "Common V2 margin": v2_margin,
+                    "Official-formula baseline V3 margin": old_v3,
+                    "Shadow FBS-only V3 margin": new_v3,
+                    "Baseline V3 absolute error": abs(old_v3-actual),
+                    "Shadow V3 absolute error": abs(new_v3-actual),
+                    "Baseline V3 winner correct": ((old_v3>0)==(actual>0)) if actual!=0 else np.nan,
+                    "Shadow V3 winner correct": ((new_v3>0)==(actual>0)) if actual!=0 else np.nan,
+                    "Shadow minus baseline absolute error": abs(new_v3-actual)-abs(old_v3-actual)})
+        past.extend(week_games)
+    return pd.DataFrame(results), pd.DataFrame(training_counts)
+
+
+st.divider()
+st.subheader("Research audit · Shadow V3 vs current V3")
+st.caption("Historical paired walk-forward research only. Both variants use the same V2 ratings, fixed V3 25%/75% blend and fixed calibration. No prospective files, frozen picks, production ratings, or grades are changed. Current FBS membership is applied retrospectively; interpret older seasons cautiously.")
+with st.expander("Run shadow V3 comparison (research only)", expanded=False):
+    shadow_year = st.number_input("Shadow audit season", min_value=2021, max_value=2025, value=2025, step=1, key="shadow_v3_year")
+    shadow_week = st.slider("First test week", min_value=3, max_value=10, value=5, key="shadow_v3_week")
+    if st.button("Run paired shadow V3 comparison", key="run_shadow_v3"):
+        if not ok_cfbd:
+            st.error("CFBD API key required.")
+        else:
+            try:
+                with st.spinner("Building historical V1/V2 ratings for each week…"):
+                    shadow_games = games_data(secret("CFBD_API_KEY"), int(shadow_year))
+                    shadow_prior = games_data(secret("CFBD_API_KEY"), int(shadow_year)-1)
+                    shadow_rows, shadow_training = _shadow_v3_walkforward(
+                        shadow_prior, shadow_games, shadow_week, shrink, home_adv)
+                if shadow_rows.empty:
+                    st.warning("No common historical FBS games could be projected. Check season and source data.")
+                else:
+                    baseline_mae = shadow_rows["Baseline V3 absolute error"].mean()
+                    challenger_mae = shadow_rows["Shadow V3 absolute error"].mean()
+                    settled = shadow_rows[shadow_rows["Actual home margin"] != 0]
+                    baseline_wins = settled["Baseline V3 winner correct"].mean()
+                    challenger_wins = settled["Shadow V3 winner correct"].mean()
+                    a,b,c,d = st.columns(4)
+                    a.metric("Same games tested", len(shadow_rows))
+                    b.metric("Baseline V3 MAE", f"{baseline_mae:.3f} pts")
+                    c.metric("Shadow V3 MAE", f"{challenger_mae:.3f} pts", delta=f"{baseline_mae-challenger_mae:+.3f} pts improvement")
+                    d.metric("Shadow better / worse", f"{int((shadow_rows['Shadow minus baseline absolute error']<0).sum())} / {int((shadow_rows['Shadow minus baseline absolute error']>0).sum())}")
+                    st.write(f"Outright winner accuracy (non-tied games): baseline **{baseline_wins:.2%}**, shadow **{challenger_wins:.2%}**")
+                    st.caption("Lower MAE is better. This comparison does not test ATS returns or establish profitability. A single historical season is insufficient for promotion.")
+                    st.dataframe(shadow_training, hide_index=True, use_container_width=True)
+                    st.dataframe(shadow_rows.sort_values("Baseline V3 absolute error", ascending=False), hide_index=True, use_container_width=True)
+                    st.download_button("Download paired shadow V3 audit CSV", shadow_rows.to_csv(index=False),
+                        file_name=f"JarzCFB_shadow_v3_audit_{shadow_year}.csv", mime="text/csv", key="shadow_v3_download")
+            except Exception as exc:
+                st.error(f"Shadow V3 audit failed: {exc}")
