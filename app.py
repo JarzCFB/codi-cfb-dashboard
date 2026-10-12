@@ -46,6 +46,22 @@ def games_data(key, year):
 from cfb_team_matching import canonical_school, match_rating
 from cfb_division_safety import matchup_status, model_allowed
 from power_rankings import build_power_rankings
+import json
+from pathlib import Path
+
+def load_published_power_rankings():
+    """Read committed Sunday snapshot; never recalculate rankings on page refresh."""
+    path = Path(__file__).resolve().parent / "rankings_history" / "latest.json"
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(payload.get("rankings"), list):
+            return None
+        return payload
+    except (OSError, ValueError, TypeError):
+        return None
+
 
 def key_name(s):
     return canonical_school(s)
@@ -715,52 +731,38 @@ st.caption(
 )
 
 try:
-    power_rows = build_power_rankings(final_v2_ratings)
-    power_df = pd.DataFrame(power_rows)
-
-    if power_df.empty:
-        st.info("Power rankings are not available yet.")
+    snapshot = load_published_power_rankings()
+    if snapshot is None:
+        st.info("Weekly rankings have not been published yet. The first snapshot will appear after Sunday's 1 PM Central scheduled run.")
     else:
-        power_df["Team"] = power_df["team"].map(
-            lambda x: str(x).title()
-        )
-        power_df["Power Rating"] = pd.to_numeric(
-            power_df["power_rating"], errors="coerce"
-        ).round(1)
-        power_df["Rank"] = power_df["rank"]
-
-        power_display = power_df[
-            ["Rank", "Team", "Power Rating"]
-        ].copy()
-
-        st.caption(
-            f"{power_display['Power Rating'].notna().sum():,} FBS teams currently rated."
-        )
-
-        st.dataframe(
-            power_display,
-            hide_index=True,
-            use_container_width=True,
-            column_config={
-                "Rank": st.column_config.NumberColumn("Rank", format="%d"),
-                "Power Rating": st.column_config.NumberColumn(
-                    "Power Rating", format="%.1f"
-                ),
-            },
-        )
-
-        st.download_button(
-            "Download power rankings",
-            power_display.to_csv(index=False),
-            file_name="codi_cfb_power_rankings.csv",
-            mime="text/csv",
-            key="download_power_rankings",
-        )
-
-except NameError:
-    st.info("Power rankings will appear when the current V2 ratings are available.")
+        history_dir = Path(__file__).resolve().parent / "rankings_history"
+        available = sorted(history_dir.glob("????-??-??.json"), reverse=True)
+        choices = [p.stem for p in available]
+        if choices:
+            chosen = st.selectbox("Published Sunday", choices, index=0, key="weekly_power_rankings_date")
+            snapshot = json.loads((history_dir / f"{chosen}.json").read_text(encoding="utf-8"))
+        st.caption(f"Published: {snapshot.get('published_central', 'unknown')} · Rankings frozen until next Sunday at 1 PM CT.")
+        power_df = pd.DataFrame(snapshot["rankings"])
+        if power_df.empty:
+            st.info("The published rankings snapshot is empty.")
+        else:
+            power_df["Rank"] = pd.to_numeric(power_df["rank"], errors="coerce")
+            power_df["Team"] = power_df["team"].map(lambda x: str(x).title())
+            power_df["Power Rating"] = pd.to_numeric(power_df["power_rating"], errors="coerce").round(1)
+            power_df["Last Week"] = pd.to_numeric(power_df["last_week_rank"], errors="coerce")
+            def movement_text(value):
+                if pd.isna(value): return "NEW"
+                if value > 0: return f"↑ {int(value)}"
+                if value < 0: return f"↓ {abs(int(value))}"
+                return "—"
+            power_df["Movement"] = pd.to_numeric(power_df["movement"], errors="coerce").map(movement_text)
+            power_display = power_df[["Rank", "Team", "Power Rating", "Last Week", "Movement"]].copy()
+            st.dataframe(power_display, hide_index=True, use_container_width=True)
+            st.download_button("Download power rankings", power_display.to_csv(index=False),
+                               file_name=f"codi_cfb_power_rankings_{snapshot.get('season', 'current')}.csv",
+                               mime="text/csv", key="download_power_rankings")
 except Exception as exc:
-    st.warning(f"Power rankings unavailable: {exc}")
+    st.warning(f"Published power rankings unavailable: {exc}")
 
 
 # Investigation cohort CSV contains classifications only. The scheduled grader
