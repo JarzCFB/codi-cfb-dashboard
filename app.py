@@ -422,16 +422,55 @@ else:
                 default="PASS - margins differ by <5 pts"
             )
 
+            # Research overlay INSIDE the existing final-projections table.
+            # Left join: never filter or remove a live projection (including Nebraska).
+            # Frozen confidence and refreshed same-book spreads are distinct from live V3.
+            _coverage = st.session_state.get("jarz_latest_confidence_coverage")
+            if _coverage is not None and not _coverage.empty:
+                _coverage = _coverage.copy()
+                _coverage["_game_key"] = _coverage["game_id"].astype(str).str.replace(r"\.0$", "", regex=True)
+                final_projections["_game_key"] = final_projections["Game ID"].astype(str).str.replace(r"\.0$", "", regex=True)
+                _extra = {
+                    "selection": "Frozen V3 selection",
+                    "experimental_confidence_1_to_10": "Confidence (1–10)",
+                    "decision_status": "Bet review status",
+                    "current_sportsbook": "Verified sportsbook",
+                    "current_spread": "Fresh frozen-pick spread",
+                    "current_american_odds": "Fresh odds",
+                    "current_edge_points": "Frozen V3 edge at fresh line",
+                    "edge_change_points": "Frozen edge movement",
+                    "match_status": "Market verification",
+                    "division_check_current": "Division check",
+                    "confidence_explanation": "Confidence notes",
+                }
+                _overlay = _coverage[["_game_key"] + [c for c in _extra if c in _coverage.columns]].copy()
+                _overlay = _overlay.drop_duplicates("_game_key", keep="first").rename(columns=_extra)
+                _before = len(final_projections)
+                final_projections = final_projections.merge(_overlay, on="_game_key", how="left", validate="many_to_one")
+                if len(final_projections) != _before:
+                    raise ValueError("Final projection count changed during confidence overlay")
+                final_projections = final_projections.drop(columns=["_game_key"])
+            else:
+                st.info("To populate confidence and same-book verification in this table, run Complete V3 Market Coverage below once. Live projections remain visible in the meantime.")
+                for _name in ["Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook", "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line", "Frozen edge movement", "Market verification", "Division check", "Confidence notes"]:
+                    final_projections[_name] = pd.NA
+
             headline=final_projections[[
                 "Kickoff UTC","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation"
+                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation",
+                "Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook",
+                "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line",
+                "Frozen edge movement", "Market verification", "Division check", "Confidence notes"
             ]].copy()
             headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
             headline=headline.drop(columns=["Kickoff UTC"])[[
                 "Kickoff CT","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation"
+                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation",
+                "Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook",
+                "Fresh frozen-pick spread", "Fresh odds", "Frozen V3 edge at fresh line",
+                "Frozen edge movement", "Market verification", "Division check", "Confidence notes"
             ]]
 
             sort_view=st.radio(
@@ -473,45 +512,10 @@ else:
             export_final=final_projections.copy()
             export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
             st.dataframe(styled_headline,hide_index=True,use_container_width=True)
-            # Research overlay: fresh-market confidence is based on the ORIGINAL
-            # frozen V3 snapshot, not on the live projection displayed above.
-            st.markdown("### Weekly market verification and 1–10 confidence")
-            st.caption("Research-only companion to the next-7-days final projections. "
-                       "The market/ratings below use frozen V3 selections and fresh same-book quotes; "
-                       "they are NOT recalculated from the live projections above. "
-                       "Ratings are provisional (capped at 7/10), NOT staking units or guaranteed picks.")
-            _embedded = st.session_state.get("jarz_latest_confidence_coverage")
-            if _embedded is None:
-                st.info("No market verification loaded in this session. Scroll to 'Research · Complete market coverage for frozen V3', "
-                        "run the coverage check, and this board will appear here automatically.")
-            else:
-                _embedded = _embedded.copy()
-                _checked_label = st.session_state.get("jarz_latest_confidence_checked", "unknown")
-                st.caption(f"Last sportsbook check: {_checked_label} UTC · Re-run market coverage below to refresh. "
-                           "These are frozen prospective picks, not every projected game.")
-                _embedded["Kickoff CT"] = format_central(_embedded["kickoff_utc"])
-                _columns = ["Kickoff CT", "selection", "home_team", "away_team",
-                            "current_sportsbook", "current_spread", "current_american_odds",
-                            "current_edge_points", "edge_change_points",
-                            "experimental_confidence_1_to_10", "decision_status",
-                            "investigation_status", "match_status", "division_check_current",
-                            "confidence_explanation"]
-                _columns = [c for c in _columns if c in _embedded.columns]
-                _eligible_embedded = _embedded[_embedded["decision_status"].ne("HOLD")].sort_values(
-                    ["experimental_confidence_1_to_10", "current_edge_points"],
-                    ascending=[False, False], na_position="last")
-                _m1, _m2, _m3 = st.columns(3)
-                _m1.metric("Frozen V3 picks checked", len(_embedded))
-                _m2.metric("Same-book spreads matched", int(_embedded["match_status"].eq("MATCHED_ORIGINAL_BOOK").sum()))
-                _m3.metric("On hold", int(_embedded["decision_status"].eq("HOLD").sum()))
-                st.markdown("**Top 10 current research candidates**")
-                st.dataframe(_eligible_embedded[_columns].head(10), hide_index=True, use_container_width=True)
-                with st.expander("Show all frozen selections, including holds"):
-                    st.dataframe(_embedded[_columns], hide_index=True, use_container_width=True)
-                st.download_button("Download weekly confidence board", _embedded.to_csv(index=False),
-                                   file_name="JarzCFB_weekly_confidence_board.csv", mime="text/csv",
-                                   key="final_embedded_confidence_download")
-
+            st.caption("Confidence and refreshed sportsbook fields are research-only and appear directly in the table above. "
+                       "Blank confidence fields mean no corresponding frozen V3 pick was found or market coverage has not been refreshed. "
+                       "The live V3 edge and frozen V3 edge at a fresh line are intentionally different calculations. "
+                       "Ratings are provisional, capped at 7/10, and are not recommended cash stakes.")
             st.download_button(
                 "Download complete final model projections",
                 export_final.to_csv(index=False),
