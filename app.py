@@ -422,6 +422,21 @@ else:
                 default="PASS - margins differ by <5 pts"
             )
 
+            # Schedule display reconciliation: correct a demonstrably stale CFBD
+            # kickoff ONLY for this independently verified matchup. Keep the
+            # original CFBD timestamp for audit; never alter frozen records.
+            final_projections["CFBD kickoff (original UTC)"] = final_projections["Kickoff UTC"]
+            for _idx, _row in final_projections.iterrows():
+                if str(_row.get("Matchup", "")) == "Nebraska @ Oregon" and int(year) == 2026:
+                    _official = pd.Timestamp("2026-10-18T03:00:00Z")
+                    _original = pd.to_datetime(_row["Kickoff UTC"], utc=True, errors="coerce")
+                    if pd.notna(_original) and abs((_official - _original).total_seconds()) > 90 * 60:
+                        final_projections.at[_idx, "Kickoff UTC"] = _official
+                        final_projections.at[_idx, "Kickoff verification"] = "Nebraska/Oregon athletics: Oct 17, 10 PM CT (CFBD differs)"
+            if "Kickoff verification" not in final_projections.columns:
+                final_projections["Kickoff verification"] = "CFBD schedule (not independently checked)"
+            final_projections["Kickoff verification"] = final_projections["Kickoff verification"].fillna("CFBD schedule (not independently checked)")
+
             # Research overlay INSIDE the existing final-projections table.
             # Left join: never filter or remove a live projection (including Nebraska).
             # Frozen confidence and refreshed same-book spreads are distinct from live V3.
@@ -528,8 +543,56 @@ else:
                     st.caption("Automatic sportsbook check is pending. Refreshing after first load; "
                                "unmatched live games will have blank frozen-pick fields.")
 
+            # Every projection gets an explicit data-availability explanation.
+            # Missing frozen picks are NOT manufactured, and absent market
+            # prices are NOT presented as executable offers.
+            for _idx, _row in final_projections.iterrows():
+                _has_pick = pd.notna(_row.get("Frozen V3 selection"))
+                _has_market = pd.notna(_row.get("Market home spread"))
+                _reason = str(_row.get("Market verification", "") or "")
+                if not _has_pick:
+                    if pd.isna(_row.get("Market verification")):
+                        final_projections.at[_idx, "Market verification"] = "NO FROZEN V3 PICK"
+                    if pd.isna(_row.get("Bet review status")):
+                        final_projections.at[_idx, "Bet review status"] = "PROJECTION ONLY — not a frozen bet"
+                    final_projections.at[_idx, "Frozen V3 selection"] = "NOT SELECTED"
+                    final_projections.at[_idx, "Confidence (1–10)"] = "NOT RATED — no frozen pick"
+                    if pd.isna(_row.get("Confidence notes")):
+                        final_projections.at[_idx, "Confidence notes"] = "No frozen V3 selection for this matchup; confidence cannot be validated"
+                if _has_pick and pd.isna(_row.get("Confidence (1–10)")):
+                    final_projections.at[_idx, "Confidence (1–10)"] = "NOT RATED — verification hold"
+                if _has_pick and pd.isna(_row.get("Bet review status")):
+                    final_projections.at[_idx, "Bet review status"] = "HOLD — incomplete market verification"
+                if _has_pick and pd.isna(_row.get("Market verification")):
+                    final_projections.at[_idx, "Market verification"] = "VERIFICATION PENDING"
+                if _has_pick and pd.isna(_row.get("Confidence notes")):
+                    final_projections.at[_idx, "Confidence notes"] = "Frozen pick exists; verification incomplete"
+                if pd.isna(_row.get("Verified sportsbook")):
+                    final_projections.at[_idx, "Verified sportsbook"] = "NOT VERIFIED"
+                if pd.isna(_row.get("Fresh frozen-pick spread")):
+                    final_projections.at[_idx, "Fresh frozen-pick spread"] = "NOT AVAILABLE"
+                if pd.isna(_row.get("Fresh odds")):
+                    final_projections.at[_idx, "Fresh odds"] = "NOT AVAILABLE"
+                if pd.isna(_row.get("Frozen V3 edge at fresh line")):
+                    final_projections.at[_idx, "Frozen V3 edge at fresh line"] = "NOT CALCULABLE"
+                if pd.isna(_row.get("Frozen edge movement")):
+                    final_projections.at[_idx, "Frozen edge movement"] = "NOT CALCULABLE"
+                if pd.isna(_row.get("Division check")):
+                    final_projections.at[_idx, "Division check"] = "NOT VERIFIED FOR FROZEN PICK"
+                if not _has_market:
+                    if not _has_pick:
+                        final_projections.at[_idx, "Confidence notes"] = "No current market line or frozen V3 selection; projection only"
+            # Live slate coverage is independent of the smaller frozen-pick cohort.
+            # A blank field is replaced with an explicit reason, not invented data.
+            final_projections["Market line"] = final_projections["Market line"].replace("", "NO CURRENT LINE")
+            final_projections["Model edge team"] = final_projections["Model edge team"].replace("", "NOT CALCULABLE — no line")
+            final_projections["Model edge (pts)"] = final_projections["Model edge (pts)"].astype(object).where(
+                final_projections["Model edge (pts)"].notna(), "NOT CALCULABLE — no line")
+            st.caption("Availability audit: all games have explicit statuses. NOT SELECTED is not a new wager; "
+                       "NOT AVAILABLE means no verified same-book quote. No odds or confidence are fabricated.")
+
             headline=final_projections[[
-                "Kickoff UTC","Matchup","Final model projection",
+                "Kickoff UTC","Matchup","Kickoff verification","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
                 "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation",
                 "Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook",
@@ -538,7 +601,7 @@ else:
             ]].copy()
             headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
             headline=headline.drop(columns=["Kickoff UTC"])[[
-                "Kickoff CT","Matchup","Final model projection",
+                "Kickoff CT","Matchup","Kickoff verification","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
                 "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation",
                 "Frozen V3 selection", "Confidence (1–10)", "Bet review status", "Verified sportsbook",
@@ -579,7 +642,7 @@ else:
                 "Frozen historical cohorts and the locked V3/final projection are unchanged."
             )
             styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
-                {"Model edge (pts)":"{:.1f}"},na_rep=""
+                {},na_rep=""
             )
 
             export_final=final_projections.copy()
@@ -2747,3 +2810,4 @@ with st.expander("Fetch sportsbook quotes, diagnose missing markets, and export 
                 st.rerun()  # Show refreshed confidence data inside the Final projections section
         except Exception as _coverage_exc:
             st.error(f"Complete market coverage failed: {_coverage_exc}")
+
