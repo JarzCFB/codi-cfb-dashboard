@@ -8,7 +8,7 @@ FBS_SCHOOLS = frozenset('air force,akron,alabama,appalachian state,arizona,arizo
 
 # These FCS names can otherwise be mistaken for FBS by a broad school-prefix match.
 # This is a denylist of verified examples, not a comprehensive FCS registry.
-KNOWN_FCS = frozenset({'north carolina central', 'houston christian', 'houston baptist'})
+KNOWN_FCS = frozenset({'north carolina central', 'houston christian', 'houston baptist', 'texas southern'})
 
 def _known_fcs(name):
     n=normalize(name)
@@ -18,6 +18,7 @@ def matchup_status(home, away):
     # Shared matcher resolves sportsbook mascot names and CFBD school aliases.
     if _known_fcs(home) or _known_fcs(away):
         return 'Unverified division / FCS: model suppressed'
+    # Strict matcher: exact/alias or school + recognized complete nickname only.
     dummy = {school: 0 for school in FBS_SCHOOLS}
     _, h, _ = match_rating(home, dummy)
     _, a, _ = match_rating(away, dummy)
