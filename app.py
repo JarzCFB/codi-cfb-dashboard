@@ -396,6 +396,15 @@ else:
         final_projections=final_projection_rows(
             games,ratings,final_v2_ratings,home_adv,data
         )
+        # V4 is a separate research-only layer. No changes to V3 margins or official picks.
+        from cfb_v4_situational import load_evidence, review_games
+        v4_review = review_games(final_projections, load_evidence())
+        with st.expander("V4 Situational Intelligence — standout players, injuries and game context", expanded=False):
+            st.caption("Evidence-gated research preview. Outstanding players, quarterback status, injuries, stadium difficulty, travel, rest, weather, rivalry and big-game factors require verified timestamped sources. Unknown is not healthy. No V4 betting edge is claimed; V3 and frozen picks remain unchanged.")
+            if v4_review.empty:
+                st.info("No eligible upcoming games for V4 review.")
+            else:
+                st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
         if final_projections.empty:
             st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
         else:
