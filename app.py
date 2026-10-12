@@ -552,64 +552,62 @@ except Exception as exc:
     st.warning(f"Power rankings unavailable: {exc}")
 
 
-# Prospective investigation performance: classification rows are tracked first;
-# only rows with actual grading fields count as settled.
+# Investigation cohort CSV contains classifications only. The scheduled grader
+# publishes settlement metrics separately in investigation_summary.json.
 st.divider()
 st.subheader("Investigation performance")
 st.caption(
-    "Prospective-only audit of the automatic PASS / CAUTION / UNSTABLE classifications. "
-    "Tracked games remain pending until the scheduled grader records an actual result."
+    "Prospective frozen investigation cohorts. Winner accuracy and margin error "
+    "are forecast metrics, NOT against-the-spread betting returns. "
+    "For ATS ROI, use Official prospective performance → V3 investigation ATS."
 )
-
 try:
+    import json as _json
     from pathlib import Path as _Path
+    _summary_path = _Path("prospective/investigation_summary.json")
     _cohort_path = _Path("prospective/investigation_cohort.csv")
-
-    if not _cohort_path.exists():
-        st.info("Investigation report has not been generated yet.")
+    if not _summary_path.exists():
+        st.info("The investigation summary has not been generated yet. Run the investigation grading workflow.")
     else:
-        _cohort = pd.read_csv(_cohort_path)
-        _status_col = next((c for c in ["investigation_status", "Investigation status", "status"] if c in _cohort.columns), None)
-        _winner_col = next((c for c in ["winner_correct", "correct_winner", "Winner correct"] if c in _cohort.columns), None)
-        _error_col = next((c for c in ["absolute_error", "margin_error", "absolute_margin_error", "Absolute margin error"] if c in _cohort.columns), None)
-        _within7_col = next((c for c in ["within_7", "within_7_points", "Within 7 pts"] if c in _cohort.columns), None)
-        _actual_col = next((c for c in ["actual_home_margin", "Actual home margin"] if c in _cohort.columns), None)
-
-        if _status_col is None:
-            st.warning("Investigation cohort report is present, but its status column was not recognized.")
-        else:
-            _rows = []
-            for _status in ["PASS", "CAUTION", "UNSTABLE"]:
-                _g = _cohort[_cohort[_status_col].astype(str).str.upper() == _status].copy()
-                _tracked = len(_g)
-                if _actual_col is not None:
-                    _settled_mask = pd.to_numeric(_g[_actual_col], errors="coerce").notna()
-                elif _winner_col is not None:
-                    _settled_mask = pd.to_numeric(_g[_winner_col], errors="coerce").notna()
-                else:
-                    _settled_mask = pd.Series(False, index=_g.index)
-                _s = _g[_settled_mask].copy()
-
-                _winner_acc = pd.to_numeric(_s[_winner_col], errors="coerce").mean() if _winner_col and len(_s) else float("nan")
-                _mae = pd.to_numeric(_s[_error_col], errors="coerce").mean() if _error_col and len(_s) else float("nan")
-                _within7 = pd.to_numeric(_s[_within7_col], errors="coerce").mean() if _within7_col and len(_s) else float("nan")
-
-                _rows.append({"Status":_status,"Tracked":_tracked,"Settled":len(_s),
-                              "Winner accuracy":_winner_acc,"Margin MAE":_mae,"Within 7 pts":_within7})
-
-            _perf = pd.DataFrame(_rows)
-            _display = _perf.copy()
-            _display["Winner accuracy"] = _display["Winner accuracy"].map(lambda x: f"{x:.1%}" if pd.notna(x) else "—")
-            _display["Margin MAE"] = _display["Margin MAE"].map(lambda x: f"{x:.1f} pts" if pd.notna(x) else "—")
-            _display["Within 7 pts"] = _display["Within 7 pts"].map(lambda x: f"{x:.1%}" if pd.notna(x) else "—")
-            st.dataframe(_display, hide_index=True, use_container_width=True)
-
-            _tracked_total = int(_perf["Tracked"].sum())
-            _settled_total = int(_perf["Settled"].sum())
-            st.caption(
-                f"{_tracked_total:,} classified prospective games tracked · {_settled_total:,} settled. "
-                "Winner accuracy, margin MAE, and within-7 rate use settled games only."
-            )
+        with _summary_path.open("r", encoding="utf-8") as _handle:
+            _summary = _json.load(_handle)
+        _groups = _summary.get("groups", {})
+        _rows = []
+        for _status in ("PASS", "CAUTION", "UNSTABLE"):
+            _g = _groups.get(_status, {})
+            _tracked = int(_g.get("classified_games", 0))
+            _settled = int(_g.get("settled_games", 0))
+            if _settled > _tracked:
+                raise ValueError(f"{_status}: settled count exceeds classified count")
+            _rows.append({
+                "Status": _status,
+                "Tracked": _tracked,
+                "Settled": _settled,
+                "Pending": _tracked - _settled,
+                "Winner accuracy": _g.get("winner_accuracy"),
+                "Margin MAE": _g.get("margin_mae"),
+                "Within 7 pts": _g.get("within_7_rate"),
+            })
+        _perf = pd.DataFrame(_rows)
+        if _cohort_path.exists():
+            _cohort = pd.read_csv(_cohort_path)
+            if "investigation_status" in _cohort.columns:
+                _counts = _cohort["investigation_status"].astype(str).str.upper().value_counts()
+                _mismatches = [status for status in ("PASS", "CAUTION", "UNSTABLE")
+                               if int(_counts.get(status, 0)) != int(_perf.loc[_perf["Status"] == status, "Tracked"].iloc[0])]
+                if _mismatches:
+                    st.warning("Investigation cohort CSV and summary JSON disagree for: " + ", ".join(_mismatches))
+        _display = _perf.copy()
+        for _col in ("Winner accuracy", "Within 7 pts"):
+            _display[_col] = _display[_col].map(lambda x: f"{float(x):.1%}" if pd.notna(x) else "—")
+        _display["Margin MAE"] = _display["Margin MAE"].map(lambda x: f"{float(x):.2f} pts" if pd.notna(x) else "—")
+        st.dataframe(_display, hide_index=True, use_container_width=True)
+        st.caption(
+            f"{int(_perf['Tracked'].sum()):,} classified games · "
+            f"{int(_perf['Settled'].sum()):,} settled · "
+            f"{int(_perf['Pending'].sum()):,} pending. "
+            "Settlement metrics come from the scheduled investigation summary."
+        )
 except Exception as _exc:
     st.warning(f"Investigation performance report unavailable: {_exc}")
 
