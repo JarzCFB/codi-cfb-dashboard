@@ -2422,6 +2422,77 @@ def _fresh_market_revalidation(frozen, odds_events, checked_at):
             result.at[position, "coverage_detail"] += "; frozen kickoff differs from independently verified schedule; original preserved"
     return result
 
+# Research-only confidence rubric. This is an uncalibrated ordinal score,
+# NOT a probability of covering and NOT a recommended cash stake.
+def _jarz_weekly_confidence(coverage):
+    import numpy as _np
+    data = coverage.copy()
+    output = []
+    for _, r in data.iterrows():
+        reasons = []
+        status = str(r.get("match_status", ""))
+        div = str(r.get("division_check_current", ""))
+        inv = str(r.get("investigation_status", "")).upper()
+        edge = pd.to_numeric(r.get("current_edge_points"), errors="coerce")
+        original = pd.to_numeric(r.get("original_edge_points"), errors="coerce")
+        odds = pd.to_numeric(r.get("current_american_odds"), errors="coerce")
+        is_fbs = div.strip().upper() == "FBS VS FBS"
+        valid = (status == "MATCHED_ORIGINAL_BOOK" and is_fbs and pd.notna(edge)
+                 and str(r.get("frozen_record_match", "both")) == "both")
+        if not valid:
+            if status != "MATCHED_ORIGINAL_BOOK": reasons.append("No verified same-book spread")
+            if not is_fbs: reasons.append("Division eligibility unresolved")
+            if pd.isna(edge): reasons.append("Missing current edge")
+            if str(r.get("frozen_record_match", "both")) != "both": reasons.append("Frozen record mismatch")
+            output.append((1, "HOLD", 0, "; ".join(reasons), _np.nan))
+            continue
+        # 100-point *heuristic* rubric. These weights are not trained on outcomes.
+        # The edge component is deliberately capped to avoid rewarding huge outliers.
+        if edge <= 0: edge_pts = 0
+        elif edge < 3: edge_pts = 5 * edge / 3
+        elif edge < 5: edge_pts = 5 + 10 * (edge-3)/2
+        elif edge < 7: edge_pts = 15 + 10 * (edge-5)/2
+        elif edge < 10: edge_pts = 25 + 5 * (edge-7)/3
+        else: edge_pts = 20; reasons.append("Extreme current edge: manual review")
+        # Historical bands are exploratory, not a reliable estimated win rate.
+        if 5 <= edge < 7: historical = 17
+        elif 7 <= edge < 10: historical = 14
+        elif 3 <= edge < 5: historical = 12
+        elif edge >= 10: historical = 5
+        else: historical = 6
+        inv_pts = {"PASS":18,"CAUTION":12,"UNSTABLE":5,"UNKNOWN":8}.get(inv,8)
+        if inv != "PASS": reasons.append("Investigation status: " + inv)
+        quote_time = pd.to_datetime(r.get("quote_last_update_utc"), utc=True, errors="coerce")
+        check_time = pd.to_datetime(r.get("checked_at_utc"), utc=True, errors="coerce")
+        age = (check_time - quote_time).total_seconds()/3600 if pd.notna(check_time) and pd.notna(quote_time) else _np.nan
+        market = 0
+        if pd.notna(age):
+            market = 12 if 0 <= age <= 1 else (8 if 0 <= age <= 6 else (4 if 0 <= age <= 24 else 0))
+        else: reasons.append("Quote age unavailable")
+        if pd.notna(odds) and -125 <= odds <= 125: market += 3
+        if pd.notna(original) and edge < original - 2: reasons.append("Edge deteriorated by over 2 points")
+        data_pts = 10
+        total = max(0, min(100, edge_pts + historical + inv_pts + market + data_pts))
+        # Conservative cap until confidence bands are calibrated on future outcomes.
+        rating = min(7, max(1, int(total / 12)))
+        if edge <= 0:
+            rating = 1
+            reasons.append("No positive current edge")
+        elif edge < 3:
+            rating = min(rating, 3)
+            reasons.append("Current edge below 3 points")
+        if edge >= 10: rating = min(rating, 5)
+        if pd.notna(original) and edge < original - 2: rating = min(rating, 5)
+        if pd.notna(age) and age > 6: rating = min(rating, 5)
+        output.append((rating, "REVIEW" if reasons else "ELIGIBLE FOR REVIEW", total,
+                       "; ".join(reasons) if reasons else "No automated warning", age))
+    data[["experimental_confidence_1_to_10", "decision_status", "rubric_points_100",
+          "confidence_explanation", "quote_age_hours"]] = pd.DataFrame(output, index=data.index)
+    # Explicitly separate model-confidence score from financial stake.
+    data["suggested_cash_units"] = _np.nan
+    data["confidence_scale_validated"] = False
+    return data
+
 st.divider()
 st.subheader("Research · Complete market coverage for frozen V3")
 st.caption("Read-only: every pending frozen V3 selection receives a market-coverage status. No original pick, line, grade or model parameter is modified. A model edge is not a guarantee of profitability.")
@@ -2475,6 +2546,28 @@ with st.expander("Fetch sportsbook quotes, diagnose missing markets, and export 
                 st.dataframe(_result, hide_index=True, use_container_width=True)
                 st.download_button("Download COMPLETE V3 market coverage CSV", _result.to_csv(index=False),
                     file_name="JarzCFB_complete_market_coverage.csv", mime="text/csv", key="download_complete_v3_coverage")
+                st.divider()
+                st.markdown("### Weekly Betting Decision Board · experimental 1–10 confidence")
+                st.caption("Scores are provisional research ratings, not cover probabilities or cash staking instructions. 10/10 is never a lock. Current calibration caps ratings at 7/10 until future games validate higher tiers.")
+                _rated = _jarz_weekly_confidence(_result)
+                _ranked = _rated.sort_values(["decision_status", "experimental_confidence_1_to_10", "current_edge_points"],
+                                             ascending=[True, False, False], na_position="last")
+                _eligible = _rated[_rated["decision_status"].ne("HOLD")].sort_values(
+                    ["experimental_confidence_1_to_10", "current_edge_points"], ascending=False)
+                d1,d2,d3 = st.columns(3)
+                d1.metric("Eligible for review", len(_eligible))
+                d2.metric("Division / market holds", int((_rated["decision_status"] == "HOLD").sum()))
+                d3.metric("Highest provisional rating", f"{int(_eligible['experimental_confidence_1_to_10'].max())}/10" if len(_eligible) else "N/A")
+                _cols = ["selection", "home_team", "away_team", "current_sportsbook", "current_spread",
+                         "current_american_odds", "current_edge_points", "experimental_confidence_1_to_10",
+                         "decision_status", "investigation_status", "confidence_explanation"]
+                st.markdown("**Top 10 research candidates (not automatic wagers)**")
+                st.dataframe(_eligible[_cols].head(10), hide_index=True, use_container_width=True)
+                st.markdown("**All picks — including holds and warnings**")
+                st.dataframe(_ranked[_cols], hide_index=True, use_container_width=True)
+                st.download_button("Download WEEKLY confidence decision board CSV", _rated.to_csv(index=False),
+                    file_name="JarzCFB_weekly_confidence_board.csv", mime="text/csv", key="download_v3_confidence_board")
+                st.info("Official grading remains flat 1 unit per frozen selection. The experimental 1–10 rating is not a recommended wager size. Recheck injuries, market prices, and eligibility before any decision.")
                 st.warning("Research only. Verify current book availability, injuries and eligibility before wagering. An unmatched pick is not a losing or zero-edge pick.")
         except Exception as _coverage_exc:
             st.error(f"Complete market coverage failed: {_coverage_exc}")
