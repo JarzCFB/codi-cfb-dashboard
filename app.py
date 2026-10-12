@@ -473,6 +473,45 @@ else:
             export_final=final_projections.copy()
             export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
             st.dataframe(styled_headline,hide_index=True,use_container_width=True)
+            # Research overlay: fresh-market confidence is based on the ORIGINAL
+            # frozen V3 snapshot, not on the live projection displayed above.
+            st.markdown("### Weekly market verification and 1–10 confidence")
+            st.caption("Research-only companion to the next-7-days final projections. "
+                       "The market/ratings below use frozen V3 selections and fresh same-book quotes; "
+                       "they are NOT recalculated from the live projections above. "
+                       "Ratings are provisional (capped at 7/10), NOT staking units or guaranteed picks.")
+            _embedded = st.session_state.get("jarz_latest_confidence_coverage")
+            if _embedded is None:
+                st.info("No market verification loaded in this session. Scroll to 'Research · Complete market coverage for frozen V3', "
+                        "run the coverage check, and this board will appear here automatically.")
+            else:
+                _embedded = _embedded.copy()
+                _checked_label = st.session_state.get("jarz_latest_confidence_checked", "unknown")
+                st.caption(f"Last sportsbook check: {_checked_label} UTC · Re-run market coverage below to refresh. "
+                           "These are frozen prospective picks, not every projected game.")
+                _embedded["Kickoff CT"] = format_central(_embedded["kickoff_utc"])
+                _columns = ["Kickoff CT", "selection", "home_team", "away_team",
+                            "current_sportsbook", "current_spread", "current_american_odds",
+                            "current_edge_points", "edge_change_points",
+                            "experimental_confidence_1_to_10", "decision_status",
+                            "investigation_status", "match_status", "division_check_current",
+                            "confidence_explanation"]
+                _columns = [c for c in _columns if c in _embedded.columns]
+                _eligible_embedded = _embedded[_embedded["decision_status"].ne("HOLD")].sort_values(
+                    ["experimental_confidence_1_to_10", "current_edge_points"],
+                    ascending=[False, False], na_position="last")
+                _m1, _m2, _m3 = st.columns(3)
+                _m1.metric("Frozen V3 picks checked", len(_embedded))
+                _m2.metric("Same-book spreads matched", int(_embedded["match_status"].eq("MATCHED_ORIGINAL_BOOK").sum()))
+                _m3.metric("On hold", int(_embedded["decision_status"].eq("HOLD").sum()))
+                st.markdown("**Top 10 current research candidates**")
+                st.dataframe(_eligible_embedded[_columns].head(10), hide_index=True, use_container_width=True)
+                with st.expander("Show all frozen selections, including holds"):
+                    st.dataframe(_embedded[_columns], hide_index=True, use_container_width=True)
+                st.download_button("Download weekly confidence board", _embedded.to_csv(index=False),
+                                   file_name="JarzCFB_weekly_confidence_board.csv", mime="text/csv",
+                                   key="final_embedded_confidence_download")
+
             st.download_button(
                 "Download complete final model projections",
                 export_final.to_csv(index=False),
@@ -2550,6 +2589,8 @@ with st.expander("Fetch sportsbook quotes, diagnose missing markets, and export 
                 st.markdown("### Weekly Betting Decision Board · experimental 1–10 confidence")
                 st.caption("Scores are provisional research ratings, not cover probabilities or cash staking instructions. 10/10 is never a lock. Current calibration caps ratings at 7/10 until future games validate higher tiers.")
                 _rated = _jarz_weekly_confidence(_result)
+                st.session_state["jarz_latest_confidence_coverage"] = _rated.copy()
+                st.session_state["jarz_latest_confidence_checked"] = _checked
                 _ranked = _rated.sort_values(["decision_status", "experimental_confidence_1_to_10", "current_edge_points"],
                                              ascending=[True, False, False], na_position="last")
                 _eligible = _rated[_rated["decision_status"].ne("HOLD")].sort_values(
@@ -2569,5 +2610,6 @@ with st.expander("Fetch sportsbook quotes, diagnose missing markets, and export 
                     file_name="JarzCFB_weekly_confidence_board.csv", mime="text/csv", key="download_v3_confidence_board")
                 st.info("Official grading remains flat 1 unit per frozen selection. The experimental 1–10 rating is not a recommended wager size. Recheck injuries, market prices, and eligibility before any decision.")
                 st.warning("Research only. Verify current book availability, injuries and eligibility before wagering. An unmatched pick is not a losing or zero-edge pick.")
+                st.rerun()  # Show refreshed confidence data inside the Final projections section
         except Exception as _coverage_exc:
             st.error(f"Complete market coverage failed: {_coverage_exc}")
