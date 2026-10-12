@@ -399,46 +399,39 @@ else:
             v2 = pd.to_numeric(final_projections["V2 margin"], errors="coerce")
             same_winner = ((v1 >= 0) & (v2 >= 0)) | ((v1 < 0) & (v2 < 0))
 
-            final_projections["Automatic investigation"]=np.select(
-                [
-                    edge.isna(),
-                    ~same_winner,
-                    disagree >= 10.0,
-                    disagree >= 5.0,
-                    (edge >= 7.0) & (disagree < 5.0),
-                    (edge >= 3.0) & (disagree < 5.0),
-                ],
-                [
-                    "NO MARKET - projection only",
-                    "UNSTABLE - models disagree on winner",
-                    "UNSTABLE - large model disagreement",
-                    "CAUTION - moderate model disagreement",
-                    "PASS - large edge with model agreement",
-                    "PASS - model agreement",
-                ],
-                default="PASS - no disagreement warning",
+            # Preserve the legacy live diagnostic for comparison. This does not
+            # change the frozen historical investigation cohort or V3 predictions.
+            final_projections["Legacy investigation status"] = np.select(
+                [edge.isna(), (~same_winner) | (disagree >= 10.0), disagree >= 5.0],
+                ["NO MARKET", "UNSTABLE", "CAUTION"], default="PASS"
             )
-
-            final_projections["Investigation status"]=np.select(
-                [
-                    edge.isna(),
-                    (~same_winner) | (disagree >= 10.0),
-                    disagree >= 5.0,
-                ],
-                ["NO MARKET", "UNSTABLE", "CAUTION"],
-                default="PASS",
+            # Diagnostic v2: classify by absolute V1/V2 margin disagreement;
+            # report projected-winner disagreement independently.
+            final_projections["Investigation status"] = np.select(
+                [edge.isna(), disagree >= 10.0, disagree >= 5.0],
+                ["NO MARKET", "UNSTABLE", "CAUTION"], default="PASS"
+            )
+            final_projections["Winner disagreement"] = np.where(
+                ~same_winner, "YES - opposite projected winners", "No"
+            )
+            final_projections["Automatic investigation"] = np.select(
+                [edge.isna(), disagree >= 10.0, disagree >= 5.0, ~same_winner],
+                ["NO MARKET - projection only", "UNSTABLE - margins differ by 10+ pts",
+                 "CAUTION - margins differ by 5 to <10 pts",
+                 "PASS on margin gap - opposite projected winners (review)"],
+                default="PASS - margins differ by <5 pts"
             )
 
             headline=final_projections[[
                 "Kickoff UTC","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Investigation status","Automatic investigation"
+                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation"
             ]].copy()
             headline["Kickoff CT"]=format_central(headline["Kickoff UTC"])
             headline=headline.drop(columns=["Kickoff UTC"])[[
                 "Kickoff CT","Matchup","Final model projection",
                 "Market line","Model edge team","Model edge (pts)",
-                "V1/V2 disagreement (pts)","Investigation status","Automatic investigation"
+                "V1/V2 disagreement (pts)","Investigation status","Winner disagreement","Legacy investigation status","Automatic investigation"
             ]]
 
             sort_view=st.radio(
@@ -468,10 +461,10 @@ else:
                 return [f"background-color:{bg};color:#111827;{weight}" for _ in row]
 
             st.caption(
-                "Automatic investigation runs on every game: PASS = models agree; CAUTION = moderate V1/V2 disagreement; "
-                "UNSTABLE = large disagreement or the models disagree on the projected winner. "
-                "Green = large edge that passes; yellow = caution; red/pink = unstable. "
-                "The investigation does not rewrite the locked V3/final projection."
+                "Diagnostic v2 (live only): PASS = V1/V2 margin difference <5 points; "
+                "CAUTION = 5 to <10; UNSTABLE = 10+. Opposite projected winners are "
+                "flagged separately, even on PASS games. Legacy status is shown for comparison. "
+                "Frozen historical cohorts and the locked V3/final projection are unchanged."
             )
             styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
                 {"Model edge (pts)":"{:.1f}"},na_rep=""
@@ -557,7 +550,7 @@ except Exception as exc:
 st.divider()
 st.subheader("Investigation performance")
 st.caption(
-    "Prospective frozen investigation cohorts. Winner accuracy and margin error "
+    "Historical frozen investigation cohorts (legacy rules, unchanged). Winner accuracy and margin error "
     "are forecast metrics, NOT against-the-spread betting returns. "
     "For ATS ROI, use Official prospective performance → V3 investigation ATS."
 )
