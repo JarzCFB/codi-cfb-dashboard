@@ -549,7 +549,6 @@ else:
             for _idx, _row in final_projections.iterrows():
                 _has_pick = pd.notna(_row.get("Frozen V3 selection"))
                 _has_market = pd.notna(_row.get("Market home spread"))
-                _reason = str(_row.get("Market verification", "") or "")
                 if not _has_pick:
                     if pd.isna(_row.get("Market verification")):
                         final_projections.at[_idx, "Market verification"] = "NO FROZEN V3 PICK"
@@ -2810,4 +2809,3 @@ with st.expander("Fetch sportsbook quotes, diagnose missing markets, and export 
                 st.rerun()  # Show refreshed confidence data inside the Final projections section
         except Exception as _coverage_exc:
             st.error(f"Complete market coverage failed: {_coverage_exc}")
-
