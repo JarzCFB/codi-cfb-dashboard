@@ -1819,3 +1819,106 @@ else:
 
     except Exception as exc:
         st.error(f"Could not load frozen prospective selections: {exc}")
+
+
+# ---------------------------------------------------------------------------
+# Research-only V1 training eligibility audit. This does NOT replace ratings,
+# change V3, alter selections, or write to prospective/ files.
+# ---------------------------------------------------------------------------
+def _v1_fbs_training_audit(all_games, shrinkage, home_field, first_week):
+    from collections import defaultdict
+    weeks = defaultdict(list)
+    seen = set()
+    for g in all_games:
+        if not isinstance(g, dict) or not g.get("completed"):
+            continue
+        if str(g.get("seasonType", g.get("season_type", "regular"))).lower() != "regular":
+            continue
+        h = g.get("homeTeam", g.get("home_team"))
+        a = g.get("awayTeam", g.get("away_team"))
+        hp = g.get("homePoints", g.get("home_points"))
+        ap = g.get("awayPoints", g.get("away_points"))
+        try:
+            week = int(g.get("week"))
+            hp, ap = float(hp), float(ap)
+        except (TypeError, ValueError):
+            continue
+        if not h or not a or not math.isfinite(hp) or not math.isfinite(ap) or (hp == 0 and ap == 0):
+            continue
+        gid = g.get("id")
+        ident = ("id", gid) if gid is not None else ("teams", week, key_name(h), key_name(a))
+        if ident in seen:
+            continue
+        seen.add(ident)
+        weeks[week].append(g)
+
+    prior = []
+    records = []
+    audit = []
+    for week in sorted(weeks):
+        if week >= first_week and prior:
+            eligible_prior = [g for g in prior if model_allowed(
+                g.get("homeTeam", g.get("home_team")),
+                g.get("awayTeam", g.get("away_team")))]
+            baseline, baseline_count = build_ratings(prior, 0, shrinkage, home_field)
+            fbs_only, fbs_count = build_ratings(eligible_prior, 0, shrinkage, home_field)
+            audit.append({"Week": week, "All training games": baseline_count,
+                          "FBS-only training games": fbs_count,
+                          "Excluded training games": baseline_count - fbs_count})
+            for g in weeks[week]:
+                h = g.get("homeTeam", g.get("home_team"))
+                a = g.get("awayTeam", g.get("away_team"))
+                if not model_allowed(h, a):
+                    continue
+                old_h, old_a = find_rating(h, baseline), find_rating(a, baseline)
+                new_h, new_a = find_rating(h, fbs_only), find_rating(a, fbs_only)
+                if any(v is None for v in (old_h, old_a, new_h, new_a)):
+                    continue  # paired comparison only; identical test set
+                actual = float(g.get("homePoints", g.get("home_points"))) - float(g.get("awayPoints", g.get("away_points")))
+                old = float(old_h) - float(old_a) + home_field
+                new = float(new_h) - float(new_a) + home_field
+                records.append({"Week": week, "Game ID": g.get("id"),
+                    "Matchup": f"{a} @ {h}", "Actual home margin": actual,
+                    "Current V1 margin": old, "FBS-only V1 margin": new,
+                    "Current V1 abs error": abs(old-actual),
+                    "FBS-only V1 abs error": abs(new-actual),
+                    "Current V1 winner correct": (old > 0) == (actual > 0) if actual != 0 else np.nan,
+                    "FBS-only V1 winner correct": (new > 0) == (actual > 0) if actual != 0 else np.nan,
+                    "Margin change": new-old})
+        prior.extend(weeks[week])
+    return pd.DataFrame(records), pd.DataFrame(audit)
+
+
+st.divider()
+st.subheader("Research audit · Current V1 vs FBS-only V1")
+st.caption("Historical walk-forward, paired-game diagnostic only. No changes to V1/V2/V3 production ratings, frozen picks, grading or files. Historical eligibility is evaluated using the currently installed FBS membership list; past seasons may have different membership.")
+with st.expander("Compare V1 training eligibility (research only)", expanded=False):
+    audit_season = st.number_input("Audit season", min_value=2020, max_value=2025, value=2025, step=1, key="v1_fbs_audit_season")
+    audit_start = st.slider("First held-out evaluation week", 3, 10, 5, key="v1_fbs_audit_week")
+    if st.button("Run paired V1 comparison", key="run_v1_fbs_audit"):
+        if not ok_cfbd:
+            st.error("CFBD API key required.")
+        else:
+            try:
+                audit_games = games_data(secret("CFBD_API_KEY"), int(audit_season))
+                paired, training = _v1_fbs_training_audit(audit_games, shrink, home_adv, audit_start)
+                if paired.empty:
+                    st.warning("No common eligible evaluation games were found.")
+                else:
+                    old_mae = paired["Current V1 abs error"].mean()
+                    new_mae = paired["FBS-only V1 abs error"].mean()
+                    wins = paired[paired["Actual home margin"] != 0]
+                    c1, c2, c3, c4 = st.columns(4)
+                    c1.metric("Same FBS games tested", len(paired))
+                    c2.metric("Current V1 MAE", f"{old_mae:.2f} pts")
+                    c3.metric("FBS-only V1 MAE", f"{new_mae:.2f} pts", delta=f"{old_mae-new_mae:+.2f} pts improvement")
+                    c4.metric("Training exclusions (latest week)", int(training.iloc[-1]["Excluded training games"]))
+                    st.write("Winner accuracy on the same non-tied games")
+                    st.write(f"Current V1: {wins['Current V1 winner correct'].mean():.1%} · FBS-only V1: {wins['FBS-only V1 winner correct'].mean():.1%}")
+                    st.caption("Positive MAE improvement means FBS-only V1 was better on this historical sample. This does not establish an improvement in betting ROI or the locked V3 model.")
+                    st.dataframe(training, hide_index=True, use_container_width=True)
+                    st.dataframe(paired.sort_values("Current V1 abs error", ascending=False), hide_index=True, use_container_width=True)
+                    st.download_button("Download paired V1 audit CSV", paired.to_csv(index=False),
+                        file_name=f"JarzCFB_v1_fbs_audit_{audit_season}.csv", mime="text/csv", key="v1_audit_download")
+            except Exception as exc:
+                st.error(f"V1 eligibility audit failed: {exc}")
