@@ -6,7 +6,8 @@ The CSV is a curated, timestamped evidence ledger, not a live injury feed.
 import csv
 from datetime import datetime, timezone
 from pathlib import Path
-from cfb_team_matching import canonical_school
+from cfb_team_matching import canonical_school, normalize, match_rating
+import requests
 
 FACTORS = ("quarterback", "star_player", "injury", "stadium", "travel", "rest", "weather", "rivalry", "big_game")
 FIELDS = ("game_id", "team", "player", "position", "factor", "status", "source", "observed_at_utc", "notes", "impact_points")
@@ -29,20 +30,26 @@ def review_games(projections, evidence, asof=None):
     for _, game in result.iterrows():
         game_id = str(game.get("Game ID") or "")
         matchup = str(game.get("Matchup", ""))
+        teams = matchup.split(" @ ")
+        allowed_teams = {canonical_school(t) for t in teams} if len(teams) == 2 else set()
         matched = []
         for item in evidence:
-            if item.get("game_id") and str(item["game_id"]) != game_id:
+            # Never let a team-only observation leak into unrelated games.
+            if not item.get("game_id") or str(item["game_id"]) != game_id:
                 continue
             team = item.get("team", "").strip()
-            if team and canonical_school(team).lower() not in matchup.lower():
+            if not team or canonical_school(team) not in allowed_teams:
                 continue
             try:
                 observed = datetime.fromisoformat(item["observed_at_utc"].replace("Z", "+00:00"))
-                if observed.tzinfo is None or observed.astimezone(timezone.utc) > asof:
+                kickoff = game.get("Kickoff UTC")
+                import pandas as pd
+                kick = pd.to_datetime(kickoff, utc=True, errors="coerce")
+                if observed.tzinfo is None or observed.astimezone(timezone.utc) > asof or (not pd.isna(kick) and observed >= kick.to_pydatetime()):
                     continue
             except (ValueError, KeyError, AttributeError):
                 continue
-            if not item.get("source", "").strip():
+            if not item.get("source", "").strip().startswith(("https://", "http://")):
                 continue
             matched.append(item)
         statuses.append("Evidence available — review required" if matched else "Not verified — do not assume healthy")
@@ -62,3 +69,62 @@ def review_games(projections, evidence, asof=None):
     result["V4 adjusted margin"] = float("nan")
     result["V4 action"] = "Research only — no calibrated adjustment"
     return result
+
+def fetch_player_stats(api_key, year, team, timeout=12):
+    """CFBD player-season production, not injury or availability data.
+
+    Returns (players, error). All players are ranked by available cumulative
+    statistical production within their *own category*; cross-position value
+    and point spreads cannot be inferred from these numbers.
+    """
+    if not api_key:
+        return [], "CFBD API key unavailable"
+    try:
+        response = requests.get(
+            "https://api.collegefootballdata.com/stats/player/season",
+            params={"year": int(year), "team": team},
+            headers={"Authorization": "Bearer " + api_key},
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        if not isinstance(payload, list):
+            return [], "Unexpected CFBD player-stat response"
+        output = []
+        for record in payload:
+            if not isinstance(record, dict):
+                continue
+            name = record.get("player")
+            category = record.get("category")
+            stat_type = record.get("statType")
+            try:
+                value = float(str(record.get("stat", "")).replace(",", ""))
+            except (ValueError, TypeError):
+                continue
+            if not name or not category or not stat_type:
+                continue
+            output.append({"player": str(name), "category": str(category),
+                           "stat_type": str(stat_type), "value": value})
+        return output, None
+    except (requests.RequestException, ValueError, TypeError) as exc:
+        return [], f"CFBD player statistics unavailable: {type(exc).__name__}"
+
+def standout_players(stats, limit=6):
+    """Select production leaders with an explicit metric; not a talent ranking."""
+    preferred = (("passing", "YDS"), ("rushing", "YDS"),
+                 ("receiving", "YDS"), ("defensive", "TOT"),
+                 ("defensive", "SACKS"), ("kicking", "PTS"))
+    selected = []
+    seen = set()
+    for category, metric in preferred:
+        candidates = [r for r in stats if r["category"].lower() == category
+                      and r["stat_type"].upper() == metric]
+        candidates.sort(key=lambda r: r["value"], reverse=True)
+        for item in candidates[:2]:
+            if item["player"] not in seen:
+                selected.append(item)
+                seen.add(item["player"])
+                break
+        if len(selected) >= limit:
+            break
+    return selected[:limit]
