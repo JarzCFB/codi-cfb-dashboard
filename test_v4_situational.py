@@ -5,6 +5,13 @@ from cfb_v4_situational import review_games, standout_players, fetch_player_stat
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
+    def test_empty_game_list_has_stable_columns(self):
+        frame = pd.DataFrame(columns=["Game ID", "Matchup", "Kickoff UTC", "V3/final margin"])
+        result = review_games(frame, [])
+        self.assertTrue(result.empty)
+        self.assertIn("V4 verification", result.columns)
+        self.assertIn("V4 adjusted margin", result.columns)
+
     def test_unknown_player_status_not_mistaken_for_healthy(self):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17","V3/final margin":3.5}])
         result = review_games(frame, [])
