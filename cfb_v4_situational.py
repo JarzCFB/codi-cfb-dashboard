@@ -14,13 +14,31 @@ import requests
 FACTORS = ("quarterback", "star_player", "injury", "stadium", "travel", "rest", "weather", "rivalry", "big_game")
 FIELDS = ("game_id", "team", "player", "position", "factor", "status", "source", "observed_at_utc", "notes", "impact_points")
 
+def parse_evidence_csv(handle):
+    """Parse a CSV upload and fail closed on missing required columns.
+
+    Parsing does not certify truth of any report; review_games enforces game,
+    team, source URL and time constraints before displaying it.
+    """
+    rows = list(csv.DictReader(handle))
+    if not rows and not getattr(handle, "seekable", lambda: False)():
+        return []
+    if getattr(handle, "seekable", lambda: False)():
+        handle.seek(0)
+        reader = csv.DictReader(handle)
+        columns = set(reader.fieldnames or ())
+        if not set(FIELDS).issubset(columns):
+            raise ValueError("Evidence CSV missing columns: " + ", ".join(sorted(set(FIELDS) - columns)))
+        rows = list(reader)
+    return [r for r in rows if r.get("factor") in FACTORS]
+
+
 def load_evidence(path="v4/evidence.csv"):
     path = Path(path)
     if not path.exists():
         return []
     with path.open(newline="", encoding="utf-8") as handle:
-        rows = list(csv.DictReader(handle))
-    return [r for r in rows if r.get("factor") in FACTORS]
+        return parse_evidence_csv(handle)
 
 def review_games(projections, evidence, asof=None):
     """Add V4 review columns without touching original V3 projections."""
