@@ -396,6 +396,65 @@ else:
         final_projections=final_projection_rows(
             games,ratings,final_v2_ratings,home_adv,data
         )
+        # V4 is a separate research-only layer. No changes to V3 margins or official picks.
+        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv, player_availability, player_report_details, report_freshness
+        @st.cache_data(ttl=21600, show_spinner=False)
+        def v4_team_leaders(key, season, team):
+            stats, error = fetch_player_stats(key, season, team)
+            return standout_players(stats), error
+        with st.expander("V4 evidence input (optional, research only)", expanded=False):
+            st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
+            st.download_button(
+                "Download evidence CSV template",
+                data="game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points\n",
+                file_name="v4_evidence_template.csv",
+                mime="text/csv",
+                key="v4_template_download",
+            )
+            v4_upload = st.file_uploader("V4 evidence CSV", type=["csv"], key="v4_evidence_upload")
+        try:
+            if v4_upload is not None:
+                import io as _v4_io
+                v4_evidence = parse_evidence_csv(_v4_io.StringIO(v4_upload.getvalue().decode("utf-8-sig")))
+            else:
+                v4_evidence = load_evidence()
+        except (ValueError, UnicodeError) as exc:
+            st.warning(f"V4 evidence could not be loaded: {exc}")
+            v4_evidence = []
+        v4_review = review_games(final_projections, v4_evidence)
+        with st.expander("V4 Situational Intelligence — standout players, injuries and game context", expanded=False):
+            st.caption("Evidence-gated research preview. Outstanding players, quarterback status, injuries, stadium difficulty, travel, rest, weather, rivalry and big-game factors require verified timestamped sources. Unknown is not healthy. No V4 betting edge is claimed; V3 and frozen picks remain unchanged.")
+            if v4_review.empty:
+                st.info("No eligible upcoming games for V4 review.")
+            else:
+                coverage = evidence_coverage(v4_review)
+                st.caption(f"Evidence coverage: {coverage['source_linked']} / {coverage['games']} matchups have source-linked reports; {coverage['unverified']} lack them. Source links are not independently verified.")
+                st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
+                st.markdown("**Standout players by current-season production**")
+                st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
+                selected_game = st.selectbox("Select matchup for team player leaders", v4_review["Matchup"].tolist(), key="v4_player_matchup")
+                if selected_game and " @ " in selected_game:
+                    away_team, home_team = selected_game.split(" @ ", 1)
+                    for team in (away_team, home_team):
+                        leaders, error = v4_team_leaders(secret("CFBD_API_KEY"), int(year), team)
+                        st.markdown(f"**{team}**")
+                        if error:
+                            st.warning(error)
+                        elif leaders:
+                            selected_row = v4_review[v4_review["Matchup"] == selected_game].iloc[0]
+                            leaders_table = pd.DataFrame(leaders)
+                            leaders_table["Availability"] = [
+                                player_availability(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC"))
+                                for _, r in leaders_table.iterrows()
+                            ]
+                            details = [player_report_details(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC")) for _, r in leaders_table.iterrows()]
+                            leaders_table["Report timestamp UTC"] = [d["observed_at_utc"] for d in details]
+                            leaders_table["Report source"] = [d["sources"] for d in details]
+                            leaders_table["Report age"] = [report_freshness(d["observed_at_utc"]) for d in details]
+                            st.dataframe(leaders_table.rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
+                        else:
+                            st.info("No compatible season production statistics returned; player availability remains unknown.")
+
         if final_projections.empty:
             st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
         else:

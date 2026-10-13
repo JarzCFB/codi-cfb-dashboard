@@ -1,0 +1,35 @@
+name: V4 research safety tests
+on:
+  pull_request:
+    paths:
+      - 'app.py'
+      - 'cfb_v4_situational.py'
+      - 'v4/**'
+      - 'cfb_team_matching.py'
+      - 'test_v4_situational.py'
+      - '.github/workflows/v4-tests.yml'
+  workflow_dispatch:
+jobs:
+  test-v4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install minimal dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile and run isolated tests
+        run: |
+          python -m py_compile app.py cfb_v4_situational.py test_v4_situational.py
+          python -m unittest -v test_v4_situational
+      - name: Streamlit startup smoke test without API credentials
+        run: |
+          python - <<'PY'
+          from streamlit.testing.v1 import AppTest
+          app = AppTest.from_file('app.py', default_timeout=45).run()
+          errors = [str(item.message) for item in app.exception]
+          if errors:
+              raise AssertionError('Streamlit app startup failed: ' + ' | '.join(errors))
+          print('Streamlit app rendered without exceptions (no API keys).')
+          PY
