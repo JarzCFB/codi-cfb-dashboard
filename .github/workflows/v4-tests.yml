@@ -1,0 +1,23 @@
+name: V4 research safety tests
+on:
+  pull_request:
+    paths:
+      - 'cfb_v4_situational.py'
+      - 'cfb_team_matching.py'
+      - 'test_v4_situational.py'
+      - '.github/workflows/v4-tests.yml'
+  workflow_dispatch:
+jobs:
+  test-v4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install minimal dependencies
+        run: python -m pip install 'pandas>=2.2,<3' 'requests>=2.31,<3'
+      - name: Compile and run isolated tests
+        run: |
+          python -m py_compile cfb_v4_situational.py test_v4_situational.py
+          python -m unittest -v test_v4_situational
