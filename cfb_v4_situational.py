@@ -32,7 +32,7 @@ def review_games(projections, evidence, asof=None):
         return result
     statuses, players, alerts, sources = [], [], [], []
     for _, game in result.iterrows():
-        game_id = str(game.get("Game ID") or "")
+        game_id = str(game.get("Game ID") if pd.notna(game.get("Game ID")) else "")
         matchup = str(game.get("Matchup", ""))
         teams = matchup.split(" @ ")
         allowed_teams = {canonical_school(ALIASES.get(normalize(t), t)) for t in teams} if len(teams) == 2 else set()
@@ -41,33 +41,33 @@ def review_games(projections, evidence, asof=None):
             # Never let a team-only observation leak into unrelated games.
             if not isinstance(item, dict) or not item.get("game_id") or str(item["game_id"]) != game_id:
                 continue
-            team = item.get("team", "").strip()
+            team = str(item.get("team") or "").strip()
             if not team or canonical_school(ALIASES.get(normalize(team), team)) not in allowed_teams:
                 continue
             try:
-                observed = datetime.fromisoformat(item["observed_at_utc"].replace("Z", "+00:00"))
+                observed = datetime.fromisoformat(str(item["observed_at_utc"]).replace("Z", "+00:00"))
                 kickoff = game.get("Kickoff UTC")
                 kick = pd.to_datetime(kickoff, utc=True, errors="coerce")
                 if observed.tzinfo is None or observed.astimezone(timezone.utc) > asof or (not pd.isna(kick) and observed >= kick.to_pydatetime()):
                     continue
             except (ValueError, KeyError, AttributeError):
                 continue
-            source = urlparse(item.get("source", "").strip())
+            source = urlparse(str(item.get("source") or "").strip())
             if source.scheme != "https" or not source.hostname or source.username or source.password:
                 continue
             if item.get("factor") not in FACTORS:
                 continue
             matched.append(item)
-        statuses.append("Evidence available — review required" if matched else "Not verified — do not assume healthy")
+        statuses.append("Source-linked report — independently verify" if matched else "Not verified — do not assume healthy")
         players.append("; ".join(dict.fromkeys(
             (f'{r.get("player", "")} ({r.get("position", "")}: {r.get("status", "")})')
             for r in matched if r.get("player", "").strip()
-        )) or "No verified standout-player report")
+        )) or "No source-linked standout-player report")
         alerts.append("; ".join(
             f'{r["factor"]}: {r.get("status", "unknown")} — {r.get("notes", "")}'.strip()
             for r in matched
         ) or "Injuries, key players, venue, travel, rest, weather and stakes unverified")
-        sources.append("; ".join(dict.fromkeys(r["source"] for r in matched)))
+        sources.append("; ".join(dict.fromkeys(str(r["source"]) for r in matched)))
     result["V4 verification"] = statuses
     result["V4 key players"] = players
     result["V4 situational notes"] = alerts
@@ -107,7 +107,7 @@ def fetch_player_stats(api_key, year, team, timeout=12):
                 value = float(str(record.get("stat", "")).replace(",", ""))
             except (ValueError, TypeError):
                 continue
-            if not name or not category or not stat_type:
+            if not name or not category or not stat_type or not pd.notna(value) or value == float("inf") or value == float("-inf"):
                 continue
             output.append({"player": str(name), "category": str(category),
                            "stat_type": str(stat_type), "value": value})
