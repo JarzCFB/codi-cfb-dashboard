@@ -411,7 +411,7 @@ else:
                 v4_evidence = parse_evidence_csv(_v4_io.StringIO(v4_upload.getvalue().decode("utf-8-sig")))
             else:
                 v4_evidence = load_evidence()
-        except (ValueError, UnicodeDecodeError, _v4_io.Error) as exc:
+        except (ValueError, UnicodeError) as exc:
             st.warning(f"V4 evidence could not be loaded: {exc}")
             v4_evidence = []
         v4_review = review_games(final_projections, v4_evidence)
