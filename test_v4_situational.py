@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from cfb_v4_situational import review_games, standout_players, fetch_player_stats
+from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
@@ -58,6 +58,10 @@ class V4Tests(unittest.TestCase):
         self.assertIsNone(error)
         self.assertEqual(stats[0]["value"], 2350)
         self.assertEqual(get.call_args.kwargs["params"]["team"], "Nebraska")
+
+    def test_evidence_coverage(self):
+        frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
+        self.assertEqual(evidence_coverage(review_games(frame, []))["unverified"], 1)
 
     def test_season_stat_leaders_are_metric_specific(self):
         stats = [{"player":"A","category":"passing","stat_type":"YDS","value":2100},
