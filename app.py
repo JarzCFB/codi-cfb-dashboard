@@ -402,6 +402,12 @@ else:
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
             return standout_players(stats), error
+        from v4_public_sources import public_source_directory
+        with st.expander("V4 official public availability report directory (manual review)", expanded=False):
+            st.caption("Public source entry points only. Coverage varies by conference, date and matchup; no automated status extraction or independent verification. Absence from a report does not mean healthy.")
+            for _v4_source in public_source_directory():
+                st.markdown(f"**{_v4_source['conference']}** — [{_v4_source['url']}]({_v4_source['url']})")
+                st.caption(_v4_source["coverage"])
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
