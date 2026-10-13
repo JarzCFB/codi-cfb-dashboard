@@ -397,7 +397,11 @@ else:
             games,ratings,final_v2_ratings,home_adv,data
         )
         # V4 is a separate research-only layer. No changes to V3 margins or official picks.
-        from cfb_v4_situational import load_evidence, review_games
+        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players
+        @st.cache_data(ttl=21600, show_spinner=False)
+        def v4_team_leaders(key, season, team):
+            stats, error = fetch_player_stats(key, season, team)
+            return standout_players(stats), error
         v4_review = review_games(final_projections, load_evidence())
         with st.expander("V4 Situational Intelligence — standout players, injuries and game context", expanded=False):
             st.caption("Evidence-gated research preview. Outstanding players, quarterback status, injuries, stadium difficulty, travel, rest, weather, rivalry and big-game factors require verified timestamped sources. Unknown is not healthy. No V4 betting edge is claimed; V3 and frozen picks remain unchanged.")
@@ -405,6 +409,21 @@ else:
                 st.info("No eligible upcoming games for V4 review.")
             else:
                 st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
+                st.markdown("**Standout players by current-season production**")
+                st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
+                selected_game = st.selectbox("Select matchup for team player leaders", v4_review["Matchup"].tolist(), key="v4_player_matchup")
+                if selected_game and " @ " in selected_game:
+                    away_team, home_team = selected_game.split(" @ ", 1)
+                    for team in (away_team, home_team):
+                        leaders, error = v4_team_leaders(secret("CFBD_API_KEY"), int(year), team)
+                        st.markdown(f"**{team}**")
+                        if error:
+                            st.warning(error)
+                        elif leaders:
+                            st.dataframe(pd.DataFrame(leaders).rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
+                        else:
+                            st.info("No compatible season production statistics returned; player availability remains unknown.")
+
         if final_projections.empty:
             st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
         else:
