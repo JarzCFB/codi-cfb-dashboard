@@ -397,12 +397,24 @@ else:
             games,ratings,final_v2_ratings,home_adv,data
         )
         # V4 is a separate research-only layer. No changes to V3 margins or official picks.
-        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage
+        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv
         @st.cache_data(ttl=21600, show_spinner=False)
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
             return standout_players(stats), error
-        v4_review = review_games(final_projections, load_evidence())
+        with st.expander("V4 evidence input (optional, research only)", expanded=False):
+            st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
+            v4_upload = st.file_uploader("V4 evidence CSV", type=["csv"], key="v4_evidence_upload")
+        try:
+            if v4_upload is not None:
+                import io as _v4_io
+                v4_evidence = parse_evidence_csv(_v4_io.StringIO(v4_upload.getvalue().decode("utf-8-sig")))
+            else:
+                v4_evidence = load_evidence()
+        except (ValueError, UnicodeDecodeError, _v4_io.Error) as exc:
+            st.warning(f"V4 evidence could not be loaded: {exc}")
+            v4_evidence = []
+        v4_review = review_games(final_projections, v4_evidence)
         with st.expander("V4 Situational Intelligence — standout players, injuries and game context", expanded=False):
             st.caption("Evidence-gated research preview. Outstanding players, quarterback status, injuries, stadium difficulty, travel, rest, weather, rivalry and big-game factors require verified timestamped sources. Unknown is not healthy. No V4 betting edge is claimed; V3 and frozen picks remain unchanged.")
             if v4_review.empty:
