@@ -2,7 +2,7 @@ import unittest
 import io
 from datetime import datetime, timezone
 import pandas as pd
-from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability, cfbd_team_name, player_report_details
+from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability, cfbd_team_name, player_report_details, report_freshness
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
@@ -130,6 +130,16 @@ class V4Tests(unittest.TestCase):
                                      "2026-10-17T19:00:00Z",
                                      asof=datetime(2026,10,18,tzinfo=timezone.utc))
         self.assertIn("Unknown", result)
+
+    def test_old_report_marked_for_recheck(self):
+        self.assertIn("Older report", report_freshness(
+            "2026-10-01T12:00:00Z",
+            asof=datetime(2026, 10, 13, tzinfo=timezone.utc)))
+
+    def test_recent_report_still_requires_verification(self):
+        self.assertIn("still verify", report_freshness(
+            "2026-10-12T12:00:00Z",
+            asof=datetime(2026, 10, 13, tzinfo=timezone.utc)))
 
     def test_player_report_details_are_auditable(self):
         report = [{"game_id":"123", "team":"Nebraska", "player":"Player A",
