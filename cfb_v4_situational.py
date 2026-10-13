@@ -48,12 +48,12 @@ def review_games(projections, evidence, asof=None):
                 observed = datetime.fromisoformat(str(item["observed_at_utc"]).replace("Z", "+00:00"))
                 kickoff = game.get("Kickoff UTC")
                 kick = pd.to_datetime(kickoff, utc=True, errors="coerce")
-                if observed.tzinfo is None or observed.astimezone(timezone.utc) > asof or (not pd.isna(kick) and observed >= kick.to_pydatetime()):
+                if observed.tzinfo is None or observed.astimezone(timezone.utc) > asof or pd.isna(kick) or observed >= kick.to_pydatetime():
                     continue
             except (ValueError, KeyError, AttributeError):
                 continue
             source = urlparse(str(item.get("source") or "").strip())
-            if source.scheme != "https" or not source.hostname or source.username or source.password:
+            if source.scheme != "https" or not source.hostname or source.username or source.password or source.hostname in ("localhost", "127.0.0.1"):
                 continue
             if item.get("factor") not in FACTORS:
                 continue
@@ -61,7 +61,7 @@ def review_games(projections, evidence, asof=None):
         statuses.append("Source-linked report — independently verify" if matched else "Not verified — do not assume healthy")
         players.append("; ".join(dict.fromkeys(
             (f'{r.get("player", "")} ({r.get("position", "")}: {r.get("status", "")})')
-            for r in matched if r.get("player", "").strip()
+            for r in matched if str(r.get("player") or "").strip()
         )) or "No source-linked standout-player report")
         alerts.append("; ".join(
             f'{r["factor"]}: {r.get("status", "unknown")} — {r.get("notes", "")}'.strip()
@@ -135,3 +135,13 @@ def standout_players(stats, limit=6):
         if len(selected) >= limit:
             break
     return selected[:limit]
+
+
+def evidence_coverage(review):
+    """Return counts for the V4 source-review queue; never a health estimate."""
+    if review.empty or "V4 verification" not in review:
+        return {"games": 0, "source_linked": 0, "unverified": 0}
+    total = len(review)
+    linked = int(review["V4 verification"].str.startswith("Source-linked report").sum())
+    return {"games": total, "source_linked": linked, "unverified": total - linked}
+
