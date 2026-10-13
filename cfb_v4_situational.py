@@ -162,19 +162,13 @@ def fetch_player_stats(api_key, year, team, timeout=12):
     except (requests.RequestException, ValueError, TypeError) as exc:
         return [], f"CFBD player statistics unavailable: {type(exc).__name__}"
 
-def player_availability(player, team, evidence, game_id, kickoff_utc=None, asof=None):
-    """Game-specific, point-in-time report label; never infer from statistics.
-
-    Fail closed when kickoff or timestamp is unavailable. Source links are
-    metadata, not independent verification of a player's status.
-    """
-    from cfb_team_matching import _NORMALIZED_ALIASES
-    asof = asof or datetime.now(timezone.utc)
+def _valid_player_reports(player, team, evidence, game_id, kickoff_utc, asof):
+    """Select only reports known at the analysis cutoff and before kickoff."""
     if asof.tzinfo is None:
         raise ValueError("asof must be timezone-aware")
     kick = pd.to_datetime(kickoff_utc, utc=True, errors="coerce")
     if pd.isna(kick):
-        return "Unknown — kickoff not verified"
+        return []
     target = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(team), team))
     relevant = []
     for row in evidence:
@@ -194,10 +188,21 @@ def player_availability(player, team, evidence, game_id, kickoff_utc=None, asof=
                 continue
         except (ValueError, KeyError, TypeError, AttributeError):
             continue
-        relevant.append(row)
+        relevant.append((observed, row))
+    return relevant
+
+def player_availability(player, team, evidence, game_id, kickoff_utc=None, asof=None):
+    """Game-specific, point-in-time report label; never infer from statistics.
+
+    Fail closed when kickoff or timestamp is unavailable. Source links are
+    metadata, not independent verification of a player's status.
+    """
+    asof = asof or datetime.now(timezone.utc)
+    relevant = _valid_player_reports(player, team, evidence, game_id, kickoff_utc, asof)
     if not relevant:
         return "Unknown — no time-valid game-specific report"
-    statuses = {str(row.get("status") or "").strip().lower() for row in relevant}
+    latest = max(observed for observed, _ in relevant)
+    statuses = {str(row.get("status") or "").strip().lower() for observed, row in relevant if observed == latest}
     if len(statuses) != 1 or "" in statuses:
         return "Conflicting or incomplete reports — review"
     return "Reported: " + next(iter(statuses)) + " (not independently verified)"
