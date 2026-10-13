@@ -6,7 +6,8 @@ The CSV is a curated, timestamped evidence ledger, not a live injury feed.
 import csv
 from datetime import datetime, timezone
 from pathlib import Path
-from cfb_team_matching import canonical_school, normalize, match_rating
+from urllib.parse import urlparse
+from cfb_team_matching import canonical_school, normalize, ALIASES
 import requests
 
 FACTORS = ("quarterback", "star_player", "injury", "stadium", "travel", "rest", "weather", "rivalry", "big_game")
@@ -23,6 +24,8 @@ def load_evidence(path="v4/evidence.csv"):
 def review_games(projections, evidence, asof=None):
     """Add V4 review columns without touching original V3 projections."""
     asof = asof or datetime.now(timezone.utc)
+    if asof.tzinfo is None:
+        raise ValueError("asof must be timezone-aware")
     result = projections.copy()
     if result.empty:
         return result
@@ -31,14 +34,14 @@ def review_games(projections, evidence, asof=None):
         game_id = str(game.get("Game ID") or "")
         matchup = str(game.get("Matchup", ""))
         teams = matchup.split(" @ ")
-        allowed_teams = {canonical_school(t) for t in teams} if len(teams) == 2 else set()
+        allowed_teams = {canonical_school(ALIASES.get(normalize(t), t)) for t in teams} if len(teams) == 2 else set()
         matched = []
         for item in evidence:
             # Never let a team-only observation leak into unrelated games.
             if not item.get("game_id") or str(item["game_id"]) != game_id:
                 continue
             team = item.get("team", "").strip()
-            if not team or canonical_school(team) not in allowed_teams:
+            if not team or canonical_school(ALIASES.get(normalize(team), team)) not in allowed_teams:
                 continue
             try:
                 observed = datetime.fromisoformat(item["observed_at_utc"].replace("Z", "+00:00"))
@@ -49,7 +52,10 @@ def review_games(projections, evidence, asof=None):
                     continue
             except (ValueError, KeyError, AttributeError):
                 continue
-            if not item.get("source", "").strip().startswith(("https://", "http://")):
+            source = urlparse(item.get("source", "").strip())
+            if source.scheme != "https" or not source.hostname:
+                continue
+            if item.get("factor") not in FACTORS:
                 continue
             matched.append(item)
         statuses.append("Evidence available — review required" if matched else "Not verified — do not assume healthy")
