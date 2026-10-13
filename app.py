@@ -397,7 +397,7 @@ else:
             games,ratings,final_v2_ratings,home_adv,data
         )
         # V4 is a separate research-only layer. No changes to V3 margins or official picks.
-        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv, player_availability
+        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv, player_availability, player_report_details
         @st.cache_data(ttl=21600, show_spinner=False)
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
@@ -447,6 +447,9 @@ else:
                                 player_availability(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC"))
                                 for _, r in leaders_table.iterrows()
                             ]
+                            details = [player_report_details(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC")) for _, r in leaders_table.iterrows()]
+                            leaders_table["Report timestamp UTC"] = [d["observed_at_utc"] for d in details]
+                            leaders_table["Report source"] = [d["sources"] for d in details]
                             st.dataframe(leaders_table.rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
                         else:
                             st.info("No compatible season production statistics returned; player availability remains unknown.")
