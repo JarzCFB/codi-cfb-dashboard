@@ -21,7 +21,14 @@ def parse_evidence_csv(handle):
     if not set(FIELDS).issubset(columns):
         raise ValueError("Evidence CSV missing columns: " + ", ".join(
             sorted(set(FIELDS) - columns)))
-    return [r for r in reader if r.get("factor") in FACTORS]
+    rows = []
+    for row in reader:
+        if None in row:
+            raise ValueError("Evidence CSV contains extra unheaded columns")
+        if row.get("factor") not in FACTORS:
+            raise ValueError("Unknown evidence factor: " + str(row.get("factor")))
+        rows.append(row)
+    return rows
 
 
 def load_evidence(path="v4/evidence.csv"):
