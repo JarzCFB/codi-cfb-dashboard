@@ -101,7 +101,7 @@ def cfbd_team_name(team):
     Unknown labels pass through unchanged rather than guessing a different
     school (for example Texas Southern must not become Texas).
     """
-    from cfb_team_matching import ALIASES, normalize
+    from cfb_team_matching import normalize
     normalized = normalize(team)
     canonical = _NORMALIZED_ALIASES.get(normalized)
     if canonical:
