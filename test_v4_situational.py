@@ -1,7 +1,7 @@
 import unittest
 import io
 import pandas as pd
-from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv
+from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
@@ -100,6 +100,17 @@ class V4Tests(unittest.TestCase):
         row = "123,Nebraska,Example,QB,quarterback,questionable,https://example.com/report,2026-10-12T12:00:00Z,practice,"
         records = parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
         self.assertEqual(records[0]["team"], "Nebraska")
+
+    def test_player_availability_never_inferred_from_stats(self):
+        self.assertIn("Unknown", player_availability("Player A", "Nebraska", [], "123"))
+
+    def test_conflicting_player_reports_require_review(self):
+        reports = [
+            {"game_id":"123", "team":"Nebraska", "player":"Player A", "factor":"injury",
+             "status":status, "source":"https://example.com/report"}
+            for status in ("out", "available")
+        ]
+        self.assertIn("Conflicting", player_availability("Player A", "Nebraska", reports, "123"))
 
     def test_evidence_coverage(self):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
