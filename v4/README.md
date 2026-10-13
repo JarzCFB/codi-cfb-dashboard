@@ -13,7 +13,7 @@ V4 is an **independent research panel**, not a replacement for V3. Official sele
 ## Not yet production-ready
 - No verified automated college-football injury / availability feed is connected. CFBD season statistics do not provide this.
 - No calibrated V4 point adjustments, betting edges, or historical walk-forward validation.
-- Automated Streamlit startup smoke test (without credentials) and isolated V4 unit tests pass in GitHub Actions. **Live deployed-app testing with API keys has not been completed.**
+- A GitHub Actions workflow for isolated V4 unit tests and Streamlit startup smoke testing is configured, but **a passing run on the current PR head has not been confirmed**. Live deployed-app testing with API keys has not been completed.
 - This PR can be deployed as a clearly labeled **research preview** after an authorized merge and live verification; it must not be presented as a finished predictive V4 model.
 
 ## Safety
