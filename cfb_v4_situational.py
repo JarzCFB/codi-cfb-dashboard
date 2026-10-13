@@ -208,6 +208,21 @@ def player_availability(player, team, evidence, game_id, kickoff_utc=None, asof=
     return "Reported: " + next(iter(statuses)) + " (not independently verified)"
 
 
+def player_report_details(player, team, evidence, game_id, kickoff_utc=None, asof=None):
+    """Provide auditable, point-in-time report metadata for the UI."""
+    asof = asof or datetime.now(timezone.utc)
+    relevant = _valid_player_reports(player, team, evidence, game_id, kickoff_utc, asof)
+    if not relevant:
+        return {"status": "Unknown", "observed_at_utc": "", "sources": ""}
+    latest = max(observed for observed, _ in relevant)
+    current = [row for observed, row in relevant if observed == latest]
+    statuses = {str(row.get("status") or "").strip().lower() for row in current}
+    status = next(iter(statuses)) if len(statuses) == 1 and "" not in statuses else "Conflicting — review"
+    sources = "; ".join(dict.fromkeys(str(row["source"]) for row in current))
+    return {"status": status + " (source-linked, not verified)",
+            "observed_at_utc": latest.astimezone(timezone.utc).isoformat(),
+            "sources": sources}
+
 def standout_players(stats, limit=6):
     """Select production leaders with an explicit metric; not a talent ranking."""
     preferred = (("passing", "YDS"), ("rushing", "YDS"),
