@@ -38,6 +38,8 @@ def review_games(projections, evidence, asof=None):
         raise ValueError("asof must be timezone-aware")
     result = projections.copy()
     if result.empty:
+        for column in ("V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 adjusted margin", "V4 action"):
+            result[column] = pd.Series(dtype="float64" if column == "V4 adjusted margin" else "object")
         return result
     statuses, players, alerts, sources = [], [], [], []
     for _, game in result.iterrows():
