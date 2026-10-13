@@ -432,7 +432,19 @@ else:
                 st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
                 st.markdown("**Standout players by current-season production**")
                 st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
-                selected_game = st.selectbox("Select matchup for team player leaders", v4_review["Matchup"].tolist(), key="v4_player_matchup")
+                # Select by row position, not matchup text: teams can meet more than once.
+                selected_idx = st.selectbox(
+                    "Select matchup for team player leaders",
+                    list(range(len(v4_review))),
+                    format_func=lambda i: (
+                        f'{v4_review.iloc[i]["Matchup"]} | '
+                        f'{v4_review.iloc[i].get("Kickoff UTC", "unknown kickoff")} | '
+                        f'game {v4_review.iloc[i].get("Game ID", "unknown")}'
+                    ),
+                    key="v4_player_matchup",
+                )
+                selected_row = v4_review.iloc[selected_idx] if selected_idx is not None else None
+                selected_game = str(selected_row["Matchup"]) if selected_row is not None else ""
                 if selected_game and " @ " in selected_game:
                     away_team, home_team = selected_game.split(" @ ", 1)
                     for team in (away_team, home_team):
@@ -441,7 +453,6 @@ else:
                         if error:
                             st.warning(error)
                         elif leaders:
-                            selected_row = v4_review[v4_review["Matchup"] == selected_game].iloc[0]
                             leaders_table = pd.DataFrame(leaders)
                             leaders_table["Availability"] = [
                                 player_availability(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC"))
