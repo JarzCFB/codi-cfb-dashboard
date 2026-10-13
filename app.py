@@ -406,7 +406,7 @@ else:
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
                 "Download evidence CSV template",
-                data="game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points\\n",
+                data="game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points\n",
                 file_name="v4_evidence_template.csv",
                 mime="text/csv",
                 key="v4_template_download",
