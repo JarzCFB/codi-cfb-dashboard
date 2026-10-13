@@ -52,6 +52,26 @@ class V4Tests(unittest.TestCase):
         result = review_games(frame, evidence)
         self.assertIn("Source-linked report", result.iloc[0]["V4 verification"])
 
+    def test_player_availability_matches_known_nickname_alias(self):
+        report = [{"game_id":"123", "team":"Nebraska Cornhuskers",
+                   "player":"Example QB", "factor":"injury", "status":"questionable",
+                   "source":"https://example.com/report",
+                   "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = player_availability("Example QB", "Nebraska", report, "123",
+                                     "2026-10-17T19:00:00Z",
+                                     asof=datetime(2026, 10, 13, tzinfo=timezone.utc))
+        self.assertIn("Reported: questionable", result)
+
+    def test_player_availability_does_not_cross_similar_schools(self):
+        report = [{"game_id":"123", "team":"Texas",
+                   "player":"Example QB", "factor":"injury", "status":"out",
+                   "source":"https://example.com/report",
+                   "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = player_availability("Example QB", "Texas State", report, "123",
+                                     "2026-10-17T19:00:00Z",
+                                     asof=datetime(2026, 10, 13, tzinfo=timezone.utc))
+        self.assertIn("Unknown", result)
+
     def test_similar_team_names_do_not_cross_match(self):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Texas Southern @ Texas State",
                                "Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
