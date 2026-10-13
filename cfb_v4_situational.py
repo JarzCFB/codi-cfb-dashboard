@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 import pandas as pd
-from cfb_team_matching import canonical_school, match_rating
+from cfb_team_matching import canonical_school, match_rating, _NORMALIZED_ALIASES
 import requests
 
 FACTORS = ("quarterback", "star_player", "injury", "stadium", "travel", "rest", "weather", "rivalry", "big_game")
@@ -46,7 +46,7 @@ def review_games(projections, evidence, asof=None):
         game_id = str(game.get("Game ID") if pd.notna(game.get("Game ID")) else "")
         matchup = str(game.get("Matchup", ""))
         teams = matchup.split(" @ ")
-        allowed_teams = {canonical_school(t) for t in teams} if len(teams) == 2 else set()
+        allowed_teams = {canonical_school(_NORMALIZED_ALIASES.get(canonical_school(t), t)) for t in teams} if len(teams) == 2 else set()
         matched = []
         for item in evidence:
             # Never let a team-only observation leak into unrelated games.
