@@ -134,9 +134,19 @@ def fetch_player_stats(api_key, year, team, timeout=12):
     except (requests.RequestException, ValueError, TypeError) as exc:
         return [], f"CFBD player statistics unavailable: {type(exc).__name__}"
 
-def player_availability(player, team, evidence, game_id):
-    """Show explicit reports, never infer availability from season statistics."""
+def player_availability(player, team, evidence, game_id, kickoff_utc=None, asof=None):
+    """Game-specific, point-in-time report label; never infer from statistics.
+
+    Fail closed when kickoff or timestamp is unavailable. Source links are
+    metadata, not independent verification of a player's status.
+    """
     from cfb_team_matching import _NORMALIZED_ALIASES
+    asof = asof or datetime.now(timezone.utc)
+    if asof.tzinfo is None:
+        raise ValueError("asof must be timezone-aware")
+    kick = pd.to_datetime(kickoff_utc, utc=True, errors="coerce")
+    if pd.isna(kick):
+        return "Unknown — kickoff not verified"
     target = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(team), team))
     relevant = []
     for row in evidence:
@@ -147,11 +157,18 @@ def player_availability(player, team, evidence, game_id):
             continue
         if row.get("factor") not in ("quarterback", "star_player", "injury"):
             continue
-        if not str(row.get("source") or "").startswith("https://"):
+        source = urlparse(str(row.get("source") or "").strip())
+        if source.scheme != "https" or not source.hostname or source.username or source.password:
+            continue
+        try:
+            observed = datetime.fromisoformat(str(row["observed_at_utc"]).replace("Z", "+00:00"))
+            if observed.tzinfo is None or observed > asof or observed >= kick.to_pydatetime():
+                continue
+        except (ValueError, KeyError, TypeError, AttributeError):
             continue
         relevant.append(row)
     if not relevant:
-        return "Unknown — no game-specific report"
+        return "Unknown — no time-valid game-specific report"
     statuses = {str(row.get("status") or "").strip().lower() for row in relevant}
     if len(statuses) != 1 or "" in statuses:
         return "Conflicting or incomplete reports — review"
