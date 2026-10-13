@@ -1,0 +1,37 @@
+import unittest
+from v4_recover_v3 import recover_v3_audit, recovery_summary
+
+def row(status="settled"):
+    return {"game_id": "abc", "season": "2026", "kickoff_utc": "2026-10-03T18:00:00Z",
+            "captured_at_utc": "2026-09-29T18:00:00Z",
+            "projected_home_margin": "4.5", "actual_home_margin": "7" if status == "settled" else "",
+            "grading_status": status, "model_version": "v3"}
+
+class RecoveryTests(unittest.TestCase):
+    def test_settled(self):
+        rows = recover_v3_audit([row()])
+        self.assertEqual(recovery_summary(rows)["settled_v3_mae"], 2.5)
+        self.assertFalse(recovery_summary(rows)["v4_training_ready"])
+
+    def test_pending_not_fabricated(self):
+        rows = recover_v3_audit([row("pending")])
+        self.assertIsNone(rows[0]["actual_home_margin"])
+
+    def test_future_leakage_rejected(self):
+        r = row()
+        r["captured_at_utc"] = r["kickoff_utc"]
+        with self.assertRaisesRegex(ValueError, "post-kickoff"):
+            recover_v3_audit([r])
+
+    def test_duplicate_rejected(self):
+        with self.assertRaisesRegex(ValueError, "duplicate"):
+            recover_v3_audit([row(), row()])
+
+    def test_other_model_rejected(self):
+        r = row()
+        r["model_version"] = "v2"
+        with self.assertRaisesRegex(ValueError, "V3-only"):
+            recover_v3_audit([r])
+
+if __name__ == "__main__":
+    unittest.main()
