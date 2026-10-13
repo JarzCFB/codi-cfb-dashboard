@@ -402,6 +402,30 @@ else:
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
             return standout_players(stats), error
+        from v4_public_sources import public_source_directory
+        with st.expander("V4 official public availability sources — manual review", expanded=False):
+            st.caption("Public entry points only; coverage differs by conference and matchup. No automatic status verification. Missing report does not imply healthy.")
+            for _v4_source in public_source_directory():
+                st.markdown(f"**{_v4_source['conference']}** — [{_v4_source['url']}]({_v4_source['url']})")
+                st.caption(_v4_source["coverage"])
+        with st.expander("V4 historical evaluation — pregame snapshots (research only)", expanded=False):
+            st.caption("Held-out-season comparison requires real, timestamped V3/V4 pregame predictions and final scores. Does not change official picks.")
+            st.download_button(
+                "Download historical evaluation CSV template",
+                data="game_id,season,kickoff_utc,captured_at_utc,actual_home_margin,v3_home_margin,v4_home_margin\n",
+                file_name="v4_walkforward_template.csv", mime="text/csv", key="v4_walkforward_template",
+            )
+            _v4_history_upload = st.file_uploader("Historical pregame snapshots CSV", type=["csv"], key="v4_history_upload")
+            if _v4_history_upload is not None:
+                try:
+                    from v4_walkforward import evaluate_walkforward
+                    import csv as _v4_csv
+                    import io as _v4_io
+                    _v4_rows = list(_v4_csv.DictReader(_v4_io.StringIO(_v4_history_upload.getvalue().decode("utf-8-sig"))))
+                    st.json(evaluate_walkforward(_v4_rows, min_holdout_games=100))
+                    st.warning("Research only; input provenance and model calibration require independent verification.")
+                except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_exc:
+                    st.warning(f"Historical evaluation unavailable: {_v4_exc}")
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
