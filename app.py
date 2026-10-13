@@ -402,6 +402,27 @@ else:
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
             return standout_players(stats), error
+        with st.expander("V4 historical evaluation — uploaded pregame snapshots (research only)", expanded=False):
+            st.caption("Compare held-out-season V3 and V4 errors only when independent, point-in-time game snapshots exist. This does not fit V4 or change official picks.")
+            st.download_button(
+                "Download historical evaluation CSV template",
+                data="game_id,season,kickoff_utc,captured_at_utc,actual_home_margin,v3_home_margin,v4_home_margin\\n",
+                file_name="v4_walkforward_template.csv",
+                mime="text/csv",
+                key="v4_walkforward_template",
+            )
+            _v4_history_upload = st.file_uploader("Historical pregame snapshots CSV", type=["csv"], key="v4_history_upload")
+            if _v4_history_upload is not None:
+                try:
+                    from v4_walkforward import evaluate_walkforward
+                    import csv as _v4_csv
+                    import io as _v4_io
+                    _v4_rows = list(_v4_csv.DictReader(_v4_io.StringIO(_v4_history_upload.getvalue().decode("utf-8-sig"))))
+                    _v4_result = evaluate_walkforward(_v4_rows, min_holdout_games=100)
+                    st.json(_v4_result)
+                    st.warning("Research only: source integrity and independent V4 calibration must be established before release.")
+                except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_exc:
+                    st.warning(f"Historical evaluation cannot run: {_v4_exc}")
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
