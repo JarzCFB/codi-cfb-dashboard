@@ -7,6 +7,7 @@ import csv
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
+import pandas as pd
 from cfb_team_matching import canonical_school, normalize, ALIASES
 import requests
 
@@ -38,7 +39,7 @@ def review_games(projections, evidence, asof=None):
         matched = []
         for item in evidence:
             # Never let a team-only observation leak into unrelated games.
-            if not item.get("game_id") or str(item["game_id"]) != game_id:
+            if not isinstance(item, dict) or not item.get("game_id") or str(item["game_id"]) != game_id:
                 continue
             team = item.get("team", "").strip()
             if not team or canonical_school(ALIASES.get(normalize(team), team)) not in allowed_teams:
@@ -46,14 +47,13 @@ def review_games(projections, evidence, asof=None):
             try:
                 observed = datetime.fromisoformat(item["observed_at_utc"].replace("Z", "+00:00"))
                 kickoff = game.get("Kickoff UTC")
-                import pandas as pd
                 kick = pd.to_datetime(kickoff, utc=True, errors="coerce")
                 if observed.tzinfo is None or observed.astimezone(timezone.utc) > asof or (not pd.isna(kick) and observed >= kick.to_pydatetime()):
                     continue
             except (ValueError, KeyError, AttributeError):
                 continue
             source = urlparse(item.get("source", "").strip())
-            if source.scheme != "https" or not source.hostname:
+            if source.scheme != "https" or not source.hostname or source.username or source.password:
                 continue
             if item.get("factor") not in FACTORS:
                 continue
@@ -123,8 +123,9 @@ def standout_players(stats, limit=6):
     selected = []
     seen = set()
     for category, metric in preferred:
-        candidates = [r for r in stats if r["category"].lower() == category
-                      and r["stat_type"].upper() == metric]
+        candidates = [r for r in stats if r.get("category", "").lower() == category
+                      and r.get("stat_type", "").upper() == metric
+                      and isinstance(r.get("value"), (int, float))]
         candidates.sort(key=lambda r: r["value"], reverse=True)
         for item in candidates[:2]:
             if item["player"] not in seen:
