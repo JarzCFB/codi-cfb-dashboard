@@ -223,6 +223,22 @@ def player_report_details(player, team, evidence, game_id, kickoff_utc=None, aso
             "observed_at_utc": latest.astimezone(timezone.utc).isoformat(),
             "sources": sources}
 
+def report_freshness(observed_at_utc, asof=None, max_age_hours=72):
+    """Classify report age; source age is not evidence of player health."""
+    asof = asof or datetime.now(timezone.utc)
+    if asof.tzinfo is None:
+        raise ValueError("asof must be timezone-aware")
+    if not observed_at_utc:
+        return "No report"
+    try:
+        observed = datetime.fromisoformat(str(observed_at_utc).replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return "Invalid timestamp"
+    if observed.tzinfo is None or observed > asof:
+        return "Invalid or future report"
+    age_hours = (asof - observed).total_seconds() / 3600
+    return "Older report — recheck" if age_hours > max_age_hours else "Recent report — still verify"
+
 def standout_players(stats, limit=6):
     """Select production leaders with an explicit metric; not a talent ranking."""
     preferred = (("passing", "YDS"), ("rushing", "YDS"),
