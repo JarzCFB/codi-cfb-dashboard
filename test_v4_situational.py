@@ -211,6 +211,16 @@ class V4Tests(unittest.TestCase):
                                      asof=datetime(2026,10,18,tzinfo=timezone.utc))
         self.assertIn("Unknown", result)
 
+    def test_player_availability_rejects_local_source_url(self):
+        report = [{"game_id":"123", "team":"Nebraska", "player":"Player A",
+                   "factor":"injury", "status":"out",
+                   "source":"https://localhost/report",
+                   "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = player_availability("Player A", "Nebraska", report, "123",
+                                     "2026-10-17T19:00:00Z",
+                                     asof=datetime(2026, 10, 13, tzinfo=timezone.utc))
+        self.assertIn("Unknown", result)
+
     def test_old_report_marked_for_recheck(self):
         self.assertIn("Older report", report_freshness(
             "2026-10-01T12:00:00Z",
