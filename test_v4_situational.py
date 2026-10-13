@@ -91,6 +91,42 @@ class V4Tests(unittest.TestCase):
         self.assertEqual(stats[0]["value"], 2350)
         self.assertEqual(get.call_args.kwargs["params"]["team"], "Nebraska")
 
+    @patch("cfb_v4_situational.requests.get")
+    def test_player_stats_reject_blank_team_without_network(self, get):
+        stats, error = fetch_player_stats("test-key", 2026, "  ")
+        self.assertEqual(stats, [])
+        self.assertIn("Team name unavailable", error)
+        get.assert_not_called()
+
+    @patch("cfb_v4_situational.requests.get")
+    def test_player_stats_reject_negative_and_nonfinite_values(self, get):
+        get.return_value = Mock()
+        get.return_value.json.return_value = [
+            {"player":"Valid", "category":"passing", "statType":"YDS", "stat":"200"},
+            {"player":"Negative", "category":"passing", "statType":"YDS", "stat":"-2"},
+            {"player":"Infinity", "category":"passing", "statType":"YDS", "stat":"inf"},
+            {"player":"Not a number", "category":"passing", "statType":"YDS", "stat":"nan"},
+        ]
+        stats, error = fetch_player_stats("test-key", 2026, "Nebraska")
+        self.assertIsNone(error)
+        self.assertEqual([row["player"] for row in stats], ["Valid"])
+
+    def test_evidence_never_crosses_duplicate_matchup_game_ids(self):
+        frame = pd.DataFrame([
+            {"Game ID":"101", "Matchup":"Nebraska @ Ohio State",
+             "Kickoff UTC":"2026-10-17T19:00:00Z", "V3/final margin":3.5},
+            {"Game ID":"202", "Matchup":"Nebraska @ Ohio State",
+             "Kickoff UTC":"2026-11-21T19:00:00Z", "V3/final margin":-2.0},
+        ])
+        evidence = [{"game_id":"202", "team":"Nebraska", "factor":"quarterback",
+                     "player":"Example", "position":"QB", "status":"questionable",
+                     "source":"https://example.com/report",
+                     "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = review_games(frame, evidence, asof=datetime(2026, 10, 13, tzinfo=timezone.utc))
+        self.assertIn("Not verified", result.iloc[0]["V4 verification"])
+        self.assertIn("Source-linked report", result.iloc[1]["V4 verification"])
+        self.assertEqual(result["V3/final margin"].tolist(), [3.5, -2.0])
+
     def test_csv_unknown_factor_rejected(self):
         header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
         row = "123,Nebraska,Example,QB,unlisted,questionable,https://example.com/report,2026-10-12T12:00:00Z,practice,"
