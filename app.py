@@ -450,14 +450,14 @@ else:
                 except (ValueError, TypeError, UnicodeError, OverflowError, KeyError) as _v4_cal_exc:
                     st.warning(f"V4 calibration not run: {_v4_cal_exc}")
         with st.expander("V4 recover archived V3 predictions (read-only)", expanded=False):
-            st.caption("Upload the existing V3 ATS investigation audit CSV to recover genuine timestamped baseline predictions. This does not modify frozen picks or fill missing situational factors.")
-            _v4_recovery_upload = st.file_uploader("Archived V3 ATS audit CSV", type=["csv"], key="v4_recovery_upload")
+            st.caption("Upload either the original V3 ATS investigation audit CSV or the already recovered V3 baseline CSV. This does not modify frozen picks or fill missing situational factors.")
+            _v4_recovery_upload = st.file_uploader("Original V3 audit or recovered baseline CSV", type=["csv"], key="v4_recovery_upload")
             if _v4_recovery_upload is not None:
                 try:
                     import csv as _v4_recovery_csv
                     import io as _v4_recovery_io
-                    from v4_recover_v3 import recover_v3_audit, recovery_summary
-                    _v4_recovery_rows = recover_v3_audit(list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_recovery_upload.getvalue().decode("utf-8-sig")))))
+                    from v4_recover_v3 import recover_v3_upload, recovery_summary
+                    _v4_recovery_rows = recover_v3_upload(list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_recovery_upload.getvalue().decode("utf-8-sig")))))
                     st.json(recovery_summary(_v4_recovery_rows))
                     _v4_export_fields = ["game_id", "season", "kickoff_utc", "captured_at_utc", "home_team", "away_team", "v3_home_margin", "actual_home_margin", "source_grading_status", "v4_feature_verification"]
                     _v4_output = _v4_recovery_io.StringIO()
