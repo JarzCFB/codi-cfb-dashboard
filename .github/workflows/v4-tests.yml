@@ -13,6 +13,8 @@ on:
       - 'test_v4_calibration.py'
       - 'v4_recover_v3.py'
       - 'test_v4_recover_v3.py'
+      - 'v4_evidence_audit.py'
+      - 'test_v4_evidence_audit.py'
       - 'v4_public_sources.py'
       - 'test_v4_public_sources.py'
       - '.github/workflows/v4-tests.yml'
@@ -29,8 +31,8 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Compile and run isolated tests
         run: |
-          python -m py_compile app.py cfb_v4_situational.py test_v4_situational.py v4_walkforward.py test_v4_walkforward.py v4_calibration.py test_v4_calibration.py v4_recover_v3.py test_v4_recover_v3.py v4_public_sources.py test_v4_public_sources.py
-          python -m unittest -v test_v4_situational test_v4_walkforward test_v4_calibration test_v4_recover_v3 test_v4_public_sources
+          python -m py_compile app.py cfb_v4_situational.py test_v4_situational.py v4_walkforward.py test_v4_walkforward.py v4_calibration.py test_v4_calibration.py v4_recover_v3.py test_v4_recover_v3.py v4_evidence_audit.py test_v4_evidence_audit.py v4_public_sources.py test_v4_public_sources.py
+          python -m unittest -v test_v4_situational test_v4_walkforward test_v4_calibration test_v4_recover_v3 test_v4_evidence_audit test_v4_public_sources
       - name: Streamlit startup smoke test without API credentials
         run: |
           python - <<'PY'
