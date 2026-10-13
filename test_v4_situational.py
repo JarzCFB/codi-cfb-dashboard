@@ -1,6 +1,7 @@
 import unittest
+import io
 import pandas as pd
-from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage
+from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
@@ -58,6 +59,16 @@ class V4Tests(unittest.TestCase):
         self.assertIsNone(error)
         self.assertEqual(stats[0]["value"], 2350)
         self.assertEqual(get.call_args.kwargs["params"]["team"], "Nebraska")
+
+    def test_csv_schema_required(self):
+        with self.assertRaises(ValueError):
+            parse_evidence_csv(io.StringIO("team,factor\nNebraska,injury\n"))
+
+    def test_csv_parses_source_linked_report(self):
+        header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
+        row = "123,Nebraska,Example,QB,quarterback,questionable,https://example.com/report,2026-10-12T12:00:00Z,practice,"
+        records = parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
+        self.assertEqual(records[0]["team"], "Nebraska")
 
     def test_evidence_coverage(self):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
