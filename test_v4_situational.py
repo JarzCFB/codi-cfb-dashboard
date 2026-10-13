@@ -1,5 +1,6 @@
 import unittest
 import io
+from datetime import datetime, timezone
 import pandas as pd
 from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability
 from unittest.mock import patch, Mock
@@ -102,15 +103,25 @@ class V4Tests(unittest.TestCase):
         self.assertEqual(records[0]["team"], "Nebraska")
 
     def test_player_availability_never_inferred_from_stats(self):
-        self.assertIn("Unknown", player_availability("Player A", "Nebraska", [], "123"))
+        self.assertIn("Unknown", player_availability("Player A", "Nebraska", [], "123", "2026-10-17T19:00:00Z"))
+
+    def test_player_availability_rejects_post_kickoff_report(self):
+        report = [{"game_id":"123", "team":"Nebraska", "player":"Player A",
+                   "factor":"injury", "status":"out", "source":"https://example.com/report",
+                   "observed_at_utc":"2026-10-17T19:01:00Z"}]
+        result = player_availability("Player A", "Nebraska", report, "123",
+                                     "2026-10-17T19:00:00Z",
+                                     asof=datetime(2026,10,18,tzinfo=timezone.utc))
+        self.assertIn("Unknown", result)
 
     def test_conflicting_player_reports_require_review(self):
         reports = [
             {"game_id":"123", "team":"Nebraska", "player":"Player A", "factor":"injury",
-             "status":status, "source":"https://example.com/report"}
+             "status":status, "source":"https://example.com/report",
+             "observed_at_utc":"2026-10-12T12:00:00Z"}
             for status in ("out", "available")
         ]
-        self.assertIn("Conflicting", player_availability("Player A", "Nebraska", reports, "123"))
+        self.assertIn("Conflicting", player_availability("Player A", "Nebraska", reports, "123", "2026-10-17T19:00:00Z", asof=datetime(2026, 10, 13, tzinfo=timezone.utc)))
 
     def test_evidence_coverage(self):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
