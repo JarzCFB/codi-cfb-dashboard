@@ -46,6 +46,7 @@ class V4Tests(unittest.TestCase):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Nebraska Cornhuskers @ Ohio State Buckeyes",
                                "Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
         evidence = [{"game_id":"123","team":"Nebraska","factor":"quarterback",
+                     "player":"Example QB", "status":"questionable",
                      "source":"https://example.com/report",
                      "observed_at_utc":"2026-10-12T12:00:00Z"}]
         result = review_games(frame, evidence)
