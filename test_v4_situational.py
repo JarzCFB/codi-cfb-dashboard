@@ -76,6 +76,23 @@ class V4Tests(unittest.TestCase):
         result = review_games(frame, evidence, asof=datetime(2026,10,18,tzinfo=timezone.utc))
         self.assertIn("Not verified", result.iloc[0]["V4 verification"])
 
+    def test_missing_player_or_status_does_not_verify_injury(self):
+        frame = pd.DataFrame([{"Game ID":"123", "Matchup":"Nebraska @ Ohio State",
+                               "Kickoff UTC":"2026-10-17T19:00:00Z", "V3/final margin":3.5}])
+        base = {"game_id":"123", "team":"Nebraska", "factor":"injury",
+                "player":"Test Player", "status":"out",
+                "source":"https://example.com/report",
+                "observed_at_utc":"2026-10-12T12:00:00Z"}
+        for missing in ("player", "status"):
+            report = dict(base)
+            report[missing] = ""
+            result = review_games(frame, [report], asof=datetime(2026, 10, 13, tzinfo=timezone.utc))
+            self.assertIn("Not verified", result.iloc[0]["V4 verification"])
+            self.assertEqual(result.iloc[0]["V3/final margin"], 3.5)
+            self.assertIn("Unknown", player_availability("Test Player", "Nebraska", [report],
+                            "123", "2026-10-17T19:00:00Z",
+                            asof=datetime(2026, 10, 13, tzinfo=timezone.utc)))
+
     def test_cfbd_known_team_alias(self):
         self.assertEqual(cfbd_team_name("Nebraska Cornhuskers"), "nebraska")
         self.assertEqual(cfbd_team_name("Ohio State Buckeyes"), "ohio state")
