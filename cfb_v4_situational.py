@@ -132,7 +132,7 @@ def fetch_player_stats(api_key, year, team, timeout=12):
     """
     if not api_key:
         return [], "CFBD API key unavailable"
-    if not str(team).strip():
+    if not isinstance(team, str) or not team.strip():
         return [], "Team name unavailable"
     try:
         response = requests.get(
