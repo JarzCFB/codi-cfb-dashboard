@@ -34,6 +34,24 @@ class V4Tests(unittest.TestCase):
         self.assertIn("Source-linked report", result.iloc[0]["V4 verification"])
         self.assertEqual(result.iloc[0]["V3/final margin"], 3.5)
 
+    def test_team_nickname_alias_matches(self):
+        frame = pd.DataFrame([{"Game ID":"123","Matchup":"Nebraska Cornhuskers @ Ohio State Buckeyes",
+                               "Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
+        evidence = [{"game_id":"123","team":"Nebraska","factor":"quarterback",
+                     "source":"https://example.com/report",
+                     "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = review_games(frame, evidence)
+        self.assertIn("Source-linked report", result.iloc[0]["V4 verification"])
+
+    def test_similar_team_names_do_not_cross_match(self):
+        frame = pd.DataFrame([{"Game ID":"123","Matchup":"Texas Southern @ Texas State",
+                               "Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
+        evidence = [{"game_id":"123","team":"Texas","factor":"quarterback",
+                     "source":"https://example.com/report",
+                     "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = review_games(frame, evidence)
+        self.assertIn("Not verified", result.iloc[0]["V4 verification"])
+
     def test_future_report_rejected(self):
         frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
         evidence = [{"game_id":"123","team":"Home","factor":"injury",
