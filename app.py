@@ -449,6 +449,25 @@ else:
                     st.warning("Research only: improvement on one holdout is not production validation. Verify source provenance and test prospectively.")
                 except (ValueError, TypeError, UnicodeError, OverflowError, KeyError) as _v4_cal_exc:
                     st.warning(f"V4 calibration not run: {_v4_cal_exc}")
+        with st.expander("V4 recover archived V3 predictions (read-only)", expanded=False):
+            st.caption("Upload the existing V3 ATS investigation audit CSV to recover genuine timestamped baseline predictions. This does not modify frozen picks or fill missing situational factors.")
+            _v4_recovery_upload = st.file_uploader("Archived V3 ATS audit CSV", type=["csv"], key="v4_recovery_upload")
+            if _v4_recovery_upload is not None:
+                try:
+                    import csv as _v4_recovery_csv
+                    import io as _v4_recovery_io
+                    from v4_recover_v3 import recover_v3_audit, recovery_summary
+                    _v4_recovery_rows = recover_v3_audit(list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_recovery_upload.getvalue().decode("utf-8-sig")))))
+                    st.json(recovery_summary(_v4_recovery_rows))
+                    _v4_export_fields = ["game_id", "season", "kickoff_utc", "captured_at_utc", "home_team", "away_team", "v3_home_margin", "actual_home_margin", "source_grading_status", "v4_feature_verification"]
+                    _v4_output = _v4_recovery_io.StringIO()
+                    _v4_writer = _v4_recovery_csv.DictWriter(_v4_output, fieldnames=_v4_export_fields)
+                    _v4_writer.writeheader()
+                    _v4_writer.writerows(_v4_recovery_rows)
+                    st.download_button("Download recovered V3 baseline", data=_v4_output.getvalue(), file_name="v4_recovered_v3_baseline.csv", mime="text/csv", key="v4_recovered_baseline_download")
+                    st.warning("This is a selected-play V3 baseline, not all FBS games or a trained V4 model. Situational features still require timestamped independent verification.")
+                except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_recovery_exc:
+                    st.warning(f"V3 audit recovery unavailable: {_v4_recovery_exc}")
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
