@@ -103,6 +103,35 @@ class V4Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
 
+    def test_csv_rejects_local_source_url(self):
+        header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
+        row = "123,Nebraska,Example,QB,injury,out,https://localhost/report,2026-10-12T12:00:00Z,practice,"
+        with self.assertRaises(ValueError):
+            parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
+
+    def test_incomplete_injury_reports_remain_unverified(self):
+        frame = pd.DataFrame([{"Game ID":"123", "Matchup":"Nebraska @ Ohio State",
+                               "Kickoff UTC":"2026-10-17T19:00:00Z", "V3/final margin":3.5}])
+        base = {"game_id":"123", "team":"Nebraska", "factor":"injury",
+                "player":"Example", "status":"out",
+                "source":"https://example.com/report",
+                "observed_at_utc":"2026-10-12T12:00:00Z"}
+        for missing in ("player", "status"):
+            report = dict(base)
+            report[missing] = ""
+            result = review_games(frame, [report], asof=datetime(2026,10,13,tzinfo=timezone.utc))
+            self.assertIn("Not verified", result.iloc[0]["V4 verification"])
+            self.assertEqual(result.iloc[0]["V3/final margin"], 3.5)
+            self.assertIn("Unknown", player_availability("Example", "Nebraska", [report], "123",
+                           "2026-10-17T19:00:00Z", asof=datetime(2026,10,13,tzinfo=timezone.utc)))
+
+    def test_player_availability_rejects_local_source_url(self):
+        report = [{"game_id":"123", "team":"Nebraska", "player":"Example",
+                   "factor":"injury", "status":"out", "source":"https://localhost/report",
+                   "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        self.assertIn("Unknown", player_availability("Example", "Nebraska", report, "123",
+                      "2026-10-17T19:00:00Z", asof=datetime(2026,10,13,tzinfo=timezone.utc)))
+
     def test_csv_rejects_naive_timestamp(self):
         header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
         row = "123,Nebraska,Player,QB,injury,out,https://example.com/report,2026-10-12T12:00:00,practice,"
