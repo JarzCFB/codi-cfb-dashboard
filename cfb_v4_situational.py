@@ -31,8 +31,8 @@ def parse_evidence_csv(handle):
             if not str(row.get(required) or "").strip():
                 raise ValueError("Evidence CSV row missing " + required)
         source = urlparse(str(row["source"]).strip())
-        if source.scheme != "https" or not source.hostname or source.username or source.password:
-            raise ValueError("Evidence CSV requires an HTTPS source URL")
+        if source.scheme != "https" or not source.hostname or source.username or source.password or source.hostname in ("localhost", "127.0.0.1"):
+            raise ValueError("Evidence CSV requires a public HTTPS source URL")
         try:
             observed = datetime.fromisoformat(str(row["observed_at_utc"]).replace("Z", "+00:00"))
         except ValueError as exc:
