@@ -2,7 +2,7 @@ import unittest
 import io
 from datetime import datetime, timezone
 import pandas as pd
-from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability
+from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability, cfbd_team_name
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
@@ -75,6 +75,11 @@ class V4Tests(unittest.TestCase):
         from datetime import datetime, timezone
         result = review_games(frame, evidence, asof=datetime(2026,10,18,tzinfo=timezone.utc))
         self.assertIn("Not verified", result.iloc[0]["V4 verification"])
+
+    def test_cfbd_known_team_alias(self):
+        self.assertEqual(cfbd_team_name("Nebraska Cornhuskers"), "nebraska")
+        self.assertEqual(cfbd_team_name("Ohio State Buckeyes"), "ohio state")
+        self.assertEqual(cfbd_team_name("Texas Southern"), "Texas Southern")
 
     @patch("cfb_v4_situational.requests.get")
     def test_player_stats_provider_response(self, get):
