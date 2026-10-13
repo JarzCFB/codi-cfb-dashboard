@@ -131,6 +131,21 @@ class V4Tests(unittest.TestCase):
                                      asof=datetime(2026,10,18,tzinfo=timezone.utc))
         self.assertIn("Unknown", result)
 
+    def test_latest_player_report_supersedes_older_status(self):
+        reports = [
+            {"game_id":"123", "team":"Nebraska", "player":"Player A",
+             "factor":"injury", "status":status, "source":"https://example.com/report",
+             "observed_at_utc":timestamp}
+            for status, timestamp in (
+                ("questionable", "2026-10-12T12:00:00Z"),
+                ("available", "2026-10-13T12:00:00Z"),
+            )
+        ]
+        result = player_availability("Player A", "Nebraska", reports, "123",
+                                     "2026-10-17T19:00:00Z",
+                                     asof=datetime(2026, 10, 14, tzinfo=timezone.utc))
+        self.assertIn("Reported: available", result)
+
     def test_conflicting_player_reports_require_review(self):
         reports = [
             {"game_id":"123", "team":"Nebraska", "player":"Player A", "factor":"injury",
