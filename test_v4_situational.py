@@ -85,6 +85,12 @@ class V4Tests(unittest.TestCase):
         self.assertEqual(stats[0]["value"], 2350)
         self.assertEqual(get.call_args.kwargs["params"]["team"], "Nebraska")
 
+    def test_csv_unknown_factor_rejected(self):
+        header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
+        row = "123,Nebraska,Example,QB,unlisted,questionable,https://example.com/report,2026-10-12T12:00:00Z,practice,"
+        with self.assertRaises(ValueError):
+            parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
+
     def test_csv_schema_required(self):
         with self.assertRaises(ValueError):
             parse_evidence_csv(io.StringIO("team,factor\nNebraska,injury\n"))
