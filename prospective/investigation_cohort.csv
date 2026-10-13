@@ -102,5 +102,6 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,685a8722f297502fa85e4cd8c7e54b1c,2026-10-17T23:30:00Z,Indiana Hoosiers,Ohio State Buckeyes,2026-10-05T16:37:53Z,2.76924,1.16138,2.30927,1.608,true,PASS,V1/V2 agreement under 5 pts
 2026,7830c18dc7e87ebf087ddded14c50de4,2026-10-17T23:30:00Z,Houston Cougars,Oklahoma State Cowboys,2026-10-06T20:35:54Z,7.56277,10.36684,11.32919,2.804,true,PASS,V1/V2 agreement under 5 pts
 2026,bd2d52fadefed8a6174e73c84cca9ce3,2026-10-17T23:30:00Z,BYU Cougars,Notre Dame Fighting Irish,2026-10-06T20:35:54Z,-3.88475,-8.77129,-7.8356,4.887,true,PASS,V1/V2 agreement under 5 pts
+2026,a9a289b7b19e28b51572d20315e6bf42,2026-10-18T00:00:00Z,UL Monroe Warhawks,Louisiana Tech Bulldogs,2026-10-13T00:51:04Z,-12.48331,-10.7498,-11.88054,1.734,true,PASS,V1/V2 agreement under 5 pts
 2026,11430b210e5b57c938e1c95a9db5ffb2,2026-10-18T02:00:00Z,Sacramento State Hornets,Ohio Bobcats,2026-10-11T20:34:43Z,-8.36393,-11.60302,-11.44645,3.239,true,PASS,V1/V2 agreement under 5 pts
 2026,dd062699e8f42bd17509cfba1952e286,2026-10-18T03:59:00Z,Hawaii Rainbow Warriors,New Mexico Lobos,2026-10-12T13:03:45Z,-19.10449,-16.54123,-18.55866,2.563,true,PASS,V1/V2 agreement under 5 pts
