@@ -27,6 +27,20 @@ def parse_evidence_csv(handle):
             raise ValueError("Evidence CSV contains extra unheaded columns")
         if row.get("factor") not in FACTORS:
             raise ValueError("Unknown evidence factor: " + str(row.get("factor")))
+        for required in ("game_id", "team", "status", "source", "observed_at_utc"):
+            if not str(row.get(required) or "").strip():
+                raise ValueError("Evidence CSV row missing " + required)
+        source = urlparse(str(row["source"]).strip())
+        if source.scheme != "https" or not source.hostname or source.username or source.password:
+            raise ValueError("Evidence CSV requires an HTTPS source URL")
+        try:
+            observed = datetime.fromisoformat(str(row["observed_at_utc"]).replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ValueError("Evidence CSV contains invalid observed_at_utc") from exc
+        if observed.tzinfo is None:
+            raise ValueError("Evidence CSV timestamps must include a timezone")
+        if row["factor"] in ("quarterback", "star_player", "injury") and not str(row.get("player") or "").strip():
+            raise ValueError("Player-specific evidence must name a player")
         rows.append(row)
     return rows
 
