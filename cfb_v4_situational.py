@@ -88,7 +88,9 @@ def review_games(projections, evidence, asof=None):
             source = urlparse(str(item.get("source") or "").strip())
             if source.scheme != "https" or not source.hostname or source.username or source.password or source.hostname in ("localhost", "127.0.0.1"):
                 continue
-            if item.get("factor") not in FACTORS:
+            if item.get("factor") not in FACTORS or not str(item.get("status") or "").strip():
+                continue
+            if item.get("factor") in ("quarterback", "star_player", "injury") and not str(item.get("player") or "").strip():
                 continue
             matched.append(item)
         statuses.append("Source-linked report — independently verify" if matched else "Not verified — do not assume healthy")
@@ -179,7 +181,7 @@ def _valid_player_reports(player, team, evidence, game_id, kickoff_utc, asof):
         school = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(row.get("team")), row.get("team")))
         if school != target or str(row.get("player") or "").strip().casefold() != str(player).strip().casefold():
             continue
-        if row.get("factor") not in ("quarterback", "star_player", "injury"):
+        if row.get("factor") not in ("quarterback", "star_player", "injury") or not str(row.get("status") or "").strip():
             continue
         source = urlparse(str(row.get("source") or "").strip())
         if source.scheme != "https" or not source.hostname or source.username or source.password:
