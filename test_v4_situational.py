@@ -177,6 +177,12 @@ class V4Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
 
+    def test_csv_rejects_local_source_url(self):
+        header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
+        row = "123,Nebraska,Example,QB,injury,out,https://localhost/report,2026-10-12T12:00:00Z,practice,"
+        with self.assertRaises(ValueError):
+            parse_evidence_csv(io.StringIO(header + "\n" + row + "\n"))
+
     def test_csv_rejects_naive_timestamp(self):
         header = "game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points"
         row = "123,Nebraska,Player,QB,injury,out,https://example.com/report,2026-10-12T12:00:00,practice,"
