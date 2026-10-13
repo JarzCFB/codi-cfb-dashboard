@@ -2,7 +2,7 @@ import unittest
 import io
 from datetime import datetime, timezone
 import pandas as pd
-from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability, cfbd_team_name
+from cfb_v4_situational import review_games, standout_players, fetch_player_stats, evidence_coverage, parse_evidence_csv, player_availability, cfbd_team_name, player_report_details
 from unittest.mock import patch, Mock
 
 class V4Tests(unittest.TestCase):
@@ -130,6 +130,18 @@ class V4Tests(unittest.TestCase):
                                      "2026-10-17T19:00:00Z",
                                      asof=datetime(2026,10,18,tzinfo=timezone.utc))
         self.assertIn("Unknown", result)
+
+    def test_player_report_details_are_auditable(self):
+        report = [{"game_id":"123", "team":"Nebraska", "player":"Player A",
+                   "factor":"injury", "status":"questionable",
+                   "source":"https://example.com/dated-report",
+                   "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        details = player_report_details("Player A", "Nebraska", report, "123",
+                                        "2026-10-17T19:00:00Z",
+                                        asof=datetime(2026,10,13,tzinfo=timezone.utc))
+        self.assertIn("questionable", details["status"])
+        self.assertIn("2026-10-12", details["observed_at_utc"])
+        self.assertIn("https://example.com/dated-report", details["sources"])
 
     def test_latest_player_report_supersedes_older_status(self):
         reports = [
