@@ -426,6 +426,29 @@ else:
                     st.warning("Research only; input provenance and model calibration require independent verification.")
                 except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_exc:
                     st.warning(f"Historical evaluation unavailable: {_v4_exc}")
+        with st.expander("V4 predictive calibration — historical holdout test (research only)", expanded=False):
+            st.caption("Train a situational residual model on prior seasons and score the latest held-out season. No official picks, live V4 edges, or model release without independently verified pregame data.")
+            from v4_calibration import FEATURES as _v4_features
+            _v4_columns = ["game_id", "season", "kickoff_utc", "captured_at_utc", "actual_home_margin", "v3_home_margin", *_v4_features]
+            st.download_button(
+                "Download V4 calibration CSV template",
+                data=",".join(_v4_columns) + "\n",
+                file_name="v4_calibration_template.csv", mime="text/csv", key="v4_calibration_template",
+            )
+            _v4_calibration_upload = st.file_uploader("Verified historical feature ledger CSV", type=["csv"], key="v4_calibration_upload")
+            if _v4_calibration_upload is not None:
+                try:
+                    import csv as _v4_cal_csv
+                    import io as _v4_cal_io
+                    from v4_calibration import evaluate_candidate as _v4_evaluate_candidate
+                    _v4_cal_rows = list(_v4_cal_csv.DictReader(_v4_cal_io.StringIO(_v4_calibration_upload.getvalue().decode("utf-8-sig"))))
+                    _v4_cal_result = _v4_evaluate_candidate(_v4_cal_rows)
+                    st.metric("Held-out V3 MAE", f"{_v4_cal_result['v3_mae']:.2f} pts")
+                    st.metric("Held-out experimental V4 MAE", f"{_v4_cal_result['v4_candidate_mae']:.2f} pts")
+                    st.json(_v4_cal_result)
+                    st.warning("Research only: improvement on one holdout is not production validation. Verify source provenance and test prospectively.")
+                except (ValueError, TypeError, UnicodeError, OverflowError, KeyError) as _v4_cal_exc:
+                    st.warning(f"V4 calibration not run: {_v4_cal_exc}")
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
