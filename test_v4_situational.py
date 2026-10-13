@@ -30,7 +30,7 @@ class V4Tests(unittest.TestCase):
                      "source":"https://example.com/official",
                      "observed_at_utc":"2026-10-12T12:00:00Z"}]
         result = review_games(frame, evidence)
-        self.assertIn("Evidence available", result.iloc[0]["V4 verification"])
+        self.assertIn("Source-linked report", result.iloc[0]["V4 verification"])
         self.assertEqual(result.iloc[0]["V3/final margin"], 3.5)
 
     def test_future_report_rejected(self):
