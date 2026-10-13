@@ -132,6 +132,8 @@ def fetch_player_stats(api_key, year, team, timeout=12):
     """
     if not api_key:
         return [], "CFBD API key unavailable"
+    if not str(team).strip():
+        return [], "Team name unavailable"
     try:
         response = requests.get(
             "https://api.collegefootballdata.com/stats/player/season",
@@ -154,7 +156,7 @@ def fetch_player_stats(api_key, year, team, timeout=12):
                 value = float(str(record.get("stat", "")).replace(",", ""))
             except (ValueError, TypeError):
                 continue
-            if not name or not category or not stat_type or not pd.notna(value) or value == float("inf") or value == float("-inf"):
+            if not name or not category or not stat_type or not pd.notna(value) or value == float("inf") or value == float("-inf") or value < 0:
                 continue
             output.append({"player": str(name), "category": str(category),
                            "stat_type": str(stat_type), "value": value})
