@@ -95,6 +95,20 @@ def review_games(projections, evidence, asof=None):
     result["V4 action"] = "Research only — no calibrated adjustment"
     return result
 
+def cfbd_team_name(team):
+    """Convert known sportsbook school+nickname names to CFBD school names.
+
+    Unknown labels pass through unchanged rather than guessing a different
+    school (for example Texas Southern must not become Texas).
+    """
+    from cfb_team_matching import ALIASES, normalize
+    normalized = normalize(team)
+    canonical = _NORMALIZED_ALIASES.get(normalized)
+    if canonical:
+        return canonical
+    return str(team).strip()
+
+
 def fetch_player_stats(api_key, year, team, timeout=12):
     """CFBD player-season production, not injury or availability data.
 
@@ -107,7 +121,7 @@ def fetch_player_stats(api_key, year, team, timeout=12):
     try:
         response = requests.get(
             "https://api.collegefootballdata.com/stats/player/season",
-            params={"year": int(year), "team": team},
+            params={"year": int(year), "team": cfbd_team_name(team)},
             headers={"Authorization": "Bearer " + api_key},
             timeout=timeout,
         )
