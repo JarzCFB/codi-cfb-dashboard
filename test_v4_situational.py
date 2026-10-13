@@ -22,6 +22,23 @@ class V4Tests(unittest.TestCase):
         result = review_games(frame, evidence)
         self.assertIn("Not verified", result.iloc[0]["V4 verification"])
 
+    def test_valid_game_specific_evidence(self):
+        frame = pd.DataFrame([{"Game ID":"123","Matchup":"Nebraska @ Ohio State","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
+        evidence = [{"game_id":"123","team":"Nebraska","factor":"quarterback",
+                     "player":"Example","position":"QB","status":"questionable",
+                     "source":"https://example.com/official",
+                     "observed_at_utc":"2026-10-12T12:00:00Z"}]
+        result = review_games(frame, evidence)
+        self.assertIn("Evidence available", result.iloc[0]["V4 verification"])
+        self.assertEqual(result.iloc[0]["V3/final margin"], 3.5)
+
+    def test_future_report_rejected(self):
+        frame = pd.DataFrame([{"Game ID":"123","Matchup":"Away @ Home","Kickoff UTC":"2026-10-17T19:00:00Z","V3/final margin":3.5}])
+        evidence = [{"game_id":"123","team":"Home","factor":"injury",
+                     "source":"https://example.com/report",
+                     "observed_at_utc":"2099-10-12T12:00:00Z"}]
+        self.assertIn("Not verified", review_games(frame, evidence).iloc[0]["V4 verification"])
+
     def test_season_stat_leaders_are_metric_specific(self):
         stats = [{"player":"A","category":"passing","stat_type":"YDS","value":2100},
                  {"player":"B","category":"rushing","stat_type":"YDS","value":800}]
