@@ -189,7 +189,8 @@ def _valid_player_reports(player, team, evidence, game_id, kickoff_utc, asof):
         if row.get("factor") not in ("quarterback", "star_player", "injury") or not str(row.get("status") or "").strip():
             continue
         source = urlparse(str(row.get("source") or "").strip())
-        if source.scheme != "https" or not source.hostname or source.username or source.password:
+        if (source.scheme != "https" or not source.hostname or source.username
+                or source.password or source.hostname in ("localhost", "127.0.0.1")):
             continue
         try:
             observed = datetime.fromisoformat(str(row["observed_at_utc"]).replace("Z", "+00:00"))
