@@ -397,7 +397,7 @@ else:
             games,ratings,final_v2_ratings,home_adv,data
         )
         # V4 is a separate research-only layer. No changes to V3 margins or official picks.
-        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv
+        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv, player_availability
         @st.cache_data(ttl=21600, show_spinner=False)
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
@@ -441,7 +441,13 @@ else:
                         if error:
                             st.warning(error)
                         elif leaders:
-                            st.dataframe(pd.DataFrame(leaders).rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
+                            selected_row = v4_review[v4_review["Matchup"] == selected_game].iloc[0]
+                            leaders_table = pd.DataFrame(leaders)
+                            leaders_table["Availability"] = [
+                                player_availability(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC"))
+                                for _, r in leaders_table.iterrows()
+                            ]
+                            st.dataframe(leaders_table.rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
                         else:
                             st.info("No compatible season production statistics returned; player availability remains unknown.")
 
