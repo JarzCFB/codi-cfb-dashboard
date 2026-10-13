@@ -397,7 +397,7 @@ else:
             games,ratings,final_v2_ratings,home_adv,data
         )
         # V4 is a separate research-only layer. No changes to V3 margins or official picks.
-        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players
+        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage
         @st.cache_data(ttl=21600, show_spinner=False)
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
@@ -408,6 +408,8 @@ else:
             if v4_review.empty:
                 st.info("No eligible upcoming games for V4 review.")
             else:
+                coverage = evidence_coverage(v4_review)
+                st.caption(f"Evidence coverage: {coverage['source_linked']} / {coverage['games']} matchups have source-linked reports; {coverage['unverified']} lack them. Source links are not independently verified.")
                 st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
                 st.markdown("**Standout players by current-season production**")
                 st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
