@@ -67,7 +67,12 @@ def review_games(projections, evidence, asof=None):
         game_id = str(game.get("Game ID") if pd.notna(game.get("Game ID")) else "")
         matchup = str(game.get("Matchup", ""))
         teams = matchup.split(" @ ")
-        allowed_teams = {canonical_school(_NORMALIZED_ALIASES.get(canonical_school(t), t)) for t in teams} if len(teams) == 2 else set()
+        # Resolve each displayed school/nickname pair before matching evidence.
+        # Never infer that an unrelated longer school name is the shorter school.
+        allowed_teams = {
+            canonical_school(_NORMALIZED_ALIASES.get(canonical_school(t), canonical_school(t)))
+            for t in teams
+        } if len(teams) == 2 else set()
         matched = []
         for item in evidence:
             # Never let a team-only observation leak into unrelated games.
@@ -173,12 +178,12 @@ def _valid_player_reports(player, team, evidence, game_id, kickoff_utc, asof):
     kick = pd.to_datetime(kickoff_utc, utc=True, errors="coerce")
     if pd.isna(kick):
         return []
-    target = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(team), team))
+    target = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(team), canonical_school(team)))
     relevant = []
     for row in evidence:
         if not isinstance(row, dict) or str(row.get("game_id") or "") != str(game_id):
             continue
-        school = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(row.get("team")), row.get("team")))
+        school = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(row.get("team")), canonical_school(row.get("team"))))
         if school != target or str(row.get("player") or "").strip().casefold() != str(player).strip().casefold():
             continue
         if row.get("factor") not in ("quarterback", "star_player", "injury") or not str(row.get("status") or "").strip():
