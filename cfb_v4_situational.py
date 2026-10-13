@@ -134,6 +134,30 @@ def fetch_player_stats(api_key, year, team, timeout=12):
     except (requests.RequestException, ValueError, TypeError) as exc:
         return [], f"CFBD player statistics unavailable: {type(exc).__name__}"
 
+def player_availability(player, team, evidence, game_id):
+    """Show explicit reports, never infer availability from season statistics."""
+    from cfb_team_matching import _NORMALIZED_ALIASES
+    target = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(team), team))
+    relevant = []
+    for row in evidence:
+        if not isinstance(row, dict) or str(row.get("game_id") or "") != str(game_id):
+            continue
+        school = canonical_school(_NORMALIZED_ALIASES.get(canonical_school(row.get("team")), row.get("team")))
+        if school != target or str(row.get("player") or "").strip().casefold() != str(player).strip().casefold():
+            continue
+        if row.get("factor") not in ("quarterback", "star_player", "injury"):
+            continue
+        if not str(row.get("source") or "").startswith("https://"):
+            continue
+        relevant.append(row)
+    if not relevant:
+        return "Unknown — no game-specific report"
+    statuses = {str(row.get("status") or "").strip().lower() for row in relevant}
+    if len(statuses) != 1 or "" in statuses:
+        return "Conflicting or incomplete reports — review"
+    return "Reported: " + next(iter(statuses)) + " (not independently verified)"
+
+
 def standout_players(stats, limit=6):
     """Select production leaders with an explicit metric; not a talent ranking."""
     preferred = (("passing", "YDS"), ("rushing", "YDS"),
