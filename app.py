@@ -429,6 +429,10 @@ else:
             else:
                 coverage = evidence_coverage(v4_review)
                 st.caption(f"Evidence coverage: {coverage['source_linked']} / {coverage['games']} matchups have source-linked reports; {coverage['unverified']} lack them. Source links are not independently verified.")
+                if coverage["source_linked"] == 0:
+                    st.warning("V4 availability feed: NOT CONNECTED. CFBD player statistics do not include injuries. All player availability remains unknown unless you upload game-specific source-linked reports.")
+                else:
+                    st.info("V4 reports come from the uploaded/manual evidence ledger, not a verified automatic injury feed. Independently check every source before use.")
                 st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
                 st.markdown("**Standout players by current-season production**")
                 st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
