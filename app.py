@@ -402,6 +402,15 @@ else:
         def v4_team_leaders(key, season, team):
             stats, error = fetch_player_stats(key, season, team)
             return standout_players(stats), error
+        with st.expander("V4 official availability report sources (free)", expanded=False):
+            st.caption("Check the official conference report for the specific upcoming matchup. Reports may not exist until game week and are not automatically ingested. Never assume an unlisted player is available outside the applicable conference policy.")
+            st.markdown(
+                "- [Big Ten official reporting policy and portal](https://bigten.org/) — reports begin three days before conference games; final report two hours before kickoff.\\n"
+                "- [ACC official availability reports](https://theacc.com/sports/2025/8/28/availability-reporting.aspx) — conference games, updated through game day.\\n"
+                "- [Pac-12 official availability reports](https://pac-12.com/news/2026/9/11/2026-football-reports.aspx) — conference games, with some eligible nonconference games.\\n"
+                "- [College Football Playoff official reports](https://collegefootballplayoff.com/sports/2025/11/12/reports) — playoff games only."
+            )
+            st.info("Workflow: verify the exact opponent, player, status and report publication time; add the report URL and timestamp through the evidence CSV uploader below. Do not enter a previous opponent's injury status as current-game confirmation.")
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
             st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
             st.download_button(
