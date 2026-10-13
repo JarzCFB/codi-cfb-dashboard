@@ -466,6 +466,19 @@ else:
                     _v4_writer.writerows(_v4_recovery_rows)
                     st.download_button("Download recovered V3 baseline", data=_v4_output.getvalue(), file_name="v4_recovered_v3_baseline.csv", mime="text/csv", key="v4_recovered_baseline_download")
                     st.warning("This is a selected-play V3 baseline, not all FBS games or a trained V4 model. Situational features still require timestamped independent verification.")
+                    st.divider()
+                    st.markdown("**V4 point-in-time feature evidence audit**")
+                    st.caption("Evidence is optional. Blank features stay unknown; URLs and timestamps are not independently authenticated by this app.")
+                    _v4_evidence_template = "game_id,feature,value,source_url,published_at_utc,observed_at_utc\\n"
+                    st.download_button("Download V4 feature provenance template", data=_v4_evidence_template, file_name="v4_feature_provenance_template.csv", mime="text/csv", key="v4_provenance_template")
+                    _v4_provenance_upload = st.file_uploader("Optional V4 feature provenance CSV", type=["csv"], key="v4_provenance_upload")
+                    if _v4_provenance_upload is not None:
+                        from v4_evidence_audit import audit_evidence
+                        _v4_evidence_rows = list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_provenance_upload.getvalue().decode("utf-8-sig"))))
+                        _v4_evidence_result = audit_evidence(_v4_recovery_rows, _v4_evidence_rows)
+                        st.json({k: v for k, v in _v4_evidence_result.items() if k != "complete_rows"})
+                        st.info("No V4 calibration is run from this upload. Sources must be independently authenticated and at least two historical seasons are required.")
+
                 except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_recovery_exc:
                     st.warning(f"V3 audit recovery unavailable: {_v4_recovery_exc}")
         with st.expander("V4 evidence input (optional, research only)", expanded=False):
