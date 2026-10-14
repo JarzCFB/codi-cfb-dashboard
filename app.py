@@ -478,6 +478,11 @@ else:
                         _v4_evidence_rows = list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_provenance_upload.getvalue().decode("utf-8-sig"))))
                     _v4_evidence_result = audit_evidence(_v4_recovery_rows, _v4_evidence_rows)
                     st.json({k: v for k, v in _v4_evidence_result.items() if k not in ("complete_rows", "missing_rows")})
+                    from v4_readiness import readiness_report
+                    _v4_readiness = readiness_report(_v4_recovery_rows, _v4_evidence_result)
+                    st.subheader("V4 operational readiness (research only)")
+                    st.json(_v4_readiness)
+                    st.download_button("Download V4 readiness report", data=_v4_recovery_json.dumps(_v4_readiness, indent=2), file_name="v4_readiness_report.json", mime="application/json", key="v4_readiness_report")
                     _v4_missing_output = _v4_recovery_io.StringIO()
                     _v4_missing_fields = ["game_id", "season", "kickoff_utc", "source_grading_status", "missing_features", "present_feature_count"]
                     _v4_missing_writer = _v4_recovery_csv.DictWriter(_v4_missing_output, fieldnames=_v4_missing_fields)
