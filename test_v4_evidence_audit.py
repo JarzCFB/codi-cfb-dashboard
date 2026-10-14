@@ -18,11 +18,15 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(result["complete_settled_games"], 1)
         self.assertFalse(result["source_authenticity_verified"])
         self.assertFalse(result["eligible_for_research_calibration"])
+        self.assertEqual(result["feature_coverage"]["qb_out_diff"], 1)
+        self.assertEqual(result["missing_rows"][0]["missing_features"], "")
 
     def test_missing_stays_missing(self):
         result = audit_evidence([BASE], evidence()[:-1])
         self.assertEqual(result["complete_settled_games"], 0)
         self.assertEqual(result["missing_feature_cells"], 1)
+        self.assertEqual(result["missing_rows"][0]["missing_features"], "neutral_site")
+        self.assertEqual(result["coverage_by_feature_pct"]["neutral_site"], 0.0)
 
     def test_post_capture_publication_rejected(self):
         rows = evidence()
@@ -45,6 +49,13 @@ class EvidenceTests(unittest.TestCase):
     def test_pending_not_in_training(self):
         base = dict(BASE, source_grading_status="pending", actual_home_margin=None)
         self.assertEqual(audit_evidence([base], evidence())["complete_settled_games"], 0)
+
+    def test_two_seasons_do_not_automatically_qualify(self):
+        old = dict(BASE, game_id="old", season=2025)
+        old_evidence = [dict(r, game_id="old") for r in evidence()]
+        result = audit_evidence([BASE, old], evidence() + old_evidence)
+        self.assertTrue(result["multi_season_complete_data"])
+        self.assertFalse(result["eligible_for_research_calibration"])
 
     def test_duplicate_feature_rejected(self):
         rows = evidence()

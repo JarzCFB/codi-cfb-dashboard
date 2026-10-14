@@ -476,7 +476,13 @@ else:
                         from v4_evidence_audit import audit_evidence
                         _v4_evidence_rows = list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_provenance_upload.getvalue().decode("utf-8-sig"))))
                         _v4_evidence_result = audit_evidence(_v4_recovery_rows, _v4_evidence_rows)
-                        st.json({k: v for k, v in _v4_evidence_result.items() if k != "complete_rows"})
+                        st.json({k: v for k, v in _v4_evidence_result.items() if k not in ("complete_rows", "missing_rows")})
+                        _v4_missing_output = _v4_recovery_io.StringIO()
+                        _v4_missing_fields = ["game_id", "season", "kickoff_utc", "source_grading_status", "missing_features", "present_feature_count"]
+                        _v4_missing_writer = _v4_recovery_csv.DictWriter(_v4_missing_output, fieldnames=_v4_missing_fields)
+                        _v4_missing_writer.writeheader()
+                        _v4_missing_writer.writerows(_v4_evidence_result["missing_rows"])
+                        st.download_button("Download per-game missing feature report", data=_v4_missing_output.getvalue(), file_name="v4_missing_feature_report.csv", mime="text/csv", key="v4_missing_feature_report")
                         st.info("No V4 calibration is run from this upload. Sources must be independently authenticated and at least two historical seasons are required.")
 
                 except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_recovery_exc:
