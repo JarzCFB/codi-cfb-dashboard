@@ -16,6 +16,11 @@ st.set_page_config(page_title="Codi's CFB Dashboard", page_icon="🏈", layout="
 st.title("College football · Odds & value dashboard")
 st.caption("Independent rating model • live bookmaker comparisons • personal bet journal")
 
+# Reserve the first dashboard panel for the existing complete 7-day V3 slate.
+# It is populated later, after the same data and model inputs are available.
+top_projection_slot = st.container()
+
+
 ODDS_URL = "https://api.the-odds-api.com/v4/sports/americanfootball_ncaaf/odds/"
 CFBD_URL = "https://api.collegefootballdata.com"
 CENTRAL_TZ = ZoneInfo("America/Chicago")
@@ -364,534 +369,534 @@ if ok_odds:
     except Exception as exc:st.error(f"Odds feed unavailable: {exc}")
 
 
-st.divider()
-st.subheader("Final model projections · next 7 days")
-st.caption(
-    "One headline projection per eligible FBS-vs-FBS game kicking off in the next 7 days. The final projection uses the locked V3 calibrated "
-    "blend of V1 and V2. A game appears even when it does not meet the frozen-selection edge threshold. "
-    "Market line and edge are shown only when a current spread is available."
-)
-
-if not ok_cfbd:
-    st.info("CFBD data is required to build the complete upcoming projection slate.")
-else:
-    try:
-        from cfb_v2_experimental import build_v2
-        prior_games=games_data(secret("CFBD_API_KEY"),int(year)-1)
-        final_v2_ratings,final_v2_info=build_v2(
-            prior_games,games,datetime.now(timezone.utc),home_adv,shrink
-        )
-        # Use the last published weekly V2 strength for forward projections.
-        # Live sportsbook odds remain independently refreshable.
-        published_snapshot = load_published_power_rankings()
-        if published_snapshot and int(published_snapshot.get("season", -1)) == int(year):
-            frozen_v2 = {
-                row["team"]: float(row["power_rating"])
-                for row in published_snapshot["rankings"]
-                if row.get("power_rating") is not None
-            }
-            if frozen_v2:
-                final_v2_ratings = frozen_v2
-                st.caption("V2 power ratings frozen to the published Sunday snapshot; sportsbook odds remain live.")
-        final_projections=final_projection_rows(
-            games,ratings,final_v2_ratings,home_adv,data
-        )
-        # V4 is a separate research-only layer. No changes to V3 margins or official picks.
-        from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv, player_availability, player_report_details, report_freshness
-        @st.cache_data(ttl=21600, show_spinner=False)
-        def v4_team_leaders(key, season, team):
-            stats, error = fetch_player_stats(key, season, team)
-            return standout_players(stats), error
-        from v4_public_sources import public_source_directory
-        with st.expander("V4 official public availability sources — manual review", expanded=False):
-            st.caption("Public entry points only; coverage differs by conference and matchup. No automatic status verification. Missing report does not imply healthy.")
-            for _v4_source in public_source_directory():
-                st.markdown(f"**{_v4_source['conference']}** — [{_v4_source['url']}]({_v4_source['url']})")
-                st.caption(_v4_source["coverage"])
-        with st.expander("V4 historical evaluation — pregame snapshots (research only)", expanded=False):
-            st.caption("Held-out-season comparison requires real, timestamped V3/V4 pregame predictions and final scores. Does not change official picks.")
-            st.download_button(
-                "Download historical evaluation CSV template",
-                data="game_id,season,kickoff_utc,captured_at_utc,actual_home_margin,v3_home_margin,v4_home_margin\n",
-                file_name="v4_walkforward_template.csv", mime="text/csv", key="v4_walkforward_template",
-            )
-            _v4_history_upload = st.file_uploader("Historical pregame snapshots CSV", type=["csv"], key="v4_history_upload")
-            if _v4_history_upload is not None:
-                try:
-                    from v4_walkforward import evaluate_walkforward
-                    import csv as _v4_csv
-                    import io as _v4_io
-                    _v4_rows = list(_v4_csv.DictReader(_v4_io.StringIO(_v4_history_upload.getvalue().decode("utf-8-sig"))))
-                    st.json(evaluate_walkforward(_v4_rows, min_holdout_games=100))
-                    st.warning("Research only; input provenance and model calibration require independent verification.")
-                except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_exc:
-                    st.warning(f"Historical evaluation unavailable: {_v4_exc}")
-        with st.expander("V4 predictive calibration — historical holdout test (research only)", expanded=False):
-            st.caption("Train a situational residual model on prior seasons and score the latest held-out season. No official picks, live V4 edges, or model release without independently verified pregame data.")
-            from v4_calibration import FEATURES as _v4_features
-            _v4_columns = ["game_id", "season", "kickoff_utc", "captured_at_utc", "actual_home_margin", "v3_home_margin", *_v4_features]
-            st.download_button(
-                "Download V4 calibration CSV template",
-                data=",".join(_v4_columns) + "\n",
-                file_name="v4_calibration_template.csv", mime="text/csv", key="v4_calibration_template",
-            )
-            _v4_calibration_upload = st.file_uploader("Verified historical feature ledger CSV", type=["csv"], key="v4_calibration_upload")
-            if _v4_calibration_upload is not None:
-                try:
-                    import csv as _v4_cal_csv
-                    import io as _v4_cal_io
-                    from v4_calibration import evaluate_candidate as _v4_evaluate_candidate
-                    _v4_cal_rows = list(_v4_cal_csv.DictReader(_v4_cal_io.StringIO(_v4_calibration_upload.getvalue().decode("utf-8-sig"))))
-                    _v4_cal_result = _v4_evaluate_candidate(_v4_cal_rows)
-                    st.metric("Held-out V3 MAE", f"{_v4_cal_result['v3_mae']:.2f} pts")
-                    st.metric("Held-out experimental V4 MAE", f"{_v4_cal_result['v4_candidate_mae']:.2f} pts")
-                    st.json(_v4_cal_result)
-                    st.warning("Research only: improvement on one holdout is not production validation. Verify source provenance and test prospectively.")
-                except (ValueError, TypeError, UnicodeError, OverflowError, KeyError) as _v4_cal_exc:
-                    st.warning(f"V4 calibration not run: {_v4_cal_exc}")
-        with st.expander("V4 recover archived V3 predictions (read-only)", expanded=False):
-            st.caption("Upload either the original V3 ATS investigation audit CSV or the already recovered V3 baseline CSV. This does not modify frozen picks or fill missing situational factors.")
-            _v4_recovery_upload = st.file_uploader("Original V3 audit or recovered baseline CSV", type=["csv"], key="v4_recovery_upload")
-            if _v4_recovery_upload is not None:
-                try:
-                    import csv as _v4_recovery_csv
-                    import io as _v4_recovery_io
-                    from v4_recover_v3 import recover_v3_upload, recovery_summary
-                    _v4_recovery_rows = recover_v3_upload(list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_recovery_upload.getvalue().decode("utf-8-sig")))))
-                    st.json(recovery_summary(_v4_recovery_rows))
-                    _v4_export_fields = ["game_id", "season", "kickoff_utc", "captured_at_utc", "home_team", "away_team", "v3_home_margin", "actual_home_margin", "source_grading_status", "v4_feature_verification"]
-                    _v4_output = _v4_recovery_io.StringIO()
-                    _v4_writer = _v4_recovery_csv.DictWriter(_v4_output, fieldnames=_v4_export_fields)
-                    _v4_writer.writeheader()
-                    _v4_writer.writerows(_v4_recovery_rows)
-                    st.download_button("Download recovered V3 baseline", data=_v4_output.getvalue(), file_name="v4_recovered_v3_baseline.csv", mime="text/csv", key="v4_recovered_baseline_download")
-                    st.warning("This is a selected-play V3 baseline, not all FBS games or a trained V4 model. Situational features still require timestamped independent verification.")
-                    st.divider()
-                    st.markdown("**V4 point-in-time feature evidence audit**")
-                    st.caption("Evidence is optional. Blank features stay unknown; URLs and timestamps are not independently authenticated by this app.")
-                    _v4_evidence_template = "game_id,feature,value,source_url,published_at_utc,observed_at_utc\\n"
-                    st.download_button("Download V4 feature provenance template", data=_v4_evidence_template, file_name="v4_feature_provenance_template.csv", mime="text/csv", key="v4_provenance_template")
-                    _v4_provenance_upload = st.file_uploader("Optional V4 feature provenance CSV", type=["csv"], key="v4_provenance_upload")
-                    from v4_evidence_audit import audit_evidence
-                    _v4_evidence_rows = []
-                    if _v4_provenance_upload is not None:
-                        _v4_evidence_rows = list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_provenance_upload.getvalue().decode("utf-8-sig"))))
-                    _v4_evidence_result = audit_evidence(_v4_recovery_rows, _v4_evidence_rows)
-                    st.json({k: v for k, v in _v4_evidence_result.items() if k not in ("complete_rows", "missing_rows")})
-                    import json as _v4_readiness_json
-                    from v4_readiness import readiness_report
-                    _v4_readiness = readiness_report(_v4_recovery_rows, _v4_evidence_result)
-                    st.subheader("V4 operational readiness (research only)")
-                    st.json(_v4_readiness)
-                    st.download_button("Download V4 readiness report", data=_v4_readiness_json.dumps(_v4_readiness, indent=2), file_name="v4_readiness_report.json", mime="application/json", key="v4_readiness_report")
-                    _v4_missing_output = _v4_recovery_io.StringIO()
-                    _v4_missing_fields = ["game_id", "season", "kickoff_utc", "source_grading_status", "missing_features", "present_feature_count"]
-                    _v4_missing_writer = _v4_recovery_csv.DictWriter(_v4_missing_output, fieldnames=_v4_missing_fields)
-                    _v4_missing_writer.writeheader()
-                    _v4_missing_writer.writerows(_v4_evidence_result["missing_rows"])
-                    st.download_button("Download per-game missing feature report", data=_v4_missing_output.getvalue(), file_name="v4_missing_feature_report.csv", mime="text/csv", key="v4_missing_feature_report")
-                    from v4_evidence_triage import triage_rows, triage_csv
-                    _v4_triage = triage_rows(_v4_recovery_rows, _v4_evidence_rows)
-                    _v4_windows = {}
-                    for _v4_row in _v4_triage:
-                        _v4_windows[_v4_row["capture_window"]] = _v4_windows.get(_v4_row["capture_window"], 0) + 1
-                    st.caption("Original prediction lead-time distribution (not proof of available injury reports)")
-                    st.json(_v4_windows)
-                    st.download_button("Download V4 evidence collection priorities", data=triage_csv(_v4_triage), file_name="v4_evidence_collection_priorities.csv", mime="text/csv", key="v4_evidence_collection_priorities")
-                    st.info("Missing-feature report is available without an evidence upload. No V4 calibration runs; source authenticity and multiple seasons remain unverified.")
-
-                except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_recovery_exc:
-                    st.warning(f"V3 audit recovery unavailable: {_v4_recovery_exc}")
-        with st.expander("V4 evidence input (optional, research only)", expanded=False):
-            st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
-            st.download_button(
-                "Download evidence CSV template",
-                data="game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points\n",
-                file_name="v4_evidence_template.csv",
-                mime="text/csv",
-                key="v4_template_download",
-            )
-            v4_upload = st.file_uploader("V4 evidence CSV", type=["csv"], key="v4_evidence_upload")
+with top_projection_slot:
+    st.divider()
+    st.subheader("Final model projections · next 7 days")
+    st.caption(
+        "One headline projection per eligible FBS-vs-FBS game kicking off in the next 7 days. The final projection uses the locked V3 calibrated "
+        "blend of V1 and V2. A game appears even when it does not meet the frozen-selection edge threshold. "
+        "Market line and edge are shown only when a current spread is available."
+    )
+    
+    if not ok_cfbd:
+        st.info("CFBD data is required to build the complete upcoming projection slate.")
+    else:
         try:
-            if v4_upload is not None:
-                import io as _v4_io
-                v4_evidence = parse_evidence_csv(_v4_io.StringIO(v4_upload.getvalue().decode("utf-8-sig")))
-            else:
-                v4_evidence = load_evidence()
-        except (ValueError, UnicodeError) as exc:
-            st.warning(f"V4 evidence could not be loaded: {exc}")
-            v4_evidence = []
-        v4_review = review_games(final_projections, v4_evidence)
-        with st.expander("V4 Situational Intelligence — standout players, injuries and game context", expanded=False):
-            st.caption("Evidence-gated research preview. Outstanding players, quarterback status, injuries, stadium difficulty, travel, rest, weather, rivalry and big-game factors require verified timestamped sources. Unknown is not healthy. No V4 betting edge is claimed; V3 and frozen picks remain unchanged.")
-            if v4_review.empty:
-                st.info("No eligible upcoming games for V4 review.")
-            else:
-                coverage = evidence_coverage(v4_review)
-                st.caption(f"Evidence coverage: {coverage['source_linked']} / {coverage['games']} matchups have source-linked reports; {coverage['unverified']} lack them. Source links are not independently verified.")
-                if coverage["source_linked"] == 0:
-                    st.warning("V4 availability feed: NOT CONNECTED. CFBD player statistics do not include injuries. All player availability remains unknown unless you upload game-specific source-linked reports.")
+            from cfb_v2_experimental import build_v2
+            prior_games=games_data(secret("CFBD_API_KEY"),int(year)-1)
+            final_v2_ratings,final_v2_info=build_v2(
+                prior_games,games,datetime.now(timezone.utc),home_adv,shrink
+            )
+            # Use the last published weekly V2 strength for forward projections.
+            # Live sportsbook odds remain independently refreshable.
+            published_snapshot = load_published_power_rankings()
+            if published_snapshot and int(published_snapshot.get("season", -1)) == int(year):
+                frozen_v2 = {
+                    row["team"]: float(row["power_rating"])
+                    for row in published_snapshot["rankings"]
+                    if row.get("power_rating") is not None
+                }
+                if frozen_v2:
+                    final_v2_ratings = frozen_v2
+                    st.caption("V2 power ratings frozen to the published Sunday snapshot; sportsbook odds remain live.")
+            final_projections=final_projection_rows(
+                games,ratings,final_v2_ratings,home_adv,data
+            )
+            # V4 is a separate research-only layer. No changes to V3 margins or official picks.
+            from cfb_v4_situational import load_evidence, review_games, fetch_player_stats, standout_players, evidence_coverage, parse_evidence_csv, player_availability, player_report_details, report_freshness
+            @st.cache_data(ttl=21600, show_spinner=False)
+            def v4_team_leaders(key, season, team):
+                stats, error = fetch_player_stats(key, season, team)
+                return standout_players(stats), error
+            from v4_public_sources import public_source_directory
+            with st.expander("V4 official public availability sources — manual review", expanded=False):
+                st.caption("Public entry points only; coverage differs by conference and matchup. No automatic status verification. Missing report does not imply healthy.")
+                for _v4_source in public_source_directory():
+                    st.markdown(f"**{_v4_source['conference']}** — [{_v4_source['url']}]({_v4_source['url']})")
+                    st.caption(_v4_source["coverage"])
+            with st.expander("V4 historical evaluation — pregame snapshots (research only)", expanded=False):
+                st.caption("Held-out-season comparison requires real, timestamped V3/V4 pregame predictions and final scores. Does not change official picks.")
+                st.download_button(
+                    "Download historical evaluation CSV template",
+                    data="game_id,season,kickoff_utc,captured_at_utc,actual_home_margin,v3_home_margin,v4_home_margin\n",
+                    file_name="v4_walkforward_template.csv", mime="text/csv", key="v4_walkforward_template",
+                )
+                _v4_history_upload = st.file_uploader("Historical pregame snapshots CSV", type=["csv"], key="v4_history_upload")
+                if _v4_history_upload is not None:
+                    try:
+                        from v4_walkforward import evaluate_walkforward
+                        import csv as _v4_csv
+                        import io as _v4_io
+                        _v4_rows = list(_v4_csv.DictReader(_v4_io.StringIO(_v4_history_upload.getvalue().decode("utf-8-sig"))))
+                        st.json(evaluate_walkforward(_v4_rows, min_holdout_games=100))
+                        st.warning("Research only; input provenance and model calibration require independent verification.")
+                    except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_exc:
+                        st.warning(f"Historical evaluation unavailable: {_v4_exc}")
+            with st.expander("V4 predictive calibration — historical holdout test (research only)", expanded=False):
+                st.caption("Train a situational residual model on prior seasons and score the latest held-out season. No official picks, live V4 edges, or model release without independently verified pregame data.")
+                from v4_calibration import FEATURES as _v4_features
+                _v4_columns = ["game_id", "season", "kickoff_utc", "captured_at_utc", "actual_home_margin", "v3_home_margin", *_v4_features]
+                st.download_button(
+                    "Download V4 calibration CSV template",
+                    data=",".join(_v4_columns) + "\n",
+                    file_name="v4_calibration_template.csv", mime="text/csv", key="v4_calibration_template",
+                )
+                _v4_calibration_upload = st.file_uploader("Verified historical feature ledger CSV", type=["csv"], key="v4_calibration_upload")
+                if _v4_calibration_upload is not None:
+                    try:
+                        import csv as _v4_cal_csv
+                        import io as _v4_cal_io
+                        from v4_calibration import evaluate_candidate as _v4_evaluate_candidate
+                        _v4_cal_rows = list(_v4_cal_csv.DictReader(_v4_cal_io.StringIO(_v4_calibration_upload.getvalue().decode("utf-8-sig"))))
+                        _v4_cal_result = _v4_evaluate_candidate(_v4_cal_rows)
+                        st.metric("Held-out V3 MAE", f"{_v4_cal_result['v3_mae']:.2f} pts")
+                        st.metric("Held-out experimental V4 MAE", f"{_v4_cal_result['v4_candidate_mae']:.2f} pts")
+                        st.json(_v4_cal_result)
+                        st.warning("Research only: improvement on one holdout is not production validation. Verify source provenance and test prospectively.")
+                    except (ValueError, TypeError, UnicodeError, OverflowError, KeyError) as _v4_cal_exc:
+                        st.warning(f"V4 calibration not run: {_v4_cal_exc}")
+            with st.expander("V4 recover archived V3 predictions (read-only)", expanded=False):
+                st.caption("Upload either the original V3 ATS investigation audit CSV or the already recovered V3 baseline CSV. This does not modify frozen picks or fill missing situational factors.")
+                _v4_recovery_upload = st.file_uploader("Original V3 audit or recovered baseline CSV", type=["csv"], key="v4_recovery_upload")
+                if _v4_recovery_upload is not None:
+                    try:
+                        import csv as _v4_recovery_csv
+                        import io as _v4_recovery_io
+                        from v4_recover_v3 import recover_v3_upload, recovery_summary
+                        _v4_recovery_rows = recover_v3_upload(list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_recovery_upload.getvalue().decode("utf-8-sig")))))
+                        st.json(recovery_summary(_v4_recovery_rows))
+                        _v4_export_fields = ["game_id", "season", "kickoff_utc", "captured_at_utc", "home_team", "away_team", "v3_home_margin", "actual_home_margin", "source_grading_status", "v4_feature_verification"]
+                        _v4_output = _v4_recovery_io.StringIO()
+                        _v4_writer = _v4_recovery_csv.DictWriter(_v4_output, fieldnames=_v4_export_fields)
+                        _v4_writer.writeheader()
+                        _v4_writer.writerows(_v4_recovery_rows)
+                        st.download_button("Download recovered V3 baseline", data=_v4_output.getvalue(), file_name="v4_recovered_v3_baseline.csv", mime="text/csv", key="v4_recovered_baseline_download")
+                        st.warning("This is a selected-play V3 baseline, not all FBS games or a trained V4 model. Situational features still require timestamped independent verification.")
+                        st.divider()
+                        st.markdown("**V4 point-in-time feature evidence audit**")
+                        st.caption("Evidence is optional. Blank features stay unknown; URLs and timestamps are not independently authenticated by this app.")
+                        _v4_evidence_template = "game_id,feature,value,source_url,published_at_utc,observed_at_utc\\n"
+                        st.download_button("Download V4 feature provenance template", data=_v4_evidence_template, file_name="v4_feature_provenance_template.csv", mime="text/csv", key="v4_provenance_template")
+                        _v4_provenance_upload = st.file_uploader("Optional V4 feature provenance CSV", type=["csv"], key="v4_provenance_upload")
+                        from v4_evidence_audit import audit_evidence
+                        _v4_evidence_rows = []
+                        if _v4_provenance_upload is not None:
+                            _v4_evidence_rows = list(_v4_recovery_csv.DictReader(_v4_recovery_io.StringIO(_v4_provenance_upload.getvalue().decode("utf-8-sig"))))
+                        _v4_evidence_result = audit_evidence(_v4_recovery_rows, _v4_evidence_rows)
+                        st.json({k: v for k, v in _v4_evidence_result.items() if k not in ("complete_rows", "missing_rows")})
+                        import json as _v4_readiness_json
+                        from v4_readiness import readiness_report
+                        _v4_readiness = readiness_report(_v4_recovery_rows, _v4_evidence_result)
+                        st.subheader("V4 operational readiness (research only)")
+                        st.json(_v4_readiness)
+                        st.download_button("Download V4 readiness report", data=_v4_readiness_json.dumps(_v4_readiness, indent=2), file_name="v4_readiness_report.json", mime="application/json", key="v4_readiness_report")
+                        _v4_missing_output = _v4_recovery_io.StringIO()
+                        _v4_missing_fields = ["game_id", "season", "kickoff_utc", "source_grading_status", "missing_features", "present_feature_count"]
+                        _v4_missing_writer = _v4_recovery_csv.DictWriter(_v4_missing_output, fieldnames=_v4_missing_fields)
+                        _v4_missing_writer.writeheader()
+                        _v4_missing_writer.writerows(_v4_evidence_result["missing_rows"])
+                        st.download_button("Download per-game missing feature report", data=_v4_missing_output.getvalue(), file_name="v4_missing_feature_report.csv", mime="text/csv", key="v4_missing_feature_report")
+                        from v4_evidence_triage import triage_rows, triage_csv
+                        _v4_triage = triage_rows(_v4_recovery_rows, _v4_evidence_rows)
+                        _v4_windows = {}
+                        for _v4_row in _v4_triage:
+                            _v4_windows[_v4_row["capture_window"]] = _v4_windows.get(_v4_row["capture_window"], 0) + 1
+                        st.caption("Original prediction lead-time distribution (not proof of available injury reports)")
+                        st.json(_v4_windows)
+                        st.download_button("Download V4 evidence collection priorities", data=triage_csv(_v4_triage), file_name="v4_evidence_collection_priorities.csv", mime="text/csv", key="v4_evidence_collection_priorities")
+                        st.info("Missing-feature report is available without an evidence upload. No V4 calibration runs; source authenticity and multiple seasons remain unverified.")
+    
+                    except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_recovery_exc:
+                        st.warning(f"V3 audit recovery unavailable: {_v4_recovery_exc}")
+            with st.expander("V4 evidence input (optional, research only)", expanded=False):
+                st.caption("Upload source-linked reports for this session. Uploads are not stored or used for official picks.")
+                st.download_button(
+                    "Download evidence CSV template",
+                    data="game_id,team,player,position,factor,status,source,observed_at_utc,notes,impact_points\n",
+                    file_name="v4_evidence_template.csv",
+                    mime="text/csv",
+                    key="v4_template_download",
+                )
+                v4_upload = st.file_uploader("V4 evidence CSV", type=["csv"], key="v4_evidence_upload")
+            try:
+                if v4_upload is not None:
+                    import io as _v4_io
+                    v4_evidence = parse_evidence_csv(_v4_io.StringIO(v4_upload.getvalue().decode("utf-8-sig")))
                 else:
-                    st.info("V4 reports come from the uploaded/manual evidence ledger, not a verified automatic injury feed. Independently check every source before use.")
-                st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
-                st.markdown("**Standout players by current-season production**")
-                st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
-                selected_game = st.selectbox("Select matchup for team player leaders", v4_review["Matchup"].tolist(), key="v4_player_matchup")
-                if selected_game and " @ " in selected_game:
-                    away_team, home_team = selected_game.split(" @ ", 1)
-                    for team in (away_team, home_team):
-                        leaders, error = v4_team_leaders(secret("CFBD_API_KEY"), int(year), team)
-                        st.markdown(f"**{team}**")
-                        if error:
-                            st.warning(error)
-                        elif leaders:
-                            selected_row = v4_review[v4_review["Matchup"] == selected_game].iloc[0]
-                            leaders_table = pd.DataFrame(leaders)
-                            leaders_table["Availability"] = [
-                                player_availability(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC"))
-                                for _, r in leaders_table.iterrows()
-                            ]
-                            details = [player_report_details(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC")) for _, r in leaders_table.iterrows()]
-                            leaders_table["Report timestamp UTC"] = [d["observed_at_utc"] for d in details]
-                            leaders_table["Report source"] = [d["sources"] for d in details]
-                            leaders_table["Report age"] = [report_freshness(d["observed_at_utc"]) for d in details]
-                            st.dataframe(leaders_table.rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
-                        else:
-                            st.info("No compatible season production statistics returned; player availability remains unknown.")
-
-        if final_projections.empty:
-            st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
-        else:
-            st.caption(
-                f"{len(final_projections):,} games projected in the next 7 days · "
-                f"V2 training: {final_v2_info.get('previous_games',0)} prior-season and "
-                f"{final_v2_info.get('current_games',0)} current-season eligible games."
-            )
-            # Automatic model sanity check: investigate large V1/V2 disagreements.
-            # This is diagnostic only and does not change the locked V3/final projection.
-            final_projections["V1/V2 disagreement (pts)"]=(
-                final_projections["V1 margin"]-final_projections["V2 margin"]
-            ).abs().round(1)
-            final_projections["Model check"]=np.select(
-                [
-                    final_projections["V1/V2 disagreement (pts)"]>=10.0,
-                    final_projections["V1/V2 disagreement (pts)"]>=5.0,
-                ],
-                [
-                    "HIGH DISAGREEMENT - inspect",
-                    "Moderate disagreement",
-                ],
-                default="Strong agreement",
-            )
-            # Automatic investigation. The dashboard makes the stability assessment itself.
-            edge = pd.to_numeric(final_projections["Model edge (pts)"], errors="coerce")
-            disagree = pd.to_numeric(final_projections["V1/V2 disagreement (pts)"], errors="coerce")
-            v1 = pd.to_numeric(final_projections["V1 margin"], errors="coerce")
-            v2 = pd.to_numeric(final_projections["V2 margin"], errors="coerce")
-            same_winner = ((v1 >= 0) & (v2 >= 0)) | ((v1 < 0) & (v2 < 0))
-
-            # Preserve the legacy live diagnostic for comparison. This does not
-            # change the frozen historical investigation cohort or V3 predictions.
-            final_projections["Legacy investigation status"] = np.select(
-                [edge.isna(), (~same_winner) | (disagree >= 10.0), disagree >= 5.0],
-                ["NO MARKET", "UNSTABLE", "CAUTION"], default="PASS"
-            )
-            # Diagnostic v2: classify by absolute V1/V2 margin disagreement;
-            # report projected-winner disagreement independently.
-            final_projections["Investigation status"] = np.select(
-                [edge.isna(), disagree >= 10.0, disagree >= 5.0],
-                ["NO MARKET", "UNSTABLE", "CAUTION"], default="PASS"
-            )
-            final_projections["Winner disagreement"] = np.where(
-                ~same_winner, "YES - opposite projected winners", "No"
-            )
-            final_projections["Automatic investigation"] = np.select(
-                [edge.isna(), disagree >= 10.0, disagree >= 5.0, ~same_winner],
-                ["NO MARKET - projection only", "UNSTABLE - margins differ by 10+ pts",
-                 "CAUTION - margins differ by 5 to <10 pts",
-                 "PASS on margin gap - opposite projected winners (review)"],
-                default="PASS - margins differ by <5 pts"
-            )
-
-            # Schedule display reconciliation: correct a demonstrably stale CFBD
-            # kickoff ONLY for this independently verified matchup. Keep the
-            # original CFBD timestamp for audit; never alter frozen records.
-            final_projections["CFBD kickoff (original UTC)"] = final_projections["Kickoff UTC"]
-            for _idx, _row in final_projections.iterrows():
-                if str(_row.get("Matchup", "")) == "Nebraska @ Oregon" and int(year) == 2026:
-                    _official = pd.Timestamp("2026-10-18T03:00:00Z")
-                    _original = pd.to_datetime(_row["Kickoff UTC"], utc=True, errors="coerce")
-                    if pd.notna(_original) and abs((_official - _original).total_seconds()) > 90 * 60:
-                        final_projections.at[_idx, "Kickoff UTC"] = _official
-                        final_projections.at[_idx, "Kickoff verification"] = "Nebraska/Oregon athletics: Oct 17, 10 PM CT (CFBD differs)"
-            if "Kickoff verification" not in final_projections.columns:
-                final_projections["Kickoff verification"] = "CFBD schedule (not independently checked)"
-            final_projections["Kickoff verification"] = final_projections["Kickoff verification"].fillna("CFBD schedule (not independently checked)")
-
-            # Research overlay INSIDE the existing final-projections table.
-            # Left join: never filter or remove a live projection (including Nebraska).
-            # Frozen confidence and refreshed same-book spreads are distinct from live V3.
-            # IMPORTANT: CFBD uses numeric game IDs, while the frozen Odds API
-            # journal uses UUIDs. Never join these two providers on game_id.
-            # Use BOTH independently matched home/away identities and kickoff.
-            _coverage = st.session_state.get("jarz_latest_confidence_coverage")
-            _extra = {
-                "selection": "Frozen V3 selection",
-                "experimental_confidence_1_to_10": "Confidence (1–10)",
-                "decision_status": "Bet review status",
-                "current_sportsbook": "Verified sportsbook",
-                "current_spread": "Fresh frozen-pick spread",
-                "current_american_odds": "Fresh odds",
-                "current_edge_points": "Frozen V3 edge at fresh line",
-                "edge_change_points": "Frozen edge movement",
-                "match_status": "Market verification",
-                "division_check_current": "Division check",
-                "confidence_explanation": "Confidence notes",
-            }
-            for _display_name in _extra.values():
-                final_projections[_display_name] = pd.NA
-            if isinstance(_coverage, pd.DataFrame) and not _coverage.empty:
-                _matched = 0
-                _ambiguous = 0
-                for _idx, _projection in final_projections.iterrows():
-                    _matchup = str(_projection.get("Matchup", ""))
-                    if " @ " not in _matchup:
-                        continue
-                    _away, _home = _matchup.rsplit(" @ ", 1)
-                    _kick = pd.to_datetime(_projection["Kickoff UTC"], utc=True, errors="coerce")
-                    if pd.isna(_kick):
-                        continue
-                    _candidates = []
-                    _team_matches = []
-                    for _, _frozen in _coverage.iterrows():
-                        if not (same_school_name(str(_frozen.get("home_team", "")), _home)
-                                and same_school_name(str(_frozen.get("away_team", "")), _away)):
+                    v4_evidence = load_evidence()
+            except (ValueError, UnicodeError) as exc:
+                st.warning(f"V4 evidence could not be loaded: {exc}")
+                v4_evidence = []
+            v4_review = review_games(final_projections, v4_evidence)
+            with st.expander("V4 Situational Intelligence — standout players, injuries and game context", expanded=False):
+                st.caption("Evidence-gated research preview. Outstanding players, quarterback status, injuries, stadium difficulty, travel, rest, weather, rivalry and big-game factors require verified timestamped sources. Unknown is not healthy. No V4 betting edge is claimed; V3 and frozen picks remain unchanged.")
+                if v4_review.empty:
+                    st.info("No eligible upcoming games for V4 review.")
+                else:
+                    coverage = evidence_coverage(v4_review)
+                    st.caption(f"Evidence coverage: {coverage['source_linked']} / {coverage['games']} matchups have source-linked reports; {coverage['unverified']} lack them. Source links are not independently verified.")
+                    if coverage["source_linked"] == 0:
+                        st.warning("V4 availability feed: NOT CONNECTED. CFBD player statistics do not include injuries. All player availability remains unknown unless you upload game-specific source-linked reports.")
+                    else:
+                        st.info("V4 reports come from the uploaded/manual evidence ledger, not a verified automatic injury feed. Independently check every source before use.")
+                    st.dataframe(v4_review[["Kickoff UTC", "Matchup", "V3/final margin", "V4 verification", "V4 key players", "V4 situational notes", "V4 evidence sources", "V4 action"]], use_container_width=True, hide_index=True)
+                    st.markdown("**Standout players by current-season production**")
+                    st.caption("CFBD season statistical leaders, not confirmed starters or availability reports. Missing stats and missing injury reports are shown explicitly. No unvalidated point changes.")
+                    selected_game = st.selectbox("Select matchup for team player leaders", v4_review["Matchup"].tolist(), key="v4_player_matchup")
+                    if selected_game and " @ " in selected_game:
+                        away_team, home_team = selected_game.split(" @ ", 1)
+                        for team in (away_team, home_team):
+                            leaders, error = v4_team_leaders(secret("CFBD_API_KEY"), int(year), team)
+                            st.markdown(f"**{team}**")
+                            if error:
+                                st.warning(error)
+                            elif leaders:
+                                selected_row = v4_review[v4_review["Matchup"] == selected_game].iloc[0]
+                                leaders_table = pd.DataFrame(leaders)
+                                leaders_table["Availability"] = [
+                                    player_availability(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC"))
+                                    for _, r in leaders_table.iterrows()
+                                ]
+                                details = [player_report_details(r["player"], team, v4_evidence, selected_row.get("Game ID"), selected_row.get("Kickoff UTC")) for _, r in leaders_table.iterrows()]
+                                leaders_table["Report timestamp UTC"] = [d["observed_at_utc"] for d in details]
+                                leaders_table["Report source"] = [d["sources"] for d in details]
+                                leaders_table["Report age"] = [report_freshness(d["observed_at_utc"]) for d in details]
+                                st.dataframe(leaders_table.rename(columns={"player":"Player", "category":"Category", "stat_type":"Metric", "value":"Season total"}), hide_index=True, use_container_width=True)
+                            else:
+                                st.info("No compatible season production statistics returned; player availability remains unknown.")
+    
+            if final_projections.empty:
+                st.info("No upcoming eligible FBS-vs-FBS games currently have both V1 and V2 ratings.")
+            else:
+                st.caption(
+                    f"{len(final_projections):,} games projected in the next 7 days · "
+                    f"V2 training: {final_v2_info.get('previous_games',0)} prior-season and "
+                    f"{final_v2_info.get('current_games',0)} current-season eligible games."
+                )
+                # Automatic model sanity check: investigate large V1/V2 disagreements.
+                # This is diagnostic only and does not change the locked V3/final projection.
+                final_projections["V1/V2 disagreement (pts)"]=(
+                    final_projections["V1 margin"]-final_projections["V2 margin"]
+                ).abs().round(1)
+                final_projections["Model check"]=np.select(
+                    [
+                        final_projections["V1/V2 disagreement (pts)"]>=10.0,
+                        final_projections["V1/V2 disagreement (pts)"]>=5.0,
+                    ],
+                    [
+                        "HIGH DISAGREEMENT - inspect",
+                        "Moderate disagreement",
+                    ],
+                    default="Strong agreement",
+                )
+                # Automatic investigation. The dashboard makes the stability assessment itself.
+                edge = pd.to_numeric(final_projections["Model edge (pts)"], errors="coerce")
+                disagree = pd.to_numeric(final_projections["V1/V2 disagreement (pts)"], errors="coerce")
+                v1 = pd.to_numeric(final_projections["V1 margin"], errors="coerce")
+                v2 = pd.to_numeric(final_projections["V2 margin"], errors="coerce")
+                same_winner = ((v1 >= 0) & (v2 >= 0)) | ((v1 < 0) & (v2 < 0))
+    
+                # Preserve the legacy live diagnostic for comparison. This does not
+                # change the frozen historical investigation cohort or V3 predictions.
+                final_projections["Legacy investigation status"] = np.select(
+                    [edge.isna(), (~same_winner) | (disagree >= 10.0), disagree >= 5.0],
+                    ["NO MARKET", "UNSTABLE", "CAUTION"], default="PASS"
+                )
+                # Diagnostic v2: classify by absolute V1/V2 margin disagreement;
+                # report projected-winner disagreement independently.
+                final_projections["Investigation status"] = np.select(
+                    [edge.isna(), disagree >= 10.0, disagree >= 5.0],
+                    ["NO MARKET", "UNSTABLE", "CAUTION"], default="PASS"
+                )
+                final_projections["Winner disagreement"] = np.where(
+                    ~same_winner, "YES - opposite projected winners", "No"
+                )
+                final_projections["Automatic investigation"] = np.select(
+                    [edge.isna(), disagree >= 10.0, disagree >= 5.0, ~same_winner],
+                    ["NO MARKET - projection only", "UNSTABLE - margins differ by 10+ pts",
+                     "CAUTION - margins differ by 5 to <10 pts",
+                     "PASS on margin gap - opposite projected winners (review)"],
+                    default="PASS - margins differ by <5 pts"
+                )
+    
+                # Schedule display reconciliation: correct a demonstrably stale CFBD
+                # kickoff ONLY for this independently verified matchup. Keep the
+                # original CFBD timestamp for audit; never alter frozen records.
+                final_projections["CFBD kickoff (original UTC)"] = final_projections["Kickoff UTC"]
+                for _idx, _row in final_projections.iterrows():
+                    if str(_row.get("Matchup", "")) == "Nebraska @ Oregon" and int(year) == 2026:
+                        _official = pd.Timestamp("2026-10-18T03:00:00Z")
+                        _original = pd.to_datetime(_row["Kickoff UTC"], utc=True, errors="coerce")
+                        if pd.notna(_original) and abs((_official - _original).total_seconds()) > 90 * 60:
+                            final_projections.at[_idx, "Kickoff UTC"] = _official
+                            final_projections.at[_idx, "Kickoff verification"] = "Nebraska/Oregon athletics: Oct 17, 10 PM CT (CFBD differs)"
+                if "Kickoff verification" not in final_projections.columns:
+                    final_projections["Kickoff verification"] = "CFBD schedule (not independently checked)"
+                final_projections["Kickoff verification"] = final_projections["Kickoff verification"].fillna("CFBD schedule (not independently checked)")
+    
+                # Research overlay INSIDE the existing final-projections table.
+                # Left join: never filter or remove a live projection (including Nebraska).
+                # Frozen confidence and refreshed same-book spreads are distinct from live V3.
+                # IMPORTANT: CFBD uses numeric game IDs, while the frozen Odds API
+                # journal uses UUIDs. Never join these two providers on game_id.
+                # Use BOTH independently matched home/away identities and kickoff.
+                _coverage = st.session_state.get("jarz_latest_confidence_coverage")
+                _extra = {
+                    "selection": "Frozen V3 selection",
+                    "experimental_confidence_1_to_10": "Confidence (1–10)",
+                    "decision_status": "Bet review status",
+                    "current_sportsbook": "Verified sportsbook",
+                    "current_spread": "Fresh frozen-pick spread",
+                    "current_american_odds": "Fresh odds",
+                    "current_edge_points": "Frozen V3 edge at fresh line",
+                    "edge_change_points": "Frozen edge movement",
+                    "match_status": "Market verification",
+                    "division_check_current": "Division check",
+                    "confidence_explanation": "Confidence notes",
+                }
+                for _display_name in _extra.values():
+                    final_projections[_display_name] = pd.NA
+                if isinstance(_coverage, pd.DataFrame) and not _coverage.empty:
+                    _matched = 0
+                    _ambiguous = 0
+                    for _idx, _projection in final_projections.iterrows():
+                        _matchup = str(_projection.get("Matchup", ""))
+                        if " @ " not in _matchup:
                             continue
-                        _team_matches.append(_frozen)
-                        _verified = pd.to_datetime(_frozen.get("verified_kickoff_utc"), utc=True, errors="coerce")
-                        _frozen_kick = pd.to_datetime(_frozen.get("kickoff_utc"), utc=True, errors="coerce")
-                        _times = [_verified] if pd.notna(_verified) else [_frozen_kick]
-                        if any(pd.notna(_t) and abs((_t - _kick).total_seconds()) <= 3 * 3600 for _t in _times):
-                            _candidates.append(_frozen)
-                        else:
-                            # Reconcile only when the independent live Odds API event
-                            # agrees with CFBD's kickoff, AND the frozen selection has
-                            # a verified same-book market match. Do not use team names
-                            # alone to override conflicting dates.
-                            _matching_events = [
-                                _ev for _ev in (data if isinstance(data, list) else [])
-                                if isinstance(_ev, dict)
-                                and same_school_name(str(_ev.get("home_team", "")), _home)
-                                and same_school_name(str(_ev.get("away_team", "")), _away)
-                                and pd.notna(pd.to_datetime(_ev.get("commence_time"), utc=True, errors="coerce"))
-                                and abs((pd.to_datetime(_ev.get("commence_time"), utc=True) - _kick).total_seconds()) <= 90 * 60
-                            ]
-                            if (len(_matching_events) == 1
-                                    and str(_frozen.get("match_status", "")) == "MATCHED_ORIGINAL_BOOK"):
-                                _reconciled = _frozen.copy()
-                                _reconciled["match_status"] = "RECONCILED — CFBD + LIVE ODDS AGREE"
-                                _reconciled["decision_status"] = "REVIEW — frozen kickoff differs"
-                                _reconciled["confidence_explanation"] = (
-                                    str(_frozen.get("confidence_explanation", ""))
-                                    + "; frozen kickoff differs; live CFBD and Odds API event agree")
-                                _candidates.append(_reconciled)
-                    # Ambiguous or repeated matches must not silently attach a rating.
-                    if len(_candidates) == 1:
-                        _frozen = _candidates[0]
-                        for _source, _display_name in _extra.items():
-                            if _source in _frozen.index:
-                                final_projections.at[_idx, _display_name] = _frozen[_source]
-                        _matched += 1
-                    elif len(_candidates) > 1:
-                        final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_MATCH"
-                        _ambiguous += 1
-                    elif len(_team_matches) == 1:
-                        # Show the data-quality issue without assigning a misleading
-                        # rating or spread to a game with conflicting kickoff dates.
-                        final_projections.at[_idx, "Market verification"] = "KICKOFF_CONFLICT — REVIEW"
-                        final_projections.at[_idx, "Bet review status"] = "HOLD — schedule mismatch"
-                        _frozen_only = _team_matches[0]
-                        _frozen_date = pd.to_datetime(_frozen_only.get("kickoff_utc"), utc=True, errors="coerce")
-                        _verified_date = pd.to_datetime(_frozen_only.get("verified_kickoff_utc"), utc=True, errors="coerce")
-                        _cfbd_date = _kick.strftime("%Y-%m-%d %H:%M UTC")
-                        _notes = ["CFBD " + _cfbd_date]
-                        if pd.notna(_frozen_date):
-                            _notes.append("frozen " + _frozen_date.strftime("%Y-%m-%d %H:%M UTC"))
-                        if pd.notna(_verified_date):
-                            _notes.append("verified " + _verified_date.strftime("%Y-%m-%d %H:%M UTC"))
-                        final_projections.at[_idx, "Confidence notes"] = " | ".join(_notes)
-                    elif len(_team_matches) > 1:
-                        final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_TEAM_MATCH"
-                        _ambiguous += 1
-                st.caption(f"Automatic confidence overlay: {_matched} of {len(final_projections)} live projections "
-                           f"matched to a frozen V3 selection; {_ambiguous} ambiguous. "
-                           "Other games remain in the table without an invented rating.")
-            else:
-                _err = st.session_state.get("jarz_auto_coverage_error")
-                if _err:
-                    st.warning("Automatic market coverage failed: " + str(_err))
+                        _away, _home = _matchup.rsplit(" @ ", 1)
+                        _kick = pd.to_datetime(_projection["Kickoff UTC"], utc=True, errors="coerce")
+                        if pd.isna(_kick):
+                            continue
+                        _candidates = []
+                        _team_matches = []
+                        for _, _frozen in _coverage.iterrows():
+                            if not (same_school_name(str(_frozen.get("home_team", "")), _home)
+                                    and same_school_name(str(_frozen.get("away_team", "")), _away)):
+                                continue
+                            _team_matches.append(_frozen)
+                            _verified = pd.to_datetime(_frozen.get("verified_kickoff_utc"), utc=True, errors="coerce")
+                            _frozen_kick = pd.to_datetime(_frozen.get("kickoff_utc"), utc=True, errors="coerce")
+                            _times = [_verified] if pd.notna(_verified) else [_frozen_kick]
+                            if any(pd.notna(_t) and abs((_t - _kick).total_seconds()) <= 3 * 3600 for _t in _times):
+                                _candidates.append(_frozen)
+                            else:
+                                # Reconcile only when the independent live Odds API event
+                                # agrees with CFBD's kickoff, AND the frozen selection has
+                                # a verified same-book market match. Do not use team names
+                                # alone to override conflicting dates.
+                                _matching_events = [
+                                    _ev for _ev in (data if isinstance(data, list) else [])
+                                    if isinstance(_ev, dict)
+                                    and same_school_name(str(_ev.get("home_team", "")), _home)
+                                    and same_school_name(str(_ev.get("away_team", "")), _away)
+                                    and pd.notna(pd.to_datetime(_ev.get("commence_time"), utc=True, errors="coerce"))
+                                    and abs((pd.to_datetime(_ev.get("commence_time"), utc=True) - _kick).total_seconds()) <= 90 * 60
+                                ]
+                                if (len(_matching_events) == 1
+                                        and str(_frozen.get("match_status", "")) == "MATCHED_ORIGINAL_BOOK"):
+                                    _reconciled = _frozen.copy()
+                                    _reconciled["match_status"] = "RECONCILED — CFBD + LIVE ODDS AGREE"
+                                    _reconciled["decision_status"] = "REVIEW — frozen kickoff differs"
+                                    _reconciled["confidence_explanation"] = (
+                                        str(_frozen.get("confidence_explanation", ""))
+                                        + "; frozen kickoff differs; live CFBD and Odds API event agree")
+                                    _candidates.append(_reconciled)
+                        # Ambiguous or repeated matches must not silently attach a rating.
+                        if len(_candidates) == 1:
+                            _frozen = _candidates[0]
+                            for _source, _display_name in _extra.items():
+                                if _source in _frozen.index:
+                                    final_projections.at[_idx, _display_name] = _frozen[_source]
+                            _matched += 1
+                        elif len(_candidates) > 1:
+                            final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_MATCH"
+                            _ambiguous += 1
+                        elif len(_team_matches) == 1:
+                            # Show the data-quality issue without assigning a misleading
+                            # rating or spread to a game with conflicting kickoff dates.
+                            final_projections.at[_idx, "Market verification"] = "KICKOFF_CONFLICT — REVIEW"
+                            final_projections.at[_idx, "Bet review status"] = "HOLD — schedule mismatch"
+                            _frozen_only = _team_matches[0]
+                            _frozen_date = pd.to_datetime(_frozen_only.get("kickoff_utc"), utc=True, errors="coerce")
+                            _verified_date = pd.to_datetime(_frozen_only.get("verified_kickoff_utc"), utc=True, errors="coerce")
+                            _cfbd_date = _kick.strftime("%Y-%m-%d %H:%M UTC")
+                            _notes = ["CFBD " + _cfbd_date]
+                            if pd.notna(_frozen_date):
+                                _notes.append("frozen " + _frozen_date.strftime("%Y-%m-%d %H:%M UTC"))
+                            if pd.notna(_verified_date):
+                                _notes.append("verified " + _verified_date.strftime("%Y-%m-%d %H:%M UTC"))
+                            final_projections.at[_idx, "Confidence notes"] = " | ".join(_notes)
+                        elif len(_team_matches) > 1:
+                            final_projections.at[_idx, "Market verification"] = "AMBIGUOUS_TEAM_MATCH"
+                            _ambiguous += 1
+                    st.caption(f"Automatic confidence overlay: {_matched} of {len(final_projections)} live projections "
+                               f"matched to a frozen V3 selection; {_ambiguous} ambiguous. "
+                               "Other games remain in the table without an invented rating.")
                 else:
-                    st.caption("Automatic sportsbook check is pending. Refreshing after first load; "
-                               "unmatched live games will have blank frozen-pick fields.")
-
-            # Independent LIVE slate confidence for EVERY projected game. This is
-            # an experimental ordinal research score, not a frozen-pick score,
-            # probability, staking instruction, or backtested betting signal.
-            # No modification to locked V3, frozen selection, or grading.
-            def _live_confidence(row):
-                e = pd.to_numeric(row.get("Model edge (pts)"), errors="coerce")
-                gap = pd.to_numeric(row.get("V1/V2 disagreement (pts)"), errors="coerce")
-                v1m = pd.to_numeric(row.get("V1 margin"), errors="coerce")
-                v2m = pd.to_numeric(row.get("V2 margin"), errors="coerce")
-                if pd.isna(e):
-                    return 1, "No current spread; provisional 1/10 (not actionable)"
-                # Edge rewards are intentionally bounded. Larger edges alone
-                # cannot produce a high confidence rating.
-                score = 2 + min(4, int(float(e) // 2.5))
-                if pd.notna(gap):
-                    if gap >= 10:
-                        score -= 3
-                    elif gap >= 5:
-                        score -= 2
-                    elif gap >= 3:
+                    _err = st.session_state.get("jarz_auto_coverage_error")
+                    if _err:
+                        st.warning("Automatic market coverage failed: " + str(_err))
+                    else:
+                        st.caption("Automatic sportsbook check is pending. Refreshing after first load; "
+                                   "unmatched live games will have blank frozen-pick fields.")
+    
+                # Independent LIVE slate confidence for EVERY projected game. This is
+                # an experimental ordinal research score, not a frozen-pick score,
+                # probability, staking instruction, or backtested betting signal.
+                # No modification to locked V3, frozen selection, or grading.
+                def _live_confidence(row):
+                    e = pd.to_numeric(row.get("Model edge (pts)"), errors="coerce")
+                    gap = pd.to_numeric(row.get("V1/V2 disagreement (pts)"), errors="coerce")
+                    v1m = pd.to_numeric(row.get("V1 margin"), errors="coerce")
+                    v2m = pd.to_numeric(row.get("V2 margin"), errors="coerce")
+                    if pd.isna(e):
+                        return 1, "No current spread; provisional 1/10 (not actionable)"
+                    # Edge rewards are intentionally bounded. Larger edges alone
+                    # cannot produce a high confidence rating.
+                    score = 2 + min(4, int(float(e) // 2.5))
+                    if pd.notna(gap):
+                        if gap >= 10:
+                            score -= 3
+                        elif gap >= 5:
+                            score -= 2
+                        elif gap >= 3:
+                            score -= 1
+                    if pd.notna(v1m) and pd.notna(v2m) and (v1m >= 0) != (v2m >= 0):
                         score -= 1
-                if pd.notna(v1m) and pd.notna(v2m) and (v1m >= 0) != (v2m >= 0):
-                    score -= 1
-                score = max(1, min(7, score))
-                note = (f"Live V3 edge {float(e):.1f} pts; "
-                        f"V1/V2 gap {float(gap):.1f} pts" if pd.notna(gap)
-                        else f"Live V3 edge {float(e):.1f} pts; V1/V2 gap unavailable")
-                return score, note + "; experimental, not validated"
-
-            _live_ratings = final_projections.apply(_live_confidence, axis=1)
-            final_projections["Live confidence (1–10)"] = _live_ratings.map(lambda x: x[0]).astype(int)
-            final_projections["Live confidence basis"] = _live_ratings.map(lambda x: x[1])
-            final_projections["Official frozen pick status"] = final_projections["Frozen V3 selection"].map(
-                lambda x: "Official frozen V3 pick" if pd.notna(x) and str(x).strip() else "Projection only"
-            )
-            # Preserve original frozen confidence distinctly from the new live score.
-            final_projections = final_projections.rename(columns={"Confidence (1–10)": "Frozen pick confidence (1–10)"})
-
-            # Every projection gets an explicit data-availability explanation.
-            # Missing frozen picks are NOT manufactured, and absent market
-            # prices are NOT presented as executable offers.
-            for _idx, _row in final_projections.iterrows():
-                _has_pick = pd.notna(_row.get("Frozen V3 selection"))
-                _has_market = pd.notna(_row.get("Market home spread"))
-                if not _has_pick:
-                    if pd.isna(_row.get("Market verification")):
-                        final_projections.at[_idx, "Market verification"] = "NO FROZEN V3 PICK"
-                    if pd.isna(_row.get("Bet review status")):
-                        final_projections.at[_idx, "Bet review status"] = "PROJECTION ONLY — not a frozen bet"
-                    final_projections.at[_idx, "Frozen V3 selection"] = "NOT SELECTED"
-                    final_projections.at[_idx, "Frozen pick confidence (1–10)"] = "NOT RATED — no frozen pick"
-                    if pd.isna(_row.get("Confidence notes")):
-                        final_projections.at[_idx, "Confidence notes"] = "No frozen V3 selection for this matchup; confidence cannot be validated"
-                if _has_pick and pd.isna(_row.get("Frozen pick confidence (1–10)")):
-                    final_projections.at[_idx, "Frozen pick confidence (1–10)"] = "NOT RATED — verification hold"
-                if _has_pick and pd.isna(_row.get("Bet review status")):
-                    final_projections.at[_idx, "Bet review status"] = "HOLD — incomplete market verification"
-                if _has_pick and pd.isna(_row.get("Market verification")):
-                    final_projections.at[_idx, "Market verification"] = "VERIFICATION PENDING"
-                if _has_pick and pd.isna(_row.get("Confidence notes")):
-                    final_projections.at[_idx, "Confidence notes"] = "Frozen pick exists; verification incomplete"
-                if pd.isna(_row.get("Verified sportsbook")):
-                    final_projections.at[_idx, "Verified sportsbook"] = "NOT VERIFIED"
-                if pd.isna(_row.get("Fresh frozen-pick spread")):
-                    final_projections.at[_idx, "Fresh frozen-pick spread"] = "NOT AVAILABLE"
-                if pd.isna(_row.get("Fresh odds")):
-                    final_projections.at[_idx, "Fresh odds"] = "NOT AVAILABLE"
-                if pd.isna(_row.get("Frozen V3 edge at fresh line")):
-                    final_projections.at[_idx, "Frozen V3 edge at fresh line"] = "NOT CALCULABLE"
-                if pd.isna(_row.get("Frozen edge movement")):
-                    final_projections.at[_idx, "Frozen edge movement"] = "NOT CALCULABLE"
-                if pd.isna(_row.get("Division check")):
-                    final_projections.at[_idx, "Division check"] = "NOT VERIFIED FOR FROZEN PICK"
-                if not _has_market:
+                    score = max(1, min(7, score))
+                    note = (f"Live V3 edge {float(e):.1f} pts; "
+                            f"V1/V2 gap {float(gap):.1f} pts" if pd.notna(gap)
+                            else f"Live V3 edge {float(e):.1f} pts; V1/V2 gap unavailable")
+                    return score, note + "; experimental, not validated"
+    
+                _live_ratings = final_projections.apply(_live_confidence, axis=1)
+                final_projections["Live confidence (1–10)"] = _live_ratings.map(lambda x: x[0]).astype(int)
+                final_projections["Live confidence basis"] = _live_ratings.map(lambda x: x[1])
+                final_projections["Official frozen pick status"] = final_projections["Frozen V3 selection"].map(
+                    lambda x: "Official frozen V3 pick" if pd.notna(x) and str(x).strip() else "Projection only"
+                )
+                # Preserve original frozen confidence distinctly from the new live score.
+                final_projections = final_projections.rename(columns={"Confidence (1–10)": "Frozen pick confidence (1–10)"})
+    
+                # Every projection gets an explicit data-availability explanation.
+                # Missing frozen picks are NOT manufactured, and absent market
+                # prices are NOT presented as executable offers.
+                for _idx, _row in final_projections.iterrows():
+                    _has_pick = pd.notna(_row.get("Frozen V3 selection"))
+                    _has_market = pd.notna(_row.get("Market home spread"))
                     if not _has_pick:
-                        final_projections.at[_idx, "Confidence notes"] = "No current market line or frozen V3 selection; projection only"
-            # Live slate coverage is independent of the smaller frozen-pick cohort.
-            # A blank field is replaced with an explicit reason, not invented data.
-            final_projections["Market line"] = final_projections["Market line"].replace("", "NO CURRENT LINE")
-            final_projections["Model edge team"] = final_projections["Model edge team"].replace("", "NOT CALCULABLE — no line")
-            final_projections["Model edge (pts)"] = final_projections["Model edge (pts)"].astype(object).where(
-                final_projections["Model edge (pts)"].notna(), "NOT CALCULABLE — no line")
-            st.caption("Availability audit: all games have explicit statuses. NOT SELECTED is not a new wager; "
-                       "NOT AVAILABLE means no verified same-book quote. No odds or confidence are fabricated.")
-
-            # Clean, single 7-day table: every game has a LIVE rating.
-            # Full frozen-market diagnostics remain in the CSV export, not
-            # crowded into the main projection view.
-            headline = final_projections[[
-                "Live confidence (1–10)", "Final model projection", "Investigation status",
-                "Kickoff UTC", "Matchup", "Market line", "Model edge team",
-                "Model edge (pts)", "Winner disagreement", "Official frozen pick status",
-            ]].copy()
-            headline.insert(3, "Kickoff CT", format_central(headline["Kickoff UTC"]))
-            headline = headline.drop(columns=["Kickoff UTC"])
-            st.caption("LIVE confidence: experimental 1–7/10 scale for every game; "
-                       "not an ATS win probability, guarantee, or suggested unit stake. "
-                       "Frozen V3 picks are identified separately; full verification details are in the CSV.")
-
-            sort_view=st.radio(
-                "Table order",
-                ["Highest confidence first", "Biggest model edges first", "Kickoff time"],
-                horizontal=True,
-                key="final_projection_sort_v2"
-            )
-            if sort_view == "Highest confidence first":
-                headline = headline.assign(
-                    _sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")
-                ).sort_values(
-                    ["Live confidence (1–10)", "_sort_edge"],
-                    ascending=[False, False], na_position="last"
-                ).drop(columns="_sort_edge").reset_index(drop=True)
-            elif sort_view == "Biggest model edges first":
-                headline = headline.assign(
-                    _sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")
-                ).sort_values("_sort_edge", ascending=False, na_position="last").drop(
-                    columns="_sort_edge"
-                ).reset_index(drop=True)
-
-            def highlight_model_edges(row):
-                edge=pd.to_numeric(row.get("Model edge (pts)"),errors="coerce")
-                status=str(row.get("Investigation status",""))
-                if status=="UNSTABLE":
-                    bg="#ffd6d6"; weight="font-weight:700;"
-                elif status=="CAUTION":
-                    bg="#fff1a8"; weight="font-weight:700;"
-                elif status=="PASS" and pd.notna(edge) and edge>=7.0:
-                    bg="#b7f7c5"; weight="font-weight:700;"
-                elif status=="PASS" and pd.notna(edge) and edge>=3.0:
-                    bg="#fff8d6"; weight=""
-                else:
-                    return [""]*len(row)
-                return [f"background-color:{bg};color:#111827;{weight}" for _ in row]
-
-            st.caption(
-                "Diagnostic v2 (live only): PASS = V1/V2 margin difference <5 points; "
-                "CAUTION = 5 to <10; UNSTABLE = 10+. Opposite projected winners are "
-                "flagged separately, even on PASS games. Legacy status is shown for comparison. "
-                "Frozen historical cohorts and the locked V3/final projection are unchanged."
-            )
-            styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
-                {},na_rep=""
-            )
-
-            export_final=final_projections.copy()
-            export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
-            st.dataframe(styled_headline,hide_index=True,use_container_width=True)
-            st.caption("All projected games have a live confidence score. Frozen-pick research and market verification details are retained in the downloadable CSV.")
-            st.download_button(
-                "Download complete final model projections",
-                export_final.to_csv(index=False),
-                file_name="cfb_complete_model_projections.csv",
-                mime="text/csv",
-                key="download_complete_final_model_projections"
-            )
-    except Exception as exc:
-        st.error(f"Complete final projections unavailable: {exc}")
-
+                        if pd.isna(_row.get("Market verification")):
+                            final_projections.at[_idx, "Market verification"] = "NO FROZEN V3 PICK"
+                        if pd.isna(_row.get("Bet review status")):
+                            final_projections.at[_idx, "Bet review status"] = "PROJECTION ONLY — not a frozen bet"
+                        final_projections.at[_idx, "Frozen V3 selection"] = "NOT SELECTED"
+                        final_projections.at[_idx, "Frozen pick confidence (1–10)"] = "NOT RATED — no frozen pick"
+                        if pd.isna(_row.get("Confidence notes")):
+                            final_projections.at[_idx, "Confidence notes"] = "No frozen V3 selection for this matchup; confidence cannot be validated"
+                    if _has_pick and pd.isna(_row.get("Frozen pick confidence (1–10)")):
+                        final_projections.at[_idx, "Frozen pick confidence (1–10)"] = "NOT RATED — verification hold"
+                    if _has_pick and pd.isna(_row.get("Bet review status")):
+                        final_projections.at[_idx, "Bet review status"] = "HOLD — incomplete market verification"
+                    if _has_pick and pd.isna(_row.get("Market verification")):
+                        final_projections.at[_idx, "Market verification"] = "VERIFICATION PENDING"
+                    if _has_pick and pd.isna(_row.get("Confidence notes")):
+                        final_projections.at[_idx, "Confidence notes"] = "Frozen pick exists; verification incomplete"
+                    if pd.isna(_row.get("Verified sportsbook")):
+                        final_projections.at[_idx, "Verified sportsbook"] = "NOT VERIFIED"
+                    if pd.isna(_row.get("Fresh frozen-pick spread")):
+                        final_projections.at[_idx, "Fresh frozen-pick spread"] = "NOT AVAILABLE"
+                    if pd.isna(_row.get("Fresh odds")):
+                        final_projections.at[_idx, "Fresh odds"] = "NOT AVAILABLE"
+                    if pd.isna(_row.get("Frozen V3 edge at fresh line")):
+                        final_projections.at[_idx, "Frozen V3 edge at fresh line"] = "NOT CALCULABLE"
+                    if pd.isna(_row.get("Frozen edge movement")):
+                        final_projections.at[_idx, "Frozen edge movement"] = "NOT CALCULABLE"
+                    if pd.isna(_row.get("Division check")):
+                        final_projections.at[_idx, "Division check"] = "NOT VERIFIED FOR FROZEN PICK"
+                    if not _has_market:
+                        if not _has_pick:
+                            final_projections.at[_idx, "Confidence notes"] = "No current market line or frozen V3 selection; projection only"
+                # Live slate coverage is independent of the smaller frozen-pick cohort.
+                # A blank field is replaced with an explicit reason, not invented data.
+                final_projections["Market line"] = final_projections["Market line"].replace("", "NO CURRENT LINE")
+                final_projections["Model edge team"] = final_projections["Model edge team"].replace("", "NOT CALCULABLE — no line")
+                final_projections["Model edge (pts)"] = final_projections["Model edge (pts)"].astype(object).where(
+                    final_projections["Model edge (pts)"].notna(), "NOT CALCULABLE — no line")
+                st.caption("Availability audit: all games have explicit statuses. NOT SELECTED is not a new wager; "
+                           "NOT AVAILABLE means no verified same-book quote. No odds or confidence are fabricated.")
+    
+                # Clean, single 7-day table: every game has a LIVE rating.
+                # Full frozen-market diagnostics remain in the CSV export, not
+                # crowded into the main projection view.
+                headline = final_projections[[
+                    "Live confidence (1–10)", "Final model projection", "Investigation status",
+                    "Kickoff UTC", "Matchup", "Market line", "Model edge team",
+                    "Model edge (pts)", "Winner disagreement", "Official frozen pick status",
+                ]].copy()
+                headline.insert(3, "Kickoff CT", format_central(headline["Kickoff UTC"]))
+                headline = headline.drop(columns=["Kickoff UTC"])
+                st.caption("LIVE confidence: experimental 1–7/10 scale for every game; "
+                           "not an ATS win probability, guarantee, or suggested unit stake. "
+                           "Frozen V3 picks are identified separately; full verification details are in the CSV.")
+    
+                sort_view=st.radio(
+                    "Table order",
+                    ["Highest confidence first", "Biggest model edges first", "Kickoff time"],
+                    horizontal=True,
+                    key="final_projection_sort_v2"
+                )
+                if sort_view == "Highest confidence first":
+                    headline = headline.assign(
+                        _sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")
+                    ).sort_values(
+                        ["Live confidence (1–10)", "_sort_edge"],
+                        ascending=[False, False], na_position="last"
+                    ).drop(columns="_sort_edge").reset_index(drop=True)
+                elif sort_view == "Biggest model edges first":
+                    headline = headline.assign(
+                        _sort_edge=pd.to_numeric(headline["Model edge (pts)"], errors="coerce")
+                    ).sort_values("_sort_edge", ascending=False, na_position="last").drop(
+                        columns="_sort_edge"
+                    ).reset_index(drop=True)
+    
+                def highlight_model_edges(row):
+                    edge=pd.to_numeric(row.get("Model edge (pts)"),errors="coerce")
+                    status=str(row.get("Investigation status",""))
+                    if status=="UNSTABLE":
+                        bg="#ffd6d6"; weight="font-weight:700;"
+                    elif status=="CAUTION":
+                        bg="#fff1a8"; weight="font-weight:700;"
+                    elif status=="PASS" and pd.notna(edge) and edge>=7.0:
+                        bg="#b7f7c5"; weight="font-weight:700;"
+                    elif status=="PASS" and pd.notna(edge) and edge>=3.0:
+                        bg="#fff8d6"; weight=""
+                    else:
+                        return [""]*len(row)
+                    return [f"background-color:{bg};color:#111827;{weight}" for _ in row]
+    
+                st.caption(
+                    "Diagnostic v2 (live only): PASS = V1/V2 margin difference <5 points; "
+                    "CAUTION = 5 to <10; UNSTABLE = 10+. Opposite projected winners are "
+                    "flagged separately, even on PASS games. Legacy status is shown for comparison. "
+                    "Frozen historical cohorts and the locked V3/final projection are unchanged."
+                )
+                styled_headline=headline.style.apply(highlight_model_edges,axis=1).format(
+                    {},na_rep=""
+                )
+    
+                export_final=final_projections.copy()
+                export_final.insert(1,"Kickoff CT",format_central(export_final["Kickoff UTC"]))
+                st.dataframe(styled_headline,hide_index=True,use_container_width=True)
+                st.caption("All projected games have a live confidence score. Frozen-pick research and market verification details are retained in the downloadable CSV.")
+                st.download_button(
+                    "Download complete final model projections",
+                    export_final.to_csv(index=False),
+                    file_name="cfb_complete_model_projections.csv",
+                    mime="text/csv",
+                    key="download_complete_final_model_projections"
+                )
+        except Exception as exc:
+            st.error(f"Complete final projections unavailable: {exc}")
 
 
 # Predictive FBS power rankings using the same V2 ratings that feed the final model.
