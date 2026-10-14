@@ -68,7 +68,7 @@ jobs:
               "Download the v4-research-evidence-gap artifact for the CSV collection queue and full reports.",
           ]
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
-              output.write("\\n".join(lines) + "\\n")
+              output.write("\n".join(lines) + "\n")
       - name: Upload V4 research evidence gap artifact
         uses: actions/upload-artifact@v4
         with:
