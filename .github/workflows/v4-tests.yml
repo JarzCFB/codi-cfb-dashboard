@@ -41,13 +41,14 @@ jobs:
           python -m unittest -v test_v4_situational test_v4_walkforward test_v4_calibration test_v4_recover_v3 test_v4_evidence_audit test_v4_evidence_triage test_v4_readiness test_v4_public_sources
       - name: Run V4 historical evidence and gap regression tests
         run: |
-          python -m unittest -v test_v4_evidence_quality test_v4_holdout_robustness test_v4_collection_plan test_v4_source_review test_v4_review_reconciliation test_v4_research_dataset test_v4_calibration_hardening test_v4_audit_cli test_v4_repo_baseline test_v4_historical_gap test_v4_ensemble_validation
+          python -m unittest -v test_v4_evidence_quality test_v4_holdout_robustness test_v4_collection_plan test_v4_source_review test_v4_review_reconciliation test_v4_research_dataset test_v4_calibration_hardening test_v4_audit_cli test_v4_repo_baseline test_v4_historical_gap test_v4_ensemble_validation test_v4_v3_advisory
       - name: Generate real-data V4 research reports
         run: |
           mkdir -p v4_research_outputs
           python v4_repo_baseline.py --output-dir v4_research_outputs
           python v4_historical_gap.py --output v4_research_outputs/v4_historical_gap.json
           python v4_ensemble_validation.py --output v4_research_outputs/v4_ensemble_validation.json
+          python v4_v3_advisory.py --output v4_research_outputs/v4_v3_advisory.json
       - name: Publish V4 evidence gap summary
         shell: python
         run: |
