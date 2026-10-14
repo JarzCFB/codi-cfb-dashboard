@@ -44,7 +44,7 @@ def advisory_report(baseline, evidence):
         "total_v3_games": len(items),
         "games_with_six_claimed_features": sum(not item["missing_features"] for item in items),
         "games_needing_evidence": sum(bool(item["missing_features"]) for item in items),
-        "audit_coverage": audit.get("coverage", {}),
+        "audit_coverage": {"missing_feature_cells": audit["missing_feature_cells"], "feature_coverage": audit["feature_coverage"], "source_authenticity_verified": audit["source_authenticity_verified"]},
         "games": items,
         "note": "No V4 recommendation or staking change until independent source verification and prospective model validation.",
     }
