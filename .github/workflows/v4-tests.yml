@@ -42,6 +42,40 @@ jobs:
       - name: Run V4 historical evidence and gap regression tests
         run: |
           python -m unittest -v test_v4_evidence_quality test_v4_holdout_robustness test_v4_collection_plan test_v4_source_review test_v4_review_reconciliation test_v4_research_dataset test_v4_calibration_hardening test_v4_audit_cli test_v4_repo_baseline test_v4_historical_gap
+      - name: Generate real-data V4 research reports
+        run: |
+          mkdir -p v4_research_outputs
+          python v4_repo_baseline.py --output-dir v4_research_outputs
+          python v4_historical_gap.py --output v4_research_outputs/v4_historical_gap.json
+      - name: Publish V4 evidence gap summary
+        shell: python
+        run: |
+          import json
+          import os
+          from pathlib import Path
+          report = json.loads(Path("v4_research_outputs/v4_historical_gap.json").read_text())
+          baseline = json.loads(Path("v4_research_outputs/v4_repo_audit_summary.json").read_text())
+          lines = [
+              "## V4 research data status",
+              f"- Historical V1/V2 backtest games: {report['historical_v1_v2']['games']}",
+              f"- Frozen V3 selections: {report['prospective_v3']['games']}",
+              f"- Settled V3 selections: {baseline['baseline']['settled']}",
+              f"- Missing V4 feature cells: {baseline['missing_feature_tasks']}",
+              "- Verified historical V4 feature set: Not available",
+              "- Paired V3 versus V4 holdout comparison: Not available",
+              "- V4 release ready: No",
+              "",
+              "Download the v4-research-evidence-gap artifact for the CSV collection queue and full reports.",
+          ]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as output:
+              output.write("\\n".join(lines) + "\\n")
+      - name: Upload V4 research evidence gap artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v4-research-evidence-gap
+          path: v4_research_outputs/
+          retention-days: 30
+          if-no-files-found: error
       - name: Streamlit startup smoke test without API credentials
         run: |
           python - <<'PY'
