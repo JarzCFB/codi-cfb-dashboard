@@ -74,14 +74,25 @@ def audit_evidence(baseline, evidence):
                     "captured_at_utc", "actual_home_margin", "v3_home_margin")}
             row.update({feature: indexed[(gid, feature)] for feature in FEATURES})
             complete.append(row)
+    feature_coverage = {f: sum((gid, f) in indexed for gid in baseline_by_id) for f in FEATURES}
+    missing_rows = [{"game_id": gid, "season": base["season"],
+                     "kickoff_utc": base["kickoff_utc"],
+                     "source_grading_status": base["source_grading_status"],
+                     "missing_features": "|".join(f for f in FEATURES if (gid, f) not in indexed),
+                     "present_feature_count": sum((gid, f) in indexed for f in FEATURES)}
+                    for gid, base in baseline_by_id.items()]
     return {
         "baseline_games": len(baseline),
         "evidence_rows": len(evidence),
         "settled_games": sum(r["source_grading_status"] == "settled" for r in baseline),
         "complete_settled_games": len(complete),
         "missing_feature_cells": sum((gid, f) not in indexed for gid in baseline_by_id for f in FEATURES),
-        "eligible_for_research_calibration": len({r["season"] for r in complete}) >= 2,
+        "eligible_for_research_calibration": False,
+        "multi_season_complete_data": len({r["season"] for r in complete}) >= 2,
+        "feature_coverage": feature_coverage,
+        "coverage_by_feature_pct": {f: round(100 * n / len(baseline), 1) if baseline else 0.0 for f, n in feature_coverage.items()},
+        "missing_rows": missing_rows,
         "source_authenticity_verified": False,
-        "warning": "Source URLs/timestamps are user-provided claims. Independent archival verification required before training or release.",
+        "warning": "Never calibration-ready on uploaded URL claims alone. Source authentication, sample size, multiple seasons, and holdout verification are required.",
         "complete_rows": complete,
     }
