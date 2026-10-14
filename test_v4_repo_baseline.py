@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from v4_repo_baseline import repository_v3_baseline, baseline_csv, main
+from v4_repo_baseline import repository_v3_baseline, baseline_csv, baseline_diagnostics, main
 
 
 def row(model="v3", gid="g1"):
@@ -47,6 +47,14 @@ class RepoBaselineTests(unittest.TestCase):
             self.assertEqual(result["missing_feature_tasks"], 6)
             self.assertFalse(result["release_ready"])
             self.assertTrue((out / "v4_recovered_v3_baseline.csv").exists())
+
+    def test_diagnostics_block_single_season(self):
+        baseline = repository_v3_baseline([row()])
+        diagnostics = baseline_diagnostics(baseline)
+        self.assertEqual(diagnostics["games_by_season"], {2026: 1})
+        self.assertEqual(diagnostics["settled_by_season"], {2026: 1})
+        self.assertFalse(diagnostics["multiple_seasons_present"])
+        self.assertFalse(diagnostics["eligible_for_walkforward"])
 
     def test_invalid_input_no_output(self):
         with tempfile.TemporaryDirectory() as tmp:
