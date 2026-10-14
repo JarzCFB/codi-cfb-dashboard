@@ -1,5 +1,6 @@
 """Research-only V4 residual model. Locked V3 is never modified."""
-from datetime import datetime
+from datetime import datetime, timezone
+from v4_evidence_audit import _valid_feature
 import math
 import numpy as np
 
@@ -10,11 +11,12 @@ def _timestamp(value):
     dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
     if dt.tzinfo is None:
         raise ValueError("timestamps must have timezone")
-    return dt
+    return dt.astimezone(timezone.utc)
 
 def evaluate_candidate(rows, min_train=200, min_holdout=100, ridge=100.0):
     """Train on past seasons and score latest season without fitting to holdout."""
-    if min_train < 1 or min_holdout < 1 or not math.isfinite(float(ridge)) or ridge <= 0:
+    if (type(min_train) is not int or type(min_holdout) is not int or
+            min_train < 1 or min_holdout < 1 or not math.isfinite(float(ridge)) or ridge <= 0):
         raise ValueError("invalid evaluation configuration")
     records, seen = [], set()
     for row in rows:
@@ -29,8 +31,8 @@ def evaluate_candidate(rows, min_train=200, min_holdout=100, ridge=100.0):
         values = np.asarray([float(row[k]) for k in ("actual_home_margin", "v3_home_margin") + FEATURES])
         if not np.isfinite(values).all():
             raise ValueError("nonfinite data")
-        if values[2] < -1 or values[2] > 1 or values[3] < -11 or values[3] > 11 or values[6] < 0 or values[7] not in (0, 1):
-            raise ValueError("invalid feature range")
+        for feature in FEATURES:
+            _valid_feature(feature, row[feature])
         records.append((int(row["season"]), values))
     seasons = sorted({season for season, _ in records})
     if len(seasons) < 2:
