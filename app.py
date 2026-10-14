@@ -484,6 +484,14 @@ else:
                     _v4_missing_writer.writeheader()
                     _v4_missing_writer.writerows(_v4_evidence_result["missing_rows"])
                     st.download_button("Download per-game missing feature report", data=_v4_missing_output.getvalue(), file_name="v4_missing_feature_report.csv", mime="text/csv", key="v4_missing_feature_report")
+                    from v4_evidence_triage import triage_rows, triage_csv
+                    _v4_triage = triage_rows(_v4_recovery_rows, _v4_evidence_rows)
+                    _v4_windows = {}
+                    for _v4_row in _v4_triage:
+                        _v4_windows[_v4_row["capture_window"]] = _v4_windows.get(_v4_row["capture_window"], 0) + 1
+                    st.caption("Original prediction lead-time distribution (not proof of available injury reports)")
+                    st.json(_v4_windows)
+                    st.download_button("Download V4 evidence collection priorities", data=triage_csv(_v4_triage), file_name="v4_evidence_collection_priorities.csv", mime="text/csv", key="v4_evidence_collection_priorities")
                     st.info("Missing-feature report is available without an evidence upload. No V4 calibration runs; source authenticity and multiple seasons remain unverified.")
 
                 except (ValueError, TypeError, UnicodeError, OverflowError) as _v4_recovery_exc:
