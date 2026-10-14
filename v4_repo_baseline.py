@@ -4,6 +4,7 @@ import csv
 import io
 import json
 from pathlib import Path
+from collections import Counter
 
 from v4_audit_cli import audit_local_files
 from v4_recover_v3 import recover_v3_audit, recovery_summary
@@ -18,6 +19,19 @@ def repository_v3_baseline(rows):
     if not v3:
         raise ValueError("No frozen V3 selections found in graded source")
     return recover_v3_audit(v3)
+
+
+def baseline_diagnostics(baseline):
+    """Describe actual frozen V3 sample and hard-block single-season evaluation."""
+    by_season = Counter(int(r["season"]) for r in baseline)
+    settled = Counter(int(r["season"]) for r in baseline if r["source_grading_status"] == "settled")
+    return {
+        "games_by_season": dict(sorted(by_season.items())),
+        "settled_by_season": dict(sorted(settled.items())),
+        "multiple_seasons_present": len(by_season) >= 2,
+        "eligible_for_walkforward": False,
+        "reason": "Selected V3 picks lack verified V4 features and are not the all-FBS universe.",
+    }
 
 
 def baseline_csv(baseline):
@@ -51,6 +65,7 @@ def main(argv=None):
     summary = {
         "status": "RESEARCH_ONLY",
         "baseline": recovery_summary(baseline),
+        "diagnostics": baseline_diagnostics(baseline),
         "missing_feature_tasks": tasks["missing_feature_tasks"],
         "evidence_rows": audit["evidence_rows"],
         "readiness_checks": readiness["checks"],
