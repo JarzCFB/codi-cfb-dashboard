@@ -36,11 +36,14 @@ jobs:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: python prospective_grade.py
 
+      - name: Refresh read-only V3 shadow monitor
+        run: python v3_shadow_monitor.py
+
       - name: Commit results without modifying original selections
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add prospective/graded_selections.csv prospective/results_summary.json
+          git add prospective/graded_selections.csv prospective/results_summary.json reports/v3_shadow_monitor.json
           if ! git diff --cached --quiet; then
             git commit -m 'Update prospective model results'
             git pull --rebase origin main
