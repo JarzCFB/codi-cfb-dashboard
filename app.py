@@ -16,6 +16,50 @@ st.set_page_config(page_title="Codi's CFB Dashboard", page_icon="🏈", layout="
 st.title("College football · Odds & value dashboard")
 st.caption("Independent rating model • live bookmaker comparisons • personal bet journal")
 
+# Frozen V3 research monitor: separate from live projection confidence and official picks.
+with st.expander("Frozen V3 research monitor · shadow thresholds and verification", expanded=False):
+    st.caption("Research-only. Official V3 remains the calibrated 25% V1 / 75% V2 model with a 3-point minimum edge. "
+               "Shadow results do not change or recommend bets. Historical cohort labels are frozen, not live inferences.")
+    try:
+        _shadow_response = requests.get(
+            "https://raw.githubusercontent.com/JarzCFB/codi-cfb-dashboard/main/reports/v3_shadow_monitor.json",
+            timeout=8,
+        )
+        _shadow_response.raise_for_status()
+        _shadow = _shadow_response.json()
+        _threshold_rows = []
+        for _threshold, _record in _shadow.get("edge_thresholds", {}).items():
+            _threshold_rows.append({
+                "Minimum frozen edge (pts)": _threshold,
+                "Settled": _record.get("settled"),
+                "Wins": _record.get("wins"),
+                "Losses": _record.get("losses"),
+                "Pushes": _record.get("pushes"),
+                "Net units": _record.get("net_units"),
+                "ROI per settled pick": _record.get("roi_per_settled_selection"),
+            })
+        st.markdown("**Frozen V3 shadow threshold comparison**")
+        st.dataframe(pd.DataFrame(_threshold_rows), hide_index=True, use_container_width=True)
+        st.markdown("**Frozen V1/V2 agreement cohorts**")
+        st.dataframe(pd.DataFrame([
+            {"Status": _status, **_record}
+            for _status, _record in _shadow.get("frozen_cohorts", {}).items()
+        ]), hide_index=True, use_container_width=True)
+        st.caption(f"UNCLASSIFIED frozen V3 picks: {_shadow.get('unclassified_v3_count', 0)}. "
+                   "Missing classifications are not reconstructed after kickoff.")
+        st.markdown("**Upcoming frozen V3 selections — verification required**")
+        _pending = _shadow.get("future_pending_v3", [])
+        if _pending:
+            st.dataframe(pd.DataFrame(_pending), hide_index=True, use_container_width=True)
+        else:
+            st.info("No pending frozen V3 selections in the latest committed report.")
+        st.caption("Frozen odds are historical snapshots, NOT verified current sportsbook prices. "
+                   "Quarterback and injury news requires independent source checks.")
+    except (requests.RequestException, ValueError, KeyError) as _shadow_error:
+        st.info("Frozen V3 shadow report is temporarily unavailable. Official projections remain unaffected.")
+
+
+
 # Reserve the first dashboard panel for the existing complete 7-day V3 slate.
 # It is populated later, after the same data and model inputs are available.
 top_projection_slot = st.container()
