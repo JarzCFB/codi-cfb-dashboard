@@ -26,11 +26,13 @@ jobs:
         run: python -m unittest discover -v
       - name: Update frozen investigation cohorts and report
         run: python prospective_investigation.py
+      - name: Refresh frozen V3 shadow monitor
+        run: python v3_shadow_monitor.py
       - name: Commit investigation results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add prospective/investigation_cohort.csv prospective/investigation_summary.json
+          git add prospective/investigation_cohort.csv prospective/investigation_summary.json reports/v3_shadow_monitor.json
           if git diff --cached --quiet; then
             echo "No investigation changes to commit."
           else
