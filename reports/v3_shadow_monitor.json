@@ -45,9 +45,9 @@
   },
   "frozen_cohorts": {
     "CAUTION": {
-      "selections": 15,
+      "selections": 16,
       "settled": 15,
-      "pending": 0,
+      "pending": 1,
       "wins": 10,
       "losses": 5,
       "pushes": 0,
@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.279826
     },
     "PASS": {
-      "selections": 57,
+      "selections": 66,
       "settled": 57,
-      "pending": 0,
+      "pending": 9,
       "wins": 32,
       "losses": 24,
       "pushes": 1,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.08743
     },
     "UNCLASSIFIED": {
-      "selections": 48,
+      "selections": 38,
       "settled": 26,
-      "pending": 22,
+      "pending": 12,
       "wins": 12,
       "losses": 13,
       "pushes": 1,
@@ -85,7 +85,7 @@
       "roi_per_settled_selection": 0.079588
     }
   },
-  "unclassified_v3_count": 48,
+  "unclassified_v3_count": 38,
   "unclassified_games": [
     {
       "season": "2026",
@@ -251,42 +251,6 @@
     },
     {
       "season": "2026",
-      "game_id": "1e9caefb58095e7560167dff561c9ff7",
-      "kickoff_utc": "2026-10-24T19:30:00Z",
-      "matchup": "Tennessee Volunteers at South Carolina Gamecocks"
-    },
-    {
-      "season": "2026",
-      "game_id": "20d8411740b919c4478bd28a6dd751aa",
-      "kickoff_utc": "2026-10-24T19:30:00Z",
-      "matchup": "Bowling Green Falcons at Buffalo Bulls"
-    },
-    {
-      "season": "2026",
-      "game_id": "259f3312084b229ac2b74d414d36869f",
-      "kickoff_utc": "2026-10-24T16:00:00Z",
-      "matchup": "Indiana Hoosiers at Michigan Wolverines"
-    },
-    {
-      "season": "2026",
-      "game_id": "2d125f14eca5c6eb1417f126cafde7c0",
-      "kickoff_utc": "2026-10-24T16:00:00Z",
-      "matchup": "Pittsburgh Panthers at Miami Hurricanes"
-    },
-    {
-      "season": "2026",
-      "game_id": "2e2ae6a759029288a93488e0805aa9f3",
-      "kickoff_utc": "2026-10-24T00:30:00Z",
-      "matchup": "Army Black Knights at Tulsa Golden Hurricane"
-    },
-    {
-      "season": "2026",
-      "game_id": "440de8df25b4cca8ebcecb7431bbb5c0",
-      "kickoff_utc": "2026-10-24T23:30:00Z",
-      "matchup": "USC Trojans at Wisconsin Badgers"
-    },
-    {
-      "season": "2026",
       "game_id": "5be63fd8c778b46afe084d3352e38a40",
       "kickoff_utc": "2026-10-22T23:30:00Z",
       "matchup": "East Carolina Pirates at Memphis Tigers"
@@ -311,24 +275,6 @@
     },
     {
       "season": "2026",
-      "game_id": "bbbabc2490914e9a4d1e619a32461b1f",
-      "kickoff_utc": "2026-10-24T16:00:00Z",
-      "matchup": "California Golden Bears at SMU Mustangs"
-    },
-    {
-      "season": "2026",
-      "game_id": "bdce7d97283542037fe3f8a033c36a72",
-      "kickoff_utc": "2026-10-24T19:30:00Z",
-      "matchup": "North Texas Mean Green at Navy Midshipmen"
-    },
-    {
-      "season": "2026",
-      "game_id": "c3dd6e7e07382aa22aca6458aea01f2d",
-      "kickoff_utc": "2026-10-23T23:00:00Z",
-      "matchup": "UMass Minutemen at UConn Huskies"
-    },
-    {
-      "season": "2026",
       "game_id": "c4e171dd82e86c3a4dd50d4d3b54edab",
       "kickoff_utc": "2026-10-24T23:30:00Z",
       "matchup": "Utah State Aggies at Texas State Bobcats"
@@ -344,12 +290,6 @@
       "game_id": "c85512046e05e5ed845e60dd5d6d5e1e",
       "kickoff_utc": "2026-10-20T23:00:00Z",
       "matchup": "Middle Tennessee Blue Raiders at Florida International Panthers"
-    },
-    {
-      "season": "2026",
-      "game_id": "ca109267525bde74bd35cecd176185be",
-      "kickoff_utc": "2026-10-24T19:30:00Z",
-      "matchup": "Oklahoma Sooners at Mississippi State Bulldogs"
     },
     {
       "season": "2026",
