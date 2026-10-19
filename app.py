@@ -17,7 +17,7 @@ st.title("College football · Odds & value dashboard")
 st.caption("Independent rating model • live bookmaker comparisons • personal bet journal")
 
 # Frozen V3 research monitor: separate from live projection confidence and official picks.
-with st.expander("Frozen V3 research monitor · shadow thresholds and verification", expanded=False):
+with st.sidebar.expander("Advanced · Frozen V3 research monitor", expanded=False):
     st.caption("Research-only. Official V3 remains the calibrated 25% V1 / 75% V2 model with a 3-point minimum edge. "
                "Shadow results do not change or recommend bets. Historical cohort labels are frozen, not live inferences.")
     try:
@@ -883,6 +883,30 @@ with top_projection_slot:
                            "not an ATS win probability, guarantee, or suggested unit stake. "
                            "Frozen V3 picks are identified separately; full verification details are in the CSV.")
     
+                # View-only filtering of the existing slate; never modifies frozen picks.
+                _edge_view = st.segmented_control(
+                    "Show games with minimum model edge",
+                    options=["All games", "3+ pts", "5+ pts", "7+ pts"],
+                    default="All games",
+                    key="v3_slate_edge_view",
+                    help="Display filter only. The official V3 frozen-pick rule remains 3+ points.",
+                )
+                _agreement_view = st.checkbox(
+                    "Show PASS agreement only",
+                    value=False,
+                    key="v3_slate_pass_only",
+                    help="Live V1/V2 diagnostic; not a frozen historical classification.",
+                )
+                if _edge_view != "All games":
+                    _minimum_edge = float(_edge_view.split("+")[0])
+                    headline = headline.loc[
+                        pd.to_numeric(headline["Model edge (pts)"], errors="coerce") >= _minimum_edge
+                    ].copy()
+                if _agreement_view:
+                    headline = headline.loc[headline["Investigation status"] == "PASS"].copy()
+                st.caption(f"Showing {len(headline)} games with selected display filters. "
+                           "Full unfiltered model projections remain available in the CSV export.")
+
                 sort_view=st.radio(
                     "Table order",
                     ["Highest confidence first", "Biggest model edges first", "Kickoff time"],
