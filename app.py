@@ -884,10 +884,11 @@ with top_projection_slot:
                            "Frozen V3 picks are identified separately; full verification details are in the CSV.")
     
                 # View-only filtering of the existing slate; never modifies frozen picks.
-                _edge_view = st.segmented_control(
+                _edge_view = st.radio(
                     "Show games with minimum model edge",
                     options=["All games", "3+ pts", "5+ pts", "7+ pts"],
-                    default="All games",
+                    index=0,
+                    horizontal=True,
                     key="v3_slate_edge_view",
                     help="Display filter only. The official V3 frozen-pick rule remains 3+ points.",
                 )
