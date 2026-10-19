@@ -200,6 +200,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,0372910f02d1b4d9cbfef5b35bbfe439,2026-10-17T16:00:00Z,Boston College Eagles,Pittsburgh Panthers,FBS vs FBS,boston college,pittsburgh
 2026,9fe9b7a2a6f8cdab425c51e9a1b30b77,2026-10-17T16:00:00Z,Bowling Green Falcons,Ball State Cardinals,FBS vs FBS,bowling green,ball state
 2026,5dd30262ad321dcff02c37d7619376e4,2026-10-17T16:00:00Z,Central Michigan Chippewas,Western Michigan Broncos,FBS vs FBS,central michigan,western michigan
+2026,bdcdf3154bdeea4c2920375945d3f010,2026-10-17T16:00:00Z,Clemson Tigers,Charleston Southern Buccaneers,Unverified division / FCS: model suppressed,clemson,charleston southern buccaneers
 2026,006c37db6769b587a0adde2067498d53,2026-10-17T16:00:00Z,Eastern Michigan Eagles,Toledo Rockets,FBS vs FBS,eastern michigan,toledo
 2026,f8b5d3a4b35efebd4f010433778fd629,2026-10-17T16:00:00Z,James Madison Dukes,Georgia State Panthers,FBS vs FBS,james madison,georgia state
 2026,9e8578b415e664eea71185131401e537,2026-10-17T16:00:00Z,Kansas State Wildcats,Kansas Jayhawks,FBS vs FBS,kansas state,kansas
@@ -217,6 +218,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,c67bc7b2b2b6bf3571ece5117facad42,2026-10-17T16:00:00Z,West Virginia Mountaineers,Cincinnati Bearcats,FBS vs FBS,west virginia,cincinnati
 2026,7d7f757d2bf4cb7b6d8bbfe9589d25a2,2026-10-17T17:00:00Z,Buffalo Bulls,UMass Minutemen,FBS vs FBS,buffalo,umass
 2026,f10a59f9dd66cb1aa169a293326449d9,2026-10-17T17:00:00Z,Temple Owls,Charlotte 49ers,FBS vs FBS,temple,charlotte
+2026,8ce4565fe6dda2fbac6a893844519dcf,2026-10-17T17:00:00Z,Texas A&M Aggies,Citadel Bulldogs,Unverified division / FCS: model suppressed,texas a and m,citadel bulldogs
 2026,43959d4bb3927439ced7a6bf26cc3c00,2026-10-17T19:30:00Z,Air Force Falcons,UNLV Rebels,FBS vs FBS,air force,unlv
 2026,e45fd12f3d9475fd0941509e7429b596,2026-10-17T19:30:00Z,Baylor Bears,TCU Horned Frogs,FBS vs FBS,baylor,tcu
 2026,b5e637cf502d6d5f408af440ea2d591d,2026-10-17T19:30:00Z,California Golden Bears,Wake Forest Demon Deacons,FBS vs FBS,california,wake forest
@@ -240,6 +242,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,7830c18dc7e87ebf087ddded14c50de4,2026-10-17T23:30:00Z,Houston Cougars,Oklahoma State Cowboys,FBS vs FBS,houston,oklahoma state
 2026,685a8722f297502fa85e4cd8c7e54b1c,2026-10-17T23:30:00Z,Indiana Hoosiers,Ohio State Buckeyes,FBS vs FBS,indiana,ohio state
 2026,0728226f9c1e3aace0f64536109f4d05,2026-10-17T23:30:00Z,Oklahoma Sooners,Kentucky Wildcats,FBS vs FBS,oklahoma,kentucky
+2026,c4c9cbe2a4507d3f1235f7ca9e424a19,2026-10-17T23:30:00Z,Stanford Cardinal,Elon Phoenix,Unverified division / FCS: model suppressed,stanford,elon phoenix
 2026,a9a289b7b19e28b51572d20315e6bf42,2026-10-18T00:00:00Z,UL Monroe Warhawks,Louisiana Tech Bulldogs,FBS vs FBS,ul monroe,louisiana tech
 2026,121ada2c134388f8cc2f26ffc54f52d1,2026-10-18T01:00:00Z,UTEP Miners,San Jose State Spartans,FBS vs FBS,utep,san jose state
 2026,11430b210e5b57c938e1c95a9db5ffb2,2026-10-18T02:00:00Z,Sacramento State Hornets,Ohio Bobcats,Season-specific FBS status requires verification,sacramento state,ohio
