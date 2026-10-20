@@ -77,6 +77,18 @@ jobs:
                   f"covered={agreement['covered_v3']}, "
                   f"rejected={agreement['rejected_evidence']}")
           print(f'RESEARCH REPORT VERIFIED: {count} same-capture agreement records')
+          import os
+          summary = os.environ.get('GITHUB_STEP_SUMMARY')
+          if summary:
+              with open(summary, 'a', encoding='utf-8') as handle:
+                  handle.write('## JarzCFB V3 evidence verification\\n\\n')
+                  handle.write(f'- Frozen same-capture evidence records: **{count}**\\n')
+                  handle.write(f"- Covered V3 selections: **{agreement['covered_v3']}**\\n")
+                  handle.write(f"- Uncovered historical V3 selections: **{agreement['uncovered_v3']}**\\n")
+                  handle.write(f"- Rejected evidence records: **{agreement['rejected_evidence']}**\\n")
+                  if count == 0:
+                      handle.write('\\nNo agreement evidence yet. This is expected until a new qualifying V3 selection freezes.\\n')
+
           PYCODE
       - name: Commit snapshots, selections and research report
         run: |
