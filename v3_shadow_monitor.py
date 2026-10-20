@@ -6,6 +6,7 @@ results, thresholds or model parameters. No look-ahead in selection membership.
 import csv
 import json
 from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path("prospective")
@@ -37,6 +38,39 @@ def summarize(rows):
     }
 
 
+def recent_window(rows, days=14):
+    """Descriptive recent results, using kickoff dates rather than grading run time."""
+    settled = [r for r in rows if r.get("grading_status") == "settled"
+               and r.get("selection_result") in ("win", "loss", "push")]
+    dates = []
+    for r in settled:
+        try:
+            dates.append(datetime.fromisoformat(r["kickoff_utc"].replace("Z", "+00:00")))
+        except (ValueError, TypeError, KeyError):
+            pass
+    if not dates:
+        return {"window_days": days, "through_kickoff_utc": None, "edge_thresholds": {}}
+    end = max(dates)
+    start = end - timedelta(days=days)
+    window = []
+    for r in settled:
+        try:
+            dt = datetime.fromisoformat(r["kickoff_utc"].replace("Z", "+00:00"))
+            if start < dt <= end:
+                window.append(r)
+        except (ValueError, TypeError, KeyError):
+            continue
+    return {
+        "window_days": days,
+        "through_kickoff_utc": end.isoformat().replace("+00:00", "Z"),
+        "edge_thresholds": {
+            str(t): summarize([r for r in window if r.get("edge_points")
+                               and float(r["edge_points"]) >= t])
+            for t in THRESHOLDS
+        },
+    }
+
+
 def build(graded, cohorts):
     v3 = [r for r in graded if r.get("model_version") == "v3"]
     frozen = {(r.get("season"), r.get("game_id")): r for r in cohorts}
@@ -57,6 +91,8 @@ def build(graded, cohorts):
             for t in THRESHOLDS
         },
         "frozen_cohorts": {k: summarize(v) for k, v in sorted(classified.items())},
+        "recent_settled_window": recent_window(v3),
+        "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
         "unclassified_v3_count": len(missing),
         "unclassified_games": [
             {"season": r.get("season"), "game_id": r.get("game_id"),
