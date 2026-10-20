@@ -58,6 +58,26 @@ jobs:
           PYCODE
       - name: Refresh read-only V3 research report
         run: python v3_shadow_monitor.py
+      - name: Verify report reflects frozen agreement evidence
+        run: |
+          python - <<'PYCODE'
+          import csv
+          import json
+          from pathlib import Path
+          evidence = Path('prospective/v3_pregame_agreement.csv')
+          report = json.loads(Path('reports/v3_shadow_monitor.json').read_text(encoding='utf-8'))
+          agreement = report['pregame_agreement']
+          count = 0
+          if evidence.exists():
+              with evidence.open(newline='', encoding='utf-8') as handle:
+                  count = sum(1 for _ in csv.DictReader(handle))
+          if agreement['covered_v3'] != count or agreement['rejected_evidence']:
+              raise RuntimeError(
+                  f'Agreement report mismatch: CSV={count}, '
+                  f"covered={agreement['covered_v3']}, "
+                  f"rejected={agreement['rejected_evidence']}")
+          print(f'RESEARCH REPORT VERIFIED: {count} same-capture agreement records')
+          PYCODE
       - name: Commit snapshots, selections and research report
         run: |
           git config user.name 'github-actions[bot]'
