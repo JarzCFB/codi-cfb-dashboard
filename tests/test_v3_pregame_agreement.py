@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from prospective_capture import record_v3_agreement
+from prospective_capture import record_v3_agreement, capture_prospective
 
 
 class AgreementCaptureTests(unittest.TestCase):
@@ -32,6 +32,52 @@ class AgreementCaptureTests(unittest.TestCase):
             self.assertEqual(rows[0]['investigation_status'], 'PASS')
             self.assertEqual(rows[0]['v1_margin'], '7.0')
             self.assertEqual(rows[0]['v2_margin'], '5.0')
+
+    def test_capture_pipeline_writes_sidecar_without_external_api(self):
+        pick = dict(model_version='v3', season='2026', game_id='game-1',
+                    kickoff_utc='2026-10-24T18:00:00Z',
+                    captured_at_utc='2026-10-20T13:00:00Z',
+                    home_team='Home', away_team='Away', selection='Home',
+                    sportsbook_key='book', spread=-3.5, american_odds=-110,
+                    projected_home_margin=8.1)
+        quote = dict(season='2026', game_id='game-1',
+                     captured_at_utc=pick['captured_at_utc'],
+                     selection='Home', sportsbook_key='book',
+                     home_team='Home', away_team='Away',
+                     spread=-3.5, american_odds=-110,
+                     projected_home_margin=7.0)
+        with tempfile.TemporaryDirectory() as folder:
+            ledger = Path(folder) / 'selections.csv'
+            with patch('prospective_capture.build_v2',
+                       return_value=({}, {'previous_games': 0, 'current_games': 0})):
+                with patch('prospective_capture.freeze', return_value=[pick]):
+                    with patch('prospective_capture.projected_margin', return_value=5.0):
+                        result = capture_prospective([quote], 2026, ledger=ledger,
+                                                     previous_games=[], current_games=[])
+            self.assertEqual(len(result), 1)
+            path = Path(folder) / 'v3_pregame_agreement.csv'
+            self.assertTrue(path.exists())
+            with path.open(newline='', encoding='utf-8') as handle:
+                rows = list(csv.DictReader(handle))
+            self.assertEqual(rows[0]['investigation_status'], 'PASS')
+
+    def test_same_game_wrong_odds_is_rejected(self):
+        pick = dict(model_version='v3', season='2026', game_id='game-1',
+                    kickoff_utc='2026-10-24T18:00:00Z',
+                    captured_at_utc='2026-10-20T13:00:00Z',
+                    home_team='Home', away_team='Away', selection='Home',
+                    sportsbook_key='book', spread=-3.5, american_odds=-110,
+                    projected_home_margin=8.1)
+        quote = dict(season='2026', game_id='game-1',
+                     captured_at_utc=pick['captured_at_utc'],
+                     selection='Home', sportsbook_key='book',
+                     home_team='Home', away_team='Away',
+                     spread=-3.5, american_odds=-115,
+                     projected_home_margin=7.0)
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaises(ValueError):
+                record_v3_agreement([pick], [quote], {}, {},
+                                    Path(folder) / 'agreement.csv')
 
     def test_no_new_v3_never_writes_file(self):
         with tempfile.TemporaryDirectory() as folder:
