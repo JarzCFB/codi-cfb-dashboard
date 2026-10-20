@@ -14,11 +14,12 @@ class AgreementCaptureTests(unittest.TestCase):
                     kickoff_utc='2026-10-24T18:00:00Z',
                     captured_at_utc='2026-10-20T13:00:00Z',
                     home_team='Home', away_team='Away', selection='Home',
-                    sportsbook_key='book', spread=-3.5,
+                    sportsbook_key='book', spread=-3.5, american_odds=-110,
                     projected_home_margin=8.1)
         quote = dict(season='2026', game_id='game-1',
                      captured_at_utc=pick['captured_at_utc'],
                      selection='Home', sportsbook_key='book',
+                     home_team='Home', away_team='Away', american_odds=-110,
                      spread=-3.5, projected_home_margin=7.0)
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'v3_pregame_agreement.csv'
