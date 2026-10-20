@@ -134,7 +134,10 @@ def record_v3_agreement(new_picks, snapshot_rows, v2_ratings, meta, path):
                          and r.get('captured_at_utc') == p['captured_at_utc']
                          and r.get('selection') == p['selection']
                          and r.get('sportsbook_key') == p['sportsbook_key']
-                         and number(r.get('spread')) == number(p['spread'])), None)
+                         and number(r.get('spread')) == number(p['spread'])
+                         and number(r.get('american_odds')) == number(p['american_odds'])
+                         and r.get('home_team') == p['home_team']
+                         and r.get('away_team') == p['away_team']), None)
         if matching is None:
             raise ValueError('Frozen V3 quote cannot be matched to its source snapshot')
         v1 = number(matching.get('projected_home_margin'))
