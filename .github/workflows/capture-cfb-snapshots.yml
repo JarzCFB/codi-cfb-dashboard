@@ -20,8 +20,10 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install requests numpy pandas
-      - name: Test prospective selection rules
-        run: python -m unittest discover -v
+      - name: Test prospective selection rules and same-capture evidence
+        run: |
+          python -m unittest discover -v
+          python -m unittest discover -s tests -v
       - name: Capture live odds and freeze prospective selections
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
