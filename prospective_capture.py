@@ -99,6 +99,73 @@ def freeze(rows, v2_ratings, ledger, meta):
         tmp.replace(ledger)
     return new
 
+AGREEMENT_FIELDS = [
+    'season', 'game_id', 'kickoff_utc', 'captured_at_utc',
+    'home_team', 'away_team', 'v1_margin', 'v2_margin', 'v3_margin',
+    'v1_v2_disagreement', 'same_projected_winner', 'investigation_status',
+    'investigation_reason', 'source', 'v2_inputs_sha256'
+]
+
+
+def record_v3_agreement(new_picks, snapshot_rows, v2_ratings, meta, path):
+    """Append only same-capture evidence for newly frozen V3 picks.
+
+    Never reconstruct old V3 games or modify the official selections ledger.
+    V1/V2 need not independently pass the betting edge threshold.
+    """
+    from prospective_investigation import classify
+    path = Path(path)
+    v3 = [p for p in new_picks if p['model_version'] == 'v3']
+    if not v3:
+        return 0
+    existing = []
+    if path.exists():
+        with path.open(newline='', encoding='utf-8') as handle:
+            existing = list(csv.DictReader(handle))
+    known = {(r['season'], r['game_id']) for r in existing}
+    records = []
+    for p in v3:
+        key = (p['season'], p['game_id'])
+        if key in known:
+            continue
+        matching = next((r for r in snapshot_rows
+                         if str(r.get('season')) == p['season']
+                         and str(r.get('game_id')) == p['game_id']
+                         and r.get('captured_at_utc') == p['captured_at_utc']
+                         and r.get('selection') == p['selection']
+                         and r.get('sportsbook_key') == p['sportsbook_key']
+                         and number(r.get('spread')) == number(p['spread'])), None)
+        if matching is None:
+            raise ValueError('Frozen V3 quote cannot be matched to its source snapshot')
+        v1 = number(matching.get('projected_home_margin'))
+        v2 = projected_margin(p['home_team'], p['away_team'], v2_ratings)
+        if v1 is None or v2 is None:
+            raise ValueError('Frozen V3 requires both pregame V1 and V2 margins')
+        disagreement, same, status, reason = classify(v1, v2)
+        records.append({
+            'season': p['season'], 'game_id': p['game_id'],
+            'kickoff_utc': p['kickoff_utc'], 'captured_at_utc': p['captured_at_utc'],
+            'home_team': p['home_team'], 'away_team': p['away_team'],
+            'v1_margin': round(v1, 5), 'v2_margin': round(v2, 5),
+            'v3_margin': p['projected_home_margin'],
+            'v1_v2_disagreement': round(disagreement, 5),
+            'same_projected_winner': str(same).lower(),
+            'investigation_status': status, 'investigation_reason': reason,
+            'source': 'same_capture_v3_frozen_quote',
+            'v2_inputs_sha256': meta.get('inputs_sha256', ''),
+        })
+        known.add(key)
+    if records:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix('.tmp')
+        with tmp.open('w', newline='', encoding='utf-8') as handle:
+            writer = csv.DictWriter(handle, fieldnames=AGREEMENT_FIELDS)
+            writer.writeheader()
+            writer.writerows(existing + records)
+        tmp.replace(path)
+    return len(records)
+
+
 def capture_prospective(snapshot_rows, season, ledger='prospective/selections.csv',
                         previous_games=None, current_games=None):
     if not snapshot_rows:return []
@@ -117,8 +184,11 @@ def capture_prospective(snapshot_rows, season, ledger='prospective/selections.cs
     meta['inputs_sha256']=hashlib.sha256(json.dumps(
         [previous_games,current_games],sort_keys=True,separators=(',',':')).encode()).hexdigest()
     new=freeze(snapshot_rows,ratings,ledger,meta)
+    agreement_path=Path(ledger).with_name('v3_pregame_agreement.csv')
+    agreement_count=record_v3_agreement(new,snapshot_rows,ratings,meta,agreement_path)
     print(json.dumps({'prospective_new_v1':sum(x['model_version']=='v1' for x in new),
                       'prospective_new_v2':sum(x['model_version']=='v2' for x in new),
                       'prospective_new_v3':sum(x['model_version']=='v3' for x in new),
+                      'v3_pregame_agreement_new':agreement_count,
                       'ledger':str(ledger),'rule_v1_v2':RULE,'rule_v3':V3_RULE},indent=2))
     return new
