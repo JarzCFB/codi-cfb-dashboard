@@ -56,6 +56,24 @@ with st.sidebar.expander("Advanced · Frozen V3 research monitor", expanded=Fals
         ]), hide_index=True, use_container_width=True)
         st.caption(f"UNCLASSIFIED frozen V3 picks: {_shadow.get('unclassified_v3_count', 0)}. "
                    "Missing classifications are not reconstructed after kickoff.")
+        _agreement = _shadow.get("pregame_agreement")
+        if _agreement:
+            st.markdown("**New · Same-capture V3 model agreement**")
+            st.caption("Independent pregame V1/V2 research evidence; not inferred from separate qualifying picks. "
+                       "Older games without capture-time evidence remain uncovered.")
+            st.write(f"Evidence for {_agreement.get('covered_v3', 0)} frozen V3 picks; "
+                     f"{_agreement.get('uncovered_v3', 0)} without matching evidence.")
+            _agreement_rows = [
+                {"Agreement": _status, **_metrics}
+                for _status, _metrics in _agreement.get("status_performance", {}).items()
+            ]
+            if _agreement_rows:
+                st.dataframe(pd.DataFrame(_agreement_rows), hide_index=True, use_container_width=True)
+            _agreement_games = _agreement.get("games", [])
+            if _agreement_games:
+                st.dataframe(pd.DataFrame(_agreement_games), hide_index=True, use_container_width=True)
+            if _agreement.get("rejected_evidence", 0):
+                st.warning(f"{_agreement['rejected_evidence']} agreement evidence rows failed validation.")
         st.markdown("**Upcoming frozen V3 selections — verification required**")
         _pending = _shadow.get("future_pending_v3", [])
         if _pending:
