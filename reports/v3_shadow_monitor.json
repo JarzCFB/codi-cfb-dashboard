@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.279826
     },
     "PASS": {
-      "selections": 66,
+      "selections": 68,
       "settled": 57,
-      "pending": 9,
+      "pending": 11,
       "wins": 32,
       "losses": 24,
       "pushes": 1,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.08743
     },
     "UNCLASSIFIED": {
-      "selections": 40,
+      "selections": 38,
       "settled": 26,
-      "pending": 14,
+      "pending": 12,
       "wins": 12,
       "losses": 13,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 40,
+  "unclassified_v3_count": 38,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 105,
-      "COHORT_NOT_GENERATED": 2,
+      "CLASSIFIED": 107,
       "MISSING_V1": 18,
       "MISSING_V1_AND_V2": 8,
       "MISSING_V2": 12
@@ -423,14 +422,6 @@
       },
       {
         "season": "2026",
-        "game_id": "99932501288d30e4693c828c0ab2455e",
-        "kickoff_utc": "2026-10-24T16:00:00Z",
-        "matchup": "Rutgers Scarlet Knights at Northwestern Wildcats",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "a28a6841bdc11350063d5e6d57fbd577",
         "kickoff_utc": "2026-10-24T23:00:00Z",
         "matchup": "Colorado Buffaloes at Oklahoma State Cowboys",
@@ -479,14 +470,6 @@
       },
       {
         "season": "2026",
-        "game_id": "d99b11b38d1cf1cbb334246263c53ac9",
-        "kickoff_utc": "2026-10-25T00:00:00Z",
-        "matchup": "UTSA Roadrunners at Tulane Green Wave",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "dc65142bf9a0e7652a252b2074037efa",
         "kickoff_utc": "2026-10-20T23:00:00Z",
         "matchup": "Missouri State Bears at Delaware Blue Hens",
@@ -511,6 +494,15 @@
       }
     ],
     "warning": "Diagnostic only. Never infer historical model agreement from nonqualifying picks."
+  },
+  "pregame_agreement": {
+    "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
+    "covered_v3": 0,
+    "uncovered_v3": 145,
+    "rejected_evidence": 0,
+    "status_performance": {},
+    "games": [],
+    "warning": "Only evidence recorded at original capture is counted; older missing games are not reconstructed."
   },
   "unclassified_games": [
     {
@@ -689,12 +681,6 @@
     },
     {
       "season": "2026",
-      "game_id": "99932501288d30e4693c828c0ab2455e",
-      "kickoff_utc": "2026-10-24T16:00:00Z",
-      "matchup": "Rutgers Scarlet Knights at Northwestern Wildcats"
-    },
-    {
-      "season": "2026",
       "game_id": "a28a6841bdc11350063d5e6d57fbd577",
       "kickoff_utc": "2026-10-24T23:00:00Z",
       "matchup": "Colorado Buffaloes at Oklahoma State Cowboys"
@@ -728,12 +714,6 @@
       "game_id": "d476cb73381765342220f698035bc889",
       "kickoff_utc": "2026-10-22T23:00:00Z",
       "matchup": "James Madison Dukes at Appalachian State Mountaineers"
-    },
-    {
-      "season": "2026",
-      "game_id": "d99b11b38d1cf1cbb334246263c53ac9",
-      "kickoff_utc": "2026-10-25T00:00:00Z",
-      "matchup": "UTSA Roadrunners at Tulane Green Wave"
     },
     {
       "season": "2026",

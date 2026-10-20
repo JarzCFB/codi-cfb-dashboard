@@ -7,7 +7,7 @@
   },
   "groups": {
     "PASS": {
-      "classified_games": 74,
+      "classified_games": 76,
       "settled_games": 55,
       "winner_correct": 35,
       "within_7": 23,
