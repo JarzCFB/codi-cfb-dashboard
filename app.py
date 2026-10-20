@@ -40,6 +40,15 @@ with st.sidebar.expander("Advanced · Frozen V3 research monitor", expanded=Fals
             })
         st.markdown("**Frozen V3 shadow threshold comparison**")
         st.dataframe(pd.DataFrame(_threshold_rows), hide_index=True, use_container_width=True)
+        _forward = _shadow.get("forward_shadow_comparison")
+        if _forward:
+            st.markdown("**Forward-only evaluation · from Oct 20, 2026**")
+            st.caption("Only frozen picks kicking off after the locked cutoff. "
+                       "Early results have small samples and do not change official V3.")
+            st.dataframe(pd.DataFrame([
+                {"Minimum edge": f"{_edge}+ pts", **_metrics}
+                for _edge, _metrics in _forward.get("thresholds", {}).items()
+            ]), hide_index=True, use_container_width=True)
         st.markdown("**Frozen V1/V2 agreement cohorts**")
         st.dataframe(pd.DataFrame([
             {"Status": _status, **_record}
