@@ -3,9 +3,9 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 143,
+      "selections": 145,
       "settled": 121,
-      "pending": 22,
+      "pending": 24,
       "wins": 67,
       "losses": 52,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.08743
     },
     "UNCLASSIFIED": {
-      "selections": 38,
+      "selections": 40,
       "settled": 26,
-      "pending": 12,
+      "pending": 14,
       "wins": 12,
       "losses": 13,
       "pushes": 1,
@@ -85,7 +85,433 @@
       "roi_per_settled_selection": 0.079588
     }
   },
-  "unclassified_v3_count": 38,
+  "recent_settled_window": {
+    "window_days": 14,
+    "through_kickoff_utc": "2026-10-18T03:59:00Z",
+    "edge_thresholds": {
+      "3": {
+        "selections": 80,
+        "settled": 80,
+        "pending": 0,
+        "wins": 42,
+        "losses": 37,
+        "pushes": 1,
+        "net_units": 1.277388,
+        "roi_per_settled_selection": 0.015967
+      },
+      "5": {
+        "selections": 31,
+        "settled": 31,
+        "pending": 0,
+        "wins": 19,
+        "losses": 12,
+        "pushes": 0,
+        "net_units": 5.409344,
+        "roi_per_settled_selection": 0.174495
+      },
+      "7": {
+        "selections": 13,
+        "settled": 13,
+        "pending": 0,
+        "wins": 9,
+        "losses": 4,
+        "pushes": 0,
+        "net_units": 4.259988,
+        "roi_per_settled_selection": 0.327691
+      },
+      "10": {
+        "selections": 5,
+        "settled": 5,
+        "pending": 0,
+        "wins": 2,
+        "losses": 3,
+        "pushes": 0,
+        "net_units": -1.138528,
+        "roi_per_settled_selection": -0.227706
+      }
+    }
+  },
+  "forward_shadow_comparison": {
+    "start_kickoff_utc": "2026-10-20T00:00:00Z",
+    "method": "forward-only paper tracking of existing frozen V3 selections; no retrospective pre-cutoff games",
+    "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
+    "thresholds": {
+      "3": {
+        "selections": 24,
+        "settled": 0,
+        "pending": 24,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
+      },
+      "5": {
+        "selections": 7,
+        "settled": 0,
+        "pending": 7,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
+      },
+      "7": {
+        "selections": 1,
+        "settled": 0,
+        "pending": 1,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
+      },
+      "10": {
+        "selections": 0,
+        "settled": 0,
+        "pending": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
+      }
+    }
+  },
+  "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
+  "unclassified_v3_count": 40,
+  "classification_coverage": {
+    "counts": {
+      "CLASSIFIED": 105,
+      "COHORT_NOT_GENERATED": 2,
+      "MISSING_V1": 18,
+      "MISSING_V1_AND_V2": 8,
+      "MISSING_V2": 12
+    },
+    "unclassified_details": [
+      {
+        "season": "2026",
+        "game_id": "1d3756ab74c013c39510958b5a632b74",
+        "kickoff_utc": "2026-10-04T00:00:00Z",
+        "matchup": "Arkansas State Red Wolves at Louisiana Ragin Cajuns",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "2b8db5053d533b488c0d76f49382d219",
+        "kickoff_utc": "2026-10-03T16:00:00Z",
+        "matchup": "Notre Dame Fighting Irish at North Carolina Tar Heels",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "59abc1d6262d2ea6a72c4daad4c83af2",
+        "kickoff_utc": "2026-10-03T20:15:00Z",
+        "matchup": "Kentucky Wildcats at South Carolina Gamecocks",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "6338f8a71aba32414791add2d358472d",
+        "kickoff_utc": "2026-10-03T23:30:00Z",
+        "matchup": "Temple Owls at South Florida Bulls",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "766a0470521ac4a0fad476df45c1438b",
+        "kickoff_utc": "2026-10-03T19:30:00Z",
+        "matchup": "Bowling Green Falcons at Miami (OH) RedHawks",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "b58c0d24e66471e6095c0a5f9afb7ce3",
+        "kickoff_utc": "2026-10-03T23:00:00Z",
+        "matchup": "BYU Cougars at TCU Horned Frogs",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "e7e3e3bfc3fd7fca7550ecf48cb78666",
+        "kickoff_utc": "2026-10-03T20:00:00Z",
+        "matchup": "UTEP Miners at New Mexico Lobos",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "f28938b05f7d4b4187e879917f6e583a",
+        "kickoff_utc": "2026-10-03T19:30:00Z",
+        "matchup": "California Golden Bears at UNLV Rebels",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "9aa0a267b153a6cc0d6c3e5746e78213",
+        "kickoff_utc": "2026-10-07T23:30:00Z",
+        "matchup": "New Mexico State Aggies at Florida International Panthers",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "234d9123fdc010716a5a844efaf7ab43",
+        "kickoff_utc": "2026-10-11T00:00:00Z",
+        "matchup": "Minnesota Golden Gophers at Purdue Boilermakers",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "2876b41c9c5327639fda141d7027eadb",
+        "kickoff_utc": "2026-10-10T17:00:00Z",
+        "matchup": "James Madison Dukes at Georgia Southern Eagles",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "3350fb5023fd4b47b86d34fcc5f47c17",
+        "kickoff_utc": "2026-10-10T16:00:00Z",
+        "matchup": "Tulane Green Wave at Army Black Knights",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "6050a18b694eb1d661ee7fa571b7ddbb",
+        "kickoff_utc": "2026-10-10T19:30:00Z",
+        "matchup": "Kent State Golden Flashes at Western Michigan Broncos",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "a3ce49a66d513b6bd1772b8696863ee1",
+        "kickoff_utc": "2026-10-10T23:00:00Z",
+        "matchup": "Nevada Wolf Pack at UTEP Miners",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "52f2d012fe3e686087077b0d7083159a",
+        "kickoff_utc": "2026-10-08T23:30:00Z",
+        "matchup": "South Alabama Jaguars at Arkansas State Red Wolves",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "9e7a1e65bd6ffb3ff108db2a5e125170",
+        "kickoff_utc": "2026-10-17T19:30:00Z",
+        "matchup": "North Carolina Tar Heels at Duke Blue Devils",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "23614f055733537fb79ab73e68040eca",
+        "kickoff_utc": "2026-10-10T01:00:00Z",
+        "matchup": "Wyoming Cowboys at San Jose State Spartans",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "21a7dc0df1a77eb87cc985e844095cf0",
+        "kickoff_utc": "2026-10-10T23:00:00Z",
+        "matchup": "Coastal Carolina Chanticleers at Marshall Thundering Herd",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "6c0ea3fe653989dd0d695482738232c3",
+        "kickoff_utc": "2026-10-10T19:30:00Z",
+        "matchup": "Central Michigan Chippewas at Ohio Bobcats",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "4f3a6620c44a51f7b649892be381e0eb",
+        "kickoff_utc": "2026-10-10T23:00:00Z",
+        "matchup": "North Dakota State Bison at UNLV Rebels",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "62dd374d95f55eaaad10717b58220ce7",
+        "kickoff_utc": "2026-10-13T23:00:00Z",
+        "matchup": "Delaware Blue Hens at Middle Tennessee Blue Raiders",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "84fb3ff9d04d9f8c6aeb5c8cadf6fbb5",
+        "kickoff_utc": "2026-10-15T23:30:00Z",
+        "matchup": "Georgia Southern Eagles at Old Dominion Monarchs",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "9fe9b7a2a6f8cdab425c51e9a1b30b77",
+        "kickoff_utc": "2026-10-17T16:00:00Z",
+        "matchup": "Ball State Cardinals at Bowling Green Falcons",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "e45fd12f3d9475fd0941509e7429b596",
+        "kickoff_utc": "2026-10-17T23:00:00Z",
+        "matchup": "TCU Horned Frogs at Baylor Bears",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "05280844ab84b8ce5e50305f7cd195d9",
+        "kickoff_utc": "2026-10-17T23:30:00Z",
+        "matchup": "Wisconsin Badgers at UCLA Bruins",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "121ada2c134388f8cc2f26ffc54f52d1",
+        "kickoff_utc": "2026-10-18T01:00:00Z",
+        "matchup": "San Jose State Spartans at UTEP Miners",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "1d2bda7e3fb33e2ff67ddf7ced277a53",
+        "kickoff_utc": "2026-10-24T19:30:00Z",
+        "matchup": "Hawaii Rainbow Warriors at Northern Illinois Huskies",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "5be63fd8c778b46afe084d3352e38a40",
+        "kickoff_utc": "2026-10-22T23:30:00Z",
+        "matchup": "East Carolina Pirates at Memphis Tigers",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "7b91563277082145d844f94b9ef1a8a6",
+        "kickoff_utc": "2026-10-24T17:00:00Z",
+        "matchup": "Miami (OH) RedHawks at Central Michigan Chippewas",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "99932501288d30e4693c828c0ab2455e",
+        "kickoff_utc": "2026-10-24T16:00:00Z",
+        "matchup": "Rutgers Scarlet Knights at Northwestern Wildcats",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "a28a6841bdc11350063d5e6d57fbd577",
+        "kickoff_utc": "2026-10-24T23:00:00Z",
+        "matchup": "Colorado Buffaloes at Oklahoma State Cowboys",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "c4e171dd82e86c3a4dd50d4d3b54edab",
+        "kickoff_utc": "2026-10-24T23:30:00Z",
+        "matchup": "Utah State Aggies at Texas State Bobcats",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "c5223791e733b6bc0744618614b007b7",
+        "kickoff_utc": "2026-10-24T22:30:00Z",
+        "matchup": "San Diego State Aztecs at Colorado State Rams",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "c85512046e05e5ed845e60dd5d6d5e1e",
+        "kickoff_utc": "2026-10-20T23:00:00Z",
+        "matchup": "Middle Tennessee Blue Raiders at Florida International Panthers",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "cc78a514047b7ed0d2c5a3acdf3cdc1e",
+        "kickoff_utc": "2026-10-24T23:30:00Z",
+        "matchup": "Vanderbilt Commodores at Kentucky Wildcats",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "d476cb73381765342220f698035bc889",
+        "kickoff_utc": "2026-10-22T23:00:00Z",
+        "matchup": "James Madison Dukes at Appalachian State Mountaineers",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "d99b11b38d1cf1cbb334246263c53ac9",
+        "kickoff_utc": "2026-10-25T00:00:00Z",
+        "matchup": "UTSA Roadrunners at Tulane Green Wave",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "dc65142bf9a0e7652a252b2074037efa",
+        "kickoff_utc": "2026-10-20T23:00:00Z",
+        "matchup": "Missouri State Bears at Delaware Blue Hens",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "c8b1ac2d988cf0d2c90200c8731bcde1",
+        "kickoff_utc": "2026-10-24T21:00:00Z",
+        "matchup": "San Jose State Spartans at Nevada Wolf Pack",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "a337612e92dd80f7ba7cab853ff409d0",
+        "kickoff_utc": "2026-10-24T20:00:00Z",
+        "matchup": "UL Monroe Warhawks at Troy Trojans",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      }
+    ],
+    "warning": "Diagnostic only. Never infer historical model agreement from nonqualifying picks."
+  },
   "unclassified_games": [
     {
       "season": "2026",
@@ -314,6 +740,18 @@
       "game_id": "dc65142bf9a0e7652a252b2074037efa",
       "kickoff_utc": "2026-10-20T23:00:00Z",
       "matchup": "Missouri State Bears at Delaware Blue Hens"
+    },
+    {
+      "season": "2026",
+      "game_id": "c8b1ac2d988cf0d2c90200c8731bcde1",
+      "kickoff_utc": "2026-10-24T21:00:00Z",
+      "matchup": "San Jose State Spartans at Nevada Wolf Pack"
+    },
+    {
+      "season": "2026",
+      "game_id": "a337612e92dd80f7ba7cab853ff409d0",
+      "kickoff_utc": "2026-10-24T20:00:00Z",
+      "matchup": "UL Monroe Warhawks at Troy Trojans"
     }
   ],
   "future_pending_v3": [
@@ -513,6 +951,24 @@
       "american_odds": "-122.0",
       "edge_points": "3.90624",
       "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-24T21:00:00Z",
+      "selection": "Nevada Wolf Pack",
+      "spread": "-4.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.67354",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-24T20:00:00Z",
+      "selection": "Troy Trojans",
+      "spread": "-14.5",
+      "american_odds": "-115.0",
+      "edge_points": "3.12663",
+      "sportsbook": "DraftKings",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
