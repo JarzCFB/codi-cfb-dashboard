@@ -134,7 +134,61 @@ def classification_coverage(v3, selections, cohorts):
     }
 
 
-def build(graded, cohorts, selections=None):
+def pregame_agreement_report(v3, evidence):
+    """Report independently captured same-time research labels, without backfill.
+
+    Only matching frozen V3 selection timestamps qualify. Historical frozen
+    investigation cohorts remain a separate series, never overwritten.
+    """
+    by_key = {(r.get("season"), r.get("game_id"), r.get("captured_at_utc")): r
+              for r in v3}
+    labels = defaultdict(list)
+    valid = []
+    rejected = 0
+    seen = set()
+    for e in evidence:
+        key = (e.get("season"), e.get("game_id"), e.get("captured_at_utc"))
+        r = by_key.get(key)
+        if key in seen or not r or e.get("source") != "same_capture_v3_frozen_quote":
+            rejected += 1
+            continue
+        if (str(e.get("v3_margin")) != str(r.get("projected_home_margin"))
+                and not _same_number(e.get("v3_margin"), r.get("projected_home_margin"))):
+            rejected += 1
+            continue
+        label = e.get("investigation_status")
+        if label not in ("PASS", "CAUTION", "UNSTABLE"):
+            rejected += 1
+            continue
+        seen.add(key)
+        labels[label].append(r)
+        valid.append({
+            "season": e.get("season"), "game_id": e.get("game_id"),
+            "kickoff_utc": r.get("kickoff_utc"),
+            "matchup": str(r.get("away_team", "")) + " at " + str(r.get("home_team", "")),
+            "status": label,
+            "disagreement_points": e.get("v1_v2_disagreement"),
+            "source": e.get("source"),
+        })
+    return {
+        "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
+        "covered_v3": len(valid),
+        "uncovered_v3": len(v3) - len(valid),
+        "rejected_evidence": rejected,
+        "status_performance": {k: summarize(v) for k, v in sorted(labels.items())},
+        "games": sorted(valid, key=lambda r: (r.get("kickoff_utc") or "", r.get("game_id") or "")),
+        "warning": "Only evidence recorded at original capture is counted; older missing games are not reconstructed.",
+    }
+
+
+def _same_number(a, b):
+    try:
+        return abs(float(a) - float(b)) < 0.00001
+    except (ValueError, TypeError):
+        return False
+
+
+def build(graded, cohorts, selections=None, pregame_evidence=None):
     v3 = [r for r in graded if r.get("model_version") == "v3"]
     frozen = {(r.get("season"), r.get("game_id")): r for r in cohorts}
     missing = [r for r in v3 if (r.get("season"), r.get("game_id")) not in frozen]
@@ -159,6 +213,7 @@ def build(graded, cohorts, selections=None):
         "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
         "unclassified_v3_count": len(missing),
         "classification_coverage": classification_coverage(v3, selections or [], cohorts) if selections is not None else None,
+        "pregame_agreement": pregame_agreement_report(v3, pregame_evidence or []),
         "unclassified_games": [
             {"season": r.get("season"), "game_id": r.get("game_id"),
              "kickoff_utc": r.get("kickoff_utc"), "matchup": r.get("away_team", "") +
@@ -178,7 +233,8 @@ def build(graded, cohorts, selections=None):
 def main():
     report = build(read(ROOT / "graded_selections.csv"),
                    read(ROOT / "investigation_cohort.csv"),
-                   read(ROOT / "selections.csv"))
+                   read(ROOT / "selections.csv"),
+                   read(ROOT / "v3_pregame_agreement.csv"))
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print("V3 shadow monitor:", {k: v["settled"] for k, v in report["edge_thresholds"].items()},
