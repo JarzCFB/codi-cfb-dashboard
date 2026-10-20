@@ -25,6 +25,15 @@ def read(path):
         return list(csv.DictReader(f))
 
 
+def valid_edge(row, threshold):
+    try:
+        from math import isfinite
+        edge = float(row.get("edge_points", ""))
+        return isfinite(edge) and edge >= threshold
+    except (ValueError, TypeError):
+        return False
+
+
 def summarize(rows):
     settled = [r for r in rows if r.get("grading_status") == "settled"
                and r.get("selection_result") in ("win", "loss", "push")]
@@ -68,8 +77,7 @@ def recent_window(rows, days=14):
         "window_days": days,
         "through_kickoff_utc": end.isoformat().replace("+00:00", "Z"),
         "edge_thresholds": {
-            str(t): summarize([r for r in window if r.get("edge_points")
-                               and float(r["edge_points"]) >= t])
+            str(t): summarize([r for r in window if valid_edge(r, t)])
             for t in THRESHOLDS
         },
     }
@@ -95,8 +103,7 @@ def forward_shadow(rows, cutoff=FORWARD_START_UTC):
         "method": "forward-only paper tracking of existing frozen V3 selections; no retrospective pre-cutoff games",
         "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
         "thresholds": {
-            str(t): summarize([r for r in eligible if r.get("edge_points")
-                               and float(r["edge_points"]) >= t])
+            str(t): summarize([r for r in eligible if valid_edge(r, t)])
             for t in THRESHOLDS
         },
     }
@@ -203,8 +210,7 @@ def build(graded, cohorts, selections=None, pregame_evidence=None):
         "method": "read-only frozen V3 shadow thresholds; one unit per frozen selection",
         "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
         "edge_thresholds": {
-            str(t): summarize([r for r in v3 if r.get("edge_points")
-                               and float(r["edge_points"]) >= t])
+            str(t): summarize([r for r in v3 if valid_edge(r, t)])
             for t in THRESHOLDS
         },
         "frozen_cohorts": {k: summarize(v) for k, v in sorted(classified.items())},
