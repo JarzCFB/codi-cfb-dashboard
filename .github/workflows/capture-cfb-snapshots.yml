@@ -32,9 +32,29 @@ jobs:
           python - <<'PYCODE'
           from snapshot_capture import capture
           from prospective_capture import capture_prospective
+          import csv
+          from pathlib import Path
           rows, _ = capture()
-          if rows:
-              capture_prospective(rows, int(rows[0]['season']))
+          if not rows:
+              print('CAPTURE STATUS: no eligible snapshot rows; no new V3 agreement evidence expected')
+          else:
+              picks = capture_prospective(rows, int(rows[0]['season']))
+              new_v3 = [p for p in picks if p['model_version'] == 'v3']
+              evidence_path = Path('prospective/v3_pregame_agreement.csv')
+              if new_v3:
+                  if not evidence_path.exists():
+                      raise RuntimeError('New V3 selections lack same-capture agreement evidence')
+                  with evidence_path.open(newline='', encoding='utf-8') as handle:
+                      evidence = list(csv.DictReader(handle))
+                  for pick in new_v3:
+                      matching = [e for e in evidence if
+                                  str(e['season']) == str(pick['season']) and
+                                  str(e['game_id']) == str(pick['game_id']) and
+                                  e['captured_at_utc'] == pick['captured_at_utc']]
+                      if len(matching) != 1:
+                          raise RuntimeError('Missing or duplicate agreement evidence for newly frozen V3 game')
+              print(f'CAPTURE STATUS: snapshot_rows={len(rows)}, new_v3={len(new_v3)}, '
+                    f'agreement_file_present={evidence_path.exists()}')
           PYCODE
       - name: Refresh read-only V3 research report
         run: python v3_shadow_monitor.py
