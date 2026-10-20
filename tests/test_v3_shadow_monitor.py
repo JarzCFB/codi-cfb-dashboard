@@ -1,6 +1,6 @@
 """Read-only V3 shadow monitor regression checks."""
 import unittest
-from v3_shadow_monitor import build, recent_window, forward_shadow
+from v3_shadow_monitor import build, recent_window, forward_shadow, classification_coverage
 
 
 def row(kickoff, edge, result="win", units=0.9):
@@ -35,6 +35,15 @@ class ShadowMonitorTests(unittest.TestCase):
         self.assertEqual(result["thresholds"]["3"]["settled"], 2)
         self.assertEqual(result["thresholds"]["5"]["settled"], 1)
         self.assertEqual(result["thresholds"]["7"]["settled"], 0)
+
+    def test_classification_coverage_distinguishes_missing_picks(self):
+        v3 = [row("2026-10-20T18:00:00Z", 6)]
+        report = classification_coverage(v3, [
+            {"season": "2026", "game_id": v3[0]["game_id"], "model_version": "v1"},
+        ], [])
+        self.assertEqual(report["counts"]["MISSING_V2"], 1)
+        self.assertEqual(report["unclassified_details"][0]["reason"], "MISSING_V2")
+        self.assertIn("does not imply", report["unclassified_details"][0]["note"])
 
     def test_build_preserves_unclassified_and_frozen_thresholds(self):
         rows = [row("2026-10-20T18:00:00Z", 6)]
