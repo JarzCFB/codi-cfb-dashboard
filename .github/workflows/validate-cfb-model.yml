@@ -28,7 +28,9 @@ jobs:
       - name: Compile modified modules
         run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py app.py
       - name: Run all regression tests
-        run: python -m unittest discover -v
+        run: |
+          python -m unittest discover -v
+          python -m unittest discover -s tests -v
       - name: Validate research report offline
         run: |
           python v3_shadow_monitor.py
