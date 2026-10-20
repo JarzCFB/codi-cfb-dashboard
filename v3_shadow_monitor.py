@@ -102,7 +102,39 @@ def forward_shadow(rows, cutoff=FORWARD_START_UTC):
     }
 
 
-def build(graded, cohorts):
+def classification_coverage(v3, selections, cohorts):
+    """Explain absent frozen cohorts without synthesizing historical ratings."""
+    by_game = defaultdict(set)
+    for r in selections:
+        if r.get("model_version") in ("v1", "v2", "v3"):
+            by_game[(r.get("season"), r.get("game_id"))].add(r["model_version"])
+    frozen = {(r.get("season"), r.get("game_id")) for r in cohorts}
+    counts = defaultdict(int)
+    details = []
+    for r in v3:
+        key = (r.get("season"), r.get("game_id"))
+        if key in frozen:
+            counts["CLASSIFIED"] += 1
+            continue
+        present = by_game.get(key, set())
+        missing = [v for v in ("v1", "v2") if v not in present]
+        reason = "MISSING_" + "_AND_".join(v.upper() for v in missing) if missing else "COHORT_NOT_GENERATED"
+        counts[reason] += 1
+        details.append({
+            "season": r.get("season"), "game_id": r.get("game_id"),
+            "kickoff_utc": r.get("kickoff_utc"),
+            "matchup": str(r.get("away_team", "")) + " at " + str(r.get("home_team", "")),
+            "reason": reason,
+            "note": "V1/V2 selection absence does not imply a missing model rating",
+        })
+    return {
+        "counts": dict(sorted(counts.items())),
+        "unclassified_details": details,
+        "warning": "Diagnostic only. Never infer historical model agreement from nonqualifying picks.",
+    }
+
+
+def build(graded, cohorts, selections=None):
     v3 = [r for r in graded if r.get("model_version") == "v3"]
     frozen = {(r.get("season"), r.get("game_id")): r for r in cohorts}
     missing = [r for r in v3 if (r.get("season"), r.get("game_id")) not in frozen]
@@ -126,6 +158,7 @@ def build(graded, cohorts):
         "forward_shadow_comparison": forward_shadow(v3),
         "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
         "unclassified_v3_count": len(missing),
+        "classification_coverage": classification_coverage(v3, selections or [], cohorts) if selections is not None else None,
         "unclassified_games": [
             {"season": r.get("season"), "game_id": r.get("game_id"),
              "kickoff_utc": r.get("kickoff_utc"), "matchup": r.get("away_team", "") +
@@ -144,7 +177,8 @@ def build(graded, cohorts):
 
 def main():
     report = build(read(ROOT / "graded_selections.csv"),
-                   read(ROOT / "investigation_cohort.csv"))
+                   read(ROOT / "investigation_cohort.csv"),
+                   read(ROOT / "selections.csv"))
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print("V3 shadow monitor:", {k: v["settled"] for k, v in report["edge_thresholds"].items()},
