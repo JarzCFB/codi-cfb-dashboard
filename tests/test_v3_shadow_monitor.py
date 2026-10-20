@@ -1,6 +1,6 @@
 """Read-only V3 shadow monitor regression checks."""
 import unittest
-from v3_shadow_monitor import build, recent_window, forward_shadow, classification_coverage
+from v3_shadow_monitor import build, recent_window, forward_shadow, classification_coverage, pregame_agreement_report
 
 
 def row(kickoff, edge, result="win", units=0.9):
@@ -44,6 +44,26 @@ class ShadowMonitorTests(unittest.TestCase):
         self.assertEqual(report["counts"]["MISSING_V2"], 1)
         self.assertEqual(report["unclassified_details"][0]["reason"], "MISSING_V2")
         self.assertIn("does not imply", report["unclassified_details"][0]["note"])
+
+    def test_same_capture_agreement_accepts_only_original_v3(self):
+        v3 = [row("2026-10-24T18:00:00Z", 6)]
+        v3[0].update(captured_at_utc="2026-10-20T13:00:00Z",
+                     projected_home_margin="8.1")
+        evidence = [
+            {"season": "2026", "game_id": v3[0]["game_id"],
+             "captured_at_utc": "2026-10-20T13:00:00Z",
+             "v3_margin": "8.1", "investigation_status": "PASS",
+             "source": "same_capture_v3_frozen_quote"},
+            {"season": "2026", "game_id": v3[0]["game_id"],
+             "captured_at_utc": "2026-10-21T13:00:00Z",
+             "v3_margin": "8.1", "investigation_status": "UNSTABLE",
+             "source": "same_capture_v3_frozen_quote"},
+        ]
+        report = pregame_agreement_report(v3, evidence)
+        self.assertEqual(report["covered_v3"], 1)
+        self.assertEqual(report["rejected_evidence"], 1)
+        self.assertEqual(report["status_performance"]["PASS"]["settled"], 1)
+        self.assertNotIn("UNSTABLE", report["status_performance"])
 
     def test_build_preserves_unclassified_and_frozen_thresholds(self):
         rows = [row("2026-10-20T18:00:00Z", 6)]
