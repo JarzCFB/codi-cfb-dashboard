@@ -12,6 +12,10 @@ from pathlib import Path
 ROOT = Path("prospective")
 REPORT = Path("reports/v3_shadow_monitor.json")
 THRESHOLDS = (3, 5, 7, 10)
+# Locked before the next weekend. Only games kicking off on/after this UTC
+# cutoff enter the prospective comparison; earlier results are excluded.
+FORWARD_START_UTC = "2026-10-20T00:00:00Z"
+
 
 
 def read(path):
@@ -71,6 +75,33 @@ def recent_window(rows, days=14):
     }
 
 
+def forward_shadow(rows, cutoff=FORWARD_START_UTC):
+    """Forward-only paper comparison, using frozen original edges and quotes.
+
+    No historical pre-cutoff results enter this record. A settled row is
+    included only when its kickoff is on/after the fixed cutoff.
+    """
+    start = datetime.fromisoformat(cutoff.replace("Z", "+00:00"))
+    eligible = []
+    for r in rows:
+        try:
+            kickoff = datetime.fromisoformat(r["kickoff_utc"].replace("Z", "+00:00"))
+            if kickoff >= start:
+                eligible.append(r)
+        except (ValueError, TypeError, KeyError):
+            continue
+    return {
+        "start_kickoff_utc": cutoff,
+        "method": "forward-only paper tracking of existing frozen V3 selections; no retrospective pre-cutoff games",
+        "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
+        "thresholds": {
+            str(t): summarize([r for r in eligible if r.get("edge_points")
+                               and float(r["edge_points"]) >= t])
+            for t in THRESHOLDS
+        },
+    }
+
+
 def build(graded, cohorts):
     v3 = [r for r in graded if r.get("model_version") == "v3"]
     frozen = {(r.get("season"), r.get("game_id")): r for r in cohorts}
@@ -92,6 +123,7 @@ def build(graded, cohorts):
         },
         "frozen_cohorts": {k: summarize(v) for k, v in sorted(classified.items())},
         "recent_settled_window": recent_window(v3),
+        "forward_shadow_comparison": forward_shadow(v3),
         "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
         "unclassified_v3_count": len(missing),
         "unclassified_games": [
