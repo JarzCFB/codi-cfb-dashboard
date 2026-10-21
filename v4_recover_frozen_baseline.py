@@ -52,7 +52,11 @@ def recover(selections, graded):
             raise ValueError("settled V3 grade missing actual margin")
         if settled:
             from math import isfinite
-            if not isfinite(float(actual)):
+            try:
+                valid = isfinite(float(actual))
+            except (TypeError, ValueError, OverflowError):
+                valid = False
+            if not valid:
                 raise ValueError("settled V3 grade has nonfinite actual margin")
         result.append({
             "game_id": gid, "season": frozen_row["season"],
