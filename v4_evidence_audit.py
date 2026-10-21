@@ -44,6 +44,17 @@ def audit_evidence(baseline, evidence):
     baseline_by_id = {str(row["game_id"]): row for row in baseline}
     if len(baseline_by_id) != len(baseline):
         raise ValueError("duplicate baseline game")
+    for base in baseline:
+        if not str(base.get("game_id") or "").strip():
+            raise ValueError("baseline game ID missing")
+        capture = _time(base["captured_at_utc"])
+        kickoff = _time(base["kickoff_utc"])
+        if capture >= kickoff:
+            raise ValueError("baseline capture must precede kickoff")
+        if base["source_grading_status"] == "settled":
+            for field in ("v3_home_margin", "actual_home_margin"):
+                if not isfinite(float(base[field])):
+                    raise ValueError("invalid settled baseline margin")
     indexed = {}
     for item in evidence:
         if any(not str(item.get(k, "")).strip() for k in REQUIRED_EVIDENCE):
@@ -57,7 +68,8 @@ def audit_evidence(baseline, evidence):
         if key in indexed:
             raise ValueError("duplicate game/feature evidence")
         parsed = urlparse(str(item["source_url"]))
-        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
+                or parsed.hostname.lower() in ("localhost", "127.0.0.1", "::1")):
             raise ValueError("evidence requires a public HTTPS source URL")
         capture = _time(baseline_by_id[gid]["captured_at_utc"])
         kickoff = _time(baseline_by_id[gid]["kickoff_utc"])
