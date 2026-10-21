@@ -33,6 +33,14 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
     result["settled_baseline_rows"] = sum(
         row.get("source_grading_status") == "settled" for row in baseline)
     result["feature_rows"] = len(evidence)
+    seasons = {}
+    for row in baseline:
+        season = str(row.get("season", "unknown"))
+        entry = seasons.setdefault(season, {"selected_games": 0, "settled_games": 0})
+        entry["selected_games"] += 1
+        entry["settled_games"] += int(row.get("source_grading_status") == "settled")
+    result["baseline_by_season"] = dict(sorted(seasons.items()))
+    result["baseline_season_count"] = len(seasons)
     result["selected_only_baseline"] = True
     result["eligible_for_all_game_training"] = False
     if not evidence_path.exists() and baseline_path.exists():
@@ -49,6 +57,7 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
         result["reason"] = "Evidence audit rejected data: " + str(exc)
         return result
     result["complete_settled_games"] = audit["complete_settled_games"]
+    result["complete_settled_season_count"] = len({row["season"] for row in audit["complete_rows"]})
     result["missing_feature_cells"] = audit["missing_feature_cells"]
     result["feature_coverage"] = audit["feature_coverage"]
     result["coverage_by_feature_pct"] = audit["coverage_by_feature_pct"]
