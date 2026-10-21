@@ -27,12 +27,17 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
         "evaluations": [],
         "warning": "Evidence URL and timestamp claims are not independently authenticated; no official V4 promotion."
     }
+    baseline = _csv(baseline_path) if baseline_path.exists() else []
+    evidence = _csv(evidence_path) if evidence_path.exists() else []
+    result["baseline_rows"] = len(baseline)
+    result["settled_baseline_rows"] = sum(
+        row.get("source_grading_status") == "settled" for row in baseline)
+    result["feature_rows"] = len(evidence)
+    result["selected_only_baseline"] = True
+    result["eligible_for_all_game_training"] = False
     if not baseline_path.exists() or not evidence_path.exists():
         result["reason"] = "Historical baseline and/or pregame feature evidence missing"
         return result
-    baseline, evidence = _csv(baseline_path), _csv(evidence_path)
-    result["baseline_rows"] = len(baseline)
-    result["feature_rows"] = len(evidence)
     try:
         audit = audit_evidence(baseline, evidence)
     except (KeyError, ValueError, TypeError, OverflowError) as exc:
