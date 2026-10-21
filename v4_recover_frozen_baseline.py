@@ -55,6 +55,8 @@ def recover(selections, graded):
             raise ValueError("graded V3 data differs from frozen selection for " + gid)
         if grade and grade.get("grading_status") not in ("settled", "pending"):
             raise ValueError("unknown V3 grading status for " + gid)
+        if grade and grade.get("grading_status") == "pending" and str(grade.get("actual_home_margin") or "").strip():
+            raise ValueError("pending V3 grade must not contain an actual margin for " + gid)
         settled = bool(grade and grade.get("grading_status") == "settled")
         actual = str(grade.get("actual_home_margin", "")).strip() if settled else ""
         if settled and not actual:
