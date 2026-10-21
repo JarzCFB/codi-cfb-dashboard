@@ -33,6 +33,16 @@ def _solve(matrix, target):
 def fit(train):
     if len(train) < MIN_TRAIN:
         raise ValueError("insufficient independently verified training games")
+    # fit() is also callable directly, so reject malformed inputs here
+    # rather than relying exclusively on evaluate()'s validation.
+    for row in train:
+        try:
+            values = [float(row[f]) for f in FEATURES] + [
+                float(row["actual_home_margin"]), float(row["v3_home_margin"])]
+            if not all(isfinite(value) for value in values):
+                raise ValueError("missing or nonfinite training value")
+        except (KeyError, TypeError, ValueError, OverflowError) as exc:
+            raise ValueError("missing or nonfinite training value") from exc
     means = [sum(float(r[f]) for r in train) / len(train) for f in FEATURES]
     scales = [max(sqrt(sum((float(r[f]) - means[j]) ** 2 for r in train) / len(train)), 1.0)
               for j, f in enumerate(FEATURES)]
