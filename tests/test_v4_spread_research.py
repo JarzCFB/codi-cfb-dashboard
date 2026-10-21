@@ -33,6 +33,8 @@ class V4SpreadResearchTests(unittest.TestCase):
         self.assertEqual(result["evaluations"][0]["holdout_games"], 110)
         self.assertIn("v3_rmse", result["evaluations"][0])
         self.assertIn("v4_rmse", result["evaluations"][0])
+        self.assertIsInstance(result["evaluations"][0]["both_error_metrics_improved"], bool)
+        self.assertFalse(result["evaluations"][0]["holdout_improvement_claim_allowed"])
         self.assertTrue(isinstance(predict(fit(rows[:210]), rows[210]), float))
 
 if __name__ == "__main__":
