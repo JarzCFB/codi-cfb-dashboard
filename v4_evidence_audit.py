@@ -5,6 +5,7 @@ Never writes V3 picks. Never infers health from a missing report.
 from datetime import datetime
 from math import isfinite
 from urllib.parse import urlparse
+from ipaddress import ip_address
 
 FEATURES = ("qb_out_diff", "key_players_out_diff", "rest_days_diff",
             "travel_miles_diff", "wind_mph", "neutral_site")
@@ -34,6 +35,21 @@ def _valid_feature(name, value):
     if name == "neutral_site" and number not in (0, 1):
         raise ValueError("neutral site must be 0 or 1")
     return number
+
+def _public_https_source(url):
+    parsed = urlparse(str(url))
+    host = parsed.hostname
+    if (parsed.scheme != "https" or not host or parsed.username or parsed.password
+            or host.lower() == "localhost" or host.lower().endswith(".localhost")
+            or host.lower().endswith(".local")):
+        return False
+    try:
+        # A literal IP address is allowed only when globally routable.
+        return ip_address(host).is_global
+    except ValueError:
+        # Reject loopback-like names and ambiguous single-label hosts.
+        return "." in host and not host.startswith(".") and not host.endswith(".")
+
 
 def audit_evidence(baseline, evidence):
     """Return coverage and independently traceable candidates, not certified facts.
@@ -67,9 +83,7 @@ def audit_evidence(baseline, evidence):
         key = (gid, feature)
         if key in indexed:
             raise ValueError("duplicate game/feature evidence")
-        parsed = urlparse(str(item["source_url"]))
-        if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
-                or parsed.hostname.lower() in ("localhost", "127.0.0.1", "::1")):
+        if not _public_https_source(item["source_url"]):
             raise ValueError("evidence requires a public HTTPS source URL")
         capture = _time(baseline_by_id[gid]["captured_at_utc"])
         kickoff = _time(baseline_by_id[gid]["kickoff_utc"])
