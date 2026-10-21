@@ -39,6 +39,16 @@ class V4SpreadResearchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing or nonfinite"):
             evaluate(rows, source_authenticity_verified=True)
 
+    def test_rolling_holdouts_use_only_earlier_seasons(self):
+        rows = ([game(2023, i) for i in range(210)]
+                + [game(2024, i) for i in range(110)]
+                + [game(2025, i) for i in range(110)])
+        report = evaluate(rows, source_authenticity_verified=True)
+        self.assertEqual([r["holdout_season"] for r in report["evaluations"]], [2024, 2025])
+        self.assertEqual([r["training_games"] for r in report["evaluations"]], [210, 320])
+        self.assertEqual([r["holdout_games"] for r in report["evaluations"]], [110, 110])
+        self.assertFalse(report["release_ready"])
+
     def test_season_holdout_remains_research_only(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         result = evaluate(rows, source_authenticity_verified=True)
