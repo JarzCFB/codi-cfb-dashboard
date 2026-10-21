@@ -85,3 +85,7 @@ The GitHub Actions research workflow now fails when frozen V3 recovery produces 
 ## Frozen-ledger reconciliation in CI
 
 The research workflow compares the recovered selected-only baseline against both original V3 CSV ledgers: selection count, exact set of game IDs, and settled-grade count must match. It reruns when those ledgers, the historical V1/V2 backtest, or the V4 feature-evidence CSV change. This checks consistency of recovery; it does **not** authenticate third-party feature sources or establish a V4 betting edge.
+
+## Paired holdout accuracy diagnostics
+
+The V4 ridge research evaluator now reports `both_error_metrics_improved` only when both holdout MAE and RMSE are strictly lower than frozen V3. A tradeoff between average error and large misses is **not** an across-the-board improvement. The evaluator always sets `holdout_improvement_claim_allowed=false` and `release_ready=false`; these exploratory accuracy diagnostics cannot substitute for authenticated source data, independently archived all-game V3 predictions, prospective betting ROI, or explicit release approval.
