@@ -93,13 +93,18 @@ def evaluate(complete_rows, source_authenticity_verified=False):
         v4_errors = [predict(model, r) - float(r["actual_home_margin"]) for r in test]
         v3_rmse = sqrt(sum(e*e for e in v3_errors) / len(test))
         v4_rmse = sqrt(sum(e*e for e in v4_errors) / len(test))
+        # Diagnostics only: a candidate must not be described as improved
+        # when one error metric improves but the other deteriorates.
+        both_errors_improved = candidate < baseline and v4_rmse < v3_rmse
         output["evaluations"].append({"holdout_season": season, "training_games": len(train),
             "holdout_games": len(test), "v3_mae": round(baseline, 4),
             "v4_mae": round(candidate, 4), "v4_mae_improvement": round(baseline-candidate, 4),
             "v3_rmse": round(v3_rmse, 4), "v4_rmse": round(v4_rmse, 4),
+            "both_error_metrics_improved": both_errors_improved,
+            "holdout_improvement_claim_allowed": False,
             "improved_game_count": sum(abs(b) > abs(a) for b, a in zip(v3_errors, v4_errors)),
             "standardized_coefficients": model["coefficients"],
-            "note": "Predictive spread error only; no validated betting edge or ROI."})
+            "note": "Exploratory paired error diagnostics only; no authenticated historical V3-versus-V4 betting edge or ROI."})
     output["reason"] = ("No season holdout meets minimum sample requirements"
                         if not output["evaluations"] else
                         "Research holdout metrics only; independent forward betting ROI and governance approval still required")
