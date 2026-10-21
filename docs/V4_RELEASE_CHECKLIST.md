@@ -77,3 +77,7 @@ verified facts. Review each missing feature against source publications
 that demonstrably existed **before** its original capture.
 
 The recovered baseline now carries original `home_team` and `away_team` values, so the worklist can be researched by matchup. These names are copied from frozen selections, never reconstructed from current schedules.
+
+## Automated fail-closed baseline checks
+
+The GitHub Actions research workflow now fails when frozen V3 recovery produces zero games or the offline V4 status reports `Evidence audit rejected data`. The separate evidence worklist treats valid-looking pre-capture source rows as **submitted claims**, not independently authenticated facts; feature coverage must never be interpreted as verified injury, weather, or player status. The workflow's success alone does not constitute a V4 performance or release approval.
