@@ -12,6 +12,10 @@ on:
       - 'cfb_v4_situational.py'
       - 'docs/V4_RELEASE_CHECKLIST.md'
       - 'tests/**'
+      - 'prospective/selections.csv'
+      - 'prospective/graded_selections.csv'
+      - 'backtests/v1_v2_game_results.csv'
+      - 'v4/verified_feature_rows.csv'
       - '.github/workflows/validate-cfb-model.yml'
   workflow_dispatch:
 
@@ -60,6 +64,17 @@ jobs:
           assert v4['eligible_for_all_game_training'] is False
           assert v4['multi_season_baseline'] == (v4['baseline_season_count'] >= 2)
           assert v4['baseline_rows'] >= v4['settled_baseline_rows']
+          import csv
+          def v3_rows(path):
+              with open(path, newline='', encoding='utf-8-sig') as f:
+                  return [r for r in csv.DictReader(f) if r.get('model_version', '').strip().lower() == 'v3']
+          selections = v3_rows('prospective/selections.csv')
+          grades = v3_rows('prospective/graded_selections.csv')
+          assert v4['baseline_rows'] == len(selections), 'Recovered V3 games differ from frozen selections'
+          assert v4['settled_baseline_rows'] == sum(r.get('grading_status') == 'settled' for r in grades), 'Recovered settled games differ from graded ledger'
+          with open('v4/recovered_v3_baseline.csv', newline='', encoding='utf-8') as f:
+              recovered = list(csv.DictReader(f))
+          assert {r['game_id'] for r in recovered} == {r['game_id'] for r in selections}, 'Recovered game identities differ from frozen ledger'
           with open('reports/v4_historical_gap.json', encoding='utf-8') as f:
               historical_gap = json.load(f)
           assert historical_gap['status'] == 'RESEARCH_ONLY'
