@@ -66,3 +66,12 @@ the resulting CSV as a downloadable artifact. **Do not treat this dataset
 as all-FBS** or fill the remaining 2024–2025 seasons with postgame projections.
 The separate all-game historical collection and independent source
 authentication gates remain open.
+
+## Prioritized evidence collection worklist
+After baseline recovery, run `python v4_evidence_worklist.py`.
+This creates `reports/v4_missing_evidence_worklist.csv` with each game's
+original capture cutoff, missing feature names, and settled-first priority.
+The validation workflow includes this CSV in the downloadable
+`v4-research-readiness` artifact. This is a work queue, not a list of
+verified facts. Review each missing feature against source publications
+that demonstrably existed **before** its original capture.
