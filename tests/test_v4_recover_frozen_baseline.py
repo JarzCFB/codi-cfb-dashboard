@@ -51,6 +51,17 @@ class V4BaselineRecoveryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "nonfinite"):
             recover([a], [grade(a, actual="not-a-number")])
 
+    def test_invalid_projected_margin_fails(self):
+        for margin in ("", "nan", "inf", "not-a-number"):
+            with self.subTest(margin=margin):
+                with self.assertRaisesRegex(ValueError, "nonfinite projected"):
+                    recover([pick(margin=margin)], [])
+
+    def test_unknown_grade_status_fails(self):
+        a = pick()
+        with self.assertRaisesRegex(ValueError, "unknown V3 grading status"):
+            recover([a], [grade(a, status="unreviewed")])
+
     def test_post_kickoff_fails(self):
         a = dict(pick(), captured_at_utc="2026-10-25T10:00:00Z")
         with self.assertRaisesRegex(ValueError, "after kickoff"):
