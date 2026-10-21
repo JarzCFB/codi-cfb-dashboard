@@ -10,6 +10,7 @@ on:
       - 'app.py'
       - 'v4_*.py'
       - 'cfb_v4_situational.py'
+      - 'docs/V4_RELEASE_CHECKLIST.md'
       - 'tests/**'
       - '.github/workflows/validate-cfb-model.yml'
   workflow_dispatch:
@@ -47,5 +48,8 @@ jobs:
           with open('reports/v4_research_status.json', encoding='utf-8') as f:
               v4 = json.load(f)
           assert v4['status'] == 'RESEARCH_ONLY' and v4['release_ready'] is False
+          assert v4['source_authenticity_verified'] is False
+          assert isinstance(v4['evaluations'], list)
+          print('V4 evidence readiness:', v4['reason'])
           print('Offline report validation passed.')
           PY
