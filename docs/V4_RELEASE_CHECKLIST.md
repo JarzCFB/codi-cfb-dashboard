@@ -81,3 +81,7 @@ The recovered baseline now carries original `home_team` and `away_team` values, 
 ## Automated fail-closed baseline checks
 
 The GitHub Actions research workflow now fails when frozen V3 recovery produces zero games or the offline V4 status reports `Evidence audit rejected data`. The separate evidence worklist treats valid-looking pre-capture source rows as **submitted claims**, not independently authenticated facts; feature coverage must never be interpreted as verified injury, weather, or player status. The workflow's success alone does not constitute a V4 performance or release approval.
+
+## Frozen-ledger reconciliation in CI
+
+The research workflow compares the recovered selected-only baseline against both original V3 CSV ledgers: selection count, exact set of game IDs, and settled-grade count must match. It reruns when those ledgers, the historical V1/V2 backtest, or the V4 feature-evidence CSV change. This checks consistency of recovery; it does **not** authenticate third-party feature sources or establish a V4 betting edge.
