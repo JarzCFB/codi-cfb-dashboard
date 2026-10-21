@@ -6,7 +6,7 @@ def pick(gid="a", margin="4"):
     return {"game_id": gid, "model_version": "v3", "season": "2026",
             "kickoff_utc": "2026-10-24T20:00:00Z",
             "captured_at_utc": "2026-10-23T10:00:00Z",
-            "projected_home_margin": margin}
+            "projected_home_margin": margin, "home_team": "Home U", "away_team": "Away U"}
 
 def grade(p, status="settled", actual="7"):
     return dict(p, grading_status=status, actual_home_margin=actual)
@@ -17,6 +17,8 @@ class V4BaselineRecoveryTests(unittest.TestCase):
         rows = recover([a, b], [grade(a)])
         self.assertEqual(len(rows), 2)
         self.assertEqual(rows[0]["actual_home_margin"], "7")
+        self.assertEqual(rows[0]["home_team"], "Home U")
+        self.assertEqual(rows[0]["away_team"], "Away U")
         self.assertEqual(rows[1]["source_grading_status"], "pending")
         self.assertEqual(rows[1]["actual_home_margin"], "")
 
