@@ -53,3 +53,32 @@ jobs:
           print('V4 evidence readiness:', v4['reason'])
           print('Offline report validation passed.')
           PY
+
+      - name: Publish V4 readiness summary
+        if: always()
+        run: |
+          if [ -f reports/v4_research_status.json ]; then
+            python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          with open("reports/v4_research_status.json", encoding="utf-8") as f:
+              report = json.load(f)
+          print("## V4 research readiness")
+          print(f"- Status: **{report['status']}**")
+          print(f"- Release ready: **{report['release_ready']}**")
+          print(f"- Baseline present: {report['baseline_file_present']}")
+          print(f"- Feature evidence present: {report['feature_file_present']}")
+          print(f"- Complete settled games: {report.get('complete_settled_games', 0)}")
+          print(f"- Missing feature cells: {report.get('missing_feature_cells', 'unknown')}")
+          print(f"- Reason: {report['reason']}")
+          print("- V3 remains official. A passing workflow does not validate V4 performance.")
+          PY
+          else
+            echo "## V4 research readiness: report not generated" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload V4 readiness report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v4-research-readiness
+          path: reports/v4_research_status.json
+          if-no-files-found: warn
