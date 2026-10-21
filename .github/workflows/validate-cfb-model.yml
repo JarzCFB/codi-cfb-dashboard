@@ -53,6 +53,12 @@ jobs:
           assert v4['source_authenticity_verified'] is False
           assert isinstance(v4['evaluations'], list)
           assert v4['baseline_file_present'] is True
+          assert v4['selected_only_baseline'] is True
+          assert v4['eligible_for_all_game_training'] is False
+          assert v4['source_authenticity_verified'] is False
+          assert v4['multi_season_baseline'] is False, '2026 frozen selections unexpectedly changed scope'
+          assert v4['baseline_season_count'] == 1
+          assert v4['baseline_rows'] >= v4['settled_baseline_rows']
           print('V4 evidence readiness:', v4['reason'])
           print('Offline report validation passed.')
           PY
