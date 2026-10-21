@@ -44,6 +44,11 @@ class V4BaselineRecoveryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "nonfinite"):
             recover([a], [grade(a, actual="nan")])
 
+    def test_malformed_settled_margin_fails_cleanly(self):
+        a = pick()
+        with self.assertRaisesRegex(ValueError, "nonfinite"):
+            recover([a], [grade(a, actual="not-a-number")])
+
     def test_post_kickoff_fails(self):
         a = dict(pick(), captured_at_utc="2026-10-25T10:00:00Z")
         with self.assertRaisesRegex(ValueError, "after kickoff"):
