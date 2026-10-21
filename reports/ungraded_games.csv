@@ -1,7 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,dc65142bf9a0e7652a252b2074037efa,2026-10-20T23:00:00Z,Delaware Blue Hens,Missouri State Bears,not_final_in_cfbd
-2026,c85512046e05e5ed845e60dd5d6d5e1e,2026-10-20T23:00:00Z,Florida International Panthers,Middle Tennessee Blue Raiders,not_final_in_cfbd
-2026,a3ed14cd9d938b3c5bea48fb0c78805d,2026-10-20T23:30:00Z,Marshall Thundering Herd,South Alabama Jaguars,not_final_in_cfbd
 2026,b04425f83695783f343344ca6d33261c,2026-10-22T00:00:00Z,Sam Houston State Bearkats,New Mexico State Aggies,not_final_in_cfbd
 2026,d476cb73381765342220f698035bc889,2026-10-22T23:00:00Z,Appalachian State Mountaineers,James Madison Dukes,not_final_in_cfbd
 2026,1635891ddb79191dba2be031ad6dc762,2026-10-22T23:00:00Z,Kennesaw State Owls,Liberty Flames,not_final_in_cfbd
