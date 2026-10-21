@@ -29,6 +29,23 @@ class V4StatusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "public HTTPS"):
             audit_evidence(baseline, evidence)
 
+    def test_private_and_reserved_sources_rejected(self):
+        baseline = [{"game_id": "x", "season": "2025",
+            "captured_at_utc": "2025-10-05T10:00:00Z",
+            "kickoff_utc": "2025-10-05T20:00:00Z",
+            "source_grading_status": "settled",
+            "v3_home_margin": "3", "actual_home_margin": "7"}]
+        for url in ("https://192.168.1.5/report", "https://10.0.0.2/news",
+                    "https://127.0.0.2/weather", "https://[::1]/",
+                    "https://reports.local/status", "https://localhost.localhost/"):
+            with self.subTest(url=url):
+                evidence = [{"game_id": "x", "feature": "wind_mph", "value": "10",
+                    "source_url": url,
+                    "published_at_utc": "2025-10-05T08:00:00Z",
+                    "observed_at_utc": "2025-10-05T09:00:00Z"}]
+                with self.assertRaisesRegex(ValueError, "public HTTPS"):
+                    audit_evidence(baseline, evidence)
+
     def test_missing_data_is_explicit(self):
         with tempfile.TemporaryDirectory() as tmp:
             result = status(Path(tmp)/"missing.csv", Path(tmp)/"absent.csv")
