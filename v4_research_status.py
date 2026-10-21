@@ -35,6 +35,11 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
     result["feature_rows"] = len(evidence)
     result["selected_only_baseline"] = True
     result["eligible_for_all_game_training"] = False
+    if not evidence_path.exists() and baseline_path.exists():
+        result["missing_feature_cells"] = len(baseline) * len(FEATURES)
+        result["feature_coverage"] = {feature: 0 for feature in FEATURES}
+        result["coverage_by_feature_pct"] = {feature: 0.0 for feature in FEATURES}
+        result["complete_settled_games"] = 0
     if not baseline_path.exists() or not evidence_path.exists():
         result["reason"] = "Historical baseline and/or pregame feature evidence missing"
         return result
