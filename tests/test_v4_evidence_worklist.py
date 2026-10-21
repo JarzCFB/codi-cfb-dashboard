@@ -34,12 +34,12 @@ class V4WorklistTests(unittest.TestCase):
             root = Path(tmp)
             base, evidence, output = (root/"baseline.csv", root/"evidence.csv", root/"out.csv")
             base.write_text(
-                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,v3_home_margin,actual_home_margin\\n"
-                "abc,2026,2026-10-24T20:00:00Z,2026-10-23T10:00:00Z,settled,4,7\\n",
+                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,v3_home_margin,actual_home_margin\n"
+                "abc,2026,2026-10-24T20:00:00Z,2026-10-23T10:00:00Z,settled,4,7\n",
                 encoding="utf-8")
             evidence.write_text(
-                "game_id,feature,value,source_url,published_at_utc,observed_at_utc\\n"
-                "abc,wind_mph,10,https://example.org/weather,2026-10-22T08:00:00Z,2026-10-22T09:00:00Z\\n",
+                "game_id,feature,value,source_url,published_at_utc,observed_at_utc\n"
+                "abc,wind_mph,10,https://example.org/weather,2026-10-22T08:00:00Z,2026-10-22T09:00:00Z\n",
                 encoding="utf-8")
             result = generate(base, evidence, output)
             with output.open(newline="", encoding="utf-8") as handle:
