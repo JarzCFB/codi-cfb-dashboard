@@ -5,7 +5,7 @@ feature rows should be supplied. Never reconstruct features using postgame repor
 """
 from math import isfinite, sqrt
 from random import Random
-from v4_evidence_audit import FEATURES
+from v4_evidence_audit import FEATURES, _time
 
 MIN_TRAIN = 200
 MIN_HOLDOUT = 100
@@ -107,6 +107,15 @@ def evaluate(complete_rows, source_authenticity_verified=False):
             raise ValueError("invalid season in V4 evaluation") from None
         if season < 2000 or season > 2100:
             raise ValueError("invalid season in V4 evaluation")
+        # An authenticated feature set is still unusable if the underlying
+        # prediction snapshot was recorded at or after kickoff.
+        try:
+            captured = _time(row["captured_at_utc"])
+            kickoff = _time(row["kickoff_utc"])
+        except (KeyError, ValueError, TypeError) as exc:
+            raise ValueError("missing or invalid pregame timestamps in V4 evaluation") from exc
+        if captured >= kickoff:
+            raise ValueError("V4 evaluation capture must precede kickoff")
         key = (season, gid)
         if key in seen:
             raise ValueError("duplicate season/game in V4 evaluation")
