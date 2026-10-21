@@ -1,0 +1,49 @@
+# V4 completion and release checklist (research only)
+
+## Current state
+The V4 situational review and ridge adjustment research code exist. No authenticated
+multi-season feature dataset or independent forward V4 betting record has been established.
+**V3 remains the official betting model.** Do not promote V4 from a green CI run.
+
+## Required data
+1. Recover an independently frozen, pregame V3 baseline covering all eligible FBS games,
+   not just winning bets. Each row needs a stable game ID, season, kickoff and capture
+   timestamps, frozen V3 home margin, settled actual home margin, and grading status.
+   Do not substitute postgame V3 recalculations for original pregame predictions.
+2. Record six V4 features per game using the schema in `v4_evidence_audit.py`:
+   `qb_out_diff`, `key_players_out_diff`, `rest_days_diff`,
+   `travel_miles_diff`, `wind_mph`, and `neutral_site`.
+   Each observation needs a source URL and publication/observation timestamps
+   **no later than its original V3 capture**.
+3. Independently authenticate sources, timestamp claims, team and player identity,
+   and feature definitions. A URL is not authentication. Missing injury reports
+   mean unknown, not healthy. Do not backfill from retrospective articles.
+4. Audit feature coverage and selection bias. Record who reviewed each source,
+   when, and how publication timestamps were independently verified.
+5. Require >=200 complete settled training games from earlier seasons and >=100
+   complete settled games from a later season. Run chronological held-out
+   MAE/RMSE comparisons, paired error and stability diagnostics.
+6. Evaluate market-relative betting performance with authentic pregame odds,
+   vigorish, missing-line rules and identical selection eligibility for V3/V4.
+   Do not confuse spread prediction MAE with betting ROI.
+7. Shadow-run V4 prospectively before kickoff with immutable inputs and outputs,
+   no lookahead, no automated official bets, and an independent review of results.
+8. Explicit human approval is required before any official V3 replacement.
+
+## Commands
+```bash
+python -m unittest discover -v
+python -m unittest discover -s tests -v
+python v4_research_status.py
+```
+
+The generated `reports/v4_research_status.json` is an audit summary, not a
+certification of feature truth. CSV files named `verified_feature_rows.csv`
+are still unverified until an independent provenance review is completed.
+
+## Fail-closed interpretation
+- Missing files: research cannot be calibrated.
+- Evidence after original capture: reject.
+- Complete rows but unverified sources: report coverage, do not fit.
+- Good held-out MAE alone: not sufficient for live betting deployment.
+- Green tests: software functioning, **not** proof of profitable betting.
