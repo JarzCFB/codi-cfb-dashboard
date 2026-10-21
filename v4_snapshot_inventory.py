@@ -12,6 +12,8 @@ def inventory(root="snapshots/2026"):
     files = sorted(Path(root).glob("*.csv"))
     games = set()
     pregame = set()
+    six_hour_pregame = set()
+    future_market_updates = 0
     status = Counter()
     rows = 0
     invalid = 0
@@ -30,17 +32,28 @@ def inventory(root="snapshots/2026"):
                 games.add(gid)
                 status[row["capture_status"].strip()] += 1
                 try:
-                    if _time(row["captured_at_utc"]) < _time(row["kickoff_utc"]):
-                        pregame.add(gid)
-                    else:
+                    captured = _time(row["captured_at_utc"])
+                    kickoff = _time(row["kickoff_utc"])
+                    if captured >= kickoff:
                         invalid += 1
-                except (ValueError, TypeError):
+                        continue
+                    market_update = (row.get("market_last_update_utc") or "").strip()
+                    if market_update and _time(market_update) > captured:
+                        future_market_updates += 1
+                        invalid += 1
+                        continue
+                    pregame.add(gid)
+                    if (kickoff - captured).total_seconds() >= 6 * 3600:
+                        six_hour_pregame.add(gid)
+                except (ValueError, TypeError, AttributeError):
                     invalid += 1
     return {
         "status": "RESEARCH_ONLY", "release_ready": False,
         "source_type": "archived_odds_and_ratings_not_official_v3",
         "snapshot_files": len(files), "snapshot_quote_rows": rows,
         "distinct_game_ids": len(games), "distinct_pregame_game_ids": len(pregame),
+        "distinct_games_captured_at_least_6h_before_kickoff": len(six_hour_pregame),
+        "market_update_after_capture_rows": future_market_updates,
         "invalid_rows_or_files": invalid, "capture_status_counts": dict(sorted(status.items())),
         "official_v3_predictions_recovered": 0,
         "warning": "Ratings-derived projected_home_margin is NOT official calibrated V3. Odds game IDs may not match CFBD game IDs.",
