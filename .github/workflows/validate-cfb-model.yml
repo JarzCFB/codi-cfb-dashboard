@@ -54,6 +54,8 @@ jobs:
           assert v4['source_authenticity_verified'] is False
           assert isinstance(v4['evaluations'], list)
           assert v4['baseline_file_present'] is True
+          assert not v4.get('reason', '').startswith('Evidence audit rejected'), v4.get('reason')
+          assert v4['baseline_rows'] > 0, 'Frozen V3 recovery unexpectedly empty'
           assert v4['selected_only_baseline'] is True
           assert v4['eligible_for_all_game_training'] is False
           assert v4['multi_season_baseline'] == (v4['baseline_season_count'] >= 2)
