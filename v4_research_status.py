@@ -41,6 +41,8 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
         entry["settled_games"] += int(row.get("source_grading_status") == "settled")
     result["baseline_by_season"] = dict(sorted(seasons.items()))
     result["baseline_season_count"] = len(seasons)
+    result["multi_season_baseline"] = len(seasons) >= 2
+    result["historical_season_gap"] = max(0, 2 - len(seasons))
     result["selected_only_baseline"] = True
     result["eligible_for_all_game_training"] = False
     result["training_games_shortfall_minimum"] = max(0, MIN_TRAIN - result["settled_baseline_rows"])
