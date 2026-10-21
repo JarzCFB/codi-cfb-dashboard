@@ -100,6 +100,8 @@ jobs:
           print(f"- Baseline present: {report['baseline_file_present']}")
           print(f"- Frozen V3 selected games: {report.get('baseline_rows', 0)}")
           print(f"- Settled frozen V3 games: {report.get('settled_baseline_rows', 0)}")
+          print(f"- Minimum distinct train + holdout games: {report.get('required_disjoint_settled_games', 'unknown')}")
+          print(f"- Numeric shortfall (selected-only, NOT eligible): {report.get('disjoint_sample_shortfall_minimum', 'unknown')}")
           print(f"- Baseline seasons: {report.get('baseline_season_count', 0)}")
           print(f"- Multi-season baseline: {report.get('multi_season_baseline', False)}")
           print(f"- Complete-feature settled seasons: {report.get('complete_settled_season_count', 0)}")
