@@ -81,6 +81,8 @@ class V4StatusTests(unittest.TestCase):
         self.assertEqual(result["training_games_shortfall_minimum"], 199)
         self.assertEqual(result["holdout_games_shortfall_minimum"], 99)
         self.assertEqual(result["baseline_season_count"], 1)
+        self.assertFalse(result["multi_season_baseline"])
+        self.assertEqual(result["historical_season_gap"], 1)
         self.assertEqual(result["baseline_by_season"]["2025"]["settled_games"], 1)
         self.assertEqual(result["complete_settled_season_count"], 1)
         self.assertFalse(result["eligible_for_all_game_training"])
