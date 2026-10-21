@@ -4,7 +4,9 @@ from v4_spread_research import evaluate, fit, predict, MIN_TRAIN, _paired_mae_in
 from v4_evidence_audit import FEATURES
 
 def game(season, i):
-    row = {"season": season, "game_id": f"{season}-{i}", "v3_home_margin": float(i % 11 - 5),
+    row = {"season": season, "game_id": f"{season}-{i}",
+           "captured_at_utc": f"{season}-09-01T12:00:00Z",
+           "kickoff_utc": f"{season}-09-02T20:00:00Z", "v3_home_margin": float(i % 11 - 5),
            "actual_home_margin": float(i % 11 - 5) + (1 if i % 2 else -1)}
     row.update({f: float((i + j) % 5) for j, f in enumerate(FEATURES)})
     return row
@@ -41,6 +43,18 @@ class V4SpreadResearchTests(unittest.TestCase):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         rows[0]["season"] = "not-a-season"
         with self.assertRaisesRegex(ValueError, "invalid season"):
+            evaluate(rows, source_authenticity_verified=True)
+
+    def test_postkickoff_snapshot_rejected(self):
+        rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
+        rows[0]["captured_at_utc"] = rows[0]["kickoff_utc"]
+        with self.assertRaisesRegex(ValueError, "must precede kickoff"):
+            evaluate(rows, source_authenticity_verified=True)
+
+    def test_missing_snapshot_time_rejected(self):
+        rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
+        del rows[0]["captured_at_utc"]
+        with self.assertRaisesRegex(ValueError, "pregame timestamps"):
             evaluate(rows, source_authenticity_verified=True)
 
     def test_missing_feature_fails_closed(self):
