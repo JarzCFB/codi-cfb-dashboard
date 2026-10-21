@@ -51,13 +51,17 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
         result["feature_coverage"] = {feature: 0 for feature in FEATURES}
         result["coverage_by_feature_pct"] = {feature: 0.0 for feature in FEATURES}
         result["complete_settled_games"] = 0
-    if not baseline_path.exists() or not evidence_path.exists():
-        result["reason"] = "Historical baseline and/or pregame feature evidence missing"
+    if not baseline_path.exists():
+        result["reason"] = "Historical baseline missing"
         return result
     try:
+        # Validate the recovered baseline even when no evidence file exists.
         audit = audit_evidence(baseline, evidence)
     except (KeyError, ValueError, TypeError, OverflowError) as exc:
         result["reason"] = "Evidence audit rejected data: " + str(exc)
+        return result
+    if not evidence_path.exists():
+        result["reason"] = "Pregame feature evidence missing; baseline audited"
         return result
     result["complete_settled_games"] = audit["complete_settled_games"]
     result["complete_settled_season_count"] = len({row["season"] for row in audit["complete_rows"]})
