@@ -25,6 +25,7 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
         "baseline_file_present": baseline_path.exists(),
         "feature_file_present": evidence_path.exists(),
         "evaluations": [],
+        "complete_settled_season_count": 0,
         "warning": "Evidence URL and timestamp claims are not independently authenticated; no official V4 promotion."
     }
     baseline = _csv(baseline_path) if baseline_path.exists() else []
@@ -45,9 +46,16 @@ def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
     result["historical_season_gap"] = max(0, 2 - len(seasons))
     result["selected_only_baseline"] = True
     result["eligible_for_all_game_training"] = False
+    # Train and holdout must be disjoint. Do not count the same settled
+    # game toward both sample requirements.
+    result["required_disjoint_settled_games"] = MIN_TRAIN + MIN_HOLDOUT
+    result["disjoint_sample_shortfall_minimum"] = max(
+        0, MIN_TRAIN + MIN_HOLDOUT - result["settled_baseline_rows"])
     result["training_games_shortfall_minimum"] = max(0, MIN_TRAIN - result["settled_baseline_rows"])
     result["holdout_games_shortfall_minimum"] = max(0, MIN_HOLDOUT - result["settled_baseline_rows"])
-    result["shortfall_warning"] = "Counts are selected V3 bets, not an eligible all-FBS or independently verified training sample."
+    result["shortfall_warning"] = (
+        "Train and holdout require separate games from different seasons. "
+        "Counts are selected V3 bets, not eligible all-FBS or independently verified observations.")
     if not evidence_path.exists() and baseline_path.exists():
         result["missing_feature_cells"] = len(baseline) * len(FEATURES)
         result["feature_coverage"] = {feature: 0 for feature in FEATURES}
