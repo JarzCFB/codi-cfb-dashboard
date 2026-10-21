@@ -116,10 +116,11 @@ def evaluate(complete_rows, source_authenticity_verified=False):
             raise ValueError("missing or invalid pregame timestamps in V4 evaluation") from exc
         if captured >= kickoff:
             raise ValueError("V4 evaluation capture must precede kickoff")
-        key = (season, gid)
-        if key in seen:
-            raise ValueError("duplicate season/game in V4 evaluation")
-        seen.add(key)
+        # Game identifiers are globally unique; reuse in another season can
+        # place the same game in both training and holdout partitions.
+        if gid in seen:
+            raise ValueError("duplicate season/game ID in V4 evaluation")
+        seen.add(gid)
         values = [row.get(f) for f in FEATURES] + [
             row.get("v3_home_margin"), row.get("actual_home_margin")]
         try:
