@@ -18,12 +18,12 @@ class V4WorklistTests(unittest.TestCase):
             base = root/"baseline.csv"
             evidence = root/"evidence.csv"
             base.write_text(
-                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,actual_home_margin,v3_home_margin\\n"
-                "abc,2026,2026-10-24T20:00:00Z,2026-10-23T10:00:00Z,settled,7,4\\n",
+                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,actual_home_margin,v3_home_margin\n"
+                "abc,2026,2026-10-24T20:00:00Z,2026-10-23T10:00:00Z,settled,7,4\n",
                 encoding="utf-8")
             evidence.write_text(
-                "game_id,feature,value,source_url,published_at_utc,observed_at_utc\\n"
-                "abc,wind_mph,10,https://example.org/weather,2026-10-23T12:00:00Z,2026-10-23T12:00:00Z\\n",
+                "game_id,feature,value,source_url,published_at_utc,observed_at_utc\n"
+                "abc,wind_mph,10,https://example.org/weather,2026-10-23T12:00:00Z,2026-10-23T12:00:00Z\n",
                 encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "before V3 capture"):
                 generate(base, evidence, root/"out.csv")
