@@ -72,6 +72,7 @@ jobs:
           print(f"- Frozen V3 selected games: {report.get('baseline_rows', 0)}")
           print(f"- Settled frozen V3 games: {report.get('settled_baseline_rows', 0)}")
           print(f"- Baseline seasons: {report.get('baseline_season_count', 0)}")
+          print(f"- Multi-season baseline: {report.get('multi_season_baseline', False)}")
           print(f"- Complete-feature settled seasons: {report.get('complete_settled_season_count', 0)}")
           print("- Dataset scope: V3 selections only; not all-FBS")
           print(f"- Feature evidence present: {report['feature_file_present']}")
