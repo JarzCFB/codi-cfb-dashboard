@@ -59,6 +59,9 @@ class V4StatusTests(unittest.TestCase):
                         "published_at_utc": "2025-10-04T12:00:00Z",
                         "observed_at_utc": "2025-10-05T09:00:00Z"})
             result = status(b, e)
+        self.assertEqual(result["baseline_rows"], 1)
+        self.assertEqual(result["settled_baseline_rows"], 1)
+        self.assertFalse(result["eligible_for_all_game_training"])
         self.assertEqual(result["complete_settled_games"], 1)
         self.assertEqual(result["missing_feature_cells"], 0)
         self.assertFalse(result["source_authenticity_verified"])
