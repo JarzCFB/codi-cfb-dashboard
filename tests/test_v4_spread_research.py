@@ -1,6 +1,6 @@
 """Offline guardrails for V4 research-only spread adjustments."""
 import unittest
-from v4_spread_research import evaluate, fit, predict, MIN_TRAIN
+from v4_spread_research import evaluate, fit, predict, MIN_TRAIN, _paired_mae_interval
 from v4_evidence_audit import FEATURES
 
 def game(season, i):
@@ -59,6 +59,16 @@ class V4SpreadResearchTests(unittest.TestCase):
         self.assertEqual([r["holdout_games"] for r in report["evaluations"]], [110, 110])
         self.assertFalse(report["release_ready"])
 
+    def test_paired_bootstrap_is_deterministic_and_preserves_game_pairs(self):
+        # Every game's V4 absolute error improves by exactly one point.
+        baseline = [2.0, -2.0, 3.0, -3.0]
+        candidate = [1.0, -1.0, 2.0, -2.0]
+        self.assertEqual(_paired_mae_interval(baseline, candidate, draws=200), [1.0, 1.0])
+        self.assertEqual(_paired_mae_interval(baseline, candidate, draws=200),
+                         _paired_mae_interval(baseline, candidate, draws=200))
+        with self.assertRaisesRegex(ValueError, "empty holdout"):
+            _paired_mae_interval([], [], draws=200)
+
     def test_season_holdout_remains_research_only(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         result = evaluate(rows, source_authenticity_verified=True)
@@ -68,6 +78,7 @@ class V4SpreadResearchTests(unittest.TestCase):
         self.assertEqual(result["evaluations"][0]["holdout_games"], 110)
         self.assertIn("v3_rmse", result["evaluations"][0])
         self.assertIn("v4_rmse", result["evaluations"][0])
+        self.assertEqual(len(result["evaluations"][0]["paired_mae_improvement_bootstrap_95pct"]), 2)
         self.assertIsInstance(result["evaluations"][0]["both_error_metrics_improved"], bool)
         self.assertFalse(result["evaluations"][0]["holdout_improvement_claim_allowed"])
         self.assertTrue(isinstance(predict(fit(rows[:210]), rows[210]), float))
