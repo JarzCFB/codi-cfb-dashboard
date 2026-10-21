@@ -69,6 +69,14 @@ class V4SpreadResearchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "empty holdout"):
             _paired_mae_interval([], [], draws=200)
 
+    def test_bootstrap_input_validation(self):
+        with self.assertRaises(ValueError):
+            _paired_mae_interval([1.0, 2.0], [1.0], draws=200)
+        with self.assertRaises(ValueError):
+            _paired_mae_interval([float("nan")], [1.0], draws=200)
+        with self.assertRaises(ValueError):
+            _paired_mae_interval([1.0], [1.0], draws=20)
+
     def test_season_holdout_remains_research_only(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         result = evaluate(rows, source_authenticity_verified=True)
