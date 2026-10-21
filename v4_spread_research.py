@@ -70,9 +70,15 @@ def _mae(rows, model=None):
 
 def _paired_mae_interval(v3_errors, v4_errors, draws=2000):
     """Deterministic paired game-level bootstrap; descriptive, not a release test."""
-    improvements = [abs(a) - abs(b) for a, b in zip(v3_errors, v4_errors)]
-    if not improvements:
+    if len(v3_errors) != len(v4_errors):
+        raise ValueError("paired error arrays must have equal lengths")
+    if not v3_errors:
         raise ValueError("empty holdout")
+    if not isinstance(draws, int) or draws < 40:
+        raise ValueError("bootstrap requires at least 40 integer draws")
+    improvements = [abs(a) - abs(b) for a, b in zip(v3_errors, v4_errors)]
+    if not all(isfinite(value) for value in improvements):
+        raise ValueError("nonfinite paired holdout error")
     rng = Random(20261021)
     n = len(improvements)
     estimates = sorted(sum(improvements[rng.randrange(n)] for _ in range(n)) / n
