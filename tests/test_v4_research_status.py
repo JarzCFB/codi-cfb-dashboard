@@ -1,0 +1,56 @@
+"""Regression tests for offline V4 status and source-verification boundaries."""
+import csv
+import tempfile
+import unittest
+from pathlib import Path
+from v4_research_status import status
+from v4_evidence_audit import FEATURES
+
+class V4StatusTests(unittest.TestCase):
+    def test_missing_data_is_explicit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = status(Path(tmp)/"missing.csv", Path(tmp)/"absent.csv")
+        self.assertFalse(result["release_ready"])
+        self.assertEqual(result["evaluations"], [])
+        self.assertFalse(result["baseline_file_present"])
+
+    def test_unverified_csv_cannot_authorize_calibration(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            b, e = Path(tmp)/"baseline.csv", Path(tmp)/"evidence.csv"
+            with b.open("w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=["game_id", "season", "kickoff_utc",
+                    "captured_at_utc", "source_grading_status", "actual_home_margin",
+                    "v3_home_margin"])
+                w.writeheader()
+                w.writerow({"game_id": "123", "season": "2025",
+                    "kickoff_utc": "2025-10-05T20:00:00Z",
+                    "captured_at_utc": "2025-10-05T10:00:00Z",
+                    "source_grading_status": "settled",
+                    "actual_home_margin": "7", "v3_home_margin": "6"})
+            with e.open("w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=["game_id", "feature", "value",
+                    "source_url", "published_at_utc", "observed_at_utc"])
+                w.writeheader()
+                for feature in FEATURES:
+                    w.writerow({"game_id": "123", "feature": feature, "value": "0",
+                        "source_url": "https://example.org/unverified",
+                        "published_at_utc": "2025-10-04T12:00:00Z",
+                        "observed_at_utc": "2025-10-05T09:00:00Z"})
+            result = status(b, e)
+        self.assertEqual(result["complete_settled_games"], 1)
+        self.assertEqual(result["missing_feature_cells"], 0)
+        self.assertFalse(result["source_authenticity_verified"])
+        self.assertFalse(result["release_ready"])
+        self.assertEqual(result["evaluations"], [])
+
+    def test_future_publication_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            b, e = Path(tmp)/"baseline.csv", Path(tmp)/"evidence.csv"
+            b.write_text("game_id,season,kickoff_utc,captured_at_utc,source_grading_status,actual_home_margin,v3_home_margin\n1,2025,2025-10-05T20:00:00Z,2025-10-05T10:00:00Z,settled,7,6\n")
+            e.write_text("game_id,feature,value,source_url,published_at_utc,observed_at_utc\n1,qb_out_diff,1,https://example.org/news,2025-10-06T00:00:00Z,2025-10-06T00:00:00Z\n")
+            result = status(b, e)
+        self.assertIn("rejected", result["reason"])
+        self.assertFalse(result["release_ready"])
+
+if __name__ == "__main__":
+    unittest.main()
