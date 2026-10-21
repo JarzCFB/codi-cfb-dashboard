@@ -4,7 +4,7 @@ from v4_spread_research import evaluate, fit, predict, MIN_TRAIN
 from v4_evidence_audit import FEATURES
 
 def game(season, i):
-    row = {"season": season, "v3_home_margin": float(i % 11 - 5),
+    row = {"season": season, "game_id": f"{season}-{i}", "v3_home_margin": float(i % 11 - 5),
            "actual_home_margin": float(i % 11 - 5) + (1 if i % 2 else -1)}
     row.update({f: float((i + j) % 5) for j, f in enumerate(FEATURES)})
     return row
@@ -18,6 +18,21 @@ class V4SpreadResearchTests(unittest.TestCase):
     def test_insufficient_training_fails_closed(self):
         with self.assertRaises(ValueError):
             fit([game(2024, 1)])
+    def test_missing_or_duplicate_game_identity_rejected(self):
+        rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
+        rows[0]["game_id"] = ""
+        with self.assertRaisesRegex(ValueError, "missing game ID"):
+            evaluate(rows, source_authenticity_verified=True)
+        rows[0]["game_id"] = rows[1]["game_id"]
+        with self.assertRaisesRegex(ValueError, "duplicate season/game"):
+            evaluate(rows, source_authenticity_verified=True)
+
+    def test_invalid_season_rejected(self):
+        rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
+        rows[0]["season"] = "not-a-season"
+        with self.assertRaisesRegex(ValueError, "invalid season"):
+            evaluate(rows, source_authenticity_verified=True)
+
     def test_missing_feature_fails_closed(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         del rows[0]["wind_mph"]
