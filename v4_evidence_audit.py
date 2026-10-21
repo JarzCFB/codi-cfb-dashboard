@@ -67,10 +67,18 @@ def audit_evidence(baseline, evidence):
         kickoff = _time(base["kickoff_utc"])
         if capture >= kickoff:
             raise ValueError("baseline capture must precede kickoff")
-        if base["source_grading_status"] == "settled":
-            for field in ("v3_home_margin", "actual_home_margin"):
-                if not isfinite(float(base[field])):
-                    raise ValueError("invalid settled baseline margin")
+        if base.get("source_grading_status") not in ("settled", "pending"):
+            raise ValueError("invalid baseline grading status")
+        fields = ("v3_home_margin", "actual_home_margin") if base["source_grading_status"] == "settled" else ("v3_home_margin",)
+        for field in fields:
+            try:
+                valid = isfinite(float(base[field]))
+            except (KeyError, TypeError, ValueError, OverflowError):
+                valid = False
+            if not valid:
+                raise ValueError("invalid baseline margin: " + field)
+        if base["source_grading_status"] == "pending" and str(base.get("actual_home_margin", "")).strip():
+            raise ValueError("pending baseline must not include actual margin")
     indexed = {}
     for item in evidence:
         if any(not str(item.get(k, "")).strip() for k in REQUIRED_EVIDENCE):
