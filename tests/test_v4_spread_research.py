@@ -18,6 +18,16 @@ class V4SpreadResearchTests(unittest.TestCase):
     def test_insufficient_training_fails_closed(self):
         with self.assertRaises(ValueError):
             fit([game(2024, 1)])
+    def test_direct_fit_rejects_nonfinite_training_data(self):
+        rows = [game(2024, i) for i in range(210)]
+        rows[0]["wind_mph"] = float("nan")
+        with self.assertRaisesRegex(ValueError, "missing or nonfinite training value"):
+            fit(rows)
+        rows[0]["wind_mph"] = 2.0
+        del rows[0]["actual_home_margin"]
+        with self.assertRaisesRegex(ValueError, "missing or nonfinite training value"):
+            fit(rows)
+
     def test_missing_or_duplicate_game_identity_rejected(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         rows[0]["game_id"] = ""
