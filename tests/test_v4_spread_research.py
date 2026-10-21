@@ -39,6 +39,12 @@ class V4SpreadResearchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate season/game"):
             evaluate(rows, source_authenticity_verified=True)
 
+    def test_cross_season_game_id_reuse_is_rejected(self):
+        rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
+        rows[-1]["game_id"] = rows[0]["game_id"]
+        with self.assertRaisesRegex(ValueError, "duplicate season/game"):
+            evaluate(rows, source_authenticity_verified=True)
+
     def test_invalid_season_rejected(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         rows[0]["season"] = "not-a-season"
