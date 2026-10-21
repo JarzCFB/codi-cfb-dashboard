@@ -4,9 +4,31 @@ import tempfile
 import unittest
 from pathlib import Path
 from v4_research_status import status
-from v4_evidence_audit import FEATURES
+from v4_evidence_audit import FEATURES, audit_evidence
 
 class V4StatusTests(unittest.TestCase):
+    def test_capture_after_kickoff_rejected(self):
+        baseline = [{"game_id": "x", "season": "2025",
+            "captured_at_utc": "2025-10-06T00:00:00Z",
+            "kickoff_utc": "2025-10-05T20:00:00Z",
+            "source_grading_status": "settled",
+            "v3_home_margin": "3", "actual_home_margin": "7"}]
+        with self.assertRaisesRegex(ValueError, "capture must precede"):
+            audit_evidence(baseline, [])
+
+    def test_local_source_url_rejected(self):
+        baseline = [{"game_id": "x", "season": "2025",
+            "captured_at_utc": "2025-10-05T10:00:00Z",
+            "kickoff_utc": "2025-10-05T20:00:00Z",
+            "source_grading_status": "settled",
+            "v3_home_margin": "3", "actual_home_margin": "7"}]
+        evidence = [{"game_id": "x", "feature": "wind_mph", "value": "10",
+            "source_url": "https://localhost/private",
+            "published_at_utc": "2025-10-05T08:00:00Z",
+            "observed_at_utc": "2025-10-05T09:00:00Z"}]
+        with self.assertRaisesRegex(ValueError, "public HTTPS"):
+            audit_evidence(baseline, evidence)
+
     def test_missing_data_is_explicit(self):
         with tempfile.TemporaryDirectory() as tmp:
             result = status(Path(tmp)/"missing.csv", Path(tmp)/"absent.csv")
