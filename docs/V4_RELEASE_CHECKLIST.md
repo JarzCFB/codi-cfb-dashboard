@@ -47,3 +47,11 @@ are still unverified until an independent provenance review is completed.
 - Complete rows but unverified sources: report coverage, do not fit.
 - Good held-out MAE alone: not sufficient for live betting deployment.
 - Green tests: software functioning, **not** proof of profitable betting.
+
+## Historical collection starter
+Run `python v4_data_templates.py` to create blank CSV templates in
+`v4/templates/`. These are headers only, not historical evidence. Populate
+`v4/recovered_v3_baseline.csv` from original pregame capture records and
+`v4/verified_feature_rows.csv` from individually sourced, timestamped
+observations. A generated blank template is never evidence of a verified
+feature, and no missing feature should be entered as zero.
