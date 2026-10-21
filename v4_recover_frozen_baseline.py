@@ -3,6 +3,7 @@
 This dataset is NOT an all-FBS universe and cannot alone validate or train V4.
 """
 import csv
+from math import isfinite
 from pathlib import Path
 from v4_evidence_audit import _time
 
@@ -28,6 +29,12 @@ def recover(selections, graded):
             raise ValueError("multiple V3 selections for game " + key)
         if _time(row["captured_at_utc"]) >= _time(row["kickoff_utc"]):
             raise ValueError("V3 selection captured after kickoff")
+        try:
+            valid_margin = isfinite(float(row["projected_home_margin"]))
+        except (KeyError, TypeError, ValueError, OverflowError):
+            valid_margin = False
+        if not valid_margin:
+            raise ValueError("V3 selection has nonfinite projected home margin")
         frozen[key] = row
     grades = {}
     for row in graded:
@@ -46,12 +53,13 @@ def recover(selections, graded):
                          for k in ("game_id", "season", "kickoff_utc",
                                    "captured_at_utc", "projected_home_margin", "home_team", "away_team")):
             raise ValueError("graded V3 data differs from frozen selection for " + gid)
+        if grade and grade.get("grading_status") not in ("settled", "pending"):
+            raise ValueError("unknown V3 grading status for " + gid)
         settled = bool(grade and grade.get("grading_status") == "settled")
         actual = str(grade.get("actual_home_margin", "")).strip() if settled else ""
         if settled and not actual:
             raise ValueError("settled V3 grade missing actual margin")
         if settled:
-            from math import isfinite
             try:
                 valid = isfinite(float(actual))
             except (TypeError, ValueError, OverflowError):
