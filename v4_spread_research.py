@@ -3,7 +3,6 @@
 This is NOT an official betting model. Only independently authenticated, point-in-time
 feature rows should be supplied. Never reconstruct features using postgame reports.
 """
-from collections import defaultdict
 from math import isfinite, sqrt
 from v4_evidence_audit import FEATURES
 
@@ -44,8 +43,9 @@ def fit(train):
     gram = [[sum(x[i] * x[j] for x in xs) + (RIDGE if i == j and i else 0.0)
              for j in range(n)] for i in range(n)]
     rhs = [sum(x[i] * y for x, y in zip(xs, ys)) for i in range(n)]
-    return {"intercept": _solve(gram, rhs)[0], "coefficients": None, "means": means,
-            "scales": scales, "weights": _solve(gram, rhs)}
+    weights = _solve(gram, rhs)
+    return {"intercept": weights[0], "coefficients": dict(zip(FEATURES, weights[1:])),
+            "means": means, "scales": scales, "weights": weights}
 
 def predict(model, row):
     x = [1.0] + [(float(row[f]) - model["means"][j]) / model["scales"][j]
@@ -66,21 +66,40 @@ def evaluate(complete_rows, source_authenticity_verified=False):
     if not source_authenticity_verified:
         output["reason"] = "Feature source authenticity not independently verified"
         return output
+    seen = set()
+    for row in complete_rows:
+        key = (str(row.get("season")), str(row.get("game_id")))
+        if row.get("game_id") is not None:
+            if key in seen:
+                raise ValueError("duplicate season/game in V4 evaluation")
+            seen.add(key)
+        values = [row.get(f) for f in FEATURES] + [
+            row.get("v3_home_margin"), row.get("actual_home_margin")]
+        try:
+            valid = all(isfinite(float(v)) for v in values)
+        except (ValueError, TypeError):
+            valid = False
+        if not valid:
+            raise ValueError("missing or nonfinite research value")
     seasons = sorted({int(r["season"]) for r in complete_rows})
     for season in seasons[1:]:
         train = [r for r in complete_rows if int(r["season"]) < season]
         test = [r for r in complete_rows if int(r["season"]) == season]
         if len(train) < MIN_TRAIN or len(test) < MIN_HOLDOUT:
             continue
-        for row in train + test:
-            values = [row.get(f) for f in FEATURES] + [row.get("v3_home_margin"), row.get("actual_home_margin")]
-            if not all(isfinite(float(v)) for v in values):
-                raise ValueError("nonfinite research value")
         model = fit(train)
         baseline, candidate = _mae(test), _mae(test, model)
+        v3_errors = [float(r["v3_home_margin"]) - float(r["actual_home_margin"]) for r in test]
+        v4_errors = [predict(model, r) - float(r["actual_home_margin"]) for r in test]
+        v3_rmse = sqrt(sum(e*e for e in v3_errors) / len(test))
+        v4_rmse = sqrt(sum(e*e for e in v4_errors) / len(test))
         output["evaluations"].append({"holdout_season": season, "training_games": len(train),
             "holdout_games": len(test), "v3_mae": round(baseline, 4),
-            "v4_mae": round(candidate, 4), "v4_mae_improvement": round(baseline-candidate, 4)})
+            "v4_mae": round(candidate, 4), "v4_mae_improvement": round(baseline-candidate, 4),
+            "v3_rmse": round(v3_rmse, 4), "v4_rmse": round(v4_rmse, 4),
+            "improved_game_count": sum(abs(b) > abs(a) for b, a in zip(v3_errors, v4_errors)),
+            "standardized_coefficients": model["coefficients"],
+            "note": "Predictive spread error only; no validated betting edge or ROI."})
     output["reason"] = ("No season holdout meets minimum sample requirements"
                         if not output["evaluations"] else
                         "Research holdout metrics only; independent forward betting ROI and governance approval still required")
