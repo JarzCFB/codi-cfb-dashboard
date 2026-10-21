@@ -68,11 +68,19 @@ def evaluate(complete_rows, source_authenticity_verified=False):
         return output
     seen = set()
     for row in complete_rows:
-        key = (str(row.get("season")), str(row.get("game_id")))
-        if row.get("game_id") is not None:
-            if key in seen:
-                raise ValueError("duplicate season/game in V4 evaluation")
-            seen.add(key)
+        gid = str(row.get("game_id") or "").strip()
+        if not gid:
+            raise ValueError("missing game ID in V4 evaluation")
+        try:
+            season = int(str(row.get("season", "")).strip())
+        except (ValueError, TypeError):
+            raise ValueError("invalid season in V4 evaluation") from None
+        if season < 2000 or season > 2100:
+            raise ValueError("invalid season in V4 evaluation")
+        key = (season, gid)
+        if key in seen:
+            raise ValueError("duplicate season/game in V4 evaluation")
+        seen.add(key)
         values = [row.get(f) for f in FEATURES] + [
             row.get("v3_home_margin"), row.get("actual_home_margin")]
         try:
