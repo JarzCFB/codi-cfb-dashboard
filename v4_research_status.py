@@ -1,33 +1,53 @@
-"""Offline V4 readiness snapshot; read-only, never trains on unverified evidence."""
+"""V4 offline research status: fail closed on missing or unauthenticated evidence.
+
+A file or URL is not proof of source authenticity. This script never promotes V4.
+"""
 import csv
 import json
 from pathlib import Path
-from v4_spread_research import evaluate
-from v4_evidence_audit import FEATURES
+from v4_spread_research import evaluate, MIN_TRAIN, MIN_HOLDOUT
+from v4_evidence_audit import FEATURES, audit_evidence
 
 BASELINE = Path("v4/recovered_v3_baseline.csv")
 EVIDENCE = Path("v4/verified_feature_rows.csv")
 OUTPUT = Path("reports/v4_research_status.json")
 
-def status():
-    result = {"status": "RESEARCH_ONLY", "release_ready": False,
-              "required_training_games": 200, "required_holdout_games": 100,
-              "features": list(FEATURES), "source_authenticity_verified": False,
-              "baseline_file_present": BASELINE.exists(),
-              "feature_file_present": EVIDENCE.exists(),
-              "warning": "CSV filenames or URLs do not independently authenticate source evidence."}
-    if not BASELINE.exists() or not EVIDENCE.exists():
-        result["reason"] = "Verified historical baseline and/or feature rows not available"
-        result["evaluations"] = []
+def _csv(path):
+    with path.open(newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
+
+def status(baseline_path=BASELINE, evidence_path=EVIDENCE):
+    baseline_path, evidence_path = Path(baseline_path), Path(evidence_path)
+    result = {
+        "status": "RESEARCH_ONLY", "release_ready": False,
+        "required_training_games": MIN_TRAIN, "required_holdout_games": MIN_HOLDOUT,
+        "features": list(FEATURES), "source_authenticity_verified": False,
+        "baseline_file_present": baseline_path.exists(),
+        "feature_file_present": evidence_path.exists(),
+        "evaluations": [],
+        "warning": "Evidence URL and timestamp claims are not independently authenticated; no official V4 promotion."
+    }
+    if not baseline_path.exists() or not evidence_path.exists():
+        result["reason"] = "Historical baseline and/or pregame feature evidence missing"
         return result
-    with BASELINE.open(newline="", encoding="utf-8") as handle:
-        baseline = list(csv.DictReader(handle))
-    with EVIDENCE.open(newline="", encoding="utf-8") as handle:
-        evidence = list(csv.DictReader(handle))
+    baseline, evidence = _csv(baseline_path), _csv(evidence_path)
     result["baseline_rows"] = len(baseline)
     result["feature_rows"] = len(evidence)
-    result["evaluations"] = []
-    result["reason"] = "Evidence requires independent authentication before calibration"
+    try:
+        audit = audit_evidence(baseline, evidence)
+    except (KeyError, ValueError, TypeError, OverflowError) as exc:
+        result["reason"] = "Evidence audit rejected data: " + str(exc)
+        return result
+    result["complete_settled_games"] = audit["complete_settled_games"]
+    result["missing_feature_cells"] = audit["missing_feature_cells"]
+    result["feature_coverage"] = audit["feature_coverage"]
+    result["coverage_by_feature_pct"] = audit["coverage_by_feature_pct"]
+    # audit_evidence explicitly does not authenticate URLs. Do not permit caller
+    # supplied CSV fields to turn this flag on.
+    comparison = evaluate(audit["complete_rows"],
+                          source_authenticity_verified=audit["source_authenticity_verified"])
+    result["evaluations"] = comparison["evaluations"]
+    result["reason"] = comparison["reason"]
     return result
 
 def main():
