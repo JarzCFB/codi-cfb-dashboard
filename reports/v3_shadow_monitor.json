@@ -4,13 +4,13 @@
   "edge_thresholds": {
     "3": {
       "selections": 145,
-      "settled": 121,
-      "pending": 24,
-      "wins": 67,
-      "losses": 52,
+      "settled": 123,
+      "pending": 22,
+      "wins": 68,
+      "losses": 53,
       "pushes": 2,
-      "net_units": 8.988764,
-      "roi_per_settled_selection": 0.074287
+      "net_units": 8.808436,
+      "roi_per_settled_selection": 0.071613
     },
     "5": {
       "selections": 65,
@@ -66,13 +66,13 @@
     },
     "UNCLASSIFIED": {
       "selections": 38,
-      "settled": 26,
-      "pending": 12,
-      "wins": 12,
-      "losses": 13,
+      "settled": 28,
+      "pending": 10,
+      "wins": 13,
+      "losses": 14,
       "pushes": 1,
-      "net_units": -2.022642,
-      "roi_per_settled_selection": -0.077794
+      "net_units": -2.20297,
+      "roi_per_settled_selection": -0.078677
     },
     "UNSTABLE": {
       "selections": 23,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-10-18T03:59:00Z",
+    "through_kickoff_utc": "2026-10-20T23:00:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 80,
-        "settled": 80,
+        "selections": 82,
+        "settled": 82,
         "pending": 0,
-        "wins": 42,
-        "losses": 37,
+        "wins": 43,
+        "losses": 38,
         "pushes": 1,
-        "net_units": 1.277388,
-        "roi_per_settled_selection": 0.015967
+        "net_units": 1.09706,
+        "roi_per_settled_selection": 0.013379
       },
       "5": {
         "selections": 31,
@@ -138,13 +138,13 @@
     "thresholds": {
       "3": {
         "selections": 24,
-        "settled": 0,
-        "pending": 24,
-        "wins": 0,
-        "losses": 0,
+        "settled": 2,
+        "pending": 22,
+        "wins": 1,
+        "losses": 1,
         "pushes": 0,
-        "net_units": 0,
-        "roi_per_settled_selection": null
+        "net_units": -0.180328,
+        "roi_per_settled_selection": -0.090164
       },
       "5": {
         "selections": 7,
@@ -880,15 +880,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-10-20T23:00:00Z",
-      "selection": "Florida International Panthers",
-      "spread": "-10.0",
-      "american_odds": "-110.0",
-      "edge_points": "3.02892",
-      "sportsbook": "Bovada",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-10-24T19:30:00Z",
       "selection": "Mississippi State Bulldogs",
       "spread": "3.5",
@@ -922,15 +913,6 @@
       "american_odds": "-107.0",
       "edge_points": "5.11255",
       "sportsbook": "BetRivers",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-20T23:00:00Z",
-      "selection": "Delaware Blue Hens",
-      "spread": "-2.5",
-      "american_odds": "-122.0",
-      "edge_points": "3.90624",
-      "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {

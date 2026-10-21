@@ -3,13 +3,13 @@
   "models": {
     "v1": {
       "selections": 159,
-      "settled": 131,
+      "settled": 132,
       "wins": 66,
-      "losses": 65,
+      "losses": 66,
       "pushes": 0,
-      "net_units": -4.785203,
-      "roi_per_settled_selection": -0.036528,
-      "pending": 28,
+      "net_units": -5.785203,
+      "roi_per_settled_selection": -0.043827,
+      "pending": 27,
       "invalid_or_ambiguous": 0
     },
     "v2": {
@@ -25,24 +25,24 @@
     },
     "v3": {
       "selections": 145,
-      "settled": 121,
-      "wins": 67,
-      "losses": 52,
+      "settled": 123,
+      "wins": 68,
+      "losses": 53,
       "pushes": 2,
-      "net_units": 8.988764,
-      "roi_per_settled_selection": 0.074287,
-      "pending": 24,
+      "net_units": 8.808436,
+      "roi_per_settled_selection": 0.071613,
+      "pending": 22,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 63,
-      "wins": 30,
-      "losses": 32,
+      "settled": 65,
+      "wins": 31,
+      "losses": 33,
       "pushes": 1,
-      "net_units": -4.750394,
-      "roi_per_settled_selection": -0.075403
+      "net_units": -4.930722,
+      "roi_per_settled_selection": -0.075857
     },
     "5_to_lt7": {
       "settled": 36,
@@ -71,8 +71,8 @@
   },
   "pipeline_health": {
     "total_frozen_selections": 450,
-    "settled": 377,
-    "pending": 73,
+    "settled": 380,
+    "pending": 70,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
