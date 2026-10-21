@@ -34,6 +34,16 @@ class V4BaselineRecoveryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "multiple"):
             recover([a, a], [])
 
+    def test_missing_game_id_fails(self):
+        a = dict(pick(), game_id="")
+        with self.assertRaisesRegex(ValueError, "ID missing"):
+            recover([a], [])
+
+    def test_nonfinite_settled_margin_fails(self):
+        a = pick()
+        with self.assertRaisesRegex(ValueError, "nonfinite"):
+            recover([a], [grade(a, actual="nan")])
+
     def test_post_kickoff_fails(self):
         a = dict(pick(), captured_at_utc="2026-10-25T10:00:00Z")
         with self.assertRaisesRegex(ValueError, "after kickoff"):
