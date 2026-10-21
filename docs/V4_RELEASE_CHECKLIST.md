@@ -55,3 +55,14 @@ Run `python v4_data_templates.py` to create blank CSV templates in
 `v4/verified_feature_rows.csv` from individually sourced, timestamped
 observations. A generated blank template is never evidence of a verified
 feature, and no missing feature should be entered as zero.
+
+## Frozen V3 baseline recovery (implemented)
+Run `python v4_recover_frozen_baseline.py` to extract a *selected-only*
+point-in-time baseline from `prospective/selections.csv` and
+`prospective/graded_selections.csv`. It writes
+`v4/recovered_v3_baseline.csv` without changing either original ledger.
+The CI workflow runs recovery before the V4 readiness report and publishes
+the resulting CSV as a downloadable artifact. **Do not treat this dataset
+as all-FBS** or fill the remaining 2024–2025 seasons with postgame projections.
+The separate all-game historical collection and independent source
+authentication gates remain open.
