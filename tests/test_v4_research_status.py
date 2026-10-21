@@ -42,6 +42,22 @@ class V4StatusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "v3_home_margin"):
             audit_evidence([dict(base, v3_home_margin="nan")], [])
 
+    def test_malformed_source_urls_rejected_without_crashing(self):
+        baseline = [{"game_id": "x", "season": "2025",
+            "captured_at_utc": "2025-10-05T10:00:00Z",
+            "kickoff_utc": "2025-10-05T20:00:00Z",
+            "source_grading_status": "settled",
+            "v3_home_margin": "3", "actual_home_margin": "7"}]
+        for url in ("https://[bad-ipv6]/", "https://example.org:bad/report",
+                    "https://example.org:8443/report"):
+            with self.subTest(url=url):
+                evidence = [{"game_id": "x", "feature": "wind_mph", "value": "10",
+                    "source_url": url,
+                    "published_at_utc": "2025-10-05T08:00:00Z",
+                    "observed_at_utc": "2025-10-05T09:00:00Z"}]
+                with self.assertRaisesRegex(ValueError, "public HTTPS"):
+                    audit_evidence(baseline, evidence)
+
     def test_private_and_reserved_sources_rejected(self):
         baseline = [{"game_id": "x", "season": "2025",
             "captured_at_utc": "2025-10-05T10:00:00Z",
