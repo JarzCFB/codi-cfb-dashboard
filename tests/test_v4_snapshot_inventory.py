@@ -13,6 +13,29 @@ class SnapshotInventoryTests(unittest.TestCase):
             self.assertEqual(report["official_v3_predictions_recovered"], 0)
             self.assertFalse(report["release_ready"])
 
+    def test_missing_and_nonfinite_ratings_are_not_eligible(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "capture.csv"
+            fields = ["captured_at_utc", "game_id", "kickoff_utc",
+                      "sportsbook_key", "selection", "projected_home_margin",
+                      "capture_status"]
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                for gid, projection in [("valid", "2.5"), ("missing", ""),
+                                        ("nan", "nan"), ("infinite", "inf")]:
+                    writer.writerow(dict(captured_at_utc="2026-10-01T12:00:00Z",
+                        game_id=gid, kickoff_utc="2026-10-02T20:00:00Z",
+                        sportsbook_key="book", selection="Home",
+                        projected_home_margin=projection,
+                        capture_status="timestamped_live_quote"))
+            report = inventory(root)
+            self.assertEqual(report["snapshot_quote_rows"], 4)
+            self.assertEqual(report["invalid_ratings_projection_rows"], 3)
+            self.assertEqual(report["distinct_pregame_game_ids"], 1)
+            self.assertEqual(report["distinct_games_captured_at_least_6h_before_kickoff"], 1)
+            self.assertEqual(report["official_v3_predictions_recovered"], 0)
+
     def test_future_market_update_is_not_eligible(self):
         with tempfile.TemporaryDirectory() as root:
             path = Path(root) / "capture.csv"
