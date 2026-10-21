@@ -29,7 +29,7 @@ jobs:
       - name: Install model dependencies
         run: python -m pip install requests numpy pandas scipy streamlit
       - name: Compile modified modules
-        run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py app.py v4_spread_research.py v4_evidence_audit.py v4_readiness.py v4_evidence_triage.py cfb_v4_situational.py v4_research_status.py
+        run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py app.py v4_spread_research.py v4_evidence_audit.py v4_readiness.py v4_evidence_triage.py cfb_v4_situational.py v4_research_status.py v4_recover_frozen_baseline.py
       - name: Run all regression tests
         run: |
           python -m unittest discover -v
@@ -37,6 +37,7 @@ jobs:
       - name: Validate research report offline
         run: |
           python v3_shadow_monitor.py
+          python v4_recover_frozen_baseline.py
           python v4_research_status.py
           python - <<'PY'
           import json
@@ -50,6 +51,7 @@ jobs:
           assert v4['status'] == 'RESEARCH_ONLY' and v4['release_ready'] is False
           assert v4['source_authenticity_verified'] is False
           assert isinstance(v4['evaluations'], list)
+          assert v4['baseline_file_present'] is True
           print('V4 evidence readiness:', v4['reason'])
           print('Offline report validation passed.')
           PY
@@ -80,5 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v4-research-readiness
-          path: reports/v4_research_status.json
+          path: |
+            reports/v4_research_status.json
+            v4/recovered_v3_baseline.csv
           if-no-files-found: warn
