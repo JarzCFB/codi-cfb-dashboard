@@ -34,8 +34,8 @@ class V4WorklistTests(unittest.TestCase):
             root = Path(tmp)
             base = root/"baseline.csv"
             base.write_text(
-                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status\n"
-                "abc,2026,2026-10-24T20:00:00Z,2026-10-23T10:00:00Z,settled\n",
+                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,v3_home_margin,actual_home_margin\n"
+                "abc,2026,2026-10-24T20:00:00Z,2026-10-23T10:00:00Z,settled,4,7\n",
                 encoding="utf-8")
             result = generate(base, root/"missing.csv", root/"out.csv")
             with (root/"out.csv").open(newline="", encoding="utf-8") as handle:
