@@ -29,6 +29,19 @@ class V4StatusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "public HTTPS"):
             audit_evidence(baseline, evidence)
 
+    def test_baseline_rejects_pending_outcome_and_bad_status(self):
+        base = {"game_id": "x", "season": "2026",
+                "captured_at_utc": "2026-10-23T10:00:00Z",
+                "kickoff_utc": "2026-10-24T20:00:00Z",
+                "source_grading_status": "pending",
+                "v3_home_margin": "4", "actual_home_margin": ""}
+        with self.assertRaisesRegex(ValueError, "pending baseline"):
+            audit_evidence([dict(base, actual_home_margin="7")], [])
+        with self.assertRaisesRegex(ValueError, "grading status"):
+            audit_evidence([dict(base, source_grading_status="unknown")], [])
+        with self.assertRaisesRegex(ValueError, "v3_home_margin"):
+            audit_evidence([dict(base, v3_home_margin="nan")], [])
+
     def test_private_and_reserved_sources_rejected(self):
         baseline = [{"game_id": "x", "season": "2025",
             "captured_at_utc": "2025-10-05T10:00:00Z",
