@@ -18,6 +18,12 @@ class V4SpreadResearchTests(unittest.TestCase):
     def test_insufficient_training_fails_closed(self):
         with self.assertRaises(ValueError):
             fit([game(2024, 1)])
+    def test_missing_feature_fails_closed(self):
+        rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
+        del rows[0]["wind_mph"]
+        with self.assertRaisesRegex(ValueError, "missing or nonfinite"):
+            evaluate(rows, source_authenticity_verified=True)
+
     def test_season_holdout_remains_research_only(self):
         rows = [game(2024, i) for i in range(210)] + [game(2025, i) for i in range(110)]
         result = evaluate(rows, source_authenticity_verified=True)
@@ -25,6 +31,8 @@ class V4SpreadResearchTests(unittest.TestCase):
         self.assertEqual(len(result["evaluations"]), 1)
         self.assertEqual(result["evaluations"][0]["holdout_season"], 2025)
         self.assertEqual(result["evaluations"][0]["holdout_games"], 110)
+        self.assertIn("v3_rmse", result["evaluations"][0])
+        self.assertIn("v4_rmse", result["evaluations"][0])
         self.assertTrue(isinstance(predict(fit(rows[:210]), rows[210]), float))
 
 if __name__ == "__main__":
