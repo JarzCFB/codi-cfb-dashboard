@@ -93,3 +93,7 @@ The V4 ridge research evaluator now reports `both_error_metrics_improved` only w
 ## Holdout uncertainty diagnostics
 
 For each eligible chronological season holdout, the V4 research evaluator reports a deterministic 2,000-draw paired-game bootstrap 95% percentile interval for `V3 MAE - V4 MAE`. Positive values favor lower V4 absolute error; an interval crossing zero is inconclusive. Resampling preserves each game's V3/V4 pairing. This is an exploratory uncertainty diagnostic, **not** a multiple-testing-adjusted confidence guarantee, source authentication, a betting ROI assessment, or approval to replace V3.
+
+## Direct evaluator point-in-time gate
+
+The V4 season-held-out evaluator independently requires timezone-aware `captured_at_utc` and `kickoff_utc` on every row, with original prediction capture strictly before kickoff. This is checked even when a caller sets `source_authenticity_verified=True`. Passing this gate does not prove that features or the archived prediction were authentic; independent verification is still required.
