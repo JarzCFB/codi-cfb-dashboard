@@ -126,8 +126,8 @@ class V4StatusTests(unittest.TestCase):
             root = Path(tmp)
             b = root/"baseline.csv"
             b.write_text(
-                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,actual_home_margin,v3_home_margin\\n"
-                "1,2025,2025-10-05T20:00:00Z,2025-10-06T10:00:00Z,settled,7,6\\n",
+                "game_id,season,kickoff_utc,captured_at_utc,source_grading_status,actual_home_margin,v3_home_margin\n"
+                "1,2025,2025-10-05T20:00:00Z,2025-10-06T10:00:00Z,settled,7,6\n",
                 encoding="utf-8")
             result = status(b, root/"missing_evidence.csv")
         self.assertIn("rejected", result["reason"])
