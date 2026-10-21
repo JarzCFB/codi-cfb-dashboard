@@ -22,6 +22,8 @@ def recover(selections, graded):
         if str(row.get("model_version", "")).strip().lower() != "v3":
             continue
         key = str(row["game_id"])
+        if not key.strip():
+            raise ValueError("V3 game ID missing")
         if key in frozen:
             raise ValueError("multiple V3 selections for game " + key)
         if _time(row["captured_at_utc"]) >= _time(row["kickoff_utc"]):
@@ -48,6 +50,10 @@ def recover(selections, graded):
         actual = str(grade.get("actual_home_margin", "")).strip() if settled else ""
         if settled and not actual:
             raise ValueError("settled V3 grade missing actual margin")
+        if settled:
+            from math import isfinite
+            if not isfinite(float(actual)):
+                raise ValueError("settled V3 grade has nonfinite actual margin")
         result.append({
             "game_id": gid, "season": frozen_row["season"],
             "kickoff_utc": frozen_row["kickoff_utc"],
