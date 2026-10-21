@@ -57,6 +57,11 @@ class V4BaselineRecoveryTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "nonfinite projected"):
                     recover([pick(margin=margin)], [])
 
+    def test_pending_grade_with_final_margin_is_rejected(self):
+        a = pick()
+        with self.assertRaisesRegex(ValueError, "pending V3 grade"):
+            recover([a], [grade(a, status="pending", actual="7")])
+
     def test_unknown_grade_status_fails(self):
         a = pick()
         with self.assertRaisesRegex(ValueError, "unknown V3 grading status"):
