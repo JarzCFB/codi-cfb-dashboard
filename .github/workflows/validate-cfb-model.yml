@@ -125,6 +125,8 @@ jobs:
               inv = json.load(open('reports/v4_snapshot_inventory.json', encoding='utf-8'))
               print(f"- Archived snapshot files: {inv['snapshot_files']}")
               print(f"- Distinct pregame snapshot game IDs (NOT official V3): {inv['distinct_pregame_game_ids']}")
+              print(f"- Games captured >=6h before kickoff (NOT official V3): {inv['distinct_games_captured_at_least_6h_before_kickoff']}")
+              print(f"- Market updates after capture: {inv['market_update_after_capture_rows']}")
           print("- V3 remains official. A passing workflow does not validate V4 performance.")
           PY
           else
