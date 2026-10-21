@@ -75,3 +75,5 @@ The validation workflow includes this CSV in the downloadable
 `v4-research-readiness` artifact. This is a work queue, not a list of
 verified facts. Review each missing feature against source publications
 that demonstrably existed **before** its original capture.
+
+The recovered baseline now carries original `home_team` and `away_team` values, so the worklist can be researched by matchup. These names are copied from frozen selections, never reconstructed from current schedules.
