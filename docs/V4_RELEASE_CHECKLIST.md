@@ -89,3 +89,7 @@ The research workflow compares the recovered selected-only baseline against both
 ## Paired holdout accuracy diagnostics
 
 The V4 ridge research evaluator now reports `both_error_metrics_improved` only when both holdout MAE and RMSE are strictly lower than frozen V3. A tradeoff between average error and large misses is **not** an across-the-board improvement. The evaluator always sets `holdout_improvement_claim_allowed=false` and `release_ready=false`; these exploratory accuracy diagnostics cannot substitute for authenticated source data, independently archived all-game V3 predictions, prospective betting ROI, or explicit release approval.
+
+## Holdout uncertainty diagnostics
+
+For each eligible chronological season holdout, the V4 research evaluator reports a deterministic 2,000-draw paired-game bootstrap 95% percentile interval for `V3 MAE - V4 MAE`. Positive values favor lower V4 absolute error; an interval crossing zero is inconclusive. Resampling preserves each game's V3/V4 pairing. This is an exploratory uncertainty diagnostic, **not** a multiple-testing-adjusted confidence guarantee, source authentication, a betting ROI assessment, or approval to replace V3.
