@@ -4,6 +4,7 @@ This is NOT an official betting model. Only independently authenticated, point-i
 feature rows should be supplied. Never reconstruct features using postgame reports.
 """
 from math import isfinite, sqrt
+from random import Random
 from v4_evidence_audit import FEATURES
 
 MIN_TRAIN = 200
@@ -67,6 +68,19 @@ def _mae(rows, model=None):
               - float(r["actual_home_margin"]) for r in rows]
     return sum(abs(e) for e in errors) / len(errors)
 
+def _paired_mae_interval(v3_errors, v4_errors, draws=2000):
+    """Deterministic paired game-level bootstrap; descriptive, not a release test."""
+    improvements = [abs(a) - abs(b) for a, b in zip(v3_errors, v4_errors)]
+    if not improvements:
+        raise ValueError("empty holdout")
+    rng = Random(20261021)
+    n = len(improvements)
+    estimates = sorted(sum(improvements[rng.randrange(n)] for _ in range(n)) / n
+                       for _ in range(draws))
+    return [round(estimates[int(0.025 * draws)], 4),
+            round(estimates[min(draws - 1, int(0.975 * draws))], 4)]
+
+
 def evaluate(complete_rows, source_authenticity_verified=False):
     """Strict chronological season holdout. Never auto-promote V4."""
     output = {"status": "RESEARCH_ONLY", "release_ready": False,
@@ -114,11 +128,14 @@ def evaluate(complete_rows, source_authenticity_verified=False):
         # Diagnostics only: a candidate must not be described as improved
         # when one error metric improves but the other deteriorates.
         both_errors_improved = candidate < baseline and v4_rmse < v3_rmse
+        mae_interval = _paired_mae_interval(v3_errors, v4_errors)
         output["evaluations"].append({"holdout_season": season, "training_games": len(train),
             "holdout_games": len(test), "v3_mae": round(baseline, 4),
             "v4_mae": round(candidate, 4), "v4_mae_improvement": round(baseline-candidate, 4),
             "v3_rmse": round(v3_rmse, 4), "v4_rmse": round(v4_rmse, 4),
             "both_error_metrics_improved": both_errors_improved,
+            "paired_mae_improvement_bootstrap_95pct": mae_interval,
+            "bootstrap_draws": 2000,
             "holdout_improvement_claim_allowed": False,
             "improved_game_count": sum(abs(b) > abs(a) for b, a in zip(v3_errors, v4_errors)),
             "standardized_coefficients": model["coefficients"],
