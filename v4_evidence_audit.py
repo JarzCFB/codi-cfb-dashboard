@@ -37,11 +37,15 @@ def _valid_feature(name, value):
     return number
 
 def _public_https_source(url):
-    parsed = urlparse(str(url))
-    host = parsed.hostname
+    try:
+        parsed = urlparse(str(url))
+        host = parsed.hostname
+        port = parsed.port
+    except ValueError:
+        return False
     if (parsed.scheme != "https" or not host or parsed.username or parsed.password
             or host.lower() == "localhost" or host.lower().endswith(".localhost")
-            or host.lower().endswith(".local")):
+            or host.lower().endswith(".local") or port not in (None, 443)):
         return False
     try:
         # A literal IP address is allowed only when globally routable.
