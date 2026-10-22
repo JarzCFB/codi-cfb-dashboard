@@ -3,13 +3,13 @@
   "models": {
     "v1": {
       "selections": 159,
-      "settled": 132,
+      "settled": 133,
       "wins": 66,
-      "losses": 66,
+      "losses": 67,
       "pushes": 0,
-      "net_units": -5.785203,
-      "roi_per_settled_selection": -0.043827,
-      "pending": 27,
+      "net_units": -6.785203,
+      "roi_per_settled_selection": -0.051017,
+      "pending": 26,
       "invalid_or_ambiguous": 0
     },
     "v2": {
@@ -71,8 +71,8 @@
   },
   "pipeline_health": {
     "total_frozen_selections": 450,
-    "settled": 380,
-    "pending": 70,
+    "settled": 381,
+    "pending": 69,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
