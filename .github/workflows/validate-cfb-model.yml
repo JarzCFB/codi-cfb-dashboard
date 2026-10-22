@@ -12,6 +12,7 @@ on:
       - 'cfb_v4_situational.py'
       - 'docs/V4_RELEASE_CHECKLIST.md'
       - 'tests/**'
+      - 'test_*.py'
       - 'prospective/selections.csv'
       - 'prospective/graded_selections.csv'
       - 'backtests/v1_v2_game_results.csv'
