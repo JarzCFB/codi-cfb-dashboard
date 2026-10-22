@@ -36,6 +36,31 @@ class SnapshotInventoryTests(unittest.TestCase):
             self.assertEqual(report["distinct_games_captured_at_least_6h_before_kickoff"], 1)
             self.assertEqual(report["official_v3_predictions_recovered"], 0)
 
+    def test_future_bookmaker_and_ratings_timestamps_are_excluded(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "capture.csv"
+            fields = ["captured_at_utc", "game_id", "kickoff_utc",
+                      "sportsbook_key", "selection", "projected_home_margin",
+                      "capture_status", "bookmaker_last_update_utc", "ratings_asof_utc"]
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                for gid, bookmaker, ratings in [
+                    ("good", "2026-10-01T11:00:00Z", "2026-10-01T12:00:00Z"),
+                    ("future_book", "2026-10-01T13:00:00Z", "2026-10-01T11:00:00Z"),
+                    ("future_rating", "2026-10-01T11:00:00Z", "2026-10-01T13:00:00Z")]:
+                    writer.writerow(dict(captured_at_utc="2026-10-01T12:00:00Z",
+                        game_id=gid, kickoff_utc="2026-10-02T20:00:00Z",
+                        sportsbook_key="book", selection="Home",
+                        projected_home_margin="2.5", capture_status="timestamped_live_quote",
+                        bookmaker_last_update_utc=bookmaker, ratings_asof_utc=ratings))
+            report = inventory(root)
+            self.assertEqual(report["bookmaker_update_after_capture_rows"], 1)
+            self.assertEqual(report["ratings_asof_after_capture_rows"], 1)
+            self.assertEqual(report["distinct_pregame_game_ids"], 1)
+            self.assertEqual(report["invalid_rows_or_files"], 2)
+            self.assertEqual(report["official_v3_predictions_recovered"], 0)
+
     def test_future_market_update_is_not_eligible(self):
         with tempfile.TemporaryDirectory() as root:
             path = Path(root) / "capture.csv"
