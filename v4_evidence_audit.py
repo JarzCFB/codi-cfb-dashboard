@@ -81,7 +81,7 @@ def audit_evidence(baseline, evidence):
                 valid = False
             if not valid:
                 raise ValueError("invalid baseline margin: " + field)
-        if base["source_grading_status"] == "pending" and str(base.get("actual_home_margin", "")).strip():
+        if base["source_grading_status"] == "pending" and base.get("actual_home_margin") is not None and str(base.get("actual_home_margin")).strip():
             raise ValueError("pending baseline must not include actual margin")
     indexed = {}
     for item in evidence:
