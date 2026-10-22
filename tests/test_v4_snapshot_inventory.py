@@ -56,7 +56,8 @@ class SnapshotInventoryTests(unittest.TestCase):
                         projected_home_margin="2.5", capture_status=status,
                         division_status=division))
             report = inventory(root)
-            self.assertEqual(report["distinct_games_captured_at_least_6h_before_kickoff"], 4)
+            self.assertEqual(report["distinct_games_captured_at_least_6h_before_kickoff"], 3)
+            self.assertEqual(report["rows_without_timestamped_live_quote_status"], 1)
             self.assertEqual(report["fbs_games_with_timestamped_quotes_at_least_6h_pregame"], 1)
             self.assertEqual(report["six_hour_rows_missing_division_status"], 1)
             self.assertEqual(report["six_hour_rows_not_fbs_vs_fbs"], 1)
