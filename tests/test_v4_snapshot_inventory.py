@@ -13,6 +13,32 @@ class SnapshotInventoryTests(unittest.TestCase):
             self.assertEqual(report["official_v3_predictions_recovered"], 0)
             self.assertFalse(report["release_ready"])
 
+    def test_fbs_six_hour_coverage_requires_division_and_live_quote(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "capture.csv"
+            fields = ["captured_at_utc", "game_id", "kickoff_utc",
+                      "sportsbook_key", "selection", "projected_home_margin",
+                      "capture_status", "division_status"]
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                for gid, division, status in [
+                    ("fbs", "FBS vs FBS", "timestamped_live_quote"),
+                    ("other", "FBS vs FCS", "timestamped_live_quote"),
+                    ("unknown", "", "timestamped_live_quote"),
+                    ("not_live", "FBS vs FBS", "stale_quote")]:
+                    writer.writerow(dict(captured_at_utc="2026-10-01T12:00:00Z",
+                        game_id=gid, kickoff_utc="2026-10-02T20:00:00Z",
+                        sportsbook_key="book", selection="Home",
+                        projected_home_margin="2.5", capture_status=status,
+                        division_status=division))
+            report = inventory(root)
+            self.assertEqual(report["distinct_games_captured_at_least_6h_before_kickoff"], 4)
+            self.assertEqual(report["fbs_games_with_timestamped_quotes_at_least_6h_pregame"], 1)
+            self.assertEqual(report["six_hour_rows_missing_division_status"], 1)
+            self.assertEqual(report["six_hour_rows_not_fbs_vs_fbs"], 1)
+            self.assertFalse(report["release_ready"])
+
     def test_missing_and_nonfinite_ratings_are_not_eligible(self):
         with tempfile.TemporaryDirectory() as root:
             path = Path(root) / "capture.csv"
