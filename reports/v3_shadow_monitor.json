@@ -497,11 +497,60 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 0,
+    "covered_v3": 3,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
-    "status_performance": {},
-    "games": [],
+    "status_performance": {
+      "CAUTION": {
+        "selections": 1,
+        "settled": 0,
+        "pending": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
+      },
+      "PASS": {
+        "selections": 2,
+        "settled": 0,
+        "pending": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
+      }
+    },
+    "games": [
+      {
+        "season": "2026",
+        "game_id": "7bac3aae16527dd33a224a2f81792033",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "matchup": "Northwestern Wildcats at Oregon Ducks",
+        "status": "PASS",
+        "disagreement_points": "1.11853",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "e916f49c82de2ce0b1844ee9f6deccfa",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "matchup": "Notre Dame Fighting Irish at Navy Midshipmen",
+        "status": "CAUTION",
+        "disagreement_points": "5.33965",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "581c12d11a86412432fe89645cbe80b2",
+        "kickoff_utc": "2026-10-31T19:30:00Z",
+        "matchup": "Florida Gators at Georgia Bulldogs",
+        "status": "PASS",
+        "disagreement_points": "3.51081",
+        "source": "same_capture_v3_frozen_quote"
+      }
+    ],
     "warning": "Only evidence recorded at original capture is counted; older missing games are not reconstructed."
   },
   "unclassified_games": [
