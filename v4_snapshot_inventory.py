@@ -15,6 +15,8 @@ def inventory(root="snapshots/2026"):
     pregame = set()
     six_hour_pregame = set()
     fbs_six_hour_games = set()
+    priced_fbs_six_hour_games = set()
+    unpriced_fbs_six_hour_rows = 0
     missing_division_status_rows = 0
     non_fbs_rows = 0
     future_market_updates = 0
@@ -77,6 +79,17 @@ def inventory(root="snapshots/2026"):
                             non_fbs_rows += 1
                         elif (row.get("capture_status") or "").strip() == "timestamped_live_quote":
                             fbs_six_hour_games.add(gid)
+                            try:
+                                spread = float(row["spread"])
+                                odds = float(row["american_odds"])
+                                if (not isfinite(spread) or not isfinite(odds)
+                                        or -100 < odds < 100
+                                        or not (row.get("sportsbook_key") or "").strip()
+                                        or not (row.get("selection") or "").strip()):
+                                    raise ValueError("incomplete sportsbook quote")
+                                priced_fbs_six_hour_games.add(gid)
+                            except (ValueError, TypeError, KeyError):
+                                unpriced_fbs_six_hour_rows += 1
                 except (ValueError, TypeError, AttributeError):
                     invalid += 1
     return {
@@ -86,6 +99,8 @@ def inventory(root="snapshots/2026"):
         "distinct_game_ids": len(games), "distinct_pregame_game_ids": len(pregame),
         "distinct_games_captured_at_least_6h_before_kickoff": len(six_hour_pregame),
         "fbs_games_with_timestamped_quotes_at_least_6h_pregame": len(fbs_six_hour_games),
+        "fbs_games_with_valid_prices_at_least_6h_pregame": len(priced_fbs_six_hour_games),
+        "six_hour_fbs_rows_without_valid_prices": unpriced_fbs_six_hour_rows,
         "six_hour_rows_missing_division_status": missing_division_status_rows,
         "six_hour_rows_not_fbs_vs_fbs": non_fbs_rows,
         "market_update_after_capture_rows": future_market_updates,
