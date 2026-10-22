@@ -15,6 +15,8 @@ def inventory(root="snapshots/2026"):
     pregame = set()
     six_hour_pregame = set()
     future_market_updates = 0
+    future_bookmaker_updates = 0
+    future_ratings_asof = 0
     invalid_projection_rows = 0
     status = Counter()
     rows = 0
@@ -52,6 +54,16 @@ def inventory(root="snapshots/2026"):
                         future_market_updates += 1
                         invalid += 1
                         continue
+                    bookmaker_update = (row.get("bookmaker_last_update_utc") or "").strip()
+                    if bookmaker_update and _time(bookmaker_update) > captured:
+                        future_bookmaker_updates += 1
+                        invalid += 1
+                        continue
+                    ratings_asof = (row.get("ratings_asof_utc") or "").strip()
+                    if ratings_asof and _time(ratings_asof) > captured:
+                        future_ratings_asof += 1
+                        invalid += 1
+                        continue
                     pregame.add(gid)
                     if (kickoff - captured).total_seconds() >= 6 * 3600:
                         six_hour_pregame.add(gid)
@@ -64,6 +76,8 @@ def inventory(root="snapshots/2026"):
         "distinct_game_ids": len(games), "distinct_pregame_game_ids": len(pregame),
         "distinct_games_captured_at_least_6h_before_kickoff": len(six_hour_pregame),
         "market_update_after_capture_rows": future_market_updates,
+        "bookmaker_update_after_capture_rows": future_bookmaker_updates,
+        "ratings_asof_after_capture_rows": future_ratings_asof,
         "invalid_ratings_projection_rows": invalid_projection_rows,
         "invalid_rows_or_files": invalid, "capture_status_counts": dict(sorted(status.items())),
         "official_v3_predictions_recovered": 0,
