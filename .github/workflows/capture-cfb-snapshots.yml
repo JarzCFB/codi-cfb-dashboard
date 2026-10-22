@@ -1,7 +1,16 @@
 name: Capture CFB pregame snapshots
 on:
   workflow_dispatch:
-  schedule:
+  # Recheck live capture after fixes to the capture pipeline, not just at the next cron.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/capture-cfb-snapshots.yml'
+      - 'snapshot_capture.py'
+      - 'prospective_capture.py'
+      - 'v4_evidence_audit.py'
+      - 'test_v4_pregame_triage.py'
+    schedule:
     # Conserve Odds API credits early in the week; keep frequent pregame capture Friday/Saturday.
     # GitHub Actions cron is UTC. Manual workflow_dispatch remains available.
     - cron: '17 1,9,17 * * 0-4'
