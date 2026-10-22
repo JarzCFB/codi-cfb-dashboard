@@ -126,6 +126,8 @@ jobs:
               print(f"- Archived snapshot files: {inv['snapshot_files']}")
               print(f"- Distinct pregame snapshot game IDs (NOT official V3): {inv['distinct_pregame_game_ids']}")
               print(f"- Games captured >=6h before kickoff (NOT official V3): {inv['distinct_games_captured_at_least_6h_before_kickoff']}")
+              print(f"- FBS-vs-FBS games with timestamped quotes >=6h before kickoff (NOT V3): {inv['fbs_games_with_timestamped_quotes_at_least_6h_pregame']}")
+              print(f"- Six-hour rows without division classification: {inv['six_hour_rows_missing_division_status']}")
               print(f"- Market updates after capture: {inv['market_update_after_capture_rows']}")
               print(f"- Bookmaker updates after capture: {inv['bookmaker_update_after_capture_rows']}")
               print(f"- Ratings as-of after capture: {inv['ratings_asof_after_capture_rows']}")
