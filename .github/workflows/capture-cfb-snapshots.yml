@@ -8,6 +8,8 @@ on:
       - '.github/workflows/capture-cfb-snapshots.yml'
       - 'snapshot_capture.py'
       - 'prospective_capture.py'
+      - 'v3_shadow_monitor.py'
+      - 'tests/test_v3_shadow_monitor.py'
       - 'v4_evidence_audit.py'
       - 'test_v4_pregame_triage.py'
   schedule:
