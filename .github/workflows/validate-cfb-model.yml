@@ -127,6 +127,8 @@ jobs:
               print(f"- Distinct pregame snapshot game IDs (NOT official V3): {inv['distinct_pregame_game_ids']}")
               print(f"- Games captured >=6h before kickoff (NOT official V3): {inv['distinct_games_captured_at_least_6h_before_kickoff']}")
               print(f"- Market updates after capture: {inv['market_update_after_capture_rows']}")
+              print(f"- Bookmaker updates after capture: {inv['bookmaker_update_after_capture_rows']}")
+              print(f"- Ratings as-of after capture: {inv['ratings_asof_after_capture_rows']}")
               print(f"- Missing/nonfinite ratings projections: {inv['invalid_ratings_projection_rows']}")
           print("- V3 remains official. A passing workflow does not validate V4 performance.")
           PY
