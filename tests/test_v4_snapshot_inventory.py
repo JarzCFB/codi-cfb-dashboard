@@ -13,6 +13,29 @@ class SnapshotInventoryTests(unittest.TestCase):
             self.assertEqual(report["official_v3_predictions_recovered"], 0)
             self.assertFalse(report["release_ready"])
 
+    def test_priced_fbs_games_require_valid_spread_and_odds(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "capture.csv"
+            fields = ["captured_at_utc", "game_id", "kickoff_utc",
+                      "sportsbook_key", "selection", "projected_home_margin",
+                      "capture_status", "division_status", "spread", "american_odds"]
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields)
+                writer.writeheader()
+                for gid, spread, odds in [
+                    ("valid", "-3.5", "-110"), ("missing", "", "-110"),
+                    ("bad_odds", "2.5", "50"), ("nan", "nan", "120")]:
+                    writer.writerow(dict(captured_at_utc="2026-10-01T12:00:00Z",
+                        game_id=gid, kickoff_utc="2026-10-02T20:00:00Z",
+                        sportsbook_key="book", selection="Home",
+                        projected_home_margin="2.5", capture_status="timestamped_live_quote",
+                        division_status="FBS vs FBS", spread=spread, american_odds=odds))
+            report = inventory(root)
+            self.assertEqual(report["fbs_games_with_timestamped_quotes_at_least_6h_pregame"], 4)
+            self.assertEqual(report["fbs_games_with_valid_prices_at_least_6h_pregame"], 1)
+            self.assertEqual(report["six_hour_fbs_rows_without_valid_prices"], 3)
+            self.assertEqual(report["official_v3_predictions_recovered"], 0)
+
     def test_fbs_six_hour_coverage_requires_division_and_live_quote(self):
         with tempfile.TemporaryDirectory() as root:
             path = Path(root) / "capture.csv"
