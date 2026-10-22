@@ -73,6 +73,22 @@ class ShadowMonitorTests(unittest.TestCase):
         self.assertEqual(report["status_performance"]["PASS"]["settled"], 1)
         self.assertNotIn("UNSTABLE", report["status_performance"])
 
+    def test_new_frozen_agreement_valid_before_grading(self):
+        frozen = row("2026-10-25T18:00:00Z", 5)
+        frozen.update(captured_at_utc="2026-10-22T13:00:00Z",
+                      projected_home_margin="7.2", grading_status="pending",
+                      selection_result="", one_unit_profit="")
+        evidence = [{"season": "2026", "game_id": frozen["game_id"],
+                     "captured_at_utc": frozen["captured_at_utc"],
+                     "v3_margin": "7.2", "investigation_status": "PASS",
+                     "source": "same_capture_v3_frozen_quote"}]
+        report = build([], [], selections=[frozen], pregame_evidence=evidence,
+                       agreement_selections=[frozen])
+        self.assertEqual(report["pregame_agreement"]["covered_v3"], 1)
+        self.assertEqual(report["pregame_agreement"]["rejected_evidence"], 0)
+        self.assertEqual(report["pregame_agreement"]["status_performance"]["PASS"]["pending"], 1)
+        self.assertEqual(report["edge_thresholds"]["3"]["selections"], 0)
+
     def test_build_preserves_unclassified_and_frozen_thresholds(self):
         rows = [row("2026-10-20T18:00:00Z", 6)]
         report = build(rows, [])
