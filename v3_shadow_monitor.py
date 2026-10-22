@@ -195,8 +195,14 @@ def _same_number(a, b):
         return False
 
 
-def build(graded, cohorts, selections=None, pregame_evidence=None):
+def build(graded, cohorts, selections=None, pregame_evidence=None, agreement_selections=None):
     v3 = [r for r in graded if r.get("model_version") == "v3"]
+    # Same-capture agreement is written before grading. Match against the
+    # original frozen selection ledger, not just the last graded snapshot.
+    # Never infer a selection or change its frozen margin.
+    agreement_v3 = ([r for r in agreement_selections
+                     if r.get("model_version") == "v3"]
+                    if agreement_selections is not None else v3)
     frozen = {(r.get("season"), r.get("game_id")): r for r in cohorts}
     missing = [r for r in v3 if (r.get("season"), r.get("game_id")) not in frozen]
     # A frozen cohort may only exist if V1 and V2 pregame selections both existed.
@@ -219,7 +225,7 @@ def build(graded, cohorts, selections=None, pregame_evidence=None):
         "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
         "unclassified_v3_count": len(missing),
         "classification_coverage": classification_coverage(v3, selections or [], cohorts) if selections is not None else None,
-        "pregame_agreement": pregame_agreement_report(v3, pregame_evidence or []),
+        "pregame_agreement": pregame_agreement_report(agreement_v3, pregame_evidence or []),
         "unclassified_games": [
             {"season": r.get("season"), "game_id": r.get("game_id"),
              "kickoff_utc": r.get("kickoff_utc"), "matchup": r.get("away_team", "") +
@@ -237,10 +243,12 @@ def build(graded, cohorts, selections=None, pregame_evidence=None):
 
 
 def main():
+    frozen = read(ROOT / "selections.csv")
     report = build(read(ROOT / "graded_selections.csv"),
                    read(ROOT / "investigation_cohort.csv"),
-                   read(ROOT / "selections.csv"),
-                   read(ROOT / "v3_pregame_agreement.csv"))
+                   frozen,
+                   read(ROOT / "v3_pregame_agreement.csv"),
+                   agreement_selections=frozen)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print("V3 shadow monitor:", {k: v["settled"] for k, v in report["edge_thresholds"].items()},
