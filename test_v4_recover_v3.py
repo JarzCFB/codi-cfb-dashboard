@@ -17,6 +17,22 @@ class RecoveryTests(unittest.TestCase):
         rows = recover_v3_audit([row("pending")])
         self.assertIsNone(rows[0]["actual_home_margin"])
 
+    def test_pending_outcome_leakage_rejected_in_both_upload_formats(self):
+        from v4_recover_v3 import recover_v3_upload
+        original = row("pending")
+        original["actual_home_margin"] = "9"
+        with self.assertRaisesRegex(ValueError, "pending game"):
+            recover_v3_audit([original])
+        recovered = {
+            "game_id": "abc", "season": "2026",
+            "kickoff_utc": "2026-10-17T18:00:00Z",
+            "captured_at_utc": "2026-10-05T18:00:00Z",
+            "v3_home_margin": "4.5", "actual_home_margin": "9",
+            "source_grading_status": "pending"
+        }
+        with self.assertRaisesRegex(ValueError, "pending game"):
+            recover_v3_upload([recovered])
+
     def test_future_leakage_rejected(self):
         r = row()
         r["captured_at_utc"] = r["kickoff_utc"]
