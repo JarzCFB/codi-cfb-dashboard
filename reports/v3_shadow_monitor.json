@@ -497,7 +497,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 3,
+    "covered_v3": 4,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -520,9 +520,28 @@
         "pushes": 0,
         "net_units": 0,
         "roi_per_settled_selection": null
+      },
+      "UNSTABLE": {
+        "selections": 1,
+        "settled": 0,
+        "pending": 0,
+        "wins": 0,
+        "losses": 0,
+        "pushes": 0,
+        "net_units": 0,
+        "roi_per_settled_selection": null
       }
     },
     "games": [
+      {
+        "season": "2026",
+        "game_id": "eed30e1ba5aa37d77ee6401d67832446",
+        "kickoff_utc": "2026-10-28T00:00:00Z",
+        "matchup": "Sam Houston State Bearkats at Missouri State Bears",
+        "status": "UNSTABLE",
+        "disagreement_points": "3.55272",
+        "source": "same_capture_v3_frozen_quote"
+      },
       {
         "season": "2026",
         "game_id": "7bac3aae16527dd33a224a2f81792033",
