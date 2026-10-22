@@ -134,6 +134,7 @@ jobs:
               print(f"- Bookmaker updates after capture: {inv['bookmaker_update_after_capture_rows']}")
               print(f"- Ratings as-of after capture: {inv['ratings_asof_after_capture_rows']}")
               print(f"- Missing/nonfinite ratings projections: {inv['invalid_ratings_projection_rows']}")
+              print(f"- Excluded non-live/stale quote rows: {inv['rows_without_timestamped_live_quote_status']}")
           print("- V3 remains official. A passing workflow does not validate V4 performance.")
           PY
           else
