@@ -6,7 +6,7 @@ def game(gid, kickoff, status="pending"):
     return {"game_id": gid, "season": 2026, "kickoff_utc": kickoff,
             "captured_at_utc": "2026-10-13T00:00:00Z", "source_grading_status": status,
             "home_team": "A", "away_team": "B", "v3_home_margin": 3.5,
-            "actual_home_margin": None}
+            "actual_home_margin": 7.0 if status == "settled" else None}
 
 
 class PregameTriageTests(unittest.TestCase):
