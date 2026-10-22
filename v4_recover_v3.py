@@ -38,6 +38,8 @@ def recover_v3_audit(rows):
             actual = float(row["actual_home_margin"])
             if not isfinite(actual):
                 raise ValueError("invalid final margin")
+        if status == "pending" and str(row.get("actual_home_margin", "")).strip():
+            raise ValueError("pending game must not contain final outcome")
         result.append({"game_id": game_id, "season": int(row["season"]),
                        "kickoff_utc": row["kickoff_utc"], "captured_at_utc": row["captured_at_utc"],
                        "home_team": row.get("home_team", ""), "away_team": row.get("away_team", ""),
@@ -82,6 +84,8 @@ def accept_recovered_baseline(rows):
             actual = float(row["actual_home_margin"])
             if not isfinite(actual):
                 raise ValueError("invalid final margin")
+        if status == "pending" and str(row.get("actual_home_margin", "")).strip():
+            raise ValueError("pending game must not contain final outcome")
         result.append({"game_id": game_id, "season": int(row["season"]),
                        "kickoff_utc": row["kickoff_utc"], "captured_at_utc": row["captured_at_utc"],
                        "home_team": row.get("home_team", ""), "away_team": row.get("away_team", ""),
