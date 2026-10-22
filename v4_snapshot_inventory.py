@@ -17,6 +17,7 @@ def inventory(root="snapshots/2026"):
     fbs_six_hour_games = set()
     priced_fbs_six_hour_games = set()
     unpriced_fbs_six_hour_rows = 0
+    missing_quote_status_rows = 0
     missing_division_status_rows = 0
     non_fbs_rows = 0
     future_market_updates = 0
@@ -69,6 +70,10 @@ def inventory(root="snapshots/2026"):
                         future_ratings_asof += 1
                         invalid += 1
                         continue
+                    quote_status = (row.get("capture_status") or "").strip()
+                    if quote_status != "timestamped_live_quote":
+                        missing_quote_status_rows += 1
+                        continue
                     pregame.add(gid)
                     if (kickoff - captured).total_seconds() >= 6 * 3600:
                         six_hour_pregame.add(gid)
@@ -103,6 +108,7 @@ def inventory(root="snapshots/2026"):
         "six_hour_fbs_rows_without_valid_prices": unpriced_fbs_six_hour_rows,
         "six_hour_rows_missing_division_status": missing_division_status_rows,
         "six_hour_rows_not_fbs_vs_fbs": non_fbs_rows,
+        "rows_without_timestamped_live_quote_status": missing_quote_status_rows,
         "market_update_after_capture_rows": future_market_updates,
         "bookmaker_update_after_capture_rows": future_bookmaker_updates,
         "ratings_asof_after_capture_rows": future_ratings_asof,
