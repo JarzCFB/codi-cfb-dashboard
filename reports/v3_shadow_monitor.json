@@ -513,7 +513,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 5,
+    "covered_v3": 7,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -528,7 +528,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 3,
+        "selections": 5,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -549,6 +549,24 @@
       }
     },
     "games": [
+      {
+        "season": "2026",
+        "game_id": "0f773ec5cb1e5b41f52f2bf8dbc4f182",
+        "kickoff_utc": "2026-10-24T19:00:00Z",
+        "matchup": "Oregon Ducks at Illinois Fighting Illini",
+        "status": "PASS",
+        "disagreement_points": "0.30542",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "f417c5ab864e0751355921f5d22f4b25",
+        "kickoff_utc": "2026-10-24T19:45:00Z",
+        "matchup": "Kansas State Wildcats at Arizona State Sun Devils",
+        "status": "PASS",
+        "disagreement_points": "0.61218",
+        "source": "same_capture_v3_frozen_quote"
+      },
       {
         "season": "2026",
         "game_id": "eed30e1ba5aa37d77ee6401d67832446",
