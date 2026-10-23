@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 110,
+      "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 19,
       "MISSING_V1_AND_V2": 8,
-      "MISSING_V2": 13
+      "MISSING_V2": 12
     },
     "unclassified_details": [
       {
@@ -489,7 +490,7 @@
         "game_id": "a337612e92dd80f7ba7cab853ff409d0",
         "kickoff_utc": "2026-10-24T20:00:00Z",
         "matchup": "UL Monroe Warhawks at Troy Trojans",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -513,7 +514,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 7,
+    "covered_v3": 8,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -528,7 +529,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 5,
+        "selections": 6,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -601,6 +602,15 @@
         "matchup": "Florida Gators at Georgia Bulldogs",
         "status": "PASS",
         "disagreement_points": "3.51081",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "c6533cfcdfb0860d723a5fd9b9381098",
+        "kickoff_utc": "2026-10-31T23:45:00Z",
+        "matchup": "Missouri Tigers at Arkansas Razorbacks",
+        "status": "PASS",
+        "disagreement_points": "0.14672",
         "source": "same_capture_v3_frozen_quote"
       },
       {
