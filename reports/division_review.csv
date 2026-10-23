@@ -304,3 +304,21 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,d99b11b38d1cf1cbb334246263c53ac9,2026-10-25T00:00:00Z,Tulane Green Wave,UTSA Roadrunners,FBS vs FBS,tulane,utsa
 2026,ebe9883d9cb488e233e6c45cfa009008,2026-10-25T02:00:00Z,New Mexico Lobos,North Dakota State Bison,Season-specific FBS status requires verification,new mexico,north dakota state
 2026,47595bd2a188e4dab8a27dce97c5b45d,2026-10-25T02:15:00Z,Utah Utes,Houston Cougars,FBS vs FBS,utah,houston
+2026,0ae4d3447c72a5c39b523d9b3fbaf216,2026-10-27T23:00:00Z,Western Kentucky Hilltoppers,Delaware Blue Hens,FBS vs FBS,western kentucky,delaware
+2026,eed30e1ba5aa37d77ee6401d67832446,2026-10-28T00:00:00Z,Missouri State Bears,Sam Houston State Bearkats,FBS vs FBS,missouri state,sam houston
+2026,cf6c89492427cb54521b70e7c5dc5993,2026-10-29T00:00:00Z,New Mexico State Aggies,Jacksonville State Gamecocks,FBS vs FBS,new mexico state,jacksonville state
+2026,929937ced936976088a9562342ba0b90,2026-10-31T16:00:00Z,Iowa Hawkeyes,Wisconsin Badgers,FBS vs FBS,iowa,wisconsin
+2026,e916f49c82de2ce0b1844ee9f6deccfa,2026-10-31T16:00:00Z,Navy Midshipmen,Notre Dame Fighting Irish,FBS vs FBS,navy,notre dame
+2026,7bac3aae16527dd33a224a2f81792033,2026-10-31T16:00:00Z,Oregon Ducks,Northwestern Wildcats,FBS vs FBS,oregon,northwestern
+2026,2d5a76d917c23b2f5036eb774608d1c9,2026-10-31T16:00:00Z,Texas Tech Red Raiders,Arizona Wildcats,FBS vs FBS,texas tech,arizona
+2026,bd73558e7eb5bee08962bfb1f5ef6c9a,2026-10-31T16:00:00Z,USC Trojans,Ohio State Buckeyes,FBS vs FBS,usc,ohio state
+2026,3f36c41ee29e9339f71fada56d832914,2026-10-31T16:45:00Z,Ole Miss Rebels,Auburn Tigers,FBS vs FBS,ole miss,auburn
+2026,b0f68c9265402a825cbbf7954b726339,2026-10-31T19:30:00Z,BYU Cougars,Arizona State Sun Devils,FBS vs FBS,byu,arizona state
+2026,581c12d11a86412432fe89645cbe80b2,2026-10-31T19:30:00Z,Georgia Bulldogs,Florida Gators,FBS vs FBS,georgia,florida
+2026,1e591733bae48534963359a9cff13701,2026-10-31T19:30:00Z,Indiana Hoosiers,Minnesota Golden Gophers,FBS vs FBS,indiana,minnesota
+2026,8480c989381049fc30c8d714be95db35,2026-10-31T19:45:00Z,Cincinnati Bearcats,Utah Utes,FBS vs FBS,cincinnati,utah
+2026,096584989b4dd0a84650c37eb980a8b3,2026-10-31T20:15:00Z,Oklahoma Sooners,South Carolina Gamecocks,FBS vs FBS,oklahoma,south carolina
+2026,85b5947ccfe102a2fa2179d54c83ae31,2026-10-31T23:30:00Z,North Carolina Tar Heels,Miami Hurricanes,FBS vs FBS,north carolina,miami
+2026,c6533cfcdfb0860d723a5fd9b9381098,2026-10-31T23:45:00Z,Arkansas Razorbacks,Missouri Tigers,FBS vs FBS,arkansas,missouri
+2026,877d5834acad37b6142a835438c23001,2026-11-01T00:00:00Z,Nebraska Cornhuskers,Washington Huskies,FBS vs FBS,nebraska,washington
+2026,d0126c335a51772c70c76e17ca06afb3,2026-11-01T03:00:00Z,Fresno State Bulldogs,Oregon State Beavers,FBS vs FBS,fresno state,oregon state
