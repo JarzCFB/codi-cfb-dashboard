@@ -119,5 +119,6 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,423bd1c75b601ccfabfca3759cc69a3f,2026-10-24T23:30:00Z,Arizona Wildcats,Iowa State Cyclones,2026-10-19T13:17:49Z,5.93289,6.3713,,0.438,true,PASS,V1/V2 agreement under 5 pts
 2026,440de8df25b4cca8ebcecb7431bbb5c0,2026-10-24T23:30:00Z,Wisconsin Badgers,USC Trojans,2026-10-19T13:17:49Z,3.40917,0.33128,1.7943,3.078,true,PASS,V1/V2 agreement under 5 pts
 2026,d99b11b38d1cf1cbb334246263c53ac9,2026-10-25T00:00:00Z,Tulane Green Wave,UTSA Roadrunners,2026-10-19T16:55:06Z,0.17718,2.38864,2.61255,2.211,true,PASS,V1/V2 agreement under 5 pts
+2026,eed30e1ba5aa37d77ee6401d67832446,2026-10-28T00:00:00Z,Missouri State Bears,Sam Houston State Bearkats,2026-10-22T17:43:12Z,-1.08091,2.47181,2.33185,3.553,false,UNSTABLE,models disagree on projected winner
 2026,7bac3aae16527dd33a224a2f81792033,2026-10-31T16:00:00Z,Oregon Ducks,Northwestern Wildcats,2026-10-22T14:30:44Z,3.66462,2.5461,3.7146,1.119,true,PASS,V1/V2 agreement under 5 pts
 2026,e916f49c82de2ce0b1844ee9f6deccfa,2026-10-31T16:00:00Z,Navy Midshipmen,Notre Dame Fighting Irish,2026-10-22T14:30:44Z,-14.72325,-20.0629,-20.27965,5.34,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
