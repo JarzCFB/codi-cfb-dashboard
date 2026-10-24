@@ -514,7 +514,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 8,
+    "covered_v3": 9,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -529,7 +529,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 6,
+        "selections": 7,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -566,6 +566,15 @@
         "matchup": "Kansas State Wildcats at Arizona State Sun Devils",
         "status": "PASS",
         "disagreement_points": "0.61218",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "423bd1c75b601ccfabfca3759cc69a3f",
+        "kickoff_utc": "2026-10-24T23:30:00Z",
+        "matchup": "Iowa State Cyclones at Arizona Wildcats",
+        "status": "PASS",
+        "disagreement_points": "0.43567",
         "source": "same_capture_v3_frozen_quote"
       },
       {
