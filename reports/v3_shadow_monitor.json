@@ -3,14 +3,14 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 150,
-      "settled": 125,
-      "pending": 25,
-      "wins": 68,
-      "losses": 55,
+      "selections": 154,
+      "settled": 127,
+      "pending": 27,
+      "wins": 69,
+      "losses": 56,
       "pushes": 2,
-      "net_units": 6.808436,
-      "roi_per_settled_selection": 0.054467
+      "net_units": 6.717527,
+      "roi_per_settled_selection": 0.052894
     },
     "5": {
       "selections": 67,
@@ -46,28 +46,28 @@
   "frozen_cohorts": {
     "CAUTION": {
       "selections": 17,
-      "settled": 15,
-      "pending": 2,
+      "settled": 16,
+      "pending": 1,
       "wins": 10,
-      "losses": 5,
+      "losses": 6,
       "pushes": 0,
-      "net_units": 4.197391,
-      "roi_per_settled_selection": 0.279826
+      "net_units": 3.197391,
+      "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 69,
-      "settled": 57,
+      "selections": 70,
+      "settled": 58,
       "pending": 12,
-      "wins": 32,
+      "wins": 33,
       "losses": 24,
       "pushes": 1,
-      "net_units": 4.98349,
-      "roi_per_settled_selection": 0.08743
+      "net_units": 5.892581,
+      "roi_per_settled_selection": 0.101596
     },
     "UNCLASSIFIED": {
-      "selections": 40,
+      "selections": 43,
       "settled": 30,
-      "pending": 10,
+      "pending": 13,
       "wins": 13,
       "losses": 16,
       "pushes": 1,
@@ -87,27 +87,27 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-10-22T23:30:00Z",
+    "through_kickoff_utc": "2026-10-24T00:30:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 78,
-        "settled": 78,
+        "selections": 79,
+        "settled": 79,
         "pending": 0,
-        "wins": 40,
+        "wins": 41,
         "losses": 37,
         "pushes": 1,
-        "net_units": -0.633977,
-        "roi_per_settled_selection": -0.008128
+        "net_units": 0.275114,
+        "roi_per_settled_selection": 0.003482
       },
       "5": {
-        "selections": 30,
-        "settled": 30,
+        "selections": 29,
+        "settled": 29,
         "pending": 0,
         "wins": 19,
-        "losses": 11,
+        "losses": 10,
         "pushes": 0,
-        "net_units": 6.409344,
-        "roi_per_settled_selection": 0.213645
+        "net_units": 7.409344,
+        "roi_per_settled_selection": 0.255495
       },
       "7": {
         "selections": 13,
@@ -137,14 +137,14 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 29,
-        "settled": 4,
-        "pending": 25,
-        "wins": 1,
-        "losses": 3,
+        "selections": 33,
+        "settled": 6,
+        "pending": 27,
+        "wins": 2,
+        "losses": 4,
         "pushes": 0,
-        "net_units": -2.180328,
-        "roi_per_settled_selection": -0.545082
+        "net_units": -2.271237,
+        "roi_per_settled_selection": -0.37854
       },
       "5": {
         "selections": 9,
@@ -179,11 +179,11 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 40,
+  "unclassified_v3_count": 43,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 110,
-      "COHORT_NOT_GENERATED": 1,
+      "CLASSIFIED": 111,
+      "COHORT_NOT_GENERATED": 4,
       "MISSING_V1": 19,
       "MISSING_V1_AND_V2": 8,
       "MISSING_V2": 12
@@ -507,6 +507,30 @@
         "kickoff_utc": "2026-11-01T00:00:00Z",
         "matchup": "Washington Huskies at Nebraska Cornhuskers",
         "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "0f773ec5cb1e5b41f52f2bf8dbc4f182",
+        "kickoff_utc": "2026-10-24T19:00:00Z",
+        "matchup": "Oregon Ducks at Illinois Fighting Illini",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "f417c5ab864e0751355921f5d22f4b25",
+        "kickoff_utc": "2026-10-24T19:45:00Z",
+        "matchup": "Kansas State Wildcats at Arizona State Sun Devils",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "c6533cfcdfb0860d723a5fd9b9381098",
+        "kickoff_utc": "2026-10-31T23:45:00Z",
+        "matchup": "Missouri Tigers at Arkansas Razorbacks",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -874,6 +898,24 @@
       "game_id": "877d5834acad37b6142a835438c23001",
       "kickoff_utc": "2026-11-01T00:00:00Z",
       "matchup": "Washington Huskies at Nebraska Cornhuskers"
+    },
+    {
+      "season": "2026",
+      "game_id": "0f773ec5cb1e5b41f52f2bf8dbc4f182",
+      "kickoff_utc": "2026-10-24T19:00:00Z",
+      "matchup": "Oregon Ducks at Illinois Fighting Illini"
+    },
+    {
+      "season": "2026",
+      "game_id": "f417c5ab864e0751355921f5d22f4b25",
+      "kickoff_utc": "2026-10-24T19:45:00Z",
+      "matchup": "Kansas State Wildcats at Arizona State Sun Devils"
+    },
+    {
+      "season": "2026",
+      "game_id": "c6533cfcdfb0860d723a5fd9b9381098",
+      "kickoff_utc": "2026-10-31T23:45:00Z",
+      "matchup": "Missouri Tigers at Arkansas Razorbacks"
     }
   ],
   "future_pending_v3": [
@@ -920,15 +962,6 @@
       "american_odds": "-110.0",
       "edge_points": "3.60023",
       "sportsbook": "Bovada",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-24T00:30:00Z",
-      "selection": "Army Black Knights",
-      "spread": "1.5",
-      "american_odds": "-110.0",
-      "edge_points": "3.63807",
-      "sportsbook": "BetUS",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -983,15 +1016,6 @@
       "american_odds": "-114.0",
       "edge_points": "3.6032",
       "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-23T23:00:00Z",
-      "selection": "UMass Minutemen",
-      "spread": "16.5",
-      "american_odds": "-110.0",
-      "edge_points": "4.16574",
-      "sportsbook": "BetRivers",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -1100,6 +1124,42 @@
       "american_odds": "-115.0",
       "edge_points": "5.00275",
       "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-24T19:00:00Z",
+      "selection": "Illinois Fighting Illini",
+      "spread": "10.0",
+      "american_odds": "-106.0",
+      "edge_points": "3.42609",
+      "sportsbook": "LowVig.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-24T19:45:00Z",
+      "selection": "Kansas State Wildcats",
+      "spread": "-1.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.33916",
+      "sportsbook": "BetRivers",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-31T23:45:00Z",
+      "selection": "Arkansas Razorbacks",
+      "spread": "10.5",
+      "american_odds": "-115.0",
+      "edge_points": "3.3576",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-24T23:30:00Z",
+      "selection": "Iowa State Cyclones",
+      "spread": "11.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.96622",
+      "sportsbook": "Bovada",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]

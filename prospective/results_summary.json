@@ -2,47 +2,47 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 170,
-      "settled": 134,
-      "wins": 66,
-      "losses": 68,
+      "selections": 173,
+      "settled": 137,
+      "wins": 67,
+      "losses": 70,
       "pushes": 0,
-      "net_units": -7.785203,
-      "roi_per_settled_selection": -0.058099,
+      "net_units": -8.876112,
+      "roi_per_settled_selection": -0.064789,
       "pending": 36,
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 151,
-      "settled": 127,
-      "wins": 68,
-      "losses": 58,
+      "selections": 154,
+      "settled": 129,
+      "wins": 69,
+      "losses": 59,
       "pushes": 1,
-      "net_units": 3.99258,
-      "roi_per_settled_selection": 0.031438,
-      "pending": 24,
+      "net_units": 3.901671,
+      "roi_per_settled_selection": 0.030246,
+      "pending": 25,
       "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 150,
-      "settled": 125,
-      "wins": 68,
-      "losses": 55,
+      "selections": 154,
+      "settled": 127,
+      "wins": 69,
+      "losses": 56,
       "pushes": 2,
-      "net_units": 6.808436,
-      "roi_per_settled_selection": 0.054467,
-      "pending": 25,
+      "net_units": 6.717527,
+      "roi_per_settled_selection": 0.052894,
+      "pending": 27,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 67,
-      "wins": 31,
-      "losses": 35,
+      "settled": 69,
+      "wins": 32,
+      "losses": 36,
       "pushes": 1,
-      "net_units": -6.930722,
-      "roi_per_settled_selection": -0.103444
+      "net_units": -7.021631,
+      "roi_per_settled_selection": -0.101763
     },
     "5_to_lt7": {
       "settled": 36,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 471,
-    "settled": 386,
-    "pending": 85,
+    "total_frozen_selections": 481,
+    "settled": 393,
+    "pending": 88,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
