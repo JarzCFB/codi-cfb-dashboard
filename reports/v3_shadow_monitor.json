@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 70,
+      "selections": 74,
       "settled": 58,
-      "pending": 12,
+      "pending": 16,
       "wins": 33,
       "losses": 24,
       "pushes": 1,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.101596
     },
     "UNCLASSIFIED": {
-      "selections": 43,
+      "selections": 39,
       "settled": 30,
-      "pending": 13,
+      "pending": 9,
       "wins": 13,
       "losses": 16,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 43,
+  "unclassified_v3_count": 39,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 111,
-      "COHORT_NOT_GENERATED": 4,
+      "CLASSIFIED": 115,
       "MISSING_V1": 19,
       "MISSING_V1_AND_V2": 8,
       "MISSING_V2": 12
@@ -487,14 +486,6 @@
       },
       {
         "season": "2026",
-        "game_id": "a337612e92dd80f7ba7cab853ff409d0",
-        "kickoff_utc": "2026-10-24T20:00:00Z",
-        "matchup": "UL Monroe Warhawks at Troy Trojans",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "581c12d11a86412432fe89645cbe80b2",
         "kickoff_utc": "2026-10-31T19:30:00Z",
         "matchup": "Florida Gators at Georgia Bulldogs",
@@ -507,30 +498,6 @@
         "kickoff_utc": "2026-11-01T00:00:00Z",
         "matchup": "Washington Huskies at Nebraska Cornhuskers",
         "reason": "MISSING_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "0f773ec5cb1e5b41f52f2bf8dbc4f182",
-        "kickoff_utc": "2026-10-24T19:00:00Z",
-        "matchup": "Oregon Ducks at Illinois Fighting Illini",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "f417c5ab864e0751355921f5d22f4b25",
-        "kickoff_utc": "2026-10-24T19:45:00Z",
-        "matchup": "Kansas State Wildcats at Arizona State Sun Devils",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "c6533cfcdfb0860d723a5fd9b9381098",
-        "kickoff_utc": "2026-10-31T23:45:00Z",
-        "matchup": "Missouri Tigers at Arkansas Razorbacks",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -883,12 +850,6 @@
     },
     {
       "season": "2026",
-      "game_id": "a337612e92dd80f7ba7cab853ff409d0",
-      "kickoff_utc": "2026-10-24T20:00:00Z",
-      "matchup": "UL Monroe Warhawks at Troy Trojans"
-    },
-    {
-      "season": "2026",
       "game_id": "581c12d11a86412432fe89645cbe80b2",
       "kickoff_utc": "2026-10-31T19:30:00Z",
       "matchup": "Florida Gators at Georgia Bulldogs"
@@ -898,24 +859,6 @@
       "game_id": "877d5834acad37b6142a835438c23001",
       "kickoff_utc": "2026-11-01T00:00:00Z",
       "matchup": "Washington Huskies at Nebraska Cornhuskers"
-    },
-    {
-      "season": "2026",
-      "game_id": "0f773ec5cb1e5b41f52f2bf8dbc4f182",
-      "kickoff_utc": "2026-10-24T19:00:00Z",
-      "matchup": "Oregon Ducks at Illinois Fighting Illini"
-    },
-    {
-      "season": "2026",
-      "game_id": "f417c5ab864e0751355921f5d22f4b25",
-      "kickoff_utc": "2026-10-24T19:45:00Z",
-      "matchup": "Kansas State Wildcats at Arizona State Sun Devils"
-    },
-    {
-      "season": "2026",
-      "game_id": "c6533cfcdfb0860d723a5fd9b9381098",
-      "kickoff_utc": "2026-10-31T23:45:00Z",
-      "matchup": "Missouri Tigers at Arkansas Razorbacks"
     }
   ],
   "future_pending_v3": [

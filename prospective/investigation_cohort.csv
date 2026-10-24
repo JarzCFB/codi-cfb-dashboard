@@ -111,14 +111,18 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,2d125f14eca5c6eb1417f126cafde7c0,2026-10-24T16:00:00Z,Miami Hurricanes,Pittsburgh Panthers,2026-10-19T13:17:49Z,12.42088,16.01829,17.39977,3.597,true,PASS,V1/V2 agreement under 5 pts
 2026,99932501288d30e4693c828c0ab2455e,2026-10-24T16:00:00Z,Northwestern Wildcats,Rutgers Scarlet Knights,2026-10-20T13:06:05Z,13.97806,18.74268,20.10779,4.765,true,PASS,V1/V2 agreement under 5 pts
 2026,bbbabc2490914e9a4d1e619a32461b1f,2026-10-24T16:00:00Z,SMU Mustangs,California Golden Bears,2026-10-19T13:17:49Z,10.56661,12.65816,14.07826,2.092,true,PASS,V1/V2 agreement under 5 pts
+2026,0f773ec5cb1e5b41f52f2bf8dbc4f182,2026-10-24T19:00:00Z,Illinois Fighting Illini,Oregon Ducks,2026-10-23T17:45:14Z,-6.64537,-6.3494,-6.57391,0.296,true,PASS,V1/V2 agreement under 5 pts
 2026,173057d32ff5946d42566a0d164de287,2026-10-24T19:30:00Z,Alabama Crimson Tide,Texas A&M Aggies,2026-10-19T13:17:49Z,9.75609,12.42377,,2.668,true,PASS,V1/V2 agreement under 5 pts
 2026,1e9caefb58095e7560167dff561c9ff7,2026-10-24T19:30:00Z,South Carolina Gamecocks,Tennessee Volunteers,2026-10-19T13:17:49Z,-2.85268,-2.92658,-2.66848,0.074,true,PASS,V1/V2 agreement under 5 pts
 2026,20d8411740b919c4478bd28a6dd751aa,2026-10-24T19:30:00Z,Buffalo Bulls,Bowling Green Falcons,2026-10-19T13:17:49Z,7.60012,9.845,10.90389,2.245,true,PASS,V1/V2 agreement under 5 pts
 2026,bdce7d97283542037fe3f8a033c36a72,2026-10-24T19:30:00Z,Navy Midshipmen,North Texas Mean Green,2026-10-19T13:17:49Z,-4.78848,-5.19742,-5.1032,0.409,true,PASS,V1/V2 agreement under 5 pts
 2026,ca109267525bde74bd35cecd176185be,2026-10-24T19:30:00Z,Mississippi State Bulldogs,Oklahoma Sooners,2026-10-19T13:17:49Z,3.55151,0.93021,2.33398,2.621,true,PASS,V1/V2 agreement under 5 pts
+2026,f417c5ab864e0751355921f5d22f4b25,2026-10-24T19:45:00Z,Arizona State Sun Devils,Kansas State Wildcats,2026-10-24T05:46:43Z,-4.40465,-5.01825,-4.83916,0.614,true,PASS,V1/V2 agreement under 5 pts
+2026,a337612e92dd80f7ba7cab853ff409d0,2026-10-24T20:00:00Z,Troy Trojans,UL Monroe Warhawks,2026-10-23T21:47:04Z,13.8773,15.92274,17.62663,2.045,true,PASS,V1/V2 agreement under 5 pts
 2026,423bd1c75b601ccfabfca3759cc69a3f,2026-10-24T23:30:00Z,Arizona Wildcats,Iowa State Cyclones,2026-10-19T13:17:49Z,5.93289,6.3713,,0.438,true,PASS,V1/V2 agreement under 5 pts
 2026,440de8df25b4cca8ebcecb7431bbb5c0,2026-10-24T23:30:00Z,Wisconsin Badgers,USC Trojans,2026-10-19T13:17:49Z,3.40917,0.33128,1.7943,3.078,true,PASS,V1/V2 agreement under 5 pts
 2026,d99b11b38d1cf1cbb334246263c53ac9,2026-10-25T00:00:00Z,Tulane Green Wave,UTSA Roadrunners,2026-10-19T16:55:06Z,0.17718,2.38864,2.61255,2.211,true,PASS,V1/V2 agreement under 5 pts
 2026,eed30e1ba5aa37d77ee6401d67832446,2026-10-28T00:00:00Z,Missouri State Bears,Sam Houston State Bearkats,2026-10-22T17:43:12Z,-1.08091,2.47181,2.33185,3.553,false,UNSTABLE,models disagree on projected winner
 2026,7bac3aae16527dd33a224a2f81792033,2026-10-31T16:00:00Z,Oregon Ducks,Northwestern Wildcats,2026-10-22T14:30:44Z,3.66462,2.5461,3.7146,1.119,true,PASS,V1/V2 agreement under 5 pts
 2026,e916f49c82de2ce0b1844ee9f6deccfa,2026-10-31T16:00:00Z,Navy Midshipmen,Notre Dame Fighting Irish,2026-10-22T14:30:44Z,-14.72325,-20.0629,-20.27965,5.34,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,c6533cfcdfb0860d723a5fd9b9381098,2026-10-31T23:45:00Z,Arkansas Razorbacks,Missouri Tigers,2026-10-23T21:47:04Z,-7.03701,-6.89029,-7.1424,0.147,true,PASS,V1/V2 agreement under 5 pts
