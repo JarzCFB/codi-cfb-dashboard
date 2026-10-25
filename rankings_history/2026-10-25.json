@@ -1,0 +1,982 @@
+{
+  "published_central": "2026-10-25T13:33:22.966152-05:00",
+  "season": 2026,
+  "v2_parameters": {
+    "home_adv": 2.5,
+    "shrink": 4.0,
+    "prior_weight": 0.5
+  },
+  "games_used": {
+    "previous_games": 762,
+    "current_games": 431,
+    "prior_teams": 136
+  },
+  "rankings": [
+    {
+      "team": "notre dame",
+      "power_rating": 20.533003039975377,
+      "rank": 1,
+      "last_week_rank": 1,
+      "movement": 0
+    },
+    {
+      "team": "ohio state",
+      "power_rating": 20.221566326547162,
+      "rank": 2,
+      "last_week_rank": 2,
+      "movement": 0
+    },
+    {
+      "team": "miami",
+      "power_rating": 19.674710990715642,
+      "rank": 3,
+      "last_week_rank": 4,
+      "movement": 1
+    },
+    {
+      "team": "indiana",
+      "power_rating": 18.126662586978764,
+      "rank": 4,
+      "last_week_rank": 3,
+      "movement": -1
+    },
+    {
+      "team": "alabama",
+      "power_rating": 17.53392214840983,
+      "rank": 5,
+      "last_week_rank": 5,
+      "movement": 0
+    },
+    {
+      "team": "georgia",
+      "power_rating": 16.887338897004888,
+      "rank": 6,
+      "last_week_rank": 6,
+      "movement": 0
+    },
+    {
+      "team": "lsu",
+      "power_rating": 16.841655374750175,
+      "rank": 7,
+      "last_week_rank": 7,
+      "movement": 0
+    },
+    {
+      "team": "texas",
+      "power_rating": 13.71907346968517,
+      "rank": 8,
+      "last_week_rank": 10,
+      "movement": 2
+    },
+    {
+      "team": "utah",
+      "power_rating": 13.52590971621834,
+      "rank": 9,
+      "last_week_rank": 9,
+      "movement": 0
+    },
+    {
+      "team": "texas tech",
+      "power_rating": 12.131863679696323,
+      "rank": 10,
+      "last_week_rank": 8,
+      "movement": -2
+    },
+    {
+      "team": "ole miss",
+      "power_rating": 11.743215423370492,
+      "rank": 11,
+      "last_week_rank": 12,
+      "movement": 1
+    },
+    {
+      "team": "nebraska",
+      "power_rating": 11.696114270021862,
+      "rank": 12,
+      "last_week_rank": 11,
+      "movement": -1
+    },
+    {
+      "team": "arizona",
+      "power_rating": 11.310568985671154,
+      "rank": 13,
+      "last_week_rank": 24,
+      "movement": 11
+    },
+    {
+      "team": "tennessee",
+      "power_rating": 10.813773959909613,
+      "rank": 14,
+      "last_week_rank": 13,
+      "movement": -1
+    },
+    {
+      "team": "wake forest",
+      "power_rating": 10.542828647984422,
+      "rank": 15,
+      "last_week_rank": 15,
+      "movement": 0
+    },
+    {
+      "team": "northwestern",
+      "power_rating": 10.473662028196355,
+      "rank": 16,
+      "last_week_rank": 19,
+      "movement": 3
+    },
+    {
+      "team": "ucla",
+      "power_rating": 10.360818245520086,
+      "rank": 17,
+      "last_week_rank": 17,
+      "movement": 0
+    },
+    {
+      "team": "boise state",
+      "power_rating": 10.23345139512394,
+      "rank": 18,
+      "last_week_rank": 20,
+      "movement": 2
+    },
+    {
+      "team": "new mexico",
+      "power_rating": 9.596437508900237,
+      "rank": 19,
+      "last_week_rank": 23,
+      "movement": 4
+    },
+    {
+      "team": "byu",
+      "power_rating": 9.582716611786681,
+      "rank": 20,
+      "last_week_rank": 14,
+      "movement": -6
+    },
+    {
+      "team": "wisconsin",
+      "power_rating": 8.952292897151281,
+      "rank": 21,
+      "last_week_rank": 29,
+      "movement": 8
+    },
+    {
+      "team": "james madison",
+      "power_rating": 8.931240530495552,
+      "rank": 22,
+      "last_week_rank": 16,
+      "movement": -6
+    },
+    {
+      "team": "penn state",
+      "power_rating": 8.667651447958706,
+      "rank": 23,
+      "last_week_rank": 25,
+      "movement": 2
+    },
+    {
+      "team": "oregon",
+      "power_rating": 8.514776365055528,
+      "rank": 24,
+      "last_week_rank": 18,
+      "movement": -6
+    },
+    {
+      "team": "houston",
+      "power_rating": 8.332555918475402,
+      "rank": 25,
+      "last_week_rank": 26,
+      "movement": 1
+    },
+    {
+      "team": "missouri",
+      "power_rating": 8.195126362110829,
+      "rank": 26,
+      "last_week_rank": 27,
+      "movement": 1
+    },
+    {
+      "team": "usc",
+      "power_rating": 7.901813043796674,
+      "rank": 27,
+      "last_week_rank": 21,
+      "movement": -6
+    },
+    {
+      "team": "texas a and m",
+      "power_rating": 7.8979463388435605,
+      "rank": 28,
+      "last_week_rank": 28,
+      "movement": 0
+    },
+    {
+      "team": "oklahoma",
+      "power_rating": 7.665407274076044,
+      "rank": 29,
+      "last_week_rank": 32,
+      "movement": 3
+    },
+    {
+      "team": "liberty",
+      "power_rating": 7.520135446616845,
+      "rank": 30,
+      "last_week_rank": 38,
+      "movement": 8
+    },
+    {
+      "team": "iowa",
+      "power_rating": 7.498546209853028,
+      "rank": 31,
+      "last_week_rank": 22,
+      "movement": -9
+    },
+    {
+      "team": "kentucky",
+      "power_rating": 7.210841693169742,
+      "rank": 32,
+      "last_week_rank": 33,
+      "movement": 1
+    },
+    {
+      "team": "louisville",
+      "power_rating": 7.095987782612964,
+      "rank": 33,
+      "last_week_rank": 31,
+      "movement": -2
+    },
+    {
+      "team": "south carolina",
+      "power_rating": 7.006174240752704,
+      "rank": 34,
+      "last_week_rank": 34,
+      "movement": 0
+    },
+    {
+      "team": "florida",
+      "power_rating": 6.830259419693263,
+      "rank": 35,
+      "last_week_rank": 30,
+      "movement": -5
+    },
+    {
+      "team": "smu",
+      "power_rating": 6.148592424868062,
+      "rank": 36,
+      "last_week_rank": 47,
+      "movement": 11
+    },
+    {
+      "team": "north texas",
+      "power_rating": 6.031956680692552,
+      "rank": 37,
+      "last_week_rank": 39,
+      "movement": 2
+    },
+    {
+      "team": "oregon state",
+      "power_rating": 5.850713247415212,
+      "rank": 38,
+      "last_week_rank": 37,
+      "movement": -1
+    },
+    {
+      "team": "memphis",
+      "power_rating": 5.652981335926219,
+      "rank": 39,
+      "last_week_rank": 35,
+      "movement": -4
+    },
+    {
+      "team": "florida state",
+      "power_rating": 5.39410183810238,
+      "rank": 40,
+      "last_week_rank": 43,
+      "movement": 3
+    },
+    {
+      "team": "michigan",
+      "power_rating": 5.305387621102605,
+      "rank": 41,
+      "last_week_rank": 42,
+      "movement": 1
+    },
+    {
+      "team": "auburn",
+      "power_rating": 4.855933705865379,
+      "rank": 42,
+      "last_week_rank": 36,
+      "movement": -6
+    },
+    {
+      "team": "mississippi state",
+      "power_rating": 4.823342765096502,
+      "rank": 43,
+      "last_week_rank": 40,
+      "movement": -3
+    },
+    {
+      "team": "baylor",
+      "power_rating": 4.667037655817128,
+      "rank": 44,
+      "last_week_rank": 41,
+      "movement": -3
+    },
+    {
+      "team": "pittsburgh",
+      "power_rating": 4.176575525185374,
+      "rank": 45,
+      "last_week_rank": 44,
+      "movement": -1
+    },
+    {
+      "team": "oklahoma state",
+      "power_rating": 3.509325847786608,
+      "rank": 46,
+      "last_week_rank": 57,
+      "movement": 11
+    },
+    {
+      "team": "duke",
+      "power_rating": 3.385939814293387,
+      "rank": 47,
+      "last_week_rank": 48,
+      "movement": 1
+    },
+    {
+      "team": "south florida",
+      "power_rating": 2.8804133321382093,
+      "rank": 48,
+      "last_week_rank": 50,
+      "movement": 2
+    },
+    {
+      "team": "illinois",
+      "power_rating": 2.757194208139749,
+      "rank": 49,
+      "last_week_rank": 56,
+      "movement": 7
+    },
+    {
+      "team": "utsa",
+      "power_rating": 2.5026565483537104,
+      "rank": 50,
+      "last_week_rank": 63,
+      "movement": 13
+    },
+    {
+      "team": "cincinnati",
+      "power_rating": 2.4492210388585542,
+      "rank": 51,
+      "last_week_rank": 68,
+      "movement": 17
+    },
+    {
+      "team": "tcu",
+      "power_rating": 2.384130978391697,
+      "rank": 52,
+      "last_week_rank": 46,
+      "movement": -6
+    },
+    {
+      "team": "washington",
+      "power_rating": 2.1095663221644645,
+      "rank": 53,
+      "last_week_rank": 51,
+      "movement": -2
+    },
+    {
+      "team": "army",
+      "power_rating": 1.991450351952584,
+      "rank": 54,
+      "last_week_rank": 53,
+      "movement": -1
+    },
+    {
+      "team": "ucf",
+      "power_rating": 1.9300796159798548,
+      "rank": 55,
+      "last_week_rank": 59,
+      "movement": 4
+    },
+    {
+      "team": "iowa state",
+      "power_rating": 1.91629265535565,
+      "rank": 56,
+      "last_week_rank": 45,
+      "movement": -11
+    },
+    {
+      "team": "kansas state",
+      "power_rating": 1.7390749251663444,
+      "rank": 57,
+      "last_week_rank": 49,
+      "movement": -8
+    },
+    {
+      "team": "kansas",
+      "power_rating": 1.7237498330246521,
+      "rank": 58,
+      "last_week_rank": 55,
+      "movement": -3
+    },
+    {
+      "team": "virginia",
+      "power_rating": 1.4280654814270048,
+      "rank": 59,
+      "last_week_rank": 58,
+      "movement": -1
+    },
+    {
+      "team": "toledo",
+      "power_rating": 0.8746970685335353,
+      "rank": 60,
+      "last_week_rank": 61,
+      "movement": 1
+    },
+    {
+      "team": "north carolina",
+      "power_rating": 0.8371807180945824,
+      "rank": 61,
+      "last_week_rank": 52,
+      "movement": -9
+    },
+    {
+      "team": "virginia tech",
+      "power_rating": 0.6878438498283171,
+      "rank": 62,
+      "last_week_rank": 60,
+      "movement": -2
+    },
+    {
+      "team": "louisiana tech",
+      "power_rating": 0.24035874736595983,
+      "rank": 63,
+      "last_week_rank": 75,
+      "movement": 12
+    },
+    {
+      "team": "michigan state",
+      "power_rating": -0.12098105056705619,
+      "rank": 64,
+      "last_week_rank": 66,
+      "movement": 2
+    },
+    {
+      "team": "western michigan",
+      "power_rating": -0.3043706585664369,
+      "rank": 65,
+      "last_week_rank": 67,
+      "movement": 2
+    },
+    {
+      "team": "texas state",
+      "power_rating": -0.49243185050435845,
+      "rank": 66,
+      "last_week_rank": 69,
+      "movement": 3
+    },
+    {
+      "team": "purdue",
+      "power_rating": -0.49285374038606367,
+      "rank": 67,
+      "last_week_rank": 70,
+      "movement": 3
+    },
+    {
+      "team": "air force",
+      "power_rating": -0.6140527132313377,
+      "rank": 68,
+      "last_week_rank": 54,
+      "movement": -14
+    },
+    {
+      "team": "clemson",
+      "power_rating": -0.6984170949203784,
+      "rank": 69,
+      "last_week_rank": 65,
+      "movement": -4
+    },
+    {
+      "team": "louisiana",
+      "power_rating": -0.852536632936706,
+      "rank": 70,
+      "last_week_rank": 62,
+      "movement": -8
+    },
+    {
+      "team": "nevada",
+      "power_rating": -0.8838100443819681,
+      "rank": 71,
+      "last_week_rank": 76,
+      "movement": 5
+    },
+    {
+      "team": "fresno state",
+      "power_rating": -0.999951732651585,
+      "rank": 72,
+      "last_week_rank": 71,
+      "movement": -1
+    },
+    {
+      "team": "arkansas",
+      "power_rating": -1.1359723702251816,
+      "rank": 73,
+      "last_week_rank": 72,
+      "movement": -1
+    },
+    {
+      "team": "unlv",
+      "power_rating": -1.3032336561462672,
+      "rank": 74,
+      "last_week_rank": 73,
+      "movement": -1
+    },
+    {
+      "team": "uconn",
+      "power_rating": -1.3649692656909183,
+      "rank": 75,
+      "last_week_rank": 81,
+      "movement": 6
+    },
+    {
+      "team": "west virginia",
+      "power_rating": -1.4359724106987217,
+      "rank": 76,
+      "last_week_rank": 85,
+      "movement": 9
+    },
+    {
+      "team": "minnesota",
+      "power_rating": -1.6030804312968112,
+      "rank": 77,
+      "last_week_rank": 82,
+      "movement": 5
+    },
+    {
+      "team": "boston college",
+      "power_rating": -1.643970564028912,
+      "rank": 78,
+      "last_week_rank": 93,
+      "movement": 15
+    },
+    {
+      "team": "tulane",
+      "power_rating": -2.2138072343454405,
+      "rank": 79,
+      "last_week_rank": 64,
+      "movement": -15
+    },
+    {
+      "team": "jacksonville state",
+      "power_rating": -2.3779660085355214,
+      "rank": 80,
+      "last_week_rank": 80,
+      "movement": 0
+    },
+    {
+      "team": "navy",
+      "power_rating": -2.5252796593169653,
+      "rank": 81,
+      "last_week_rank": 78,
+      "movement": -3
+    },
+    {
+      "team": "vanderbilt",
+      "power_rating": -2.550224421056745,
+      "rank": 82,
+      "last_week_rank": 77,
+      "movement": -5
+    },
+    {
+      "team": "fiu",
+      "power_rating": -2.74611348442543,
+      "rank": 83,
+      "last_week_rank": 74,
+      "movement": -9
+    },
+    {
+      "team": "utah state",
+      "power_rating": -2.799138898431378,
+      "rank": 84,
+      "last_week_rank": 83,
+      "movement": -1
+    },
+    {
+      "team": "arizona state",
+      "power_rating": -2.826053794574564,
+      "rank": 85,
+      "last_week_rank": 94,
+      "movement": 9
+    },
+    {
+      "team": "tulsa",
+      "power_rating": -2.942930415804889,
+      "rank": 86,
+      "last_week_rank": 86,
+      "movement": 0
+    },
+    {
+      "team": "georgia state",
+      "power_rating": -3.482062758795179,
+      "rank": 87,
+      "last_week_rank": 79,
+      "movement": -8
+    },
+    {
+      "team": "georgia southern",
+      "power_rating": -3.5274409121196886,
+      "rank": 88,
+      "last_week_rank": 87,
+      "movement": -1
+    },
+    {
+      "team": "east carolina",
+      "power_rating": -3.5903600581068424,
+      "rank": 89,
+      "last_week_rank": 92,
+      "movement": 3
+    },
+    {
+      "team": "ohio",
+      "power_rating": -3.6945597481420673,
+      "rank": 90,
+      "last_week_rank": 84,
+      "movement": -6
+    },
+    {
+      "team": "syracuse",
+      "power_rating": -3.9915317241005916,
+      "rank": 91,
+      "last_week_rank": 95,
+      "movement": 4
+    },
+    {
+      "team": "nc state",
+      "power_rating": -4.15978633454239,
+      "rank": 92,
+      "last_week_rank": 89,
+      "movement": -3
+    },
+    {
+      "team": "wyoming",
+      "power_rating": -4.414749738649152,
+      "rank": 93,
+      "last_week_rank": 101,
+      "movement": 8
+    },
+    {
+      "team": "south alabama",
+      "power_rating": -4.433167698454251,
+      "rank": 94,
+      "last_week_rank": 88,
+      "movement": -6
+    },
+    {
+      "team": "appalachian state",
+      "power_rating": -5.0293803506946375,
+      "rank": 95,
+      "last_week_rank": 104,
+      "movement": 9
+    },
+    {
+      "team": "arkansas state",
+      "power_rating": -5.807482749017843,
+      "rank": 96,
+      "last_week_rank": 97,
+      "movement": 1
+    },
+    {
+      "team": "hawaii",
+      "power_rating": -5.939509003932564,
+      "rank": 97,
+      "last_week_rank": 116,
+      "movement": 19
+    },
+    {
+      "team": "temple",
+      "power_rating": -5.947059126727917,
+      "rank": 98,
+      "last_week_rank": 99,
+      "movement": 1
+    },
+    {
+      "team": "georgia tech",
+      "power_rating": -6.265417716986825,
+      "rank": 99,
+      "last_week_rank": 90,
+      "movement": -9
+    },
+    {
+      "team": "buffalo",
+      "power_rating": -6.343129483215137,
+      "rank": 100,
+      "last_week_rank": 98,
+      "movement": -2
+    },
+    {
+      "team": "uab",
+      "power_rating": -6.374403647257416,
+      "rank": 101,
+      "last_week_rank": 105,
+      "movement": 4
+    },
+    {
+      "team": "san jose state",
+      "power_rating": -6.676641632098939,
+      "rank": 102,
+      "last_week_rank": 103,
+      "movement": 1
+    },
+    {
+      "team": "washington state",
+      "power_rating": -6.77176722027774,
+      "rank": 103,
+      "last_week_rank": 100,
+      "movement": -3
+    },
+    {
+      "team": "maryland",
+      "power_rating": -6.8569228694546736,
+      "rank": 104,
+      "last_week_rank": 109,
+      "movement": 5
+    },
+    {
+      "team": "colorado",
+      "power_rating": -6.869635969397076,
+      "rank": 105,
+      "last_week_rank": 91,
+      "movement": -14
+    },
+    {
+      "team": "miami oh",
+      "power_rating": -6.913780424521448,
+      "rank": 106,
+      "last_week_rank": 111,
+      "movement": 5
+    },
+    {
+      "team": "rutgers",
+      "power_rating": -7.204297598277253,
+      "rank": 107,
+      "last_week_rank": 102,
+      "movement": -5
+    },
+    {
+      "team": "delaware",
+      "power_rating": -7.312476284518696,
+      "rank": 108,
+      "last_week_rank": 117,
+      "movement": 9
+    },
+    {
+      "team": "new mexico state",
+      "power_rating": -7.357393272957892,
+      "rank": 109,
+      "last_week_rank": 113,
+      "movement": 4
+    },
+    {
+      "team": "troy",
+      "power_rating": -7.400625452532361,
+      "rank": 110,
+      "last_week_rank": 96,
+      "movement": -14
+    },
+    {
+      "team": "florida atlantic",
+      "power_rating": -7.511495973452588,
+      "rank": 111,
+      "last_week_rank": 110,
+      "movement": -1
+    },
+    {
+      "team": "san diego state",
+      "power_rating": -7.521652977341198,
+      "rank": 112,
+      "last_week_rank": 108,
+      "movement": -4
+    },
+    {
+      "team": "central michigan",
+      "power_rating": -7.599053909964926,
+      "rank": 113,
+      "last_week_rank": 112,
+      "movement": -1
+    },
+    {
+      "team": "coastal carolina",
+      "power_rating": -7.713679146202623,
+      "rank": 114,
+      "last_week_rank": 115,
+      "movement": 1
+    },
+    {
+      "team": "kennesaw state",
+      "power_rating": -8.716666374208566,
+      "rank": 115,
+      "last_week_rank": 107,
+      "movement": -8
+    },
+    {
+      "team": "marshall",
+      "power_rating": -8.795932646658382,
+      "rank": 116,
+      "last_week_rank": 118,
+      "movement": 2
+    },
+    {
+      "team": "middle tennessee",
+      "power_rating": -8.799968483098219,
+      "rank": 117,
+      "last_week_rank": 121,
+      "movement": 4
+    },
+    {
+      "team": "california",
+      "power_rating": -8.816149818781854,
+      "rank": 118,
+      "last_week_rank": 106,
+      "movement": -12
+    },
+    {
+      "team": "colorado state",
+      "power_rating": -8.95764732958603,
+      "rank": 119,
+      "last_week_rank": 119,
+      "movement": 0
+    },
+    {
+      "team": "old dominion",
+      "power_rating": -9.439704167635142,
+      "rank": 120,
+      "last_week_rank": 114,
+      "movement": -6
+    },
+    {
+      "team": "western kentucky",
+      "power_rating": -10.35098834418002,
+      "rank": 121,
+      "last_week_rank": 120,
+      "movement": -1
+    },
+    {
+      "team": "eastern michigan",
+      "power_rating": -10.430346225631538,
+      "rank": 122,
+      "last_week_rank": 122,
+      "movement": 0
+    },
+    {
+      "team": "southern miss",
+      "power_rating": -11.224394164076958,
+      "rank": 123,
+      "last_week_rank": 124,
+      "movement": 1
+    },
+    {
+      "team": "stanford",
+      "power_rating": -11.568965275998668,
+      "rank": 124,
+      "last_week_rank": 127,
+      "movement": 3
+    },
+    {
+      "team": "rice",
+      "power_rating": -11.6388072985492,
+      "rank": 125,
+      "last_week_rank": 126,
+      "movement": 1
+    },
+    {
+      "team": "umass",
+      "power_rating": -12.64302263704314,
+      "rank": 126,
+      "last_week_rank": 123,
+      "movement": -3
+    },
+    {
+      "team": "bowling green",
+      "power_rating": -13.209344641407553,
+      "rank": 127,
+      "last_week_rank": 128,
+      "movement": 1
+    },
+    {
+      "team": "missouri state",
+      "power_rating": -13.442324393295246,
+      "rank": 128,
+      "last_week_rank": 125,
+      "movement": -3
+    },
+    {
+      "team": "sam houston",
+      "power_rating": -13.822680546685405,
+      "rank": 129,
+      "last_week_rank": 129,
+      "movement": 0
+    },
+    {
+      "team": "ball state",
+      "power_rating": -15.405539024518179,
+      "rank": 130,
+      "last_week_rank": 131,
+      "movement": 1
+    },
+    {
+      "team": "kent state",
+      "power_rating": -15.857720109286568,
+      "rank": 131,
+      "last_week_rank": 134,
+      "movement": 3
+    },
+    {
+      "team": "ul monroe",
+      "power_rating": -16.407088204273393,
+      "rank": 132,
+      "last_week_rank": 135,
+      "movement": 3
+    },
+    {
+      "team": "charlotte",
+      "power_rating": -16.58503630665391,
+      "rank": 133,
+      "last_week_rank": 132,
+      "movement": -1
+    },
+    {
+      "team": "northern illinois",
+      "power_rating": -16.9030584525306,
+      "rank": 134,
+      "last_week_rank": 130,
+      "movement": -4
+    },
+    {
+      "team": "akron",
+      "power_rating": -17.737753388323014,
+      "rank": 135,
+      "last_week_rank": 133,
+      "movement": -2
+    },
+    {
+      "team": "utep",
+      "power_rating": -19.63319266716963,
+      "rank": 136,
+      "last_week_rank": 136,
+      "movement": 0
+    },
+    {
+      "team": "sacramento state",
+      "power_rating": null,
+      "rank": null,
+      "last_week_rank": null,
+      "movement": null
+    },
+    {
+      "team": "north dakota state",
+      "power_rating": null,
+      "rank": null,
+      "last_week_rank": null,
+      "movement": null
+    }
+  ]
+}
