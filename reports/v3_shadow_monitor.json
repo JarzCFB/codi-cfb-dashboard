@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 120,
+      "COHORT_NOT_GENERATED": 2,
       "MISSING_V1": 23,
       "MISSING_V1_AND_V2": 9,
-      "MISSING_V2": 14
+      "MISSING_V2": 12
     },
     "unclassified_details": [
       {
@@ -497,7 +498,7 @@
         "game_id": "877d5834acad37b6142a835438c23001",
         "kickoff_utc": "2026-11-01T00:00:00Z",
         "matchup": "Washington Huskies at Nebraska Cornhuskers",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -513,7 +514,7 @@
         "game_id": "1e591733bae48534963359a9cff13701",
         "kickoff_utc": "2026-10-31T19:30:00Z",
         "matchup": "Minnesota Golden Gophers at Indiana Hoosiers",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -561,12 +562,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 21,
+    "covered_v3": 29,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 4,
+        "selections": 5,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -576,7 +577,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 15,
+        "selections": 22,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -653,11 +654,29 @@
       },
       {
         "season": "2026",
+        "game_id": "07da1e37f1e37363a71d35f2298f01d9",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "matchup": "Illinois Fighting Illini at Maryland Terrapins",
+        "status": "PASS",
+        "disagreement_points": "3.87686",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "2f219378e527cf1f695b814a0a4ad63c",
         "kickoff_utc": "2026-10-31T16:00:00Z",
         "matchup": "SMU Mustangs at Syracuse Orange",
         "status": "CAUTION",
         "disagreement_points": "5.82656",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "3713b2d962a33a6e55be7bffedd604a5",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "matchup": "UAB Blazers at South Florida Bulls",
+        "status": "PASS",
+        "disagreement_points": "2.20037",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -698,11 +717,47 @@
       },
       {
         "season": "2026",
+        "game_id": "fc416b26c2c25018a05bc5cb0d80dbb6",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "matchup": "Bowling Green Falcons at Western Michigan Broncos",
+        "status": "PASS",
+        "disagreement_points": "1.77305",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "dea96094c29a9f24d7dc07a5d848afd7",
         "kickoff_utc": "2026-10-31T16:30:00Z",
         "matchup": "Michigan Wolverines at Rutgers Scarlet Knights",
         "status": "CAUTION",
         "disagreement_points": "7.22244",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "e88d624c699646a03bac59eb193a09bf",
+        "kickoff_utc": "2026-10-31T17:00:00Z",
+        "matchup": "Marshall Thundering Herd at Old Dominion Monarchs",
+        "status": "PASS",
+        "disagreement_points": "1.72331",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "d19dbab4071552441b056ccd2e23ca59",
+        "kickoff_utc": "2026-10-31T18:00:00Z",
+        "matchup": "Kansas State Wildcats at Colorado Buffaloes",
+        "status": "PASS",
+        "disagreement_points": "0.03779",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "e5817afb8338b8f7272feff21d87d7f7",
+        "kickoff_utc": "2026-10-31T19:00:00Z",
+        "matchup": "Louisiana Tech Bulldogs at South Alabama Jaguars",
+        "status": "PASS",
+        "disagreement_points": "1.48821",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -721,6 +776,15 @@
         "matchup": "Florida Gators at Georgia Bulldogs",
         "status": "PASS",
         "disagreement_points": "3.51081",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "9c33dd628312f89764392414cbc99c86",
+        "kickoff_utc": "2026-10-31T19:30:00Z",
+        "matchup": "Colorado State Rams at Utah State Aggies",
+        "status": "CAUTION",
+        "disagreement_points": "6.58981",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -784,6 +848,15 @@
         "matchup": "Washington Huskies at Nebraska Cornhuskers",
         "status": "PASS",
         "disagreement_points": "1.97296",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "1d5b8007f5249010b9c501138e25ac74",
+        "kickoff_utc": "2026-11-01T02:30:00Z",
+        "matchup": "Northern Illinois Huskies at UNLV Rebels",
+        "status": "PASS",
+        "disagreement_points": "2.58157",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
