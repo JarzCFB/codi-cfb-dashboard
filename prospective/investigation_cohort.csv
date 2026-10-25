@@ -125,4 +125,10 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,eed30e1ba5aa37d77ee6401d67832446,2026-10-28T00:00:00Z,Missouri State Bears,Sam Houston State Bearkats,2026-10-22T17:43:12Z,-1.08091,2.47181,2.33185,3.553,false,UNSTABLE,models disagree on projected winner
 2026,7bac3aae16527dd33a224a2f81792033,2026-10-31T16:00:00Z,Oregon Ducks,Northwestern Wildcats,2026-10-22T14:30:44Z,3.66462,2.5461,3.7146,1.119,true,PASS,V1/V2 agreement under 5 pts
 2026,e916f49c82de2ce0b1844ee9f6deccfa,2026-10-31T16:00:00Z,Navy Midshipmen,Notre Dame Fighting Irish,2026-10-22T14:30:44Z,-14.72325,-20.0629,-20.27965,5.34,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,dea96094c29a9f24d7dc07a5d848afd7,2026-10-31T16:30:00Z,Rutgers Scarlet Knights,Michigan Wolverines,2026-10-25T13:43:43Z,-2.78724,-10.00969,-8.56411,7.222,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,3f36c41ee29e9339f71fada56d832914,2026-10-31T16:45:00Z,Ole Miss Rebels,Auburn Tigers,2026-10-25T13:43:43Z,6.7345,9.38728,,2.653,true,PASS,V1/V2 agreement under 5 pts
+2026,630ed6c8993fda8943e528a465e55518,2026-10-31T20:15:00Z,UCLA Bruins,Nevada Wolf Pack,2026-10-25T13:43:43Z,14.01701,13.74463,15.94565,0.272,true,PASS,V1/V2 agreement under 5 pts
+2026,e4e95ca26b62e1c3ced6261cbb5c5f3a,2026-10-31T23:00:00Z,Iowa State Cyclones,Oklahoma State Cowboys,2026-10-25T13:43:43Z,-5.10806,0.90697,-0.09545,6.015,false,UNSTABLE,models disagree on projected winner
+2026,49aa48a7dbcd6563f389ae4232707d64,2026-10-31T23:30:00Z,Pittsburgh Panthers,Georgia Tech Yellow Jackets,2026-10-25T13:43:43Z,13.15901,12.94199,15.03672,0.217,true,PASS,V1/V2 agreement under 5 pts
+2026,e2ffa742b36678caf388ca70fdd4878c,2026-10-31T23:30:00Z,Texas Longhorns,Mississippi State Bulldogs,2026-10-25T13:43:43Z,9.46763,11.39573,12.71837,1.928,true,PASS,V1/V2 agreement under 5 pts
 2026,c6533cfcdfb0860d723a5fd9b9381098,2026-10-31T23:45:00Z,Arkansas Razorbacks,Missouri Tigers,2026-10-23T21:47:04Z,-7.03701,-6.89029,-7.1424,0.147,true,PASS,V1/V2 agreement under 5 pts

@@ -45,9 +45,9 @@
   },
   "frozen_cohorts": {
     "CAUTION": {
-      "selections": 17,
+      "selections": 18,
       "settled": 16,
-      "pending": 1,
+      "pending": 2,
       "wins": 10,
       "losses": 6,
       "pushes": 0,
@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 74,
+      "selections": 77,
       "settled": 72,
-      "pending": 2,
+      "pending": 5,
       "wins": 38,
       "losses": 32,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.032687
     },
     "UNCLASSIFIED": {
-      "selections": 51,
+      "selections": 46,
       "settled": 37,
-      "pending": 14,
+      "pending": 9,
       "wins": 18,
       "losses": 18,
       "pushes": 1,
@@ -75,9 +75,9 @@
       "roi_per_settled_selection": -0.042153
     },
     "UNSTABLE": {
-      "selections": 24,
+      "selections": 25,
       "settled": 23,
-      "pending": 1,
+      "pending": 2,
       "wins": 13,
       "losses": 10,
       "pushes": 0,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 51,
+  "unclassified_v3_count": 46,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 115,
-      "COHORT_NOT_GENERATED": 5,
+      "CLASSIFIED": 120,
       "MISSING_V1": 23,
       "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 14
@@ -527,22 +526,6 @@
       },
       {
         "season": "2026",
-        "game_id": "49aa48a7dbcd6563f389ae4232707d64",
-        "kickoff_utc": "2026-10-31T23:30:00Z",
-        "matchup": "Georgia Tech Yellow Jackets at Pittsburgh Panthers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "630ed6c8993fda8943e528a465e55518",
-        "kickoff_utc": "2026-10-31T20:15:00Z",
-        "matchup": "Nevada Wolf Pack at UCLA Bruins",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "6519cc9dfbff22ca11d607a9f246da2c",
         "kickoff_utc": "2026-10-31T16:00:00Z",
         "matchup": "Clemson Tigers at Florida State Seminoles",
@@ -571,30 +554,6 @@
         "kickoff_utc": "2026-10-29T23:30:00Z",
         "matchup": "Florida Atlantic Owls at North Texas Mean Green",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "dea96094c29a9f24d7dc07a5d848afd7",
-        "kickoff_utc": "2026-10-31T16:30:00Z",
-        "matchup": "Michigan Wolverines at Rutgers Scarlet Knights",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "e2ffa742b36678caf388ca70fdd4878c",
-        "kickoff_utc": "2026-10-31T23:30:00Z",
-        "matchup": "Mississippi State Bulldogs at Texas Longhorns",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "e4e95ca26b62e1c3ced6261cbb5c5f3a",
-        "kickoff_utc": "2026-10-31T23:00:00Z",
-        "matchup": "Oklahoma State Cowboys at Iowa State Cyclones",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -1085,18 +1044,6 @@
     },
     {
       "season": "2026",
-      "game_id": "49aa48a7dbcd6563f389ae4232707d64",
-      "kickoff_utc": "2026-10-31T23:30:00Z",
-      "matchup": "Georgia Tech Yellow Jackets at Pittsburgh Panthers"
-    },
-    {
-      "season": "2026",
-      "game_id": "630ed6c8993fda8943e528a465e55518",
-      "kickoff_utc": "2026-10-31T20:15:00Z",
-      "matchup": "Nevada Wolf Pack at UCLA Bruins"
-    },
-    {
-      "season": "2026",
       "game_id": "6519cc9dfbff22ca11d607a9f246da2c",
       "kickoff_utc": "2026-10-31T16:00:00Z",
       "matchup": "Clemson Tigers at Florida State Seminoles"
@@ -1118,24 +1065,6 @@
       "game_id": "c35bb6023b4b5005a38e7cec3ebe4d0b",
       "kickoff_utc": "2026-10-29T23:30:00Z",
       "matchup": "Florida Atlantic Owls at North Texas Mean Green"
-    },
-    {
-      "season": "2026",
-      "game_id": "dea96094c29a9f24d7dc07a5d848afd7",
-      "kickoff_utc": "2026-10-31T16:30:00Z",
-      "matchup": "Michigan Wolverines at Rutgers Scarlet Knights"
-    },
-    {
-      "season": "2026",
-      "game_id": "e2ffa742b36678caf388ca70fdd4878c",
-      "kickoff_utc": "2026-10-31T23:30:00Z",
-      "matchup": "Mississippi State Bulldogs at Texas Longhorns"
-    },
-    {
-      "season": "2026",
-      "game_id": "e4e95ca26b62e1c3ced6261cbb5c5f3a",
-      "kickoff_utc": "2026-10-31T23:00:00Z",
-      "matchup": "Oklahoma State Cowboys at Iowa State Cyclones"
     }
   ],
   "future_pending_v3": [
