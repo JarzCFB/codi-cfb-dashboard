@@ -562,12 +562,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 29,
+    "covered_v3": 30,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 5,
+        "selections": 6,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -848,6 +848,15 @@
         "matchup": "Washington Huskies at Nebraska Cornhuskers",
         "status": "PASS",
         "disagreement_points": "1.97296",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "b02a5444929be961896a4db9742a01fa",
+        "kickoff_utc": "2026-11-01T02:00:00Z",
+        "matchup": "Texas State Bobcats at Boise State Broncos",
+        "status": "CAUTION",
+        "disagreement_points": "5.16",
         "source": "same_capture_v3_frozen_quote"
       },
       {
