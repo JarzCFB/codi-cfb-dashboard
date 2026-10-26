@@ -45,9 +45,9 @@
   },
   "frozen_cohorts": {
     "CAUTION": {
-      "selections": 18,
+      "selections": 19,
       "settled": 16,
-      "pending": 2,
+      "pending": 3,
       "wins": 10,
       "losses": 6,
       "pushes": 0,
@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 77,
+      "selections": 82,
       "settled": 72,
-      "pending": 5,
+      "pending": 10,
       "wins": 38,
       "losses": 32,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.032687
     },
     "UNCLASSIFIED": {
-      "selections": 55,
+      "selections": 49,
       "settled": 37,
-      "pending": 18,
+      "pending": 12,
       "wins": 18,
       "losses": 18,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 55,
+  "unclassified_v3_count": 49,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 120,
-      "COHORT_NOT_GENERATED": 6,
+      "CLASSIFIED": 126,
       "MISSING_V1": 26,
       "MISSING_V1_AND_V2": 10,
       "MISSING_V2": 13
@@ -495,26 +494,10 @@
       },
       {
         "season": "2026",
-        "game_id": "877d5834acad37b6142a835438c23001",
-        "kickoff_utc": "2026-11-01T00:00:00Z",
-        "matchup": "Washington Huskies at Nebraska Cornhuskers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "0540f5758ac50f3bb60beb36755f7a1e",
         "kickoff_utc": "2026-10-29T23:30:00Z",
         "matchup": "Troy Trojans at James Madison Dukes",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "1e591733bae48534963359a9cff13701",
-        "kickoff_utc": "2026-10-31T19:30:00Z",
-        "matchup": "Minnesota Golden Gophers at Indiana Hoosiers",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -567,14 +550,6 @@
       },
       {
         "season": "2026",
-        "game_id": "1d5b8007f5249010b9c501138e25ac74",
-        "kickoff_utc": "2026-11-01T02:30:00Z",
-        "matchup": "Northern Illinois Huskies at UNLV Rebels",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "3713b2d962a33a6e55be7bffedd604a5",
         "kickoff_utc": "2026-10-31T16:00:00Z",
         "matchup": "UAB Blazers at South Florida Bulls",
@@ -583,34 +558,10 @@
       },
       {
         "season": "2026",
-        "game_id": "9c33dd628312f89764392414cbc99c86",
-        "kickoff_utc": "2026-10-31T19:30:00Z",
-        "matchup": "Colorado State Rams at Utah State Aggies",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "d19dbab4071552441b056ccd2e23ca59",
-        "kickoff_utc": "2026-10-31T18:00:00Z",
-        "matchup": "Kansas State Wildcats at Colorado Buffaloes",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "e5817afb8338b8f7272feff21d87d7f7",
         "kickoff_utc": "2026-10-31T19:00:00Z",
         "matchup": "Louisiana Tech Bulldogs at South Alabama Jaguars",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "e88d624c699646a03bac59eb193a09bf",
-        "kickoff_utc": "2026-10-31T17:00:00Z",
-        "matchup": "Marshall Thundering Herd at Old Dominion Monarchs",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1174,21 +1125,9 @@
     },
     {
       "season": "2026",
-      "game_id": "877d5834acad37b6142a835438c23001",
-      "kickoff_utc": "2026-11-01T00:00:00Z",
-      "matchup": "Washington Huskies at Nebraska Cornhuskers"
-    },
-    {
-      "season": "2026",
       "game_id": "0540f5758ac50f3bb60beb36755f7a1e",
       "kickoff_utc": "2026-10-29T23:30:00Z",
       "matchup": "Troy Trojans at James Madison Dukes"
-    },
-    {
-      "season": "2026",
-      "game_id": "1e591733bae48534963359a9cff13701",
-      "kickoff_utc": "2026-10-31T19:30:00Z",
-      "matchup": "Minnesota Golden Gophers at Indiana Hoosiers"
     },
     {
       "season": "2026",
@@ -1228,39 +1167,15 @@
     },
     {
       "season": "2026",
-      "game_id": "1d5b8007f5249010b9c501138e25ac74",
-      "kickoff_utc": "2026-11-01T02:30:00Z",
-      "matchup": "Northern Illinois Huskies at UNLV Rebels"
-    },
-    {
-      "season": "2026",
       "game_id": "3713b2d962a33a6e55be7bffedd604a5",
       "kickoff_utc": "2026-10-31T16:00:00Z",
       "matchup": "UAB Blazers at South Florida Bulls"
     },
     {
       "season": "2026",
-      "game_id": "9c33dd628312f89764392414cbc99c86",
-      "kickoff_utc": "2026-10-31T19:30:00Z",
-      "matchup": "Colorado State Rams at Utah State Aggies"
-    },
-    {
-      "season": "2026",
-      "game_id": "d19dbab4071552441b056ccd2e23ca59",
-      "kickoff_utc": "2026-10-31T18:00:00Z",
-      "matchup": "Kansas State Wildcats at Colorado Buffaloes"
-    },
-    {
-      "season": "2026",
       "game_id": "e5817afb8338b8f7272feff21d87d7f7",
       "kickoff_utc": "2026-10-31T19:00:00Z",
       "matchup": "Louisiana Tech Bulldogs at South Alabama Jaguars"
-    },
-    {
-      "season": "2026",
-      "game_id": "e88d624c699646a03bac59eb193a09bf",
-      "kickoff_utc": "2026-10-31T17:00:00Z",
-      "matchup": "Marshall Thundering Herd at Old Dominion Monarchs"
     },
     {
       "season": "2026",
