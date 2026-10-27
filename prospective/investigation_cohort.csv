@@ -130,6 +130,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,e88d624c699646a03bac59eb193a09bf,2026-10-31T17:00:00Z,Old Dominion Monarchs,Marshall Thundering Herd,2026-10-25T19:39:27Z,3.57954,1.85623,3.11493,1.723,true,PASS,V1/V2 agreement under 5 pts
 2026,d19dbab4071552441b056ccd2e23ca59,2026-10-31T18:00:00Z,Colorado Buffaloes,Kansas State Wildcats,2026-10-25T19:39:27Z,-6.07092,-6.10871,-6.22097,0.038,true,PASS,V1/V2 agreement under 5 pts
 2026,1e591733bae48534963359a9cff13701,2026-10-31T19:30:00Z,Indiana Hoosiers,Minnesota Golden Gophers,2026-10-25T19:39:27Z,17.2349,22.22974,23.70124,4.995,true,PASS,V1/V2 agreement under 5 pts
+2026,581c12d11a86412432fe89645cbe80b2,2026-10-31T19:30:00Z,Georgia Bulldogs,Florida Gators,2026-10-26T21:39:03Z,8.90696,12.5853,13.60216,3.678,true,PASS,V1/V2 agreement under 5 pts
 2026,9c33dd628312f89764392414cbc99c86,2026-10-31T19:30:00Z,Utah State Aggies,Colorado State Rams,2026-10-25T19:39:27Z,2.0687,8.65851,8.37383,6.59,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,630ed6c8993fda8943e528a465e55518,2026-10-31T20:15:00Z,UCLA Bruins,Nevada Wolf Pack,2026-10-25T13:43:43Z,14.01701,13.74463,15.94565,0.272,true,PASS,V1/V2 agreement under 5 pts
 2026,e4e95ca26b62e1c3ced6261cbb5c5f3a,2026-10-31T23:00:00Z,Iowa State Cyclones,Oklahoma State Cowboys,2026-10-25T13:43:43Z,-5.10806,0.90697,-0.09545,6.015,false,UNSTABLE,models disagree on projected winner

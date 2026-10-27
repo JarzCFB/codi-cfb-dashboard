@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 82,
+      "selections": 83,
       "settled": 72,
-      "pending": 10,
+      "pending": 11,
       "wins": 38,
       "losses": 32,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.032687
     },
     "UNCLASSIFIED": {
-      "selections": 51,
+      "selections": 50,
       "settled": 37,
-      "pending": 14,
+      "pending": 13,
       "wins": 18,
       "losses": 18,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 51,
+  "unclassified_v3_count": 50,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 126,
-      "COHORT_NOT_GENERATED": 1,
+      "CLASSIFIED": 127,
       "MISSING_V1": 26,
       "MISSING_V1_AND_V2": 10,
       "MISSING_V2": 14
@@ -483,14 +482,6 @@
         "kickoff_utc": "2026-10-24T21:00:00Z",
         "matchup": "San Jose State Spartans at Nevada Wolf Pack",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "581c12d11a86412432fe89645cbe80b2",
-        "kickoff_utc": "2026-10-31T19:30:00Z",
-        "matchup": "Florida Gators at Georgia Bulldogs",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1151,12 +1142,6 @@
       "game_id": "c8b1ac2d988cf0d2c90200c8731bcde1",
       "kickoff_utc": "2026-10-24T21:00:00Z",
       "matchup": "San Jose State Spartans at Nevada Wolf Pack"
-    },
-    {
-      "season": "2026",
-      "game_id": "581c12d11a86412432fe89645cbe80b2",
-      "kickoff_utc": "2026-10-31T19:30:00Z",
-      "matchup": "Florida Gators at Georgia Bulldogs"
     },
     {
       "season": "2026",
