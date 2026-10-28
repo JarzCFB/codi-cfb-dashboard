@@ -26,12 +26,12 @@
     },
     "UNSTABLE": {
       "classified_games": 28,
-      "settled_games": 21,
-      "winner_correct": 12,
+      "settled_games": 22,
+      "winner_correct": 13,
       "within_7": 11,
-      "winner_accuracy": 0.571429,
-      "margin_mae": 16.225,
-      "within_7_rate": 0.52381
+      "winner_accuracy": 0.590909,
+      "margin_mae": 16.336,
+      "within_7_rate": 0.5
     }
   }
 }
