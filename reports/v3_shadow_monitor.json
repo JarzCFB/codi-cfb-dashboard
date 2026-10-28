@@ -593,7 +593,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 32,
+    "covered_v3": 34,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -608,7 +608,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 23,
+        "selections": 24,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -618,7 +618,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 3,
+        "selections": 4,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -681,6 +681,15 @@
         "matchup": "Florida Atlantic Owls at North Texas Mean Green",
         "status": "PASS",
         "disagreement_points": "4.79713",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "78b3d38cdfa28649fdd2ca92829569ce",
+        "kickoff_utc": "2026-10-30T23:00:00Z",
+        "matchup": "Tulane Green Wave at Charlotte 49ers",
+        "status": "PASS",
+        "disagreement_points": "3.08991",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -780,6 +789,15 @@
         "matchup": "Kansas State Wildcats at Colorado Buffaloes",
         "status": "PASS",
         "disagreement_points": "0.03779",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "573eed720cdbfb7644835b8beb1bc89a",
+        "kickoff_utc": "2026-10-31T19:00:00Z",
+        "matchup": "UConn Huskies at Air Force Falcons",
+        "status": "UNSTABLE",
+        "disagreement_points": "3.5675",
         "source": "same_capture_v3_frozen_quote"
       },
       {
