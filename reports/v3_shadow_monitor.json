@@ -4,13 +4,13 @@
   "edge_thresholds": {
     "3": {
       "selections": 177,
-      "settled": 148,
-      "pending": 29,
+      "settled": 149,
+      "pending": 28,
       "wins": 79,
-      "losses": 66,
+      "losses": 67,
       "pushes": 3,
-      "net_units": 5.821675,
-      "roi_per_settled_selection": 0.039336
+      "net_units": 4.821675,
+      "roi_per_settled_selection": 0.03236
     },
     "5": {
       "selections": 76,
@@ -76,58 +76,58 @@
     },
     "UNSTABLE": {
       "selections": 25,
-      "settled": 23,
-      "pending": 2,
+      "settled": 24,
+      "pending": 1,
       "wins": 13,
-      "losses": 10,
+      "losses": 11,
       "pushes": 0,
-      "net_units": 1.830525,
-      "roi_per_settled_selection": 0.079588
+      "net_units": 0.830525,
+      "roi_per_settled_selection": 0.034605
     }
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-10-25T00:00:00Z",
+    "through_kickoff_utc": "2026-10-28T00:00:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 63,
-        "settled": 63,
+        "selections": 61,
+        "settled": 61,
         "pending": 0,
-        "wins": 30,
-        "losses": 32,
+        "wins": 27,
+        "losses": 33,
         "pushes": 1,
-        "net_units": -4.737752,
-        "roi_per_settled_selection": -0.075202
+        "net_units": -8.589323,
+        "roi_per_settled_selection": -0.140809
       },
       "5": {
-        "selections": 22,
-        "settled": 22,
+        "selections": 20,
+        "settled": 20,
         "pending": 0,
-        "wins": 13,
+        "wins": 11,
         "losses": 9,
         "pushes": 0,
-        "net_units": 2.654501,
-        "roi_per_settled_selection": 0.120659
+        "net_units": 0.793029,
+        "roi_per_settled_selection": 0.039651
       },
       "7": {
-        "selections": 7,
-        "settled": 7,
+        "selections": 6,
+        "settled": 6,
         "pending": 0,
-        "wins": 6,
+        "wins": 5,
         "losses": 1,
         "pushes": 0,
-        "net_units": 4.376519,
-        "roi_per_settled_selection": 0.625217
+        "net_units": 3.424138,
+        "roi_per_settled_selection": 0.57069
       },
       "10": {
-        "selections": 3,
-        "settled": 3,
+        "selections": 2,
+        "settled": 2,
         "pending": 0,
-        "wins": 2,
+        "wins": 1,
         "losses": 1,
         "pushes": 0,
-        "net_units": 0.861472,
-        "roi_per_settled_selection": 0.287157
+        "net_units": -0.090909,
+        "roi_per_settled_selection": -0.045455
       }
     }
   },
@@ -138,13 +138,13 @@
     "thresholds": {
       "3": {
         "selections": 56,
-        "settled": 27,
-        "pending": 29,
+        "settled": 28,
+        "pending": 28,
         "wins": 12,
-        "losses": 14,
+        "losses": 15,
         "pushes": 1,
-        "net_units": -3.167089,
-        "roi_per_settled_selection": -0.1173
+        "net_units": -4.167089,
+        "roi_per_settled_selection": -0.148825
       },
       "5": {
         "selections": 18,
@@ -1248,15 +1248,6 @@
       "american_odds": "-110.0",
       "edge_points": "8.22035",
       "sportsbook": "DraftKings",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-28T00:00:00Z",
-      "selection": "Sam Houston State Bearkats",
-      "spread": "6.5",
-      "american_odds": "100.0",
-      "edge_points": "4.16815",
-      "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
