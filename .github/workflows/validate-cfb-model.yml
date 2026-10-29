@@ -20,6 +20,8 @@ on:
       - 'snapshots/2026/**'
       - '.github/workflows/validate-cfb-model.yml'
   workflow_dispatch:
+  schedule:
+    - cron: '47 14 * * *' # Daily automated model health/regression audit (UTC)
 
 permissions:
   contents: read
@@ -40,6 +42,31 @@ jobs:
         run: |
           python -m unittest discover -v
           python -m unittest discover -s tests -v
+      - name: Audit frozen selection ledger and reject missing completed grades
+        run: |
+          python - <<'PY'
+          import csv
+          from datetime import datetime, timezone
+          from pathlib import Path
+          def read(path):
+              with Path(path).open(newline='', encoding='utf-8-sig') as f:
+                  return list(csv.DictReader(f))
+          picks = read('prospective/selections.csv')
+          graded = read('prospective/graded_selections.csv')
+          def key(r): return (r['model_version'].lower(), r['game_id'])
+          pick_keys = [key(r) for r in picks]
+          grade_keys = [key(r) for r in graded]
+          assert len(pick_keys) == len(set(pick_keys)), 'Duplicate frozen selections'
+          assert len(grade_keys) == len(set(grade_keys)), 'Duplicate graded selections'
+          assert set(grade_keys) <= set(pick_keys), 'Graded record absent from frozen ledger'
+          missing = [r for r in picks if key(r) not in set(grade_keys)]
+          now = datetime.now(timezone.utc)
+          overdue = [r for r in missing if datetime.fromisoformat(r['kickoff_utc'].replace('Z','+00:00')) < now.replace(microsecond=0) - __import__('datetime').timedelta(hours=8)]
+          print(f'Frozen: {len(picks)}; graded: {len(graded)}; awaiting grading: {len(missing)}; overdue >8h after kickoff: {len(overdue)}')
+          with open(__import__('os').environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              out.write(f'\\n## Frozen ledger health\\n- Frozen: {len(picks)}\\n- Graded: {len(graded)}\\n- Awaiting grading: {len(missing)}\\n- Overdue >8h after kickoff: {len(overdue)}\\n')
+          assert not overdue, 'Missing graded records for games kicked off >8h ago'
+          PY
       - name: Validate research report offline
         run: |
           python v3_shadow_monitor.py
