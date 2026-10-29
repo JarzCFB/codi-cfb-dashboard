@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 83,
+      "selections": 86,
       "settled": 72,
-      "pending": 11,
+      "pending": 14,
       "wins": 38,
       "losses": 32,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.032687
     },
     "UNCLASSIFIED": {
-      "selections": 55,
+      "selections": 51,
       "settled": 37,
-      "pending": 18,
+      "pending": 14,
       "wins": 18,
       "losses": 18,
       "pushes": 1,
@@ -75,9 +75,9 @@
       "roi_per_settled_selection": -0.042153
     },
     "UNSTABLE": {
-      "selections": 25,
+      "selections": 26,
       "settled": 24,
-      "pending": 1,
+      "pending": 2,
       "wins": 13,
       "losses": 11,
       "pushes": 0,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 55,
+  "unclassified_v3_count": 51,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 127,
-      "COHORT_NOT_GENERATED": 4,
+      "CLASSIFIED": 131,
       "MISSING_V1": 26,
       "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 16
@@ -527,14 +526,6 @@
       },
       {
         "season": "2026",
-        "game_id": "c35bb6023b4b5005a38e7cec3ebe4d0b",
-        "kickoff_utc": "2026-10-29T23:30:00Z",
-        "matchup": "Florida Atlantic Owls at North Texas Mean Green",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "07da1e37f1e37363a71d35f2298f01d9",
         "kickoff_utc": "2026-10-31T16:00:00Z",
         "matchup": "Illinois Fighting Illini at Maryland Terrapins",
@@ -587,30 +578,6 @@
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "BYU Cougars at Utah Utes",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "573eed720cdbfb7644835b8beb1bc89a",
-        "kickoff_utc": "2026-10-31T19:00:00Z",
-        "matchup": "UConn Huskies at Air Force Falcons",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "78b3d38cdfa28649fdd2ca92829569ce",
-        "kickoff_utc": "2026-10-30T23:00:00Z",
-        "matchup": "Tulane Green Wave at Charlotte 49ers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "2c3f80e228a486e04f6f7a38e4f00fb4",
-        "kickoff_utc": "2026-11-07T17:00:00Z",
-        "matchup": "Michigan State Spartans at Michigan Wolverines",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1261,12 +1228,6 @@
     },
     {
       "season": "2026",
-      "game_id": "c35bb6023b4b5005a38e7cec3ebe4d0b",
-      "kickoff_utc": "2026-10-29T23:30:00Z",
-      "matchup": "Florida Atlantic Owls at North Texas Mean Green"
-    },
-    {
-      "season": "2026",
       "game_id": "07da1e37f1e37363a71d35f2298f01d9",
       "kickoff_utc": "2026-10-31T16:00:00Z",
       "matchup": "Illinois Fighting Illini at Maryland Terrapins"
@@ -1306,24 +1267,6 @@
       "game_id": "8db5a11826fc84a5a6506c9b85979e70",
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "matchup": "BYU Cougars at Utah Utes"
-    },
-    {
-      "season": "2026",
-      "game_id": "573eed720cdbfb7644835b8beb1bc89a",
-      "kickoff_utc": "2026-10-31T19:00:00Z",
-      "matchup": "UConn Huskies at Air Force Falcons"
-    },
-    {
-      "season": "2026",
-      "game_id": "78b3d38cdfa28649fdd2ca92829569ce",
-      "kickoff_utc": "2026-10-30T23:00:00Z",
-      "matchup": "Tulane Green Wave at Charlotte 49ers"
-    },
-    {
-      "season": "2026",
-      "game_id": "2c3f80e228a486e04f6f7a38e4f00fb4",
-      "kickoff_utc": "2026-11-07T17:00:00Z",
-      "matchup": "Michigan State Spartans at Michigan Wolverines"
     },
     {
       "season": "2026",
