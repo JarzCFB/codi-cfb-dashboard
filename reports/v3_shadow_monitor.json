@@ -601,12 +601,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 37,
+    "covered_v3": 40,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 6,
+        "selections": 7,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -616,7 +616,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 27,
+        "selections": 28,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -626,7 +626,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 4,
+        "selections": 5,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -698,6 +698,15 @@
         "matchup": "Tulane Green Wave at Charlotte 49ers",
         "status": "PASS",
         "disagreement_points": "3.08991",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "44ee19d31b9288ad402868d6df737595",
+        "kickoff_utc": "2026-10-30T23:30:00Z",
+        "matchup": "Baylor Bears at UCF Knights",
+        "status": "UNSTABLE",
+        "disagreement_points": "3.89765",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -932,6 +941,24 @@
         "matchup": "Northern Illinois Huskies at UNLV Rebels",
         "status": "PASS",
         "disagreement_points": "2.58157",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "657053f4734af94664beb750813257bb",
+        "kickoff_utc": "2026-11-04T01:00:00Z",
+        "matchup": "Buffalo Bulls at Miami (OH) RedHawks",
+        "status": "PASS",
+        "disagreement_points": "2.66992",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "6ee8ad6eb7454d13bebc0806a10cc861",
+        "kickoff_utc": "2026-11-05T00:00:00Z",
+        "matchup": "Ball State Cardinals at UMass Minutemen",
+        "status": "CAUTION",
+        "disagreement_points": "5.52672",
         "source": "same_capture_v3_frozen_quote"
       },
       {
