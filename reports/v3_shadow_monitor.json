@@ -594,7 +594,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 36,
+    "covered_v3": 37,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -609,7 +609,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 26,
+        "selections": 27,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -781,6 +781,15 @@
         "matchup": "Marshall Thundering Herd at Old Dominion Monarchs",
         "status": "PASS",
         "disagreement_points": "1.72331",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "47548a73e429985e77f81a4617b4fdfd",
+        "kickoff_utc": "2026-10-31T18:00:00Z",
+        "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers",
+        "status": "PASS",
+        "disagreement_points": "1.88666",
         "source": "same_capture_v3_frozen_quote"
       },
       {
