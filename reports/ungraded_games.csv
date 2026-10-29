@@ -1,6 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,66c2794f789b9c2c028297eff4838e81,2026-10-28T23:00:00Z,Middle Tennessee Blue Raiders,Kennesaw State Owls,not_final_in_cfbd
-2026,cf6c89492427cb54521b70e7c5dc5993,2026-10-29T00:00:00Z,New Mexico State Aggies,Jacksonville State Gamecocks,not_final_in_cfbd
 2026,0540f5758ac50f3bb60beb36755f7a1e,2026-10-29T23:30:00Z,James Madison Dukes,Troy Trojans,not_final_in_cfbd
 2026,c35bb6023b4b5005a38e7cec3ebe4d0b,2026-10-29T23:30:00Z,North Texas Mean Green,Florida Atlantic Owls,not_final_in_cfbd
 2026,78b3d38cdfa28649fdd2ca92829569ce,2026-10-30T23:00:00Z,Charlotte 49ers,Tulane Green Wave,not_final_in_cfbd
@@ -51,9 +49,16 @@ season,game_id,kickoff_utc,home_team,away_team,reason
 2026,b02a5444929be961896a4db9742a01fa,2026-11-01T02:00:00Z,Boise State Broncos,Texas State Bobcats,not_final_in_cfbd
 2026,1d5b8007f5249010b9c501138e25ac74,2026-11-01T02:30:00Z,UNLV Rebels,Northern Illinois Huskies,not_final_in_cfbd
 2026,d0126c335a51772c70c76e17ca06afb3,2026-11-01T03:00:00Z,Fresno State Bulldogs,Oregon State Beavers,not_final_in_cfbd
+2026,11da04c7d3fba48caf11a5d8b66b8ccd,2026-11-07T00:00:00Z,SMU Mustangs,Virginia Tech Hokies,not_final_in_cfbd
+2026,2c3f80e228a486e04f6f7a38e4f00fb4,2026-11-07T17:00:00Z,Michigan Wolverines,Michigan State Spartans,not_final_in_cfbd
+2026,5b05bf2ff27508703418dcf70079a22f,2026-11-07T17:00:00Z,Minnesota Golden Gophers,UCLA Bruins,not_final_in_cfbd
 2026,43a67a478177d0dc6ef141aacf2bfd2a,2026-11-07T17:00:00Z,Missouri Tigers,Texas Longhorns,not_final_in_cfbd
+2026,61cf0b043d9d95f0a73d0838ff08a24b,2026-11-07T17:00:00Z,Northwestern Wildcats,Iowa Hawkeyes,not_final_in_cfbd
+2026,c2784b24d84fa71e7368fd775914c37d,2026-11-07T17:00:00Z,Ohio State Buckeyes,Oregon Ducks,not_final_in_cfbd
 2026,8db5a11826fc84a5a6506c9b85979e70,2026-11-07T17:00:00Z,Utah Utes,BYU Cougars,not_final_in_cfbd
 2026,00f194290bfcdfebb1d8456057b20614,2026-11-07T20:30:00Z,LSU Tigers,Alabama Crimson Tide,not_final_in_cfbd
 2026,72cab2217ae57cbb00928eab05eb244e,2026-11-07T23:15:00Z,Tennessee Volunteers,Kentucky Wildcats,not_final_in_cfbd
+2026,241c23f2724f5ca91727a47a91f2facf,2026-11-08T00:30:00Z,Army Black Knights,Air Force Falcons,not_final_in_cfbd
 2026,4aac00e6cc06b8905659f911419540d2,2026-11-08T00:30:00Z,Notre Dame Fighting Irish,Miami Hurricanes,not_final_in_cfbd
 2026,0842fcd69fdf5061f6751f876ead09f2,2026-11-08T00:30:00Z,Ole Miss Rebels,Georgia Bulldogs,not_final_in_cfbd
+2026,1ef954bd3305a66136e52ea0786f1593,2026-11-08T00:45:00Z,Florida Gators,Oklahoma Sooners,not_final_in_cfbd
