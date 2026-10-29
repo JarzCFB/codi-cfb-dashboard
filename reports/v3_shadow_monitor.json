@@ -183,8 +183,9 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 127,
+      "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 26,
-      "MISSING_V1_AND_V2": 10,
+      "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 14
     },
     "unclassified_details": [
@@ -529,7 +530,7 @@
         "game_id": "c35bb6023b4b5005a38e7cec3ebe4d0b",
         "kickoff_utc": "2026-10-29T23:30:00Z",
         "matchup": "Florida Atlantic Owls at North Texas Mean Green",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -561,7 +562,7 @@
         "game_id": "fc416b26c2c25018a05bc5cb0d80dbb6",
         "kickoff_utc": "2026-10-31T16:00:00Z",
         "matchup": "Bowling Green Falcons at Western Michigan Broncos",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -593,7 +594,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 34,
+    "covered_v3": 36,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -608,7 +609,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 24,
+        "selections": 26,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -919,11 +920,29 @@
       },
       {
         "season": "2026",
+        "game_id": "2c3f80e228a486e04f6f7a38e4f00fb4",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Michigan State Spartans at Michigan Wolverines",
+        "status": "PASS",
+        "disagreement_points": "2.60413",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "43a67a478177d0dc6ef141aacf2bfd2a",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "Texas Longhorns at Missouri Tigers",
         "status": "UNSTABLE",
         "disagreement_points": "3.07654",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "61cf0b043d9d95f0a73d0838ff08a24b",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Iowa Hawkeyes at Northwestern Wildcats",
+        "status": "PASS",
+        "disagreement_points": "0.1548",
         "source": "same_capture_v3_frozen_quote"
       },
       {
