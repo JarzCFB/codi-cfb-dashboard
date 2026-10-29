@@ -3,9 +3,9 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 177,
+      "selections": 182,
       "settled": 149,
-      "pending": 28,
+      "pending": 33,
       "wins": 79,
       "losses": 67,
       "pushes": 3,
@@ -13,9 +13,9 @@
       "roi_per_settled_selection": 0.03236
     },
     "5": {
-      "selections": 76,
+      "selections": 77,
       "settled": 65,
-      "pending": 11,
+      "pending": 12,
       "wins": 40,
       "losses": 24,
       "pushes": 1,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.032687
     },
     "UNCLASSIFIED": {
-      "selections": 50,
+      "selections": 55,
       "settled": 37,
-      "pending": 13,
+      "pending": 18,
       "wins": 18,
       "losses": 18,
       "pushes": 1,
@@ -137,9 +137,9 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 56,
+        "selections": 61,
         "settled": 28,
-        "pending": 28,
+        "pending": 33,
         "wins": 12,
         "losses": 15,
         "pushes": 1,
@@ -147,9 +147,9 @@
         "roi_per_settled_selection": -0.148825
       },
       "5": {
-        "selections": 18,
+        "selections": 19,
         "settled": 7,
-        "pending": 11,
+        "pending": 12,
         "wins": 3,
         "losses": 4,
         "pushes": 0,
@@ -179,14 +179,14 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 50,
+  "unclassified_v3_count": 55,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 127,
-      "COHORT_NOT_GENERATED": 1,
+      "COHORT_NOT_GENERATED": 4,
       "MISSING_V1": 26,
       "MISSING_V1_AND_V2": 9,
-      "MISSING_V2": 14
+      "MISSING_V2": 16
     },
     "unclassified_details": [
       {
@@ -587,6 +587,46 @@
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "BYU Cougars at Utah Utes",
         "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "573eed720cdbfb7644835b8beb1bc89a",
+        "kickoff_utc": "2026-10-31T19:00:00Z",
+        "matchup": "UConn Huskies at Air Force Falcons",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "78b3d38cdfa28649fdd2ca92829569ce",
+        "kickoff_utc": "2026-10-30T23:00:00Z",
+        "matchup": "Tulane Green Wave at Charlotte 49ers",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "2c3f80e228a486e04f6f7a38e4f00fb4",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Michigan State Spartans at Michigan Wolverines",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "61cf0b043d9d95f0a73d0838ff08a24b",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Iowa Hawkeyes at Northwestern Wildcats",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "47548a73e429985e77f81a4617b4fdfd",
+        "kickoff_utc": "2026-10-31T18:00:00Z",
+        "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -1266,6 +1306,36 @@
       "game_id": "8db5a11826fc84a5a6506c9b85979e70",
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "matchup": "BYU Cougars at Utah Utes"
+    },
+    {
+      "season": "2026",
+      "game_id": "573eed720cdbfb7644835b8beb1bc89a",
+      "kickoff_utc": "2026-10-31T19:00:00Z",
+      "matchup": "UConn Huskies at Air Force Falcons"
+    },
+    {
+      "season": "2026",
+      "game_id": "78b3d38cdfa28649fdd2ca92829569ce",
+      "kickoff_utc": "2026-10-30T23:00:00Z",
+      "matchup": "Tulane Green Wave at Charlotte 49ers"
+    },
+    {
+      "season": "2026",
+      "game_id": "2c3f80e228a486e04f6f7a38e4f00fb4",
+      "kickoff_utc": "2026-11-07T17:00:00Z",
+      "matchup": "Michigan State Spartans at Michigan Wolverines"
+    },
+    {
+      "season": "2026",
+      "game_id": "61cf0b043d9d95f0a73d0838ff08a24b",
+      "kickoff_utc": "2026-11-07T17:00:00Z",
+      "matchup": "Iowa Hawkeyes at Northwestern Wildcats"
+    },
+    {
+      "season": "2026",
+      "game_id": "47548a73e429985e77f81a4617b4fdfd",
+      "kickoff_utc": "2026-10-31T18:00:00Z",
+      "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers"
     }
   ],
   "future_pending_v3": [
@@ -1518,6 +1588,51 @@
       "spread": "-3.5",
       "american_odds": "-110.0",
       "edge_points": "3.95319",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-31T19:00:00Z",
+      "selection": "Air Force Falcons",
+      "spread": "0.0",
+      "american_odds": "-106.0",
+      "edge_points": "3.1756",
+      "sportsbook": "LowVig.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-30T23:00:00Z",
+      "selection": "Tulane Green Wave",
+      "spread": "-8.5",
+      "american_odds": "-116.0",
+      "edge_points": "3.28742",
+      "sportsbook": "LowVig.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-07T17:00:00Z",
+      "selection": "Michigan State Spartans",
+      "spread": "14.0",
+      "american_odds": "-105.0",
+      "edge_points": "5.35917",
+      "sportsbook": "DraftKings",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-07T17:00:00Z",
+      "selection": "Northwestern Wildcats",
+      "spread": "-2.5",
+      "american_odds": "-110.0",
+      "edge_points": "4.19498",
+      "sportsbook": "DraftKings",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-31T18:00:00Z",
+      "selection": "Georgia State Panthers",
+      "spread": "-5.5",
+      "american_odds": "-115.0",
+      "edge_points": "3.15609",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
