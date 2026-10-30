@@ -183,7 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 131,
-      "MISSING_V1": 26,
+      "COHORT_NOT_GENERATED": 1,
+      "MISSING_V1": 25,
       "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 16
     },
@@ -513,7 +514,7 @@
         "game_id": "7fd2d018fdc5930fd62188de968a901c",
         "kickoff_utc": "2026-10-31T20:15:00Z",
         "matchup": "Purdue Boilermakers at Penn State Nittany Lions",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
