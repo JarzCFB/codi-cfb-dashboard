@@ -136,6 +136,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,581c12d11a86412432fe89645cbe80b2,2026-10-31T19:30:00Z,Georgia Bulldogs,Florida Gators,2026-10-26T21:39:03Z,8.90696,12.5853,13.60216,3.678,true,PASS,V1/V2 agreement under 5 pts
 2026,9c33dd628312f89764392414cbc99c86,2026-10-31T19:30:00Z,Utah State Aggies,Colorado State Rams,2026-10-25T19:39:27Z,2.0687,8.65851,8.37383,6.59,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,630ed6c8993fda8943e528a465e55518,2026-10-31T20:15:00Z,UCLA Bruins,Nevada Wolf Pack,2026-10-25T13:43:43Z,14.01701,13.74463,15.94565,0.272,true,PASS,V1/V2 agreement under 5 pts
+2026,7fd2d018fdc5930fd62188de968a901c,2026-10-31T20:15:00Z,Penn State Nittany Lions,Purdue Boilermakers,2026-10-30T07:11:57Z,7.60065,11.66051,12.42329,4.06,true,PASS,V1/V2 agreement under 5 pts
 2026,e4e95ca26b62e1c3ced6261cbb5c5f3a,2026-10-31T23:00:00Z,Iowa State Cyclones,Oklahoma State Cowboys,2026-10-25T13:43:43Z,-5.10806,0.90697,-0.09545,6.015,false,UNSTABLE,models disagree on projected winner
 2026,49aa48a7dbcd6563f389ae4232707d64,2026-10-31T23:30:00Z,Pittsburgh Panthers,Georgia Tech Yellow Jackets,2026-10-25T13:43:43Z,13.15901,12.94199,15.03672,0.217,true,PASS,V1/V2 agreement under 5 pts
 2026,e2ffa742b36678caf388ca70fdd4878c,2026-10-31T23:30:00Z,Texas Longhorns,Mississippi State Bulldogs,2026-10-25T13:43:43Z,9.46763,11.39573,12.71837,1.928,true,PASS,V1/V2 agreement under 5 pts

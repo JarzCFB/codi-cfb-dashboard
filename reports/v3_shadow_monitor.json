@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 86,
+      "selections": 87,
       "settled": 73,
-      "pending": 13,
+      "pending": 14,
       "wins": 38,
       "losses": 33,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.01854
     },
     "UNCLASSIFIED": {
-      "selections": 54,
+      "selections": 53,
       "settled": 38,
-      "pending": 16,
+      "pending": 15,
       "wins": 18,
       "losses": 19,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 54,
+  "unclassified_v3_count": 53,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 131,
-      "COHORT_NOT_GENERATED": 1,
+      "CLASSIFIED": 132,
       "MISSING_V1": 26,
       "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 18
@@ -507,14 +506,6 @@
         "kickoff_utc": "2026-10-31T16:00:00Z",
         "matchup": "Clemson Tigers at Florida State Seminoles",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "7fd2d018fdc5930fd62188de968a901c",
-        "kickoff_utc": "2026-10-31T20:15:00Z",
-        "matchup": "Purdue Boilermakers at Penn State Nittany Lions",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1265,12 +1256,6 @@
       "game_id": "6519cc9dfbff22ca11d607a9f246da2c",
       "kickoff_utc": "2026-10-31T16:00:00Z",
       "matchup": "Clemson Tigers at Florida State Seminoles"
-    },
-    {
-      "season": "2026",
-      "game_id": "7fd2d018fdc5930fd62188de968a901c",
-      "kickoff_utc": "2026-10-31T20:15:00Z",
-      "matchup": "Purdue Boilermakers at Penn State Nittany Lions"
     },
     {
       "season": "2026",
