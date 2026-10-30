@@ -2,55 +2,55 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 202,
-      "settled": 163,
-      "wins": 80,
+      "selections": 204,
+      "settled": 164,
+      "wins": 81,
       "losses": 82,
       "pushes": 1,
-      "net_units": -9.233241,
-      "roi_per_settled_selection": -0.056646,
-      "pending": 39,
+      "net_units": -8.32415,
+      "roi_per_settled_selection": -0.050757,
+      "pending": 40,
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 179,
-      "settled": 150,
+      "selections": 181,
+      "settled": 151,
       "wins": 78,
-      "losses": 70,
+      "losses": 71,
       "pushes": 2,
-      "net_units": 0.900919,
-      "roi_per_settled_selection": 0.006006,
-      "pending": 29,
+      "net_units": -0.099081,
+      "roi_per_settled_selection": -0.000656,
+      "pending": 30,
       "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 182,
-      "settled": 149,
+      "selections": 185,
+      "settled": 151,
       "wins": 79,
-      "losses": 67,
+      "losses": 69,
       "pushes": 3,
-      "net_units": 4.821675,
-      "roi_per_settled_selection": 0.03236,
-      "pending": 33,
+      "net_units": 2.821675,
+      "roi_per_settled_selection": 0.018687,
+      "pending": 34,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 84,
+      "settled": 85,
       "wins": 39,
-      "losses": 43,
+      "losses": 44,
       "pushes": 2,
-      "net_units": -7.523439,
-      "roi_per_settled_selection": -0.089565
+      "net_units": -8.523439,
+      "roi_per_settled_selection": -0.100276
     },
     "5_to_lt7": {
-      "settled": 42,
+      "settled": 43,
       "wins": 26,
-      "losses": 15,
+      "losses": 16,
       "pushes": 1,
-      "net_units": 8.679331,
-      "roi_per_settled_selection": 0.206651
+      "net_units": 7.679331,
+      "roi_per_settled_selection": 0.178589
     },
     "7_to_lt10": {
       "settled": 14,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 563,
-    "settled": 462,
-    "pending": 101,
+    "total_frozen_selections": 570,
+    "settled": 466,
+    "pending": 104,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,

@@ -3,24 +3,24 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 182,
-      "settled": 149,
-      "pending": 33,
+      "selections": 185,
+      "settled": 151,
+      "pending": 34,
       "wins": 79,
-      "losses": 67,
+      "losses": 69,
       "pushes": 3,
-      "net_units": 4.821675,
-      "roi_per_settled_selection": 0.03236
+      "net_units": 2.821675,
+      "roi_per_settled_selection": 0.018687
     },
     "5": {
       "selections": 77,
-      "settled": 65,
-      "pending": 12,
+      "settled": 66,
+      "pending": 11,
       "wins": 40,
-      "losses": 24,
+      "losses": 25,
       "pushes": 1,
-      "net_units": 12.345114,
-      "roi_per_settled_selection": 0.189925
+      "net_units": 11.345114,
+      "roi_per_settled_selection": 0.171896
     },
     "7": {
       "selections": 28,
@@ -56,23 +56,23 @@
     },
     "PASS": {
       "selections": 86,
-      "settled": 72,
-      "pending": 14,
+      "settled": 73,
+      "pending": 13,
       "wins": 38,
-      "losses": 32,
+      "losses": 33,
       "pushes": 2,
-      "net_units": 2.353431,
-      "roi_per_settled_selection": 0.032687
+      "net_units": 1.353431,
+      "roi_per_settled_selection": 0.01854
     },
     "UNCLASSIFIED": {
-      "selections": 51,
-      "settled": 37,
-      "pending": 14,
+      "selections": 54,
+      "settled": 38,
+      "pending": 16,
       "wins": 18,
-      "losses": 18,
+      "losses": 19,
       "pushes": 1,
-      "net_units": -1.559672,
-      "roi_per_settled_selection": -0.042153
+      "net_units": -2.559672,
+      "roi_per_settled_selection": -0.06736
     },
     "UNSTABLE": {
       "selections": 26,
@@ -87,7 +87,7 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-10-28T00:00:00Z",
+    "through_kickoff_utc": "2026-10-29T23:30:00Z",
     "edge_thresholds": {
       "3": {
         "selections": 61,
@@ -137,24 +137,24 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 61,
-        "settled": 28,
-        "pending": 33,
+        "selections": 64,
+        "settled": 30,
+        "pending": 34,
         "wins": 12,
-        "losses": 15,
+        "losses": 17,
         "pushes": 1,
-        "net_units": -4.167089,
-        "roi_per_settled_selection": -0.148825
+        "net_units": -6.167089,
+        "roi_per_settled_selection": -0.20557
       },
       "5": {
         "selections": 19,
-        "settled": 7,
-        "pending": 12,
+        "settled": 8,
+        "pending": 11,
         "wins": 3,
-        "losses": 4,
+        "losses": 5,
         "pushes": 0,
-        "net_units": -1.394044,
-        "roi_per_settled_selection": -0.199149
+        "net_units": -2.394044,
+        "roi_per_settled_selection": -0.299256
       },
       "7": {
         "selections": 6,
@@ -179,14 +179,14 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 51,
+  "unclassified_v3_count": 54,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 131,
       "COHORT_NOT_GENERATED": 1,
-      "MISSING_V1": 25,
+      "MISSING_V1": 26,
       "MISSING_V1_AND_V2": 9,
-      "MISSING_V2": 16
+      "MISSING_V2": 18
     },
     "unclassified_details": [
       {
@@ -594,6 +594,30 @@
         "game_id": "47548a73e429985e77f81a4617b4fdfd",
         "kickoff_utc": "2026-10-31T18:00:00Z",
         "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "44ee19d31b9288ad402868d6df737595",
+        "kickoff_utc": "2026-10-30T23:30:00Z",
+        "matchup": "Baylor Bears at UCF Knights",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "657053f4734af94664beb750813257bb",
+        "kickoff_utc": "2026-11-04T01:00:00Z",
+        "matchup": "Buffalo Bulls at Miami (OH) RedHawks",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "6ee8ad6eb7454d13bebc0806a10cc861",
+        "kickoff_utc": "2026-11-05T00:00:00Z",
+        "matchup": "Ball State Cardinals at UMass Minutemen",
         "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
@@ -1307,6 +1331,24 @@
       "game_id": "47548a73e429985e77f81a4617b4fdfd",
       "kickoff_utc": "2026-10-31T18:00:00Z",
       "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers"
+    },
+    {
+      "season": "2026",
+      "game_id": "44ee19d31b9288ad402868d6df737595",
+      "kickoff_utc": "2026-10-30T23:30:00Z",
+      "matchup": "Baylor Bears at UCF Knights"
+    },
+    {
+      "season": "2026",
+      "game_id": "657053f4734af94664beb750813257bb",
+      "kickoff_utc": "2026-11-04T01:00:00Z",
+      "matchup": "Buffalo Bulls at Miami (OH) RedHawks"
+    },
+    {
+      "season": "2026",
+      "game_id": "6ee8ad6eb7454d13bebc0806a10cc861",
+      "kickoff_utc": "2026-11-05T00:00:00Z",
+      "matchup": "Ball State Cardinals at UMass Minutemen"
     }
   ],
   "future_pending_v3": [
@@ -1353,15 +1395,6 @@
       "american_odds": "-115.0",
       "edge_points": "3.3576",
       "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-29T23:30:00Z",
-      "selection": "James Madison Dukes",
-      "spread": "-17.5",
-      "american_odds": "-110.0",
-      "edge_points": "4.12171",
-      "sportsbook": "DraftKings",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -1424,15 +1457,6 @@
       "spread": "-6.5",
       "american_odds": "-110.0",
       "edge_points": "3.43556",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-29T23:30:00Z",
-      "selection": "North Texas Mean Green",
-      "spread": "-11.5",
-      "american_odds": "-110.0",
-      "edge_points": "5.59389",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
@@ -1604,6 +1628,33 @@
       "spread": "-5.5",
       "american_odds": "-115.0",
       "edge_points": "3.15609",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-10-30T23:30:00Z",
+      "selection": "UCF Knights",
+      "spread": "2.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.93549",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-04T01:00:00Z",
+      "selection": "Buffalo Bulls",
+      "spread": "6.5",
+      "american_odds": "-120.0",
+      "edge_points": "3.02668",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-05T00:00:00Z",
+      "selection": "UMass Minutemen",
+      "spread": "-3.5",
+      "american_odds": "-110.0",
+      "edge_points": "4.44644",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
