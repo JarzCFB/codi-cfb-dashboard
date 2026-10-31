@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.199837
     },
     "PASS": {
-      "selections": 87,
+      "selections": 88,
       "settled": 74,
-      "pending": 13,
+      "pending": 14,
       "wins": 38,
       "losses": 34,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": 0.004776
     },
     "UNCLASSIFIED": {
-      "selections": 53,
+      "selections": 52,
       "settled": 39,
-      "pending": 14,
+      "pending": 13,
       "wins": 18,
       "losses": 20,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 53,
+  "unclassified_v3_count": 52,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 132,
-      "COHORT_NOT_GENERATED": 1,
+      "CLASSIFIED": 133,
       "MISSING_V1": 25,
       "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 18
@@ -563,14 +562,6 @@
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "Texas Longhorns at Missouri Tigers",
         "reason": "MISSING_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "8db5a11826fc84a5a6506c9b85979e70",
-        "kickoff_utc": "2026-11-07T17:00:00Z",
-        "matchup": "BYU Cougars at Utah Utes",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1299,12 +1290,6 @@
       "game_id": "43a67a478177d0dc6ef141aacf2bfd2a",
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "matchup": "Texas Longhorns at Missouri Tigers"
-    },
-    {
-      "season": "2026",
-      "game_id": "8db5a11826fc84a5a6506c9b85979e70",
-      "kickoff_utc": "2026-11-07T17:00:00Z",
-      "matchup": "BYU Cougars at Utah Utes"
     },
     {
       "season": "2026",
