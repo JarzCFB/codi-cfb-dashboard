@@ -183,7 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 132,
-      "MISSING_V1": 26,
+      "COHORT_NOT_GENERATED": 1,
+      "MISSING_V1": 25,
       "MISSING_V1_AND_V2": 9,
       "MISSING_V2": 18
     },
@@ -569,7 +570,7 @@
         "game_id": "8db5a11826fc84a5a6506c9b85979e70",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "BYU Cougars at Utah Utes",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
