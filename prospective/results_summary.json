@@ -2,47 +2,47 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 204,
-      "settled": 164,
-      "wins": 81,
-      "losses": 82,
+      "selections": 205,
+      "settled": 166,
+      "wins": 82,
+      "losses": 83,
       "pushes": 1,
-      "net_units": -8.32415,
-      "roi_per_settled_selection": -0.050757,
-      "pending": 40,
+      "net_units": -8.406719,
+      "roi_per_settled_selection": -0.050643,
+      "pending": 39,
       "invalid_or_ambiguous": 0
     },
     "v2": {
       "selections": 181,
-      "settled": 151,
+      "settled": 152,
       "wins": 78,
-      "losses": 71,
+      "losses": 72,
       "pushes": 2,
-      "net_units": -0.099081,
-      "roi_per_settled_selection": -0.000656,
-      "pending": 30,
+      "net_units": -1.099081,
+      "roi_per_settled_selection": -0.007231,
+      "pending": 29,
       "invalid_or_ambiguous": 0
     },
     "v3": {
       "selections": 185,
-      "settled": 151,
+      "settled": 153,
       "wins": 79,
-      "losses": 69,
+      "losses": 71,
       "pushes": 3,
-      "net_units": 2.821675,
-      "roi_per_settled_selection": 0.018687,
-      "pending": 34,
+      "net_units": 0.821675,
+      "roi_per_settled_selection": 0.00537,
+      "pending": 32,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 85,
+      "settled": 87,
       "wins": 39,
-      "losses": 44,
+      "losses": 46,
       "pushes": 2,
-      "net_units": -8.523439,
-      "roi_per_settled_selection": -0.100276
+      "net_units": -10.523439,
+      "roi_per_settled_selection": -0.120959
     },
     "5_to_lt7": {
       "settled": 43,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 570,
-    "settled": 466,
-    "pending": 104,
+    "total_frozen_selections": 571,
+    "settled": 471,
+    "pending": 100,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,

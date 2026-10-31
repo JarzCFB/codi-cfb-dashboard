@@ -4,13 +4,13 @@
   "edge_thresholds": {
     "3": {
       "selections": 185,
-      "settled": 151,
-      "pending": 34,
+      "settled": 153,
+      "pending": 32,
       "wins": 79,
-      "losses": 69,
+      "losses": 71,
       "pushes": 3,
-      "net_units": 2.821675,
-      "roi_per_settled_selection": 0.018687
+      "net_units": 0.821675,
+      "roi_per_settled_selection": 0.00537
     },
     "5": {
       "selections": 77,
@@ -56,23 +56,23 @@
     },
     "PASS": {
       "selections": 87,
-      "settled": 73,
-      "pending": 14,
+      "settled": 74,
+      "pending": 13,
       "wins": 38,
-      "losses": 33,
+      "losses": 34,
       "pushes": 2,
-      "net_units": 1.353431,
-      "roi_per_settled_selection": 0.01854
+      "net_units": 0.353431,
+      "roi_per_settled_selection": 0.004776
     },
     "UNCLASSIFIED": {
       "selections": 53,
-      "settled": 38,
-      "pending": 15,
+      "settled": 39,
+      "pending": 14,
       "wins": 18,
-      "losses": 19,
+      "losses": 20,
       "pushes": 1,
-      "net_units": -2.559672,
-      "roi_per_settled_selection": -0.06736
+      "net_units": -3.559672,
+      "roi_per_settled_selection": -0.091274
     },
     "UNSTABLE": {
       "selections": 26,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-10-29T23:30:00Z",
+    "through_kickoff_utc": "2026-10-30T23:30:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 61,
-        "settled": 61,
+        "selections": 62,
+        "settled": 62,
         "pending": 0,
         "wins": 27,
-        "losses": 33,
+        "losses": 34,
         "pushes": 1,
-        "net_units": -8.589323,
-        "roi_per_settled_selection": -0.140809
+        "net_units": -9.589323,
+        "roi_per_settled_selection": -0.154667
       },
       "5": {
         "selections": 20,
@@ -138,13 +138,13 @@
     "thresholds": {
       "3": {
         "selections": 64,
-        "settled": 30,
-        "pending": 34,
+        "settled": 32,
+        "pending": 32,
         "wins": 12,
-        "losses": 17,
+        "losses": 19,
         "pushes": 1,
-        "net_units": -6.167089,
-        "roi_per_settled_selection": -0.20557
+        "net_units": -8.167089,
+        "roi_per_settled_selection": -0.255222
       },
       "5": {
         "selections": 19,
@@ -1582,15 +1582,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-10-30T23:00:00Z",
-      "selection": "Tulane Green Wave",
-      "spread": "-8.5",
-      "american_odds": "-116.0",
-      "edge_points": "3.28742",
-      "sportsbook": "LowVig.ag",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "selection": "Michigan State Spartans",
       "spread": "14.0",
@@ -1614,15 +1605,6 @@
       "spread": "-5.5",
       "american_odds": "-115.0",
       "edge_points": "3.15609",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-10-30T23:30:00Z",
-      "selection": "UCF Knights",
-      "spread": "2.5",
-      "american_odds": "-110.0",
-      "edge_points": "3.93549",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
