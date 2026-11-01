@@ -183,8 +183,9 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 141,
+      "COHORT_NOT_GENERATED": 2,
       "MISSING_V1": 27,
-      "MISSING_V1_AND_V2": 13,
+      "MISSING_V1_AND_V2": 11,
       "MISSING_V2": 21
     },
     "unclassified_details": [
@@ -609,7 +610,7 @@
         "game_id": "4f0efedf5f575715851efea9089f7ea6",
         "kickoff_utc": "2026-11-08T00:30:00Z",
         "matchup": "Colorado Buffaloes at Arizona State Sun Devils",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -625,7 +626,7 @@
         "game_id": "722ed661705df150a38e7786949ce241",
         "kickoff_utc": "2026-11-07T03:15:00Z",
         "matchup": "TCU Horned Frogs at Arizona Wildcats",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -665,7 +666,7 @@
         "game_id": "c2784b24d84fa71e7368fd775914c37d",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "Oregon Ducks at Ohio State Buckeyes",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -681,7 +682,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 57,
+    "covered_v3": 62,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -696,7 +697,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 43,
+        "selections": 47,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -706,7 +707,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 7,
+        "selections": 8,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1115,6 +1116,15 @@
       },
       {
         "season": "2026",
+        "game_id": "8d5eeb24eeb0ac7ff32325a8a8c4b371",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Tulsa Golden Hurricane at Tulane Green Wave",
+        "status": "UNSTABLE",
+        "disagreement_points": "5.2654",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "8db5a11826fc84a5a6506c9b85979e70",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "BYU Cougars at Utah Utes",
@@ -1201,6 +1211,42 @@
         "matchup": "Penn State Nittany Lions at Washington Huskies",
         "status": "PASS",
         "disagreement_points": "1.13908",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "deb5de88acb22f9a3e969c137fd65cb3",
+        "kickoff_utc": "2026-11-07T20:30:00Z",
+        "matchup": "Western Kentucky Hilltoppers at Middle Tennessee Blue Raiders",
+        "status": "PASS",
+        "disagreement_points": "0.75991",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "55e2553780b7d3d06d1fe7a4ffa9474b",
+        "kickoff_utc": "2026-11-07T21:00:00Z",
+        "matchup": "Rice Owls at North Texas Mean Green",
+        "status": "PASS",
+        "disagreement_points": "3.352",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "796b0be4ed0d775756eff53b5803125a",
+        "kickoff_utc": "2026-11-07T21:00:00Z",
+        "matchup": "Northern Illinois Huskies at San Jose State Spartans",
+        "status": "PASS",
+        "disagreement_points": "0.89384",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "b5f8faa111f5c25846fcfc22f1b664a1",
+        "kickoff_utc": "2026-11-07T21:00:00Z",
+        "matchup": "Missouri State Bears at Florida International Panthers",
+        "status": "PASS",
+        "disagreement_points": "2.99168",
         "source": "same_capture_v3_frozen_quote"
       },
       {
