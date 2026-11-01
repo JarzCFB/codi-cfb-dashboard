@@ -609,7 +609,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 40,
+    "covered_v3": 50,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -624,7 +624,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 28,
+        "selections": 36,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -634,7 +634,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 5,
+        "selections": 7,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -971,6 +971,24 @@
       },
       {
         "season": "2026",
+        "game_id": "45fdbdbe6ed3d9922fa8b26b8a885f0e",
+        "kickoff_utc": "2026-11-07T02:00:00Z",
+        "matchup": "New Mexico Lobos at Nevada Wolf Pack",
+        "status": "PASS",
+        "disagreement_points": "1.06428",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "722ed661705df150a38e7786949ce241",
+        "kickoff_utc": "2026-11-07T03:15:00Z",
+        "matchup": "TCU Horned Frogs at Arizona Wildcats",
+        "status": "PASS",
+        "disagreement_points": "4.34348",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "2c3f80e228a486e04f6f7a38e4f00fb4",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "Michigan State Spartans at Michigan Wolverines",
@@ -980,11 +998,29 @@
       },
       {
         "season": "2026",
+        "game_id": "3582b30b32fb23939161eb280cc5ca97",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "North Carolina Tar Heels at UConn Huskies",
+        "status": "PASS",
+        "disagreement_points": "1.09614",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "43a67a478177d0dc6ef141aacf2bfd2a",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "Texas Longhorns at Missouri Tigers",
         "status": "UNSTABLE",
         "disagreement_points": "3.07654",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "5b05bf2ff27508703418dcf70079a22f",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "UCLA Bruins at Minnesota Golden Gophers",
+        "status": "PASS",
+        "disagreement_points": "1.76845",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -1003,6 +1039,60 @@
         "matchup": "BYU Cougars at Utah Utes",
         "status": "PASS",
         "disagreement_points": "1.03655",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "c3e23ea05d6570fdb90c3ddb225fd3e4",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Clemson Tigers at Syracuse Orange",
+        "status": "UNSTABLE",
+        "disagreement_points": "4.47688",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "c74c1b98aca90ebf335b4028d44c2095",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "UCF Knights at Kansas Jayhawks",
+        "status": "PASS",
+        "disagreement_points": "4.17095",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "f3d964c6b45c36f9e6009c47e64f96db",
+        "kickoff_utc": "2026-11-07T17:00:00Z",
+        "matchup": "Oklahoma State Cowboys at Kansas State Wildcats",
+        "status": "UNSTABLE",
+        "disagreement_points": "2.73825",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "841d7821e82447f8a7d8592ec4584eec",
+        "kickoff_utc": "2026-11-07T17:30:00Z",
+        "matchup": "Maryland Terrapins at Purdue Boilermakers",
+        "status": "PASS",
+        "disagreement_points": "3.05668",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "028ce5ee2c58281cf935f06edc90d671",
+        "kickoff_utc": "2026-11-07T21:15:00Z",
+        "matchup": "Vanderbilt Commodores at Mississippi State Bulldogs",
+        "status": "PASS",
+        "disagreement_points": "0.43993",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "4f0efedf5f575715851efea9089f7ea6",
+        "kickoff_utc": "2026-11-08T00:30:00Z",
+        "matchup": "Colorado Buffaloes at Arizona State Sun Devils",
+        "status": "PASS",
+        "disagreement_points": "0.22239",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
