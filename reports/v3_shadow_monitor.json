@@ -682,7 +682,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 62,
+    "covered_v3": 63,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -697,7 +697,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 47,
+        "selections": 48,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1202,6 +1202,15 @@
         "matchup": "Delaware Blue Hens at Kennesaw State Owls",
         "status": "PASS",
         "disagreement_points": "0.37088",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "31cd8c948a11017166206a02f26c2cc8",
+        "kickoff_utc": "2026-11-07T20:30:00Z",
+        "matchup": "Charlotte 49ers at UAB Blazers",
+        "status": "PASS",
+        "disagreement_points": "0.31168",
         "source": "same_capture_v3_frozen_quote"
       },
       {
