@@ -29,9 +29,12 @@ def fetch_games(year, token):
 def main():
     now = datetime.now(timezone.utc)
     local = now.astimezone(CENTRAL)
-    # A Sunday publication is allowed only at/after 1 PM local time.
-    if local.weekday() != 6 or local.hour != 13:
-        print(f"Not Sunday 1 PM America/Chicago ({local.isoformat()}); skipping.")
+    # Publish after Sunday 1 PM Central; allow Monday catch-up for delayed Actions
+    # and manual dispatch. Always key the immutable snapshot to Sunday.
+    sunday_ready = local.weekday() == 6 and local.hour >= 13
+    monday_catchup = local.weekday() == 0
+    if not (sunday_ready or monday_catchup):
+        print(f"Outside Sunday afternoon / Monday catch-up ({local.isoformat()}); skipping.")
         return
     token = os.environ.get("CFBD_API_KEY", "")
     if not token:
@@ -44,7 +47,8 @@ def main():
     if not ratings or info["current_games"] < 1:
         raise RuntimeError("No current-season completed games; refusing empty publication")
     rows = build_power_rankings(ratings)
-    week = local.strftime("%Y-%m-%d")
+    snapshot_sunday = local.date() if local.weekday() == 6 else (local.date() - __import__("datetime").timedelta(days=1))
+    week = snapshot_sunday.isoformat()
     HISTORY.mkdir(parents=True, exist_ok=True)
     target = HISTORY / f"{week}.json"
     if target.exists():
