@@ -887,6 +887,31 @@ with top_projection_slot:
                     if not _has_market:
                         if not _has_pick:
                             final_projections.at[_idx, "Confidence notes"] = "No current market line or frozen V3 selection; projection only"
+                # Confirmed QB absences: betting eligibility gate, not a
+                # fabricated point adjustment to the protected V3 formula.
+                _qb_unavailable = {
+                    "ohio state": "Julian Sayin (out; return timeline uncertain)",
+                    "mississippi state": "Kamario Taylor (out for season)",
+                    "ucla": "Nico Iamaleava (out for season)",
+                }
+                final_projections["QB availability"] = "Not independently cleared"
+                final_projections["QB-adjusted V3 margin"] = "NOT CALIBRATED"
+                for _idx, _row in final_projections.iterrows():
+                    _matchup = str(_row.get("Matchup", "")).lower()
+                    _sides = [x.strip() for x in _matchup.split(" @ ")]
+                    for _team, _absence in _qb_unavailable.items():
+                        if any(_team in side for side in _sides):
+                            final_projections.at[_idx, "QB availability"] = _absence
+                            final_projections.at[_idx, "Investigation status"] = "QB INJURY HOLD"
+                            final_projections.at[_idx, "Bet review status"] = "HOLD — replacement QB impact uncalibrated"
+                            final_projections.at[_idx, "Live confidence (1–10)"] = 1
+                            final_projections.at[_idx, "Live confidence basis"] = (
+                                "QB injury hold; raw V3 projection is not cleared for betting"
+                            )
+                            break
+                if (final_projections["Investigation status"] == "QB INJURY HOLD").any():
+                    st.warning("QB injury hold: affected V3 picks are not cleared. "
+                               "Raw V3 projections and frozen selections remain unchanged.")
                 # Live slate coverage is independent of the smaller frozen-pick cohort.
                 # A blank field is replaced with an explicit reason, not invented data.
                 final_projections["Market line"] = final_projections["Market line"].replace("", "NO CURRENT LINE")
