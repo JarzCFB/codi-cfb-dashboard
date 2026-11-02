@@ -1,13 +1,12 @@
 name: Publish Sunday power rankings
 on:
   schedule:
-    # Timezone-aware retries avoid DST ambiguity and top-of-hour queue congestion.
-    # Publisher is idempotent and refuses to overwrite an existing weekly snapshot.
-    - cron: "5,35 13-18 * * 0"
-      timezone: "America/Chicago"
-    # Catch up if GitHub delayed or skipped the Sunday schedule.
-    - cron: "15 9,12 * * 1"
-      timezone: "America/Chicago"
+    # UTC schedules work across DST; the Python publisher checks Central time.
+    # Repeated runs are idempotent and never overwrite a weekly snapshot.
+    - cron: "17 18-23 * * 0"
+    - cron: "17 0-2 * * 1"
+    # Monday catch-up after the Sunday window (including DST changes).
+    - cron: "17 15-23 * * 1"
   workflow_dispatch:
 permissions:
   contents: write
