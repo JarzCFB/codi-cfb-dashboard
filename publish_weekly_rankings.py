@@ -2,7 +2,7 @@
 import csv
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 import requests
@@ -47,7 +47,7 @@ def main():
     if not ratings or info["current_games"] < 1:
         raise RuntimeError("No current-season completed games; refusing empty publication")
     rows = build_power_rankings(ratings)
-    snapshot_sunday = local.date() if local.weekday() == 6 else (local.date() - __import__("datetime").timedelta(days=1))
+    snapshot_sunday = local.date() if local.weekday() == 6 else (local.date() - timedelta(days=1))
     week = snapshot_sunday.isoformat()
     HISTORY.mkdir(parents=True, exist_ok=True)
     target = HISTORY / f"{week}.json"
