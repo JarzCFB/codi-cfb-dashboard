@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 95,
+      "selections": 99,
       "settled": 86,
-      "pending": 9,
+      "pending": 13,
       "wins": 42,
       "losses": 42,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.046033
     },
     "UNCLASSIFIED": {
-      "selections": 68,
+      "selections": 64,
       "settled": 48,
-      "pending": 20,
+      "pending": 16,
       "wins": 21,
       "losses": 26,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 68,
+  "unclassified_v3_count": 64,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 141,
-      "COHORT_NOT_GENERATED": 4,
+      "CLASSIFIED": 145,
       "MISSING_V1": 29,
       "MISSING_V1_AND_V2": 14,
       "MISSING_V2": 21
@@ -607,14 +606,6 @@
       },
       {
         "season": "2026",
-        "game_id": "4f0efedf5f575715851efea9089f7ea6",
-        "kickoff_utc": "2026-11-08T00:30:00Z",
-        "matchup": "Colorado Buffaloes at Arizona State Sun Devils",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "5b05bf2ff27508703418dcf70079a22f",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "UCLA Bruins at Minnesota Golden Gophers",
@@ -663,14 +654,6 @@
       },
       {
         "season": "2026",
-        "game_id": "c2784b24d84fa71e7368fd775914c37d",
-        "kickoff_utc": "2026-11-07T17:00:00Z",
-        "matchup": "Oregon Ducks at Ohio State Buckeyes",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "fed311ed6cdb4803798f548f3d867226",
         "kickoff_utc": "2026-11-07T22:00:00Z",
         "matchup": "South Alabama Jaguars at Louisiana Ragin Cajuns",
@@ -711,26 +694,10 @@
       },
       {
         "season": "2026",
-        "game_id": "deb5de88acb22f9a3e969c137fd65cb3",
-        "kickoff_utc": "2026-11-07T20:30:00Z",
-        "matchup": "Western Kentucky Hilltoppers at Middle Tennessee Blue Raiders",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "31cd8c948a11017166206a02f26c2cc8",
         "kickoff_utc": "2026-11-07T20:30:00Z",
         "matchup": "Charlotte 49ers at UAB Blazers",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "5304671601ad3064a66a332cbb09313f",
-        "kickoff_utc": "2026-11-07T19:30:00Z",
-        "matchup": "Georgia State Panthers at Appalachian State Mountaineers",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -1668,12 +1635,6 @@
     },
     {
       "season": "2026",
-      "game_id": "4f0efedf5f575715851efea9089f7ea6",
-      "kickoff_utc": "2026-11-08T00:30:00Z",
-      "matchup": "Colorado Buffaloes at Arizona State Sun Devils"
-    },
-    {
-      "season": "2026",
       "game_id": "5b05bf2ff27508703418dcf70079a22f",
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "matchup": "UCLA Bruins at Minnesota Golden Gophers"
@@ -1710,12 +1671,6 @@
     },
     {
       "season": "2026",
-      "game_id": "c2784b24d84fa71e7368fd775914c37d",
-      "kickoff_utc": "2026-11-07T17:00:00Z",
-      "matchup": "Oregon Ducks at Ohio State Buckeyes"
-    },
-    {
-      "season": "2026",
       "game_id": "fed311ed6cdb4803798f548f3d867226",
       "kickoff_utc": "2026-11-07T22:00:00Z",
       "matchup": "South Alabama Jaguars at Louisiana Ragin Cajuns"
@@ -1746,21 +1701,9 @@
     },
     {
       "season": "2026",
-      "game_id": "deb5de88acb22f9a3e969c137fd65cb3",
-      "kickoff_utc": "2026-11-07T20:30:00Z",
-      "matchup": "Western Kentucky Hilltoppers at Middle Tennessee Blue Raiders"
-    },
-    {
-      "season": "2026",
       "game_id": "31cd8c948a11017166206a02f26c2cc8",
       "kickoff_utc": "2026-11-07T20:30:00Z",
       "matchup": "Charlotte 49ers at UAB Blazers"
-    },
-    {
-      "season": "2026",
-      "game_id": "5304671601ad3064a66a332cbb09313f",
-      "kickoff_utc": "2026-11-07T19:30:00Z",
-      "matchup": "Georgia State Panthers at Appalachian State Mountaineers"
     }
   ],
   "future_pending_v3": [
