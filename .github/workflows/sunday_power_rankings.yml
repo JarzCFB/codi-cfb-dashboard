@@ -3,7 +3,10 @@ on:
   schedule:
     # Timezone-aware retries avoid DST ambiguity and top-of-hour queue congestion.
     # Publisher is idempotent and refuses to overwrite an existing weekly snapshot.
-    - cron: "5,20,35,50 13 * * 0"
+    - cron: "5,35 13-18 * * 0"
+      timezone: "America/Chicago"
+    # Catch up if GitHub delayed or skipped the Sunday schedule.
+    - cron: "15 9,12 * * 1"
       timezone: "America/Chicago"
   workflow_dispatch:
 permissions:
