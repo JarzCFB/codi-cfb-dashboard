@@ -682,7 +682,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 63,
+    "covered_v3": 64,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -697,7 +697,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 48,
+        "selections": 49,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1184,6 +1184,15 @@
         "matchup": "Maryland Terrapins at Purdue Boilermakers",
         "status": "PASS",
         "disagreement_points": "3.05668",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "5304671601ad3064a66a332cbb09313f",
+        "kickoff_utc": "2026-11-07T19:30:00Z",
+        "matchup": "Georgia State Panthers at Appalachian State Mountaineers",
+        "status": "PASS",
+        "disagreement_points": "1.53482",
         "source": "same_capture_v3_frozen_quote"
       },
       {
