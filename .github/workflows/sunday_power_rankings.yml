@@ -1,5 +1,10 @@
 name: Publish Sunday power rankings
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sunday_power_rankings.yml'
+      - 'publish_weekly_rankings.py'
   schedule:
     # UTC schedules work across DST; the Python publisher checks Central time.
     # Repeated runs are idempotent and never overwrite a weekly snapshot.
