@@ -13,14 +13,14 @@
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 202,
+      "selections": 204,
       "settled": 178,
       "wins": 91,
       "losses": 85,
       "pushes": 2,
       "net_units": -2.200052,
       "roi_per_settled_selection": -0.01236,
-      "pending": 24,
+      "pending": 26,
       "invalid_or_ambiguous": 0
     },
     "v3": {
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 641,
+    "total_frozen_selections": 643,
     "settled": 554,
-    "pending": 87,
+    "pending": 89,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
