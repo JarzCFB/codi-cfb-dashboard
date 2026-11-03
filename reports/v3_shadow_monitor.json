@@ -183,8 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 145,
-      "MISSING_V1": 29,
-      "MISSING_V1_AND_V2": 14,
+      "MISSING_V1": 30,
+      "MISSING_V1_AND_V2": 13,
       "MISSING_V2": 21
     },
     "unclassified_details": [
@@ -625,7 +625,7 @@
         "game_id": "841d7821e82447f8a7d8592ec4584eec",
         "kickoff_utc": "2026-11-07T17:30:00Z",
         "matchup": "Maryland Terrapins at Purdue Boilermakers",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
