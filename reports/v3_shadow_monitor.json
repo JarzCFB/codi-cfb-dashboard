@@ -184,8 +184,8 @@
     "counts": {
       "CLASSIFIED": 145,
       "MISSING_V1": 30,
-      "MISSING_V1_AND_V2": 13,
-      "MISSING_V2": 21
+      "MISSING_V1_AND_V2": 12,
+      "MISSING_V2": 22
     },
     "unclassified_details": [
       {
@@ -697,7 +697,7 @@
         "game_id": "31cd8c948a11017166206a02f26c2cc8",
         "kickoff_utc": "2026-11-07T20:30:00Z",
         "matchup": "Charlotte 49ers at UAB Blazers",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
