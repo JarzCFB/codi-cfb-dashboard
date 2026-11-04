@@ -3,14 +3,14 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 209,
-      "settled": 179,
+      "selections": 210,
+      "settled": 180,
       "pending": 30,
-      "wins": 91,
+      "wins": 92,
       "losses": 85,
       "pushes": 3,
-      "net_units": -2.169232,
-      "roi_per_settled_selection": -0.012119
+      "net_units": -1.335899,
+      "roi_per_settled_selection": -0.007422
     },
     "5": {
       "selections": 84,
@@ -65,14 +65,14 @@
       "roi_per_settled_selection": -0.046033
     },
     "UNCLASSIFIED": {
-      "selections": 64,
-      "settled": 48,
+      "selections": 65,
+      "settled": 49,
       "pending": 16,
-      "wins": 21,
+      "wins": 22,
       "losses": 26,
       "pushes": 1,
-      "net_units": -6.829478,
-      "roi_per_settled_selection": -0.142281
+      "net_units": -5.996145,
+      "roi_per_settled_selection": -0.12237
     },
     "UNSTABLE": {
       "selections": 27,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-01T02:30:00Z",
+    "through_kickoff_utc": "2026-11-04T01:00:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 59,
-        "settled": 59,
+        "selections": 57,
+        "settled": 57,
         "pending": 0,
         "wins": 24,
-        "losses": 34,
+        "losses": 32,
         "pushes": 1,
-        "net_units": -12.157996,
-        "roi_per_settled_selection": -0.206068
+        "net_units": -10.144335,
+        "roi_per_settled_selection": -0.177971
       },
       "5": {
         "selections": 18,
@@ -137,14 +137,14 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 88,
-        "settled": 58,
+        "selections": 89,
+        "settled": 59,
         "pending": 30,
-        "wins": 24,
+        "wins": 25,
         "losses": 33,
         "pushes": 1,
-        "net_units": -11.157996,
-        "roi_per_settled_selection": -0.192379
+        "net_units": -10.324663,
+        "roi_per_settled_selection": -0.174994
       },
       "5": {
         "selections": 26,
@@ -179,13 +179,13 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 64,
+  "unclassified_v3_count": 65,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 145,
       "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 30,
-      "MISSING_V1_AND_V2": 12,
+      "MISSING_V1_AND_V2": 13,
       "MISSING_V2": 21
     },
     "unclassified_details": [
@@ -699,6 +699,14 @@
         "kickoff_utc": "2026-11-07T20:30:00Z",
         "matchup": "Charlotte 49ers at UAB Blazers",
         "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "0da9451fe176ce110bdcf79c077bb223",
+        "kickoff_utc": "2026-11-14T20:30:00Z",
+        "matchup": "USC Trojans at Indiana Hoosiers",
+        "reason": "MISSING_V1_AND_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -1714,6 +1722,12 @@
       "game_id": "31cd8c948a11017166206a02f26c2cc8",
       "kickoff_utc": "2026-11-07T20:30:00Z",
       "matchup": "Charlotte 49ers at UAB Blazers"
+    },
+    {
+      "season": "2026",
+      "game_id": "0da9451fe176ce110bdcf79c077bb223",
+      "kickoff_utc": "2026-11-14T20:30:00Z",
+      "matchup": "USC Trojans at Indiana Hoosiers"
     }
   ],
   "future_pending_v3": [
@@ -1751,15 +1765,6 @@
       "american_odds": "-110.0",
       "edge_points": "4.19498",
       "sportsbook": "DraftKings",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-04T01:00:00Z",
-      "selection": "Buffalo Bulls",
-      "spread": "6.5",
-      "american_odds": "-120.0",
-      "edge_points": "3.02668",
-      "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -1985,6 +1990,15 @@
       "american_odds": "-110.0",
       "edge_points": "3.93043",
       "sportsbook": "MyBookie.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-14T20:30:00Z",
+      "selection": "Indiana Hoosiers",
+      "spread": "-7.5",
+      "american_odds": "-106.0",
+      "edge_points": "3.2919",
+      "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
