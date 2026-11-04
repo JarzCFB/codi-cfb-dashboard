@@ -1,6 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,c0ddb68355a79fb70194e95b75c037ca,2026-11-04T00:00:00Z,Akron Zips,Ohio Bobcats,not_final_in_cfbd
-2026,657053f4734af94664beb750813257bb,2026-11-04T01:00:00Z,Miami (OH) RedHawks,Buffalo Bulls,not_final_in_cfbd
 2026,6ee8ad6eb7454d13bebc0806a10cc861,2026-11-05T00:00:00Z,UMass Minutemen,Ball State Cardinals,not_final_in_cfbd
 2026,e5c8c0aaad6dc26e9ede547783d854d2,2026-11-05T00:30:00Z,Eastern Michigan Eagles,Central Michigan Chippewas,not_final_in_cfbd
 2026,5af84fe49ccd4f304f9af0dce0a0db56,2026-11-06T00:30:00Z,Florida Atlantic Owls,UTSA Roadrunners,not_final_in_cfbd
@@ -60,3 +58,4 @@ season,game_id,kickoff_utc,home_team,away_team,reason
 2026,d74a875341a00e77cf86ecfb7569edd3,2026-11-08T02:30:00Z,Utah State Aggies,Fresno State Bulldogs,not_final_in_cfbd
 2026,d4334cec8f2060f3b8491ca9c7325892,2026-11-08T03:30:00Z,Oregon State Beavers,Texas State Bobcats,not_final_in_cfbd
 2026,6ce85b1067e9e85cd0d8b3242905ecd7,2026-11-08T03:30:00Z,UNLV Rebels,Wyoming Cowboys,not_final_in_cfbd
+2026,0da9451fe176ce110bdcf79c077bb223,2026-11-14T20:30:00Z,Indiana Hoosiers,USC Trojans,not_final_in_cfbd
