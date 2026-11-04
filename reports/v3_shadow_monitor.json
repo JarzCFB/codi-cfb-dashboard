@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 99,
+      "selections": 100,
       "settled": 86,
-      "pending": 13,
+      "pending": 14,
       "wins": 42,
       "losses": 42,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.046033
     },
     "UNCLASSIFIED": {
-      "selections": 65,
+      "selections": 64,
       "settled": 49,
-      "pending": 16,
+      "pending": 15,
       "wins": 22,
       "losses": 26,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 65,
+  "unclassified_v3_count": 64,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 145,
-      "COHORT_NOT_GENERATED": 1,
+      "CLASSIFIED": 146,
       "MISSING_V1": 30,
       "MISSING_V1_AND_V2": 13,
       "MISSING_V2": 21
@@ -691,14 +690,6 @@
         "kickoff_utc": "2026-11-07T21:00:00Z",
         "matchup": "Missouri State Bears at Florida International Panthers",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "31cd8c948a11017166206a02f26c2cc8",
-        "kickoff_utc": "2026-11-07T20:30:00Z",
-        "matchup": "Charlotte 49ers at UAB Blazers",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1716,12 +1707,6 @@
       "game_id": "b5f8faa111f5c25846fcfc22f1b664a1",
       "kickoff_utc": "2026-11-07T21:00:00Z",
       "matchup": "Missouri State Bears at Florida International Panthers"
-    },
-    {
-      "season": "2026",
-      "game_id": "31cd8c948a11017166206a02f26c2cc8",
-      "kickoff_utc": "2026-11-07T20:30:00Z",
-      "matchup": "Charlotte 49ers at UAB Blazers"
     },
     {
       "season": "2026",

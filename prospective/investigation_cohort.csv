@@ -155,6 +155,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,5304671601ad3064a66a332cbb09313f,2026-11-07T19:30:00Z,Appalachian State Mountaineers,Georgia State Panthers,2026-11-02T19:30:40Z,0.19691,1.73173,2.06957,1.535,true,PASS,V1/V2 agreement under 5 pts
 2026,208e919ada4f5cf6d27af719879d1880,2026-11-07T20:00:00Z,South Carolina Gamecocks,Texas A&M Aggies,2026-11-01T16:04:06Z,3.4036,2.9033,3.94019,0.5,true,PASS,V1/V2 agreement under 5 pts
 2026,42e27947d5bad1a1aa037cccf557e9fe,2026-11-07T20:00:00Z,Kennesaw State Owls,Delaware Blue Hens,2026-11-01T16:04:06Z,1.38741,1.75828,2.42306,0.371,true,PASS,V1/V2 agreement under 5 pts
+2026,31cd8c948a11017166206a02f26c2cc8,2026-11-07T20:30:00Z,UAB Blazers,Charlotte 49ers,2026-11-04T17:16:25Z,11.77959,11.46783,13.42208,0.312,true,PASS,V1/V2 agreement under 5 pts
 2026,cd61922c472fea089e42662bc725f46b,2026-11-07T20:30:00Z,Washington Huskies,Penn State Nittany Lions,2026-11-01T16:04:06Z,-0.80477,-1.94385,-1.27802,1.139,true,PASS,V1/V2 agreement under 5 pts
 2026,deb5de88acb22f9a3e969c137fd65cb3,2026-11-07T20:30:00Z,Middle Tennessee Blue Raiders,Western Kentucky Hilltoppers,2026-11-01T21:12:14Z,3.47236,4.23227,5.06891,0.76,true,PASS,V1/V2 agreement under 5 pts
 2026,028ce5ee2c58281cf935f06edc90d671,2026-11-07T21:15:00Z,Mississippi State Bulldogs,Vanderbilt Commodores,2026-11-01T07:35:12Z,8.1698,8.60973,10.03108,0.44,true,PASS,V1/V2 agreement under 5 pts
