@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 145,
+      "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 30,
       "MISSING_V1_AND_V2": 12,
-      "MISSING_V2": 22
+      "MISSING_V2": 21
     },
     "unclassified_details": [
       {
@@ -697,7 +698,7 @@
         "game_id": "31cd8c948a11017166206a02f26c2cc8",
         "kickoff_utc": "2026-11-07T20:30:00Z",
         "matchup": "Charlotte 49ers at UAB Blazers",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -705,7 +706,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 64,
+    "covered_v3": 65,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -720,7 +721,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 49,
+        "selections": 50,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1315,6 +1316,15 @@
         "matchup": "Colorado Buffaloes at Arizona State Sun Devils",
         "status": "PASS",
         "disagreement_points": "0.22239",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "0da9451fe176ce110bdcf79c077bb223",
+        "kickoff_utc": "2026-11-14T20:30:00Z",
+        "matchup": "USC Trojans at Indiana Hoosiers",
+        "status": "PASS",
+        "disagreement_points": "0.11565",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
