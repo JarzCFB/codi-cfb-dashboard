@@ -705,12 +705,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 66,
+    "covered_v3": 70,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 7,
+        "selections": 8,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -720,7 +720,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 51,
+        "selections": 54,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1319,6 +1319,15 @@
       },
       {
         "season": "2026",
+        "game_id": "4aac00e6cc06b8905659f911419540d2",
+        "kickoff_utc": "2026-11-08T00:30:00Z",
+        "matchup": "Miami Hurricanes at Notre Dame Fighting Irish",
+        "status": "PASS",
+        "disagreement_points": "3.82179",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "4f0efedf5f575715851efea9089f7ea6",
         "kickoff_utc": "2026-11-08T00:30:00Z",
         "matchup": "Colorado Buffaloes at Arizona State Sun Devils",
@@ -1328,11 +1337,38 @@
       },
       {
         "season": "2026",
+        "game_id": "5b6989e8ecca343c4de3e7d285b70aa3",
+        "kickoff_utc": "2026-11-14T17:00:00Z",
+        "matchup": "Baylor Bears at BYU Cougars",
+        "status": "PASS",
+        "disagreement_points": "2.2447",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "0da9451fe176ce110bdcf79c077bb223",
         "kickoff_utc": "2026-11-14T20:30:00Z",
         "matchup": "USC Trojans at Indiana Hoosiers",
         "status": "PASS",
         "disagreement_points": "0.11565",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "4c76e6c2d67084d144ebe452d7d608a0",
+        "kickoff_utc": "2026-11-14T20:30:00Z",
+        "matchup": "Michigan Wolverines at Oregon Ducks",
+        "status": "PASS",
+        "disagreement_points": "3.11986",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "f9b805187f3809fdadddfa08dfa2a089",
+        "kickoff_utc": "2026-11-14T23:00:00Z",
+        "matchup": "Oregon State Beavers at Boise State Broncos",
+        "status": "CAUTION",
+        "disagreement_points": "5.26299",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
