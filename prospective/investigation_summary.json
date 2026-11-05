@@ -7,7 +7,7 @@
   },
   "groups": {
     "PASS": {
-      "classified_games": 111,
+      "classified_games": 113,
       "settled_games": 83,
       "winner_correct": 54,
       "within_7": 32,
@@ -25,7 +25,7 @@
       "within_7_rate": 0.368421
     },
     "UNSTABLE": {
-      "classified_games": 30,
+      "classified_games": 32,
       "settled_games": 24,
       "winner_correct": 14,
       "within_7": 13,

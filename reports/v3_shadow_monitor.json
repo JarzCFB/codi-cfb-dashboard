@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 100,
+      "selections": 101,
       "settled": 86,
-      "pending": 14,
+      "pending": 15,
       "wins": 42,
       "losses": 42,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.046033
     },
     "UNCLASSIFIED": {
-      "selections": 69,
+      "selections": 67,
       "settled": 50,
-      "pending": 19,
+      "pending": 17,
       "wins": 22,
       "losses": 27,
       "pushes": 1,
@@ -75,9 +75,9 @@
       "roi_per_settled_selection": -0.139923
     },
     "UNSTABLE": {
-      "selections": 27,
+      "selections": 28,
       "settled": 26,
-      "pending": 1,
+      "pending": 2,
       "wins": 15,
       "losses": 11,
       "pushes": 0,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 69,
+  "unclassified_v3_count": 67,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 146,
-      "COHORT_NOT_GENERATED": 2,
+      "CLASSIFIED": 148,
       "MISSING_V1": 31,
       "MISSING_V1_AND_V2": 13,
       "MISSING_V2": 23
@@ -711,26 +710,10 @@
       },
       {
         "season": "2026",
-        "game_id": "4aac00e6cc06b8905659f911419540d2",
-        "kickoff_utc": "2026-11-08T00:30:00Z",
-        "matchup": "Miami Hurricanes at Notre Dame Fighting Irish",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "4c76e6c2d67084d144ebe452d7d608a0",
         "kickoff_utc": "2026-11-14T20:30:00Z",
         "matchup": "Michigan Wolverines at Oregon Ducks",
         "reason": "MISSING_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "5b6989e8ecca343c4de3e7d285b70aa3",
-        "kickoff_utc": "2026-11-14T17:00:00Z",
-        "matchup": "Baylor Bears at BYU Cougars",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1808,21 +1791,9 @@
     },
     {
       "season": "2026",
-      "game_id": "4aac00e6cc06b8905659f911419540d2",
-      "kickoff_utc": "2026-11-08T00:30:00Z",
-      "matchup": "Miami Hurricanes at Notre Dame Fighting Irish"
-    },
-    {
-      "season": "2026",
       "game_id": "4c76e6c2d67084d144ebe452d7d608a0",
       "kickoff_utc": "2026-11-14T20:30:00Z",
       "matchup": "Michigan Wolverines at Oregon Ducks"
-    },
-    {
-      "season": "2026",
-      "game_id": "5b6989e8ecca343c4de3e7d285b70aa3",
-      "kickoff_utc": "2026-11-14T17:00:00Z",
-      "matchup": "Baylor Bears at BYU Cougars"
     },
     {
       "season": "2026",
