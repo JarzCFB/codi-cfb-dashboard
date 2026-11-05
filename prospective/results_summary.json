@@ -2,47 +2,47 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 231,
-      "settled": 198,
+      "selections": 235,
+      "settled": 199,
       "wins": 95,
-      "losses": 102,
+      "losses": 103,
       "pushes": 1,
-      "net_units": -15.448019,
-      "roi_per_settled_selection": -0.07802,
-      "pending": 33,
+      "net_units": -16.448019,
+      "roi_per_settled_selection": -0.082653,
+      "pending": 36,
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 205,
-      "settled": 180,
-      "wins": 93,
+      "selections": 210,
+      "settled": 181,
+      "wins": 94,
       "losses": 85,
       "pushes": 2,
-      "net_units": -0.457628,
-      "roi_per_settled_selection": -0.002542,
-      "pending": 25,
+      "net_units": 0.451463,
+      "roi_per_settled_selection": 0.002494,
+      "pending": 29,
       "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 210,
-      "settled": 180,
+      "selections": 215,
+      "settled": 181,
       "wins": 92,
-      "losses": 85,
+      "losses": 86,
       "pushes": 3,
-      "net_units": -1.335899,
-      "roi_per_settled_selection": -0.007422,
-      "pending": 30,
+      "net_units": -2.335899,
+      "roi_per_settled_selection": -0.012906,
+      "pending": 34,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 104,
+      "settled": 105,
       "wins": 47,
-      "losses": 55,
+      "losses": 56,
       "pushes": 2,
-      "net_units": -12.344433,
-      "roi_per_settled_selection": -0.118696
+      "net_units": -13.344433,
+      "roi_per_settled_selection": -0.12709
     },
     "5_to_lt7": {
       "settled": 48,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 646,
-    "settled": 558,
-    "pending": 88,
+    "total_frozen_selections": 660,
+    "settled": 561,
+    "pending": 99,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
