@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 150,
+      "COHORT_NOT_GENERATED": 2,
       "MISSING_V1": 31,
-      "MISSING_V1_AND_V2": 13,
-      "MISSING_V2": 22
+      "MISSING_V1_AND_V2": 12,
+      "MISSING_V2": 21
     },
     "unclassified_details": [
       {
@@ -569,7 +570,7 @@
         "game_id": "61cf0b043d9d95f0a73d0838ff08a24b",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "Iowa Hawkeyes at Northwestern Wildcats",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -609,7 +610,7 @@
         "game_id": "5b05bf2ff27508703418dcf70079a22f",
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "UCLA Bruins at Minnesota Golden Gophers",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -657,7 +658,7 @@
         "game_id": "55e2553780b7d3d06d1fe7a4ffa9474b",
         "kickoff_utc": "2026-11-07T21:00:00Z",
         "matchup": "Rice Owls at North Texas Mean Green",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
