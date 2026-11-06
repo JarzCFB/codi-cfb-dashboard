@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 148,
+      "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 31,
       "MISSING_V1_AND_V2": 13,
-      "MISSING_V2": 23
+      "MISSING_V2": 22
     },
     "unclassified_details": [
       {
@@ -617,7 +618,7 @@
         "game_id": "722ed661705df150a38e7786949ce241",
         "kickoff_utc": "2026-11-07T03:15:00Z",
         "matchup": "TCU Horned Frogs at Arizona Wildcats",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -729,7 +730,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 70,
+    "covered_v3": 71,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -744,7 +745,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 54,
+        "selections": 55,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1357,6 +1358,15 @@
         "matchup": "Colorado Buffaloes at Arizona State Sun Devils",
         "status": "PASS",
         "disagreement_points": "0.22239",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "eca05dc53fc3a8dd74622a4b7657bc3b",
+        "kickoff_utc": "2026-11-08T02:30:00Z",
+        "matchup": "Hawaii Rainbow Warriors at UTEP Miners",
+        "status": "PASS",
+        "disagreement_points": "4.67914",
         "source": "same_capture_v3_frozen_quote"
       },
       {
