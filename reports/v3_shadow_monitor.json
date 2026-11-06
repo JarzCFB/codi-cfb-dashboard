@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 102,
+      "selections": 103,
       "settled": 86,
-      "pending": 16,
+      "pending": 17,
       "wins": 42,
       "losses": 42,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.046033
     },
     "UNCLASSIFIED": {
-      "selections": 67,
+      "selections": 66,
       "settled": 50,
-      "pending": 17,
+      "pending": 16,
       "wins": 22,
       "losses": 27,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 67,
+  "unclassified_v3_count": 66,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 149,
-      "COHORT_NOT_GENERATED": 1,
+      "CLASSIFIED": 150,
       "MISSING_V1": 31,
       "MISSING_V1_AND_V2": 13,
       "MISSING_V2": 22
@@ -611,14 +610,6 @@
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "UCLA Bruins at Minnesota Golden Gophers",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "722ed661705df150a38e7786949ce241",
-        "kickoff_utc": "2026-11-07T03:15:00Z",
-        "matchup": "TCU Horned Frogs at Arizona Wildcats",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1726,12 +1717,6 @@
       "game_id": "5b05bf2ff27508703418dcf70079a22f",
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "matchup": "UCLA Bruins at Minnesota Golden Gophers"
-    },
-    {
-      "season": "2026",
-      "game_id": "722ed661705df150a38e7786949ce241",
-      "kickoff_utc": "2026-11-07T03:15:00Z",
-      "matchup": "TCU Horned Frogs at Arizona Wildcats"
     },
     {
       "season": "2026",
