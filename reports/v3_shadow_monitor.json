@@ -3,9 +3,9 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 215,
+      "selections": 216,
       "settled": 181,
-      "pending": 34,
+      "pending": 35,
       "wins": 92,
       "losses": 86,
       "pushes": 3,
@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 101,
+      "selections": 102,
       "settled": 86,
-      "pending": 15,
+      "pending": 16,
       "wins": 42,
       "losses": 42,
       "pushes": 2,
@@ -137,9 +137,9 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 94,
+        "selections": 95,
         "settled": 60,
-        "pending": 34,
+        "pending": 35,
         "wins": 25,
         "losses": 34,
         "pushes": 1,
@@ -182,7 +182,7 @@
   "unclassified_v3_count": 67,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 148,
+      "CLASSIFIED": 149,
       "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 31,
       "MISSING_V1_AND_V2": 13,
@@ -2117,6 +2117,15 @@
       "american_odds": "-115.0",
       "edge_points": "3.66342",
       "sportsbook": "DraftKings",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-08T02:30:00Z",
+      "selection": "Hawaii Rainbow Warriors",
+      "spread": "-8.0",
+      "american_odds": "-106.0",
+      "edge_points": "3.06005",
+      "sportsbook": "LowVig.ag",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
