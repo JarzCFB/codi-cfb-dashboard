@@ -45,9 +45,9 @@
   },
   "frozen_cohorts": {
     "CAUTION": {
-      "selections": 19,
+      "selections": 20,
       "settled": 19,
-      "pending": 0,
+      "pending": 1,
       "wins": 13,
       "losses": 6,
       "pushes": 0,
@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 103,
+      "selections": 106,
       "settled": 89,
-      "pending": 14,
+      "pending": 17,
       "wins": 42,
       "losses": 45,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.078189
     },
     "UNCLASSIFIED": {
-      "selections": 67,
+      "selections": 63,
       "settled": 50,
-      "pending": 17,
+      "pending": 13,
       "wins": 22,
       "losses": 27,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 67,
+  "unclassified_v3_count": 63,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 150,
-      "COHORT_NOT_GENERATED": 4,
+      "CLASSIFIED": 154,
       "MISSING_V1": 30,
       "MISSING_V1_AND_V2": 12,
       "MISSING_V2": 21
@@ -567,14 +566,6 @@
       },
       {
         "season": "2026",
-        "game_id": "61cf0b043d9d95f0a73d0838ff08a24b",
-        "kickoff_utc": "2026-11-07T17:00:00Z",
-        "matchup": "Iowa Hawkeyes at Northwestern Wildcats",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "47548a73e429985e77f81a4617b4fdfd",
         "kickoff_utc": "2026-10-31T18:00:00Z",
         "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers",
@@ -607,14 +598,6 @@
       },
       {
         "season": "2026",
-        "game_id": "5b05bf2ff27508703418dcf70079a22f",
-        "kickoff_utc": "2026-11-07T17:00:00Z",
-        "matchup": "UCLA Bruins at Minnesota Golden Gophers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "841d7821e82447f8a7d8592ec4584eec",
         "kickoff_utc": "2026-11-07T17:30:00Z",
         "matchup": "Maryland Terrapins at Purdue Boilermakers",
@@ -635,14 +618,6 @@
         "kickoff_utc": "2026-11-07T17:00:00Z",
         "matchup": "UCF Knights at Kansas Jayhawks",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "2a6e2d9ca0d2fc85a4164e9c0f25a05f",
-        "kickoff_utc": "2026-11-07T17:30:00Z",
-        "matchup": "Rutgers Scarlet Knights at Wisconsin Badgers",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -707,14 +682,6 @@
         "kickoff_utc": "2026-11-14T20:30:00Z",
         "matchup": "Michigan Wolverines at Oregon Ducks",
         "reason": "MISSING_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "f9b805187f3809fdadddfa08dfa2a089",
-        "kickoff_utc": "2026-11-14T23:00:00Z",
-        "matchup": "Oregon State Beavers at Boise State Broncos",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1702,12 +1669,6 @@
     },
     {
       "season": "2026",
-      "game_id": "61cf0b043d9d95f0a73d0838ff08a24b",
-      "kickoff_utc": "2026-11-07T17:00:00Z",
-      "matchup": "Iowa Hawkeyes at Northwestern Wildcats"
-    },
-    {
-      "season": "2026",
       "game_id": "47548a73e429985e77f81a4617b4fdfd",
       "kickoff_utc": "2026-10-31T18:00:00Z",
       "matchup": "Coastal Carolina Chanticleers at Georgia State Panthers"
@@ -1732,12 +1693,6 @@
     },
     {
       "season": "2026",
-      "game_id": "5b05bf2ff27508703418dcf70079a22f",
-      "kickoff_utc": "2026-11-07T17:00:00Z",
-      "matchup": "UCLA Bruins at Minnesota Golden Gophers"
-    },
-    {
-      "season": "2026",
       "game_id": "841d7821e82447f8a7d8592ec4584eec",
       "kickoff_utc": "2026-11-07T17:30:00Z",
       "matchup": "Maryland Terrapins at Purdue Boilermakers"
@@ -1753,12 +1708,6 @@
       "game_id": "c74c1b98aca90ebf335b4028d44c2095",
       "kickoff_utc": "2026-11-07T17:00:00Z",
       "matchup": "UCF Knights at Kansas Jayhawks"
-    },
-    {
-      "season": "2026",
-      "game_id": "2a6e2d9ca0d2fc85a4164e9c0f25a05f",
-      "kickoff_utc": "2026-11-07T17:30:00Z",
-      "matchup": "Rutgers Scarlet Knights at Wisconsin Badgers"
     },
     {
       "season": "2026",
@@ -1807,12 +1756,6 @@
       "game_id": "4c76e6c2d67084d144ebe452d7d608a0",
       "kickoff_utc": "2026-11-14T20:30:00Z",
       "matchup": "Michigan Wolverines at Oregon Ducks"
-    },
-    {
-      "season": "2026",
-      "game_id": "f9b805187f3809fdadddfa08dfa2a089",
-      "kickoff_utc": "2026-11-14T23:00:00Z",
-      "matchup": "Oregon State Beavers at Boise State Broncos"
     },
     {
       "season": "2026",
