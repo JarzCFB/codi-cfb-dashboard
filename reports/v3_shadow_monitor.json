@@ -183,8 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 150,
-      "COHORT_NOT_GENERATED": 3,
-      "MISSING_V1": 31,
+      "COHORT_NOT_GENERATED": 4,
+      "MISSING_V1": 30,
       "MISSING_V1_AND_V2": 12,
       "MISSING_V2": 20
     },
@@ -714,7 +714,7 @@
         "game_id": "f9b805187f3809fdadddfa08dfa2a089",
         "kickoff_utc": "2026-11-14T23:00:00Z",
         "matchup": "Oregon State Beavers at Boise State Broncos",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
