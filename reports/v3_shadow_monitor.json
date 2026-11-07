@@ -3,14 +3,14 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 216,
-      "settled": 181,
-      "pending": 35,
+      "selections": 217,
+      "settled": 184,
+      "pending": 33,
       "wins": 92,
-      "losses": 86,
+      "losses": 89,
       "pushes": 3,
-      "net_units": -2.335899,
-      "roi_per_settled_selection": -0.012906
+      "net_units": -5.335899,
+      "roi_per_settled_selection": -0.028999
     },
     "5": {
       "selections": 84,
@@ -56,18 +56,18 @@
     },
     "PASS": {
       "selections": 103,
-      "settled": 86,
-      "pending": 17,
+      "settled": 89,
+      "pending": 14,
       "wins": 42,
-      "losses": 42,
+      "losses": 45,
       "pushes": 2,
-      "net_units": -3.958822,
-      "roi_per_settled_selection": -0.046033
+      "net_units": -6.958822,
+      "roi_per_settled_selection": -0.078189
     },
     "UNCLASSIFIED": {
-      "selections": 66,
+      "selections": 67,
       "settled": 50,
-      "pending": 16,
+      "pending": 17,
       "wins": 22,
       "losses": 27,
       "pushes": 1,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-05T00:00:00Z",
+    "through_kickoff_utc": "2026-11-07T03:15:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 58,
-        "settled": 58,
+        "selections": 57,
+        "settled": 57,
         "pending": 0,
-        "wins": 24,
+        "wins": 23,
         "losses": 33,
         "pushes": 1,
-        "net_units": -11.144335,
-        "roi_per_settled_selection": -0.192144
+        "net_units": -12.053426,
+        "roi_per_settled_selection": -0.211464
       },
       "5": {
         "selections": 18,
@@ -137,14 +137,14 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 95,
-        "settled": 60,
-        "pending": 35,
+        "selections": 96,
+        "settled": 63,
+        "pending": 33,
         "wins": 25,
-        "losses": 34,
+        "losses": 37,
         "pushes": 1,
-        "net_units": -11.324663,
-        "roi_per_settled_selection": -0.188744
+        "net_units": -14.324663,
+        "roi_per_settled_selection": -0.227376
       },
       "5": {
         "selections": 26,
@@ -179,14 +179,14 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 66,
+  "unclassified_v3_count": 67,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 150,
       "COHORT_NOT_GENERATED": 4,
       "MISSING_V1": 30,
       "MISSING_V1_AND_V2": 12,
-      "MISSING_V2": 20
+      "MISSING_V2": 21
     },
     "unclassified_details": [
       {
@@ -715,6 +715,14 @@
         "kickoff_utc": "2026-11-14T23:00:00Z",
         "matchup": "Oregon State Beavers at Boise State Broncos",
         "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "2dd995baa931f5b063cb50ddbe821d74",
+        "kickoff_utc": "2026-11-08T01:00:00Z",
+        "matchup": "Liberty Flames at New Mexico State Aggies",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -1805,6 +1813,12 @@
       "game_id": "f9b805187f3809fdadddfa08dfa2a089",
       "kickoff_utc": "2026-11-14T23:00:00Z",
       "matchup": "Oregon State Beavers at Boise State Broncos"
+    },
+    {
+      "season": "2026",
+      "game_id": "2dd995baa931f5b063cb50ddbe821d74",
+      "kickoff_utc": "2026-11-08T01:00:00Z",
+      "matchup": "Liberty Flames at New Mexico State Aggies"
     }
   ],
   "future_pending_v3": [
@@ -1863,15 +1877,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-07T02:00:00Z",
-      "selection": "Nevada Wolf Pack",
-      "spread": "12.5",
-      "american_odds": "-110.0",
-      "edge_points": "3.71423",
-      "sportsbook": "DraftKings",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-08T00:30:00Z",
       "selection": "Arizona State Sun Devils",
       "spread": "-3.5",
@@ -1886,15 +1891,6 @@
       "spread": "-5.5",
       "american_odds": "-105.0",
       "edge_points": "3.07968",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-07T03:15:00Z",
-      "selection": "Arizona Wildcats",
-      "spread": "-7.5",
-      "american_odds": "-110.0",
-      "edge_points": "3.47189",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
@@ -1959,15 +1955,6 @@
       "american_odds": "-110.0",
       "edge_points": "5.42306",
       "sportsbook": "DraftKings",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-07T00:30:00Z",
-      "selection": "South Florida Bulls",
-      "spread": "-0.5",
-      "american_odds": "-113.0",
-      "edge_points": "3.39842",
-      "sportsbook": "BetRivers",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -2121,6 +2108,15 @@
       "american_odds": "-106.0",
       "edge_points": "3.06005",
       "sportsbook": "LowVig.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-08T01:00:00Z",
+      "selection": "Liberty Flames",
+      "spread": "-15.0",
+      "american_odds": "-110.0",
+      "edge_points": "3.01948",
+      "sportsbook": "BetUS",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]

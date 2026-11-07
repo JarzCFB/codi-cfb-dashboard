@@ -2,47 +2,47 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 238,
-      "settled": 200,
-      "wins": 96,
-      "losses": 103,
+      "selections": 241,
+      "settled": 203,
+      "wins": 97,
+      "losses": 105,
       "pushes": 1,
-      "net_units": -15.641567,
-      "roi_per_settled_selection": -0.078208,
+      "net_units": -16.732476,
+      "roi_per_settled_selection": -0.082426,
       "pending": 38,
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 215,
-      "settled": 181,
+      "selections": 219,
+      "settled": 184,
       "wins": 94,
-      "losses": 85,
+      "losses": 88,
       "pushes": 2,
-      "net_units": 0.451463,
-      "roi_per_settled_selection": 0.002494,
-      "pending": 34,
+      "net_units": -2.548537,
+      "roi_per_settled_selection": -0.013851,
+      "pending": 35,
       "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 216,
-      "settled": 181,
+      "selections": 217,
+      "settled": 184,
       "wins": 92,
-      "losses": 86,
+      "losses": 89,
       "pushes": 3,
-      "net_units": -2.335899,
-      "roi_per_settled_selection": -0.012906,
-      "pending": 35,
+      "net_units": -5.335899,
+      "roi_per_settled_selection": -0.028999,
+      "pending": 33,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 105,
+      "settled": 108,
       "wins": 47,
-      "losses": 56,
+      "losses": 59,
       "pushes": 2,
-      "net_units": -13.344433,
-      "roi_per_settled_selection": -0.12709
+      "net_units": -16.344433,
+      "roi_per_settled_selection": -0.151337
     },
     "5_to_lt7": {
       "settled": 48,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 669,
-    "settled": 562,
-    "pending": 107,
+    "total_frozen_selections": 677,
+    "settled": 571,
+    "pending": 106,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
