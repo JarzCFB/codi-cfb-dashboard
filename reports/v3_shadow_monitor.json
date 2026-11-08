@@ -697,7 +697,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 74,
+    "covered_v3": 80,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -712,7 +712,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 57,
+        "selections": 61,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -722,7 +722,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 8,
+        "selections": 10,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1356,11 +1356,56 @@
       },
       {
         "season": "2026",
+        "game_id": "a8f5a967982255fd6be0435c3b213b0f",
+        "kickoff_utc": "2026-11-12T00:30:00Z",
+        "matchup": "Buffalo Bulls at Ball State Cardinals",
+        "status": "PASS",
+        "disagreement_points": "3.88091",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "9d463c4686f84c78b890f0fcf2ac90c5",
+        "kickoff_utc": "2026-11-13T01:00:00Z",
+        "matchup": "Memphis Tigers at South Florida Bulls",
+        "status": "PASS",
+        "disagreement_points": "1.25873",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "5b6989e8ecca343c4de3e7d285b70aa3",
         "kickoff_utc": "2026-11-14T17:00:00Z",
         "matchup": "Baylor Bears at BYU Cougars",
         "status": "PASS",
         "disagreement_points": "2.2447",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "cf67bd8ed20036fea0a72f8a0d5836e7",
+        "kickoff_utc": "2026-11-14T17:00:00Z",
+        "matchup": "Syracuse Orange at NC State Wolfpack",
+        "status": "UNSTABLE",
+        "disagreement_points": "0.99873",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "d6d167714ff638b23e84d757ff522414",
+        "kickoff_utc": "2026-11-14T17:00:00Z",
+        "matchup": "Auburn Tigers at Mississippi State Bulldogs",
+        "status": "PASS",
+        "disagreement_points": "0.16077",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "0431ccbcda08ef99781fee8c341c8932",
+        "kickoff_utc": "2026-11-14T20:30:00Z",
+        "matchup": "Cincinnati Bearcats at Iowa State Cyclones",
+        "status": "PASS",
+        "disagreement_points": "2.37622",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -1379,6 +1424,15 @@
         "matchup": "Michigan Wolverines at Oregon Ducks",
         "status": "PASS",
         "disagreement_points": "3.11986",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "aa1c9ee516cf122de53e75ffec017edd",
+        "kickoff_utc": "2026-11-14T21:15:00Z",
+        "matchup": "Washington Huskies at Michigan State Spartans",
+        "status": "UNSTABLE",
+        "disagreement_points": "1.0785",
         "source": "same_capture_v3_frozen_quote"
       },
       {
