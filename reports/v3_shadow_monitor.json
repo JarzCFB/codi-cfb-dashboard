@@ -183,8 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 163,
-      "MISSING_V1": 36,
-      "MISSING_V1_AND_V2": 14,
+      "MISSING_V1": 37,
+      "MISSING_V1_AND_V2": 13,
       "MISSING_V2": 23
     },
     "unclassified_details": [
@@ -713,7 +713,7 @@
         "game_id": "cf67bd8ed20036fea0a72f8a0d5836e7",
         "kickoff_utc": "2026-11-14T17:00:00Z",
         "matchup": "Syracuse Orange at NC State Wolfpack",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -777,7 +777,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 91,
+    "covered_v3": 93,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -792,7 +792,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 70,
+        "selections": 72,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1481,6 +1481,15 @@
       },
       {
         "season": "2026",
+        "game_id": "b7d77aed1f8f75da7679a059e627dfee",
+        "kickoff_utc": "2026-11-14T17:00:00Z",
+        "matchup": "Wake Forest Demon Deacons at SMU Mustangs",
+        "status": "PASS",
+        "disagreement_points": "2.04276",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "cf67bd8ed20036fea0a72f8a0d5836e7",
         "kickoff_utc": "2026-11-14T17:00:00Z",
         "matchup": "Syracuse Orange at NC State Wolfpack",
@@ -1495,6 +1504,15 @@
         "matchup": "Auburn Tigers at Mississippi State Bulldogs",
         "status": "PASS",
         "disagreement_points": "0.16077",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "72e1af72402c489444f89a8600abb23f",
+        "kickoff_utc": "2026-11-14T18:00:00Z",
+        "matchup": "Arkansas State Red Wolves at Coastal Carolina Chanticleers",
+        "status": "PASS",
+        "disagreement_points": "0.53393",
         "source": "same_capture_v3_frozen_quote"
       },
       {
