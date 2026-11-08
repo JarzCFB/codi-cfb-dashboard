@@ -697,12 +697,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 72,
+    "covered_v3": 74,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 8,
+        "selections": 9,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -712,7 +712,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 56,
+        "selections": 57,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1347,6 +1347,15 @@
       },
       {
         "season": "2026",
+        "game_id": "5129a94416920cd3c476cd56af387f47",
+        "kickoff_utc": "2026-11-12T00:30:00Z",
+        "matchup": "UMass Minutemen at Toledo Rockets",
+        "status": "CAUTION",
+        "disagreement_points": "8.64357",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "5b6989e8ecca343c4de3e7d285b70aa3",
         "kickoff_utc": "2026-11-14T17:00:00Z",
         "matchup": "Baylor Bears at BYU Cougars",
@@ -1379,6 +1388,15 @@
         "matchup": "Oregon State Beavers at Boise State Broncos",
         "status": "CAUTION",
         "disagreement_points": "5.26299",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "d466840e3c50d2fdad6fd7e799fdf921",
+        "kickoff_utc": "2026-11-15T00:00:00Z",
+        "matchup": "Minnesota Golden Gophers at Penn State Nittany Lions",
+        "status": "PASS",
+        "disagreement_points": "4.81366",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
