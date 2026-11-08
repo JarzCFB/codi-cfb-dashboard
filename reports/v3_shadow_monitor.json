@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 106,
+      "selections": 112,
       "settled": 105,
-      "pending": 1,
+      "pending": 7,
       "wins": 52,
       "losses": 51,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.036814
     },
     "UNCLASSIFIED": {
-      "selections": 81,
+      "selections": 73,
       "settled": 61,
-      "pending": 20,
+      "pending": 12,
       "wins": 25,
       "losses": 35,
       "pushes": 1,
@@ -75,9 +75,9 @@
       "roi_per_settled_selection": -0.201577
     },
     "UNSTABLE": {
-      "selections": 28,
+      "selections": 30,
       "settled": 28,
-      "pending": 0,
+      "pending": 2,
       "wins": 16,
       "losses": 12,
       "pushes": 0,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 81,
+  "unclassified_v3_count": 73,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 155,
-      "COHORT_NOT_GENERATED": 8,
+      "CLASSIFIED": 163,
       "MISSING_V1": 36,
       "MISSING_V1_AND_V2": 14,
       "MISSING_V2": 23
@@ -703,22 +702,6 @@
       },
       {
         "season": "2026",
-        "game_id": "0431ccbcda08ef99781fee8c341c8932",
-        "kickoff_utc": "2026-11-14T20:30:00Z",
-        "matchup": "Cincinnati Bearcats at Iowa State Cyclones",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "9d463c4686f84c78b890f0fcf2ac90c5",
-        "kickoff_utc": "2026-11-13T01:00:00Z",
-        "matchup": "Memphis Tigers at South Florida Bulls",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "a8f5a967982255fd6be0435c3b213b0f",
         "kickoff_utc": "2026-11-12T00:30:00Z",
         "matchup": "Buffalo Bulls at Ball State Cardinals",
@@ -727,26 +710,10 @@
       },
       {
         "season": "2026",
-        "game_id": "aa1c9ee516cf122de53e75ffec017edd",
-        "kickoff_utc": "2026-11-14T21:15:00Z",
-        "matchup": "Washington Huskies at Michigan State Spartans",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "cf67bd8ed20036fea0a72f8a0d5836e7",
         "kickoff_utc": "2026-11-14T17:00:00Z",
         "matchup": "Syracuse Orange at NC State Wolfpack",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "d6d167714ff638b23e84d757ff522414",
-        "kickoff_utc": "2026-11-14T17:00:00Z",
-        "matchup": "Auburn Tigers at Mississippi State Bulldogs",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -771,30 +738,6 @@
         "kickoff_utc": "2026-11-15T03:00:00Z",
         "matchup": "Wyoming Cowboys at UTEP Miners",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "65104e496f8e5c0208eb59dd0c946475",
-        "kickoff_utc": "2026-11-14T20:30:00Z",
-        "matchup": "Jacksonville State Gamecocks at Western Kentucky Hilltoppers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "67a73e38d3fd93df27dcca8160f796c3",
-        "kickoff_utc": "2026-11-14T20:30:00Z",
-        "matchup": "Georgia Southern Eagles at Georgia State Panthers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "83b67813ba763c65142b4238e3c44270",
-        "kickoff_utc": "2026-11-14T17:00:00Z",
-        "matchup": "James Madison Dukes at UConn Huskies",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -827,14 +770,6 @@
         "kickoff_utc": "2026-11-14T19:00:00Z",
         "matchup": "Tulane Green Wave at Rice Owls",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "ee91eb14cc4d725be5df58f3285bdaa6",
-        "kickoff_utc": "2026-11-15T02:00:00Z",
-        "matchup": "North Texas Mean Green at UTSA Roadrunners",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -2087,39 +2022,15 @@
     },
     {
       "season": "2026",
-      "game_id": "0431ccbcda08ef99781fee8c341c8932",
-      "kickoff_utc": "2026-11-14T20:30:00Z",
-      "matchup": "Cincinnati Bearcats at Iowa State Cyclones"
-    },
-    {
-      "season": "2026",
-      "game_id": "9d463c4686f84c78b890f0fcf2ac90c5",
-      "kickoff_utc": "2026-11-13T01:00:00Z",
-      "matchup": "Memphis Tigers at South Florida Bulls"
-    },
-    {
-      "season": "2026",
       "game_id": "a8f5a967982255fd6be0435c3b213b0f",
       "kickoff_utc": "2026-11-12T00:30:00Z",
       "matchup": "Buffalo Bulls at Ball State Cardinals"
     },
     {
       "season": "2026",
-      "game_id": "aa1c9ee516cf122de53e75ffec017edd",
-      "kickoff_utc": "2026-11-14T21:15:00Z",
-      "matchup": "Washington Huskies at Michigan State Spartans"
-    },
-    {
-      "season": "2026",
       "game_id": "cf67bd8ed20036fea0a72f8a0d5836e7",
       "kickoff_utc": "2026-11-14T17:00:00Z",
       "matchup": "Syracuse Orange at NC State Wolfpack"
-    },
-    {
-      "season": "2026",
-      "game_id": "d6d167714ff638b23e84d757ff522414",
-      "kickoff_utc": "2026-11-14T17:00:00Z",
-      "matchup": "Auburn Tigers at Mississippi State Bulldogs"
     },
     {
       "season": "2026",
@@ -2138,24 +2049,6 @@
       "game_id": "21c985dda7b6b34cc9820a76dfad6172",
       "kickoff_utc": "2026-11-15T03:00:00Z",
       "matchup": "Wyoming Cowboys at UTEP Miners"
-    },
-    {
-      "season": "2026",
-      "game_id": "65104e496f8e5c0208eb59dd0c946475",
-      "kickoff_utc": "2026-11-14T20:30:00Z",
-      "matchup": "Jacksonville State Gamecocks at Western Kentucky Hilltoppers"
-    },
-    {
-      "season": "2026",
-      "game_id": "67a73e38d3fd93df27dcca8160f796c3",
-      "kickoff_utc": "2026-11-14T20:30:00Z",
-      "matchup": "Georgia Southern Eagles at Georgia State Panthers"
-    },
-    {
-      "season": "2026",
-      "game_id": "83b67813ba763c65142b4238e3c44270",
-      "kickoff_utc": "2026-11-14T17:00:00Z",
-      "matchup": "James Madison Dukes at UConn Huskies"
     },
     {
       "season": "2026",
@@ -2180,12 +2073,6 @@
       "game_id": "d03caba2636ec407098ec3e1fe18fcf7",
       "kickoff_utc": "2026-11-14T19:00:00Z",
       "matchup": "Tulane Green Wave at Rice Owls"
-    },
-    {
-      "season": "2026",
-      "game_id": "ee91eb14cc4d725be5df58f3285bdaa6",
-      "kickoff_utc": "2026-11-15T02:00:00Z",
-      "matchup": "North Texas Mean Green at UTSA Roadrunners"
     }
   ],
   "future_pending_v3": [

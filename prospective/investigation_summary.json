@@ -7,13 +7,13 @@
   },
   "groups": {
     "PASS": {
-      "classified_games": 119,
-      "settled_games": 86,
-      "winner_correct": 56,
-      "within_7": 33,
-      "winner_accuracy": 0.651163,
-      "margin_mae": 12.304,
-      "within_7_rate": 0.383721
+      "classified_games": 126,
+      "settled_games": 101,
+      "winner_correct": 66,
+      "within_7": 42,
+      "winner_accuracy": 0.653465,
+      "margin_mae": 11.801,
+      "within_7_rate": 0.415842
     },
     "CAUTION": {
       "classified_games": 23,
@@ -25,13 +25,13 @@
       "within_7_rate": 0.368421
     },
     "UNSTABLE": {
-      "classified_games": 32,
-      "settled_games": 24,
-      "winner_correct": 14,
-      "within_7": 13,
-      "winner_accuracy": 0.583333,
-      "margin_mae": 15.305,
-      "within_7_rate": 0.541667
+      "classified_games": 34,
+      "settled_games": 26,
+      "winner_correct": 16,
+      "within_7": 14,
+      "winner_accuracy": 0.615385,
+      "margin_mae": 15.706,
+      "within_7_rate": 0.538462
     }
   }
 }
