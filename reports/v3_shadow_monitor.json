@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.310146
     },
     "PASS": {
-      "selections": 113,
+      "selections": 115,
       "settled": 105,
-      "pending": 8,
+      "pending": 10,
       "wins": 52,
       "losses": 51,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.036814
     },
     "UNCLASSIFIED": {
-      "selections": 79,
+      "selections": 77,
       "settled": 61,
-      "pending": 18,
+      "pending": 16,
       "wins": 25,
       "losses": 35,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 79,
+  "unclassified_v3_count": 77,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 164,
-      "COHORT_NOT_GENERATED": 2,
+      "CLASSIFIED": 166,
       "MISSING_V1": 37,
       "MISSING_V1_AND_V2": 15,
       "MISSING_V2": 25
@@ -779,22 +778,6 @@
         "kickoff_utc": "2026-11-14T18:00:00Z",
         "matchup": "Arkansas State Red Wolves at Coastal Carolina Chanticleers",
         "reason": "MISSING_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "a21a2f1087d443fa1a1c71e1a03a0fe0",
-        "kickoff_utc": "2026-11-14T21:00:00Z",
-        "matchup": "Fresno State Bulldogs at Texas State Bobcats",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "c3c46d55350226dd82d83ecf0b52891a",
-        "kickoff_utc": "2026-11-15T03:30:00Z",
-        "matchup": "Colorado State Rams at Washington State Cougars",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -2191,18 +2174,6 @@
       "game_id": "72e1af72402c489444f89a8600abb23f",
       "kickoff_utc": "2026-11-14T18:00:00Z",
       "matchup": "Arkansas State Red Wolves at Coastal Carolina Chanticleers"
-    },
-    {
-      "season": "2026",
-      "game_id": "a21a2f1087d443fa1a1c71e1a03a0fe0",
-      "kickoff_utc": "2026-11-14T21:00:00Z",
-      "matchup": "Fresno State Bulldogs at Texas State Bobcats"
-    },
-    {
-      "season": "2026",
-      "game_id": "c3c46d55350226dd82d83ecf0b52891a",
-      "kickoff_utc": "2026-11-15T03:30:00Z",
-      "matchup": "Colorado State Rams at Washington State Cougars"
     },
     {
       "season": "2026",
