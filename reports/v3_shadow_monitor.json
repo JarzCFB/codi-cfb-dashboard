@@ -777,7 +777,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 93,
+    "covered_v3": 95,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -792,7 +792,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 72,
+        "selections": 74,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1598,6 +1598,15 @@
       },
       {
         "season": "2026",
+        "game_id": "a21a2f1087d443fa1a1c71e1a03a0fe0",
+        "kickoff_utc": "2026-11-14T21:00:00Z",
+        "matchup": "Fresno State Bulldogs at Texas State Bobcats",
+        "status": "PASS",
+        "disagreement_points": "1.63783",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "aa1c9ee516cf122de53e75ffec017edd",
         "kickoff_utc": "2026-11-14T21:15:00Z",
         "matchup": "Washington Huskies at Michigan State Spartans",
@@ -1648,6 +1657,15 @@
         "matchup": "Wyoming Cowboys at UTEP Miners",
         "status": "PASS",
         "disagreement_points": "4.70688",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "c3c46d55350226dd82d83ecf0b52891a",
+        "kickoff_utc": "2026-11-15T03:30:00Z",
+        "matchup": "Colorado State Rams at Washington State Cougars",
+        "status": "PASS",
+        "disagreement_points": "1.96757",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
