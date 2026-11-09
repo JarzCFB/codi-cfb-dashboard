@@ -777,7 +777,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 95,
+    "covered_v3": 98,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -792,7 +792,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 74,
+        "selections": 77,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1454,6 +1454,15 @@
       },
       {
         "season": "2026",
+        "game_id": "6a3fbf6388d7c72076555fc4a4bbedf2",
+        "kickoff_utc": "2026-11-13T02:00:00Z",
+        "matchup": "Louisiana Ragin Cajuns at UL Monroe Warhawks",
+        "status": "PASS",
+        "disagreement_points": "0.5608",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "5b6989e8ecca343c4de3e7d285b70aa3",
         "kickoff_utc": "2026-11-14T17:00:00Z",
         "matchup": "Baylor Bears at BYU Cougars",
@@ -1504,6 +1513,15 @@
         "matchup": "Auburn Tigers at Mississippi State Bulldogs",
         "status": "PASS",
         "disagreement_points": "0.16077",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "fe42d22bafb7d5f406317697dff44ee6",
+        "kickoff_utc": "2026-11-14T17:45:00Z",
+        "matchup": "Alabama Crimson Tide at Vanderbilt Commodores",
+        "status": "PASS",
+        "disagreement_points": "1.89956",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -1594,6 +1612,15 @@
         "matchup": "Middle Tennessee Blue Raiders at Liberty Flames",
         "status": "PASS",
         "disagreement_points": "1.95784",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "d0327c5775ed8cc9854411f8e077af93",
+        "kickoff_utc": "2026-11-14T20:30:00Z",
+        "matchup": "California Golden Bears at Virginia Cavaliers",
+        "status": "PASS",
+        "disagreement_points": "0.20218",
         "source": "same_capture_v3_frozen_quote"
       },
       {
