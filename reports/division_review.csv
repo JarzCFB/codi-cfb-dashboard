@@ -456,6 +456,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,6f50a1eb0425d8adc1f4914bf27289d0,2026-11-14T18:00:00Z,Temple Owls,UAB Blazers,FBS vs FBS,temple,uab
 2026,d03caba2636ec407098ec3e1fe18fcf7,2026-11-14T19:00:00Z,Rice Owls,Tulane Green Wave,FBS vs FBS,rice,tulane
 2026,54769e255d6ea468fa2d12ed744eb6f2,2026-11-14T19:00:00Z,Sam Houston State Bearkats,Kennesaw State Owls,FBS vs FBS,sam houston,kennesaw state
+2026,ac00a0cc63f0020c5d00d412dd706834,2026-11-14T20:00:00Z,Delaware Blue Hens,Florida International Panthers,FBS vs FBS,delaware,fiu
 2026,8a0a3acc1b435727e1e571600aecb68f,2026-11-14T20:00:00Z,Missouri State Bears,New Mexico State Aggies,FBS vs FBS,missouri state,new mexico state
 2026,8ad669f4c9b70f38fdb057c114588776,2026-11-14T20:00:00Z,Oklahoma Sooners,Ole Miss Rebels,FBS vs FBS,oklahoma,ole miss
 2026,4c15d7c4261fa1d8b75615a46d4d2ea7,2026-11-14T20:00:00Z,Texas A&M Aggies,Tennessee Volunteers,FBS vs FBS,texas a and m,tennessee
@@ -477,6 +478,7 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,1ce059ad7e592e033a7efe38d7bc7352,2026-11-14T22:00:00Z,Louisiana Tech Bulldogs,Southern Mississippi Golden Eagles,FBS vs FBS,louisiana tech,southern miss
 2026,f9b805187f3809fdadddfa08dfa2a089,2026-11-14T23:00:00Z,Boise State Broncos,Oregon State Beavers,FBS vs FBS,boise state,oregon state
 2026,558ce811ad052f49918a2855f3777baf,2026-11-14T23:00:00Z,Marshall Thundering Herd,Appalachian State Mountaineers,FBS vs FBS,marshall,appalachian state
+2026,d9bfb4f5e7ba909febe2a83fc04d4f15,2026-11-15T00:00:00Z,Air Force Falcons,San Jose State Spartans,FBS vs FBS,air force,san jose state
 2026,13916d6f26b193abfc3367d80f27e64c,2026-11-15T00:00:00Z,Iowa Hawkeyes,Purdue Boilermakers,FBS vs FBS,iowa,purdue
 2026,d466840e3c50d2fdad6fd7e799fdf921,2026-11-15T00:00:00Z,Penn State Nittany Lions,Minnesota Golden Gophers,FBS vs FBS,penn state,minnesota
 2026,c83b81cc8d2110c8e4a39eefea4bdc72,2026-11-15T00:00:00Z,South Alabama Jaguars,Troy Trojans,FBS vs FBS,south alabama,troy
