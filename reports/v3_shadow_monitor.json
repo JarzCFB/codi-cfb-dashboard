@@ -817,7 +817,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 99,
+    "covered_v3": 100,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -832,7 +832,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 78,
+        "selections": 79,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1499,6 +1499,15 @@
         "matchup": "Louisiana Ragin Cajuns at UL Monroe Warhawks",
         "status": "PASS",
         "disagreement_points": "0.5608",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "73d83d88b3a35eeb4bcf8462ff2070b2",
+        "kickoff_utc": "2026-11-14T03:15:00Z",
+        "matchup": "Houston Cougars at Colorado Buffaloes",
+        "status": "PASS",
+        "disagreement_points": "1.24647",
         "source": "same_capture_v3_frozen_quote"
       },
       {
