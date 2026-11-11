@@ -817,7 +817,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 100,
+    "covered_v3": 102,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -832,7 +832,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 79,
+        "selections": 80,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -842,7 +842,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 12,
+        "selections": 13,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1751,6 +1751,24 @@
         "matchup": "Colorado State Rams at Washington State Cougars",
         "status": "PASS",
         "disagreement_points": "1.96757",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "8d53f308424d388c9003e02cac8b4cf6",
+        "kickoff_utc": "2026-11-21T16:00:00Z",
+        "matchup": "Virginia Tech Hokies at Miami Hurricanes",
+        "status": "PASS",
+        "disagreement_points": "4.09878",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "0cdac6d2b6c2cbfb0f734a8cdfbe086e",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "LSU Tigers at Tennessee Volunteers",
+        "status": "UNSTABLE",
+        "disagreement_points": "0.135",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
