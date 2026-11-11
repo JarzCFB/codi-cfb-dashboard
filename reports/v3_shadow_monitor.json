@@ -183,7 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 166,
-      "MISSING_V1": 38,
+      "COHORT_NOT_GENERATED": 1,
+      "MISSING_V1": 37,
       "MISSING_V1_AND_V2": 15,
       "MISSING_V2": 25
     },
@@ -705,7 +706,7 @@
         "game_id": "a8f5a967982255fd6be0435c3b213b0f",
         "kickoff_utc": "2026-11-12T00:30:00Z",
         "matchup": "Buffalo Bulls at Ball State Cardinals",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
