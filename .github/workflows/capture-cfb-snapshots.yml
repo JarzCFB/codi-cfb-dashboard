@@ -10,6 +10,7 @@ on:
       - 'prospective_capture.py'
       - 'v3_shadow_monitor.py'
       - 'v3_line_movement.py'
+      - 'v3_upcoming_watchlist.py'
       - 'test_v3_line_movement.py'
       - 'tests/test_v3_shadow_monitor.py'
   schedule:
@@ -69,6 +70,8 @@ jobs:
           PYCODE
       - name: Track same-sportsbook line movements and flag 3+ point moves
         run: python v3_line_movement.py
+      - name: Refresh upcoming-game movement and locked-edge watchlist
+        run: python v3_upcoming_watchlist.py
       - name: Refresh read-only V3 research report
         run: python v3_shadow_monitor.py
       - name: Verify report reflects frozen agreement evidence
@@ -107,7 +110,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add snapshots/ prospective/ reports/v3_shadow_monitor.json reports/v3_line_movements.json reports/v3_line_movements.csv
+          git add snapshots/ prospective/ reports/v3_shadow_monitor.json reports/v3_line_movements.json reports/v3_line_movements.csv reports/v3_upcoming_line_watchlist.json reports/v3_upcoming_line_watchlist.csv
           if ! git diff --cached --quiet; then
             git commit -m 'Archive pregame snapshot and freeze prospective picks'
             git pull --rebase origin main

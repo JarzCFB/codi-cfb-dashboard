@@ -20,7 +20,7 @@ jobs:
           python-version: '3.11'
       - run: pip install requests numpy pandas scipy
       - name: Run lock unit tests
-        run: python -m unittest -v test_v3_weekly_lock.py
+        run: python -m unittest -v test_v3_weekly_lock.py test_v3_upcoming_watchlist.py
       - name: Manual test summary
         if: github.event_name == 'workflow_dispatch'
         run: echo 'Manual test completed; scheduled lock intentionally skipped outside Tuesday/Saturday 8 AM Central.' >> "$GITHUB_STEP_SUMMARY"
@@ -30,12 +30,15 @@ jobs:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: python v3_weekly_lock.py
+      - name: Update current-week line movement watchlist
+        if: github.event_name == 'schedule'
+        run: python v3_upcoming_watchlist.py
       - name: Commit immutable dated lock and hash
         if: github.event_name == 'schedule'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add locks/ snapshots/
+          git add locks/ snapshots/ reports/v3_upcoming_line_watchlist.json reports/v3_upcoming_line_watchlist.csv
           if ! git diff --cached --quiet; then
             git commit -m 'Freeze scheduled V3 PLAY/PASS game predictions'
             git pull --rebase origin main
