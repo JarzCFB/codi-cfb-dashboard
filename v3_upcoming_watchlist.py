@@ -81,7 +81,7 @@ def main():
     root=Path("reports");root.mkdir(exist_ok=True)
     (root/"v3_upcoming_line_watchlist.json").write_text(json.dumps({
         "generated_at_utc":now.isoformat().replace("+00:00","Z"),
-        "warning":"Earliest observed quote is not necessarily true opening line. Current edge uses frozen V3 margin and same sportsbook spread only; no updated injuries or odds price validation.",
+        "warning":"Earliest observed quote is not necessarily true opening line. Current edge uses frozen V3 margin and same sportsbook spread only; odds price eligibility is not revalidated.",
         "games":rows},indent=2)+"\n",encoding="utf-8")
     with (root/"v3_upcoming_line_watchlist.csv").open("w",newline="",encoding="utf-8") as f:
         writer=csv.DictWriter(f,fieldnames=FIELDS);writer.writeheader();writer.writerows(rows)
