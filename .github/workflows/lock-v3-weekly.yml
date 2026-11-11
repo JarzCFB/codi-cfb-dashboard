@@ -21,12 +21,17 @@ jobs:
       - run: pip install requests numpy pandas scipy
       - name: Run lock unit tests
         run: python -m unittest -v test_v3_weekly_lock.py
+      - name: Manual test summary
+        if: github.event_name == 'workflow_dispatch'
+        run: echo 'Manual test completed; scheduled lock intentionally skipped outside Tuesday/Saturday 8 AM Central.' >> "$GITHUB_STEP_SUMMARY"
       - name: Lock every scheduled game with PLAY or PASS
+        if: github.event_name == 'schedule'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: python v3_weekly_lock.py
       - name: Commit immutable dated lock and hash
+        if: github.event_name == 'schedule'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
