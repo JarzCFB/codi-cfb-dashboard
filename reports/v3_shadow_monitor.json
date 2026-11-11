@@ -3,9 +3,9 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 244,
+      "selections": 245,
       "settled": 213,
-      "pending": 31,
+      "pending": 32,
       "wins": 106,
       "losses": 104,
       "pushes": 3,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.036814
     },
     "UNCLASSIFIED": {
-      "selections": 78,
+      "selections": 79,
       "settled": 61,
-      "pending": 17,
+      "pending": 18,
       "wins": 25,
       "losses": 35,
       "pushes": 1,
@@ -137,9 +137,9 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 123,
+        "selections": 124,
         "settled": 92,
-        "pending": 31,
+        "pending": 32,
         "wins": 39,
         "losses": 52,
         "pushes": 1,
@@ -179,14 +179,14 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 78,
+  "unclassified_v3_count": 79,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 166,
       "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 37,
       "MISSING_V1_AND_V2": 15,
-      "MISSING_V2": 25
+      "MISSING_V2": 26
     },
     "unclassified_details": [
       {
@@ -811,6 +811,14 @@
         "kickoff_utc": "2026-11-14T20:00:00Z",
         "matchup": "Florida International Panthers at Delaware Blue Hens",
         "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "73d83d88b3a35eeb4bcf8462ff2070b2",
+        "kickoff_utc": "2026-11-14T03:15:00Z",
+        "matchup": "Houston Cougars at Colorado Buffaloes",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -2225,6 +2233,12 @@
       "game_id": "ac00a0cc63f0020c5d00d412dd706834",
       "kickoff_utc": "2026-11-14T20:00:00Z",
       "matchup": "Florida International Panthers at Delaware Blue Hens"
+    },
+    {
+      "season": "2026",
+      "game_id": "73d83d88b3a35eeb4bcf8462ff2070b2",
+      "kickoff_utc": "2026-11-14T03:15:00Z",
+      "matchup": "Houston Cougars at Colorado Buffaloes"
     }
   ],
   "future_pending_v3": [
@@ -2505,6 +2519,15 @@
       "american_odds": "-110.0",
       "edge_points": "3.117",
       "sportsbook": "MyBookie.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-14T03:15:00Z",
+      "selection": "Houston Cougars",
+      "spread": "-9.0",
+      "american_odds": "-111.0",
+      "edge_points": "3.83803",
+      "sportsbook": "LowVig.ag",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
