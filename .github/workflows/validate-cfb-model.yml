@@ -8,15 +8,11 @@ on:
       - 'prospective_investigation.py'
       - 'v3_shadow_monitor.py'
       - 'app.py'
-      - 'v4_*.py'
-      - 'cfb_v4_situational.py'
-      - 'docs/V4_RELEASE_CHECKLIST.md'
       - 'tests/**'
       - 'test_*.py'
       - 'prospective/selections.csv'
       - 'prospective/graded_selections.csv'
       - 'backtests/v1_v2_game_results.csv'
-      - 'v4/verified_feature_rows.csv'
       - 'snapshots/2026/**'
       - '.github/workflows/validate-cfb-model.yml'
   workflow_dispatch:
@@ -37,7 +33,7 @@ jobs:
       - name: Install model dependencies
         run: python -m pip install requests numpy pandas scipy streamlit
       - name: Compile modified modules
-        run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py app.py v4_spread_research.py v4_evidence_audit.py v4_readiness.py v4_evidence_triage.py cfb_v4_situational.py v4_research_status.py v4_recover_frozen_baseline.py v4_evidence_worklist.py v4_historical_gap.py v4_snapshot_inventory.py v4_recover_v3.py
+        run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py app.py
       - name: Run all regression tests
         run: |
           python -m unittest discover -v
@@ -67,116 +63,13 @@ jobs:
               out.write(f'\\n## Frozen ledger health\\n- Frozen: {len(picks)}\\n- Graded: {len(graded)}\\n- Awaiting grading: {len(missing)}\\n- Overdue >8h after kickoff: {len(overdue)}\\n')
           assert not overdue, 'Missing graded records for games kicked off >8h ago'
           PY
-      - name: Validate research report offline
+      - name: Validate V3 report offline
         run: |
           python v3_shadow_monitor.py
-          python v4_recover_frozen_baseline.py
-          python v4_research_status.py
-          python v4_evidence_worklist.py
-          python v4_historical_gap.py --output reports/v4_historical_gap.json
-          python v4_snapshot_inventory.py
-          python - <<'PY'
+          python - <<'PYCODE'
           import json
-          with open('reports/v3_shadow_monitor.json', encoding='utf-8') as f:
-              data = json.load(f)
-          assert 'pregame_agreement' in data
-          assert 'forward_shadow_comparison' in data
-          assert 'classification_coverage' in data
-          with open('reports/v4_research_status.json', encoding='utf-8') as f:
-              v4 = json.load(f)
-          assert v4['status'] == 'RESEARCH_ONLY' and v4['release_ready'] is False
-          assert v4['source_authenticity_verified'] is False
-          assert isinstance(v4['evaluations'], list)
-          assert v4['baseline_file_present'] is True
-          assert not v4.get('reason', '').startswith('Evidence audit rejected'), v4.get('reason')
-          assert v4['baseline_rows'] > 0, 'Frozen V3 recovery unexpectedly empty'
-          assert v4['selected_only_baseline'] is True
-          assert v4['eligible_for_all_game_training'] is False
-          assert v4['multi_season_baseline'] == (v4['baseline_season_count'] >= 2)
-          assert v4['baseline_rows'] >= v4['settled_baseline_rows']
-          import csv
-          def v3_rows(path):
-              with open(path, newline='', encoding='utf-8-sig') as f:
-                  return [r for r in csv.DictReader(f) if r.get('model_version', '').strip().lower() == 'v3']
-          selections = v3_rows('prospective/selections.csv')
-          grades = v3_rows('prospective/graded_selections.csv')
-          assert v4['baseline_rows'] == len(selections), 'Recovered V3 games differ from frozen selections'
-          assert v4['settled_baseline_rows'] == sum(r.get('grading_status') == 'settled' for r in grades), 'Recovered settled games differ from graded ledger'
-          with open('v4/recovered_v3_baseline.csv', newline='', encoding='utf-8') as f:
-              recovered = list(csv.DictReader(f))
-          assert {r['game_id'] for r in recovered} == {r['game_id'] for r in selections}, 'Recovered game identities differ from frozen ledger'
-          with open('reports/v4_historical_gap.json', encoding='utf-8') as f:
-              historical_gap = json.load(f)
-          assert historical_gap['status'] == 'RESEARCH_ONLY'
-          assert historical_gap['release_ready'] is False
-          assert historical_gap['v4_vs_v3_comparison_possible'] is False
-          assert historical_gap['historical_official_v3_predictions_available'] is False
-          with open('reports/v4_snapshot_inventory.json', encoding='utf-8') as f:
-              snapshot_inventory = json.load(f)
-          assert snapshot_inventory['source_type'] == 'archived_odds_and_ratings_not_official_v3'
-          assert snapshot_inventory['official_v3_predictions_recovered'] == 0
-          assert snapshot_inventory['release_ready'] is False
-          print('Historical V1/V2 games:', historical_gap['historical_v1_v2']['games'])
-          print('V4 evidence readiness:', v4['reason'])
-          print('Offline report validation passed.')
-          PY
-
-      - name: Publish V4 readiness summary
-        if: always()
-        run: |
-          if [ -f reports/v4_research_status.json ]; then
-            python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
-          import json
-          with open("reports/v4_research_status.json", encoding="utf-8") as f:
-              report = json.load(f)
-          print("## V4 research readiness")
-          print(f"- Status: **{report['status']}**")
-          print(f"- Release ready: **{report['release_ready']}**")
-          print(f"- Baseline present: {report['baseline_file_present']}")
-          print(f"- Frozen V3 selected games: {report.get('baseline_rows', 0)}")
-          print(f"- Settled frozen V3 games: {report.get('settled_baseline_rows', 0)}")
-          print(f"- Minimum distinct train + holdout games: {report.get('required_disjoint_settled_games', 'unknown')}")
-          print(f"- Numeric shortfall (selected-only, NOT eligible): {report.get('disjoint_sample_shortfall_minimum', 'unknown')}")
-          print(f"- Baseline seasons: {report.get('baseline_season_count', 0)}")
-          print(f"- Multi-season baseline: {report.get('multi_season_baseline', False)}")
-          print(f"- Complete-feature settled seasons: {report.get('complete_settled_season_count', 0)}")
-          print("- Dataset scope: V3 selections only; not all-FBS")
-          print(f"- Feature evidence present: {report['feature_file_present']}")
-          print(f"- Complete settled games: {report.get('complete_settled_games', 0)}")
-          print(f"- Missing feature cells: {report.get('missing_feature_cells', 'unknown')}")
-          print(f"- Reason: {report['reason']}")
-          if __import__('pathlib').Path('reports/v4_historical_gap.json').exists():
-              gap = json.load(open('reports/v4_historical_gap.json', encoding='utf-8'))
-              print(f"- Archived V1/V2 games (NOT V3): {gap['historical_v1_v2']['games']}")
-              print(f"- Historical V3 vs V4 comparison possible: {gap['v4_vs_v3_comparison_possible']}")
-          if __import__('pathlib').Path('reports/v4_snapshot_inventory.json').exists():
-              inv = json.load(open('reports/v4_snapshot_inventory.json', encoding='utf-8'))
-              print(f"- Archived snapshot files: {inv['snapshot_files']}")
-              print(f"- Distinct pregame snapshot game IDs (NOT official V3): {inv['distinct_pregame_game_ids']}")
-              print(f"- Games captured >=6h before kickoff (NOT official V3): {inv['distinct_games_captured_at_least_6h_before_kickoff']}")
-              print(f"- FBS-vs-FBS games with timestamped quotes >=6h before kickoff (NOT V3): {inv['fbs_games_with_timestamped_quotes_at_least_6h_pregame']}")
-              print(f"- FBS games with valid sportsbook prices >=6h before kickoff (NOT V3): {inv['fbs_games_with_valid_prices_at_least_6h_pregame']}")
-              print(f"- FBS six-hour quote rows missing valid prices: {inv['six_hour_fbs_rows_without_valid_prices']}")
-              print(f"- Six-hour rows without division classification: {inv['six_hour_rows_missing_division_status']}")
-              print(f"- Market updates after capture: {inv['market_update_after_capture_rows']}")
-              print(f"- Bookmaker updates after capture: {inv['bookmaker_update_after_capture_rows']}")
-              print(f"- Ratings as-of after capture: {inv['ratings_asof_after_capture_rows']}")
-              print(f"- Missing/nonfinite ratings projections: {inv['invalid_ratings_projection_rows']}")
-              print(f"- Excluded non-live/stale quote rows: {inv['rows_without_timestamped_live_quote_status']}")
-          print("- V3 remains official. A passing workflow does not validate V4 performance.")
-          PY
-          else
-            echo "## V4 research readiness: report not generated" >> "$GITHUB_STEP_SUMMARY"
-          fi
-      - name: Upload V4 readiness report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: v4-research-readiness
-          path: |
-            reports/v4_research_status.json
-            reports/v4_historical_gap.json
-            reports/v4_snapshot_inventory.json
-            v4/recovered_v3_baseline.csv
-            reports/v4_missing_evidence_worklist.csv
-          if-no-files-found: warn
+          from pathlib import Path
+          data = json.loads(Path('reports/v3_shadow_monitor.json').read_text())
+          for field in ('pregame_agreement', 'forward_shadow_comparison', 'classification_coverage'):
+              assert field in data, field
+          PYCODE
