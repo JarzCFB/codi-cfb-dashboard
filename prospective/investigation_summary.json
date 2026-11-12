@@ -8,12 +8,12 @@
   "groups": {
     "PASS": {
       "classified_games": 131,
-      "settled_games": 101,
-      "winner_correct": 66,
+      "settled_games": 102,
+      "winner_correct": 67,
       "within_7": 42,
-      "winner_accuracy": 0.653465,
-      "margin_mae": 11.801,
-      "within_7_rate": 0.415842
+      "winner_accuracy": 0.656863,
+      "margin_mae": 11.836,
+      "within_7_rate": 0.411765
     },
     "CAUTION": {
       "classified_games": 23,
