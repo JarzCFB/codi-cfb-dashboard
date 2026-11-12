@@ -490,3 +490,13 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,21c985dda7b6b34cc9820a76dfad6172,2026-11-15T03:00:00Z,UTEP Miners,Wyoming Cowboys,FBS vs FBS,utep,wyoming
 2026,c3c46d55350226dd82d83ecf0b52891a,2026-11-15T03:30:00Z,Washington State Cougars,Colorado State Rams,FBS vs FBS,washington state,colorado state
 2026,ce88da9d6fd67bac81c1e4a70545de29,2026-11-15T04:00:00Z,Hawaii Rainbow Warriors,North Dakota State Bison,Season-specific FBS status requires verification,hawaii,north dakota state
+2026,8d53f308424d388c9003e02cac8b4cf6,2026-11-21T16:00:00Z,Miami Hurricanes,Virginia Tech Hokies,FBS vs FBS,miami,virginia tech
+2026,1a3e1206e330ec66aa9a0549b4d3409c,2026-11-21T17:00:00Z,Baylor Bears,Texas Tech Red Raiders,FBS vs FBS,baylor,texas tech
+2026,ae9b81f4814e1d9dae835a13f4245ce3,2026-11-21T17:00:00Z,Michigan Wolverines,UCLA Bruins,FBS vs FBS,michigan,ucla
+2026,03a07ec7a62fbc2d6bf4748aafd30303,2026-11-21T17:00:00Z,Nebraska Cornhuskers,Ohio State Buckeyes,FBS vs FBS,nebraska,ohio state
+2026,7585fb8b12453a68ca1195319ae44c78,2026-11-21T17:00:00Z,TCU Horned Frogs,Utah Utes,FBS vs FBS,tcu,utah
+2026,725c6205de38f91b507a880c139eda54,2026-11-21T19:30:00Z,Illinois Fighting Illini,Iowa Hawkeyes,FBS vs FBS,illinois,iowa
+2026,0cdac6d2b6c2cbfb0f734a8cdfbe086e,2026-11-21T20:30:00Z,Tennessee Volunteers,LSU Tigers,FBS vs FBS,tennessee,lsu
+2026,0bb0c3e15e4a8004f708162c14c5575d,2026-11-22T00:30:00Z,Missouri Tigers,Kentucky Wildcats,FBS vs FBS,missouri,kentucky
+2026,fa98066b4b400fb6af0672e170cc584a,2026-11-22T00:30:00Z,Notre Dame Fighting Irish,SMU Mustangs,FBS vs FBS,notre dame,smu
+2026,a05c0d32b35dfd5cca63a61af28b9739,2026-11-22T00:30:00Z,South Carolina Gamecocks,Georgia Bulldogs,FBS vs FBS,south carolina,georgia
