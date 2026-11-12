@@ -817,7 +817,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 102,
+    "covered_v3": 103,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -832,7 +832,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 80,
+        "selections": 81,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1769,6 +1769,15 @@
         "matchup": "LSU Tigers at Tennessee Volunteers",
         "status": "UNSTABLE",
         "disagreement_points": "0.135",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "fa98066b4b400fb6af0672e170cc584a",
+        "kickoff_utc": "2026-11-22T00:30:00Z",
+        "matchup": "SMU Mustangs at Notre Dame Fighting Irish",
+        "status": "PASS",
+        "disagreement_points": "4.97576",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
