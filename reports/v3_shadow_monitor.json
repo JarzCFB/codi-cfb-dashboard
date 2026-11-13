@@ -3,24 +3,24 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 248,
-      "settled": 215,
-      "pending": 33,
-      "wins": 108,
-      "losses": 104,
+      "selections": 253,
+      "settled": 217,
+      "pending": 36,
+      "wins": 109,
+      "losses": 105,
       "pushes": 3,
-      "net_units": -6.033722,
-      "roi_per_settled_selection": -0.028064
+      "net_units": -6.164157,
+      "roi_per_settled_selection": -0.028406
     },
     "5": {
-      "selections": 91,
-      "settled": 84,
-      "pending": 7,
+      "selections": 93,
+      "settled": 85,
+      "pending": 8,
       "wins": 48,
-      "losses": 35,
+      "losses": 36,
       "pushes": 1,
-      "net_units": 8.747199,
-      "roi_per_settled_selection": 0.104133
+      "net_units": 7.747199,
+      "roi_per_settled_selection": 0.091144
     },
     "7": {
       "selections": 30,
@@ -56,23 +56,23 @@
     },
     "PASS": {
       "selections": 116,
-      "settled": 106,
-      "pending": 10,
+      "settled": 107,
+      "pending": 9,
       "wins": 53,
-      "losses": 51,
+      "losses": 52,
       "pushes": 2,
-      "net_units": -3.045827,
-      "roi_per_settled_selection": -0.028734
+      "net_units": -4.045827,
+      "roi_per_settled_selection": -0.037811
     },
     "UNCLASSIFIED": {
-      "selections": 81,
-      "settled": 61,
-      "pending": 20,
-      "wins": 25,
+      "selections": 86,
+      "settled": 62,
+      "pending": 24,
+      "wins": 26,
       "losses": 35,
       "pushes": 1,
-      "net_units": -12.2962,
-      "roi_per_settled_selection": -0.201577
+      "net_units": -11.426635,
+      "roi_per_settled_selection": -0.184301
     },
     "UNSTABLE": {
       "selections": 30,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-12T00:30:00Z",
+    "through_kickoff_utc": "2026-11-13T02:00:00Z",
     "edge_thresholds": {
       "3": {
         "selections": 66,
         "settled": 66,
         "pending": 0,
-        "wins": 29,
-        "losses": 37,
+        "wins": 30,
+        "losses": 36,
         "pushes": 0,
-        "net_units": -10.855397,
-        "roi_per_settled_selection": -0.164476
+        "net_units": -8.985832,
+        "roi_per_settled_selection": -0.136149
       },
       "5": {
         "selections": 19,
@@ -137,24 +137,24 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 127,
-        "settled": 94,
-        "pending": 33,
-        "wins": 41,
-        "losses": 52,
+        "selections": 132,
+        "settled": 96,
+        "pending": 36,
+        "wins": 42,
+        "losses": 53,
         "pushes": 1,
-        "net_units": -15.022486,
-        "roi_per_settled_selection": -0.159814
+        "net_units": -15.152921,
+        "roi_per_settled_selection": -0.157843
       },
       "5": {
-        "selections": 33,
-        "settled": 26,
-        "pending": 7,
+        "selections": 35,
+        "settled": 27,
+        "pending": 8,
         "wins": 11,
-        "losses": 15,
+        "losses": 16,
         "pushes": 0,
-        "net_units": -4.991959,
-        "roi_per_settled_selection": -0.191998
+        "net_units": -5.991959,
+        "roi_per_settled_selection": -0.221924
       },
       "7": {
         "selections": 8,
@@ -179,13 +179,13 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 81,
+  "unclassified_v3_count": 86,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 167,
-      "COHORT_NOT_GENERATED": 1,
-      "MISSING_V1": 38,
-      "MISSING_V1_AND_V2": 16,
+      "COHORT_NOT_GENERATED": 3,
+      "MISSING_V1": 39,
+      "MISSING_V1_AND_V2": 18,
       "MISSING_V2": 26
     },
     "unclassified_details": [
@@ -835,6 +835,46 @@
         "kickoff_utc": "2026-11-22T00:30:00Z",
         "matchup": "SMU Mustangs at Notre Dame Fighting Irish",
         "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "0d8cfafd3da8fead51df5ec2e33e9382",
+        "kickoff_utc": "2026-11-18T00:00:00Z",
+        "matchup": "Eastern Michigan Eagles at Western Michigan Broncos",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "1ce059ad7e592e033a7efe38d7bc7352",
+        "kickoff_utc": "2026-11-14T22:00:00Z",
+        "matchup": "Southern Mississippi Golden Eagles at Louisiana Tech Bulldogs",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "5840d479fc52ad2b83d7feb802d4dd23",
+        "kickoff_utc": "2026-11-18T00:00:00Z",
+        "matchup": "Ball State Cardinals at Ohio Bobcats",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "ef5f5ac74b2228e8521c289fdbc6af93",
+        "kickoff_utc": "2026-11-19T00:00:00Z",
+        "matchup": "Akron Zips at UMass Minutemen",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "c2ccf2d604c3a791b12d26ccaaf65c70",
+        "kickoff_utc": "2026-11-14T20:30:00Z",
+        "matchup": "Nevada Wolf Pack at Northern Illinois Huskies",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -2339,6 +2379,36 @@
       "game_id": "fa98066b4b400fb6af0672e170cc584a",
       "kickoff_utc": "2026-11-22T00:30:00Z",
       "matchup": "SMU Mustangs at Notre Dame Fighting Irish"
+    },
+    {
+      "season": "2026",
+      "game_id": "0d8cfafd3da8fead51df5ec2e33e9382",
+      "kickoff_utc": "2026-11-18T00:00:00Z",
+      "matchup": "Eastern Michigan Eagles at Western Michigan Broncos"
+    },
+    {
+      "season": "2026",
+      "game_id": "1ce059ad7e592e033a7efe38d7bc7352",
+      "kickoff_utc": "2026-11-14T22:00:00Z",
+      "matchup": "Southern Mississippi Golden Eagles at Louisiana Tech Bulldogs"
+    },
+    {
+      "season": "2026",
+      "game_id": "5840d479fc52ad2b83d7feb802d4dd23",
+      "kickoff_utc": "2026-11-18T00:00:00Z",
+      "matchup": "Ball State Cardinals at Ohio Bobcats"
+    },
+    {
+      "season": "2026",
+      "game_id": "ef5f5ac74b2228e8521c289fdbc6af93",
+      "kickoff_utc": "2026-11-19T00:00:00Z",
+      "matchup": "Akron Zips at UMass Minutemen"
+    },
+    {
+      "season": "2026",
+      "game_id": "c2ccf2d604c3a791b12d26ccaaf65c70",
+      "kickoff_utc": "2026-11-14T20:30:00Z",
+      "matchup": "Nevada Wolf Pack at Northern Illinois Huskies"
     }
   ],
   "future_pending_v3": [
@@ -2393,15 +2463,6 @@
       "spread": "1.5",
       "american_odds": "-115.0",
       "edge_points": "6.14615",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-13T01:00:00Z",
-      "selection": "South Florida Bulls",
-      "spread": "7.5",
-      "american_odds": "-108.0",
-      "edge_points": "6.2625",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
@@ -2568,15 +2629,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-13T02:00:00Z",
-      "selection": "Louisiana Ragin Cajuns",
-      "spread": "-10.0",
-      "american_odds": "-115.0",
-      "edge_points": "3.39613",
-      "sportsbook": "BetRivers",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-14T20:30:00Z",
       "selection": "Virginia Cavaliers",
       "spread": "-10.0",
@@ -2637,6 +2689,51 @@
       "american_odds": "-110.0",
       "edge_points": "3.03071",
       "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-18T00:00:00Z",
+      "selection": "Western Michigan Broncos",
+      "spread": "-13.5",
+      "american_odds": "-110.0",
+      "edge_points": "4.3667",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-14T22:00:00Z",
+      "selection": "Louisiana Tech Bulldogs",
+      "spread": "-16.5",
+      "american_odds": "-115.0",
+      "edge_points": "3.1677",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-18T00:00:00Z",
+      "selection": "Ohio Bobcats",
+      "spread": "-8.5",
+      "american_odds": "-110.0",
+      "edge_points": "6.72546",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-19T00:00:00Z",
+      "selection": "UMass Minutemen",
+      "spread": "-2.5",
+      "american_odds": "-110.0",
+      "edge_points": "6.95605",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-14T20:30:00Z",
+      "selection": "Nevada Wolf Pack",
+      "spread": "-6.0",
+      "american_odds": "-108.0",
+      "edge_points": "3.45482",
+      "sportsbook": "LowVig.ag",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
