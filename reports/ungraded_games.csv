@@ -1,6 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,9d463c4686f84c78b890f0fcf2ac90c5,2026-11-13T01:00:00Z,South Florida Bulls,Memphis Tigers,not_final_in_cfbd
-2026,6a3fbf6388d7c72076555fc4a4bbedf2,2026-11-13T02:00:00Z,UL Monroe Warhawks,Louisiana Ragin Cajuns,not_final_in_cfbd
 2026,eff5d01c8683ed700c896743f0490989,2026-11-14T00:00:00Z,Pittsburgh Panthers,Florida State Seminoles,not_final_in_cfbd
 2026,bc528be865b10cd4a63a9e642c90d554,2026-11-14T02:00:00Z,UCLA Bruins,Illinois Fighting Illini,not_final_in_cfbd
 2026,73d83d88b3a35eeb4bcf8462ff2070b2,2026-11-14T03:15:00Z,Colorado Buffaloes,Houston Cougars,not_final_in_cfbd
@@ -59,6 +57,11 @@ season,game_id,kickoff_utc,home_team,away_team,reason
 2026,ece9b1bb56a95381f1c485d22bd36dd8,2026-11-15T02:30:00Z,San Diego State Aztecs,Utah State Aggies,not_final_in_cfbd
 2026,21c985dda7b6b34cc9820a76dfad6172,2026-11-15T03:00:00Z,UTEP Miners,Wyoming Cowboys,not_final_in_cfbd
 2026,c3c46d55350226dd82d83ecf0b52891a,2026-11-15T03:30:00Z,Washington State Cougars,Colorado State Rams,not_final_in_cfbd
+2026,792875fa96ecdf75559454c19c011768,2026-11-18T00:00:00Z,Kent State Golden Flashes,Miami (OH) RedHawks,not_final_in_cfbd
+2026,5840d479fc52ad2b83d7feb802d4dd23,2026-11-18T00:00:00Z,Ohio Bobcats,Ball State Cardinals,not_final_in_cfbd
+2026,0d8cfafd3da8fead51df5ec2e33e9382,2026-11-18T00:00:00Z,Western Michigan Broncos,Eastern Michigan Eagles,not_final_in_cfbd
+2026,ef5f5ac74b2228e8521c289fdbc6af93,2026-11-19T00:00:00Z,UMass Minutemen,Akron Zips,not_final_in_cfbd
+2026,10cec4ab386b12694dd3cee93d870b47,2026-11-19T00:30:00Z,Buffalo Bulls,Central Michigan Chippewas,not_final_in_cfbd
 2026,8d53f308424d388c9003e02cac8b4cf6,2026-11-21T16:00:00Z,Miami Hurricanes,Virginia Tech Hokies,not_final_in_cfbd
 2026,1a3e1206e330ec66aa9a0549b4d3409c,2026-11-21T17:00:00Z,Baylor Bears,Texas Tech Red Raiders,not_final_in_cfbd
 2026,ae9b81f4814e1d9dae835a13f4245ce3,2026-11-21T17:00:00Z,Michigan Wolverines,UCLA Bruins,not_final_in_cfbd

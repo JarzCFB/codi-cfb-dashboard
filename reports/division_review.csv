@@ -490,6 +490,11 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,21c985dda7b6b34cc9820a76dfad6172,2026-11-15T03:00:00Z,UTEP Miners,Wyoming Cowboys,FBS vs FBS,utep,wyoming
 2026,c3c46d55350226dd82d83ecf0b52891a,2026-11-15T03:30:00Z,Washington State Cougars,Colorado State Rams,FBS vs FBS,washington state,colorado state
 2026,ce88da9d6fd67bac81c1e4a70545de29,2026-11-15T04:00:00Z,Hawaii Rainbow Warriors,North Dakota State Bison,Season-specific FBS status requires verification,hawaii,north dakota state
+2026,792875fa96ecdf75559454c19c011768,2026-11-18T00:00:00Z,Kent State Golden Flashes,Miami (OH) RedHawks,FBS vs FBS,kent state,miami oh
+2026,5840d479fc52ad2b83d7feb802d4dd23,2026-11-18T00:00:00Z,Ohio Bobcats,Ball State Cardinals,FBS vs FBS,ohio,ball state
+2026,0d8cfafd3da8fead51df5ec2e33e9382,2026-11-18T00:00:00Z,Western Michigan Broncos,Eastern Michigan Eagles,FBS vs FBS,western michigan,eastern michigan
+2026,ef5f5ac74b2228e8521c289fdbc6af93,2026-11-19T00:00:00Z,UMass Minutemen,Akron Zips,FBS vs FBS,umass,akron
+2026,10cec4ab386b12694dd3cee93d870b47,2026-11-19T00:30:00Z,Buffalo Bulls,Central Michigan Chippewas,FBS vs FBS,buffalo,central michigan
 2026,8d53f308424d388c9003e02cac8b4cf6,2026-11-21T16:00:00Z,Miami Hurricanes,Virginia Tech Hokies,FBS vs FBS,miami,virginia tech
 2026,1a3e1206e330ec66aa9a0549b4d3409c,2026-11-21T17:00:00Z,Baylor Bears,Texas Tech Red Raiders,FBS vs FBS,baylor,texas tech
 2026,ae9b81f4814e1d9dae835a13f4245ce3,2026-11-21T17:00:00Z,Michigan Wolverines,UCLA Bruins,FBS vs FBS,michigan,ucla
