@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.335622
     },
     "PASS": {
-      "selections": 116,
+      "selections": 119,
       "settled": 107,
-      "pending": 9,
+      "pending": 12,
       "wins": 53,
       "losses": 52,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.037811
     },
     "UNCLASSIFIED": {
-      "selections": 86,
+      "selections": 83,
       "settled": 62,
-      "pending": 24,
+      "pending": 21,
       "wins": 26,
       "losses": 35,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 86,
+  "unclassified_v3_count": 83,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 167,
-      "COHORT_NOT_GENERATED": 3,
+      "CLASSIFIED": 170,
       "MISSING_V1": 39,
       "MISSING_V1_AND_V2": 18,
       "MISSING_V2": 26
@@ -807,14 +806,6 @@
       },
       {
         "season": "2026",
-        "game_id": "73d83d88b3a35eeb4bcf8462ff2070b2",
-        "kickoff_utc": "2026-11-14T03:15:00Z",
-        "matchup": "Houston Cougars at Colorado Buffaloes",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "0cdac6d2b6c2cbfb0f734a8cdfbe086e",
         "kickoff_utc": "2026-11-21T20:30:00Z",
         "matchup": "LSU Tigers at Tennessee Volunteers",
@@ -851,22 +842,6 @@
         "kickoff_utc": "2026-11-14T22:00:00Z",
         "matchup": "Southern Mississippi Golden Eagles at Louisiana Tech Bulldogs",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "5840d479fc52ad2b83d7feb802d4dd23",
-        "kickoff_utc": "2026-11-18T00:00:00Z",
-        "matchup": "Ball State Cardinals at Ohio Bobcats",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "ef5f5ac74b2228e8521c289fdbc6af93",
-        "kickoff_utc": "2026-11-19T00:00:00Z",
-        "matchup": "Akron Zips at UMass Minutemen",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -2358,12 +2333,6 @@
     },
     {
       "season": "2026",
-      "game_id": "73d83d88b3a35eeb4bcf8462ff2070b2",
-      "kickoff_utc": "2026-11-14T03:15:00Z",
-      "matchup": "Houston Cougars at Colorado Buffaloes"
-    },
-    {
-      "season": "2026",
       "game_id": "0cdac6d2b6c2cbfb0f734a8cdfbe086e",
       "kickoff_utc": "2026-11-21T20:30:00Z",
       "matchup": "LSU Tigers at Tennessee Volunteers"
@@ -2391,18 +2360,6 @@
       "game_id": "1ce059ad7e592e033a7efe38d7bc7352",
       "kickoff_utc": "2026-11-14T22:00:00Z",
       "matchup": "Southern Mississippi Golden Eagles at Louisiana Tech Bulldogs"
-    },
-    {
-      "season": "2026",
-      "game_id": "5840d479fc52ad2b83d7feb802d4dd23",
-      "kickoff_utc": "2026-11-18T00:00:00Z",
-      "matchup": "Ball State Cardinals at Ohio Bobcats"
-    },
-    {
-      "season": "2026",
-      "game_id": "ef5f5ac74b2228e8521c289fdbc6af93",
-      "kickoff_utc": "2026-11-19T00:00:00Z",
-      "matchup": "Akron Zips at UMass Minutemen"
     },
     {
       "season": "2026",
