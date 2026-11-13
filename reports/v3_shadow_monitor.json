@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 170,
-      "MISSING_V1": 39,
+      "COHORT_NOT_GENERATED": 2,
+      "MISSING_V1": 38,
       "MISSING_V1_AND_V2": 18,
-      "MISSING_V2": 26
+      "MISSING_V2": 25
     },
     "unclassified_details": [
       {
@@ -793,7 +794,7 @@
         "game_id": "fe42d22bafb7d5f406317697dff44ee6",
         "kickoff_utc": "2026-11-14T17:45:00Z",
         "matchup": "Alabama Crimson Tide at Vanderbilt Commodores",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -849,7 +850,7 @@
         "game_id": "c2ccf2d604c3a791b12d26ccaaf65c70",
         "kickoff_utc": "2026-11-14T20:30:00Z",
         "matchup": "Nevada Wolf Pack at Northern Illinois Huskies",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
