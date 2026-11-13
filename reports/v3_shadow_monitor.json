@@ -841,7 +841,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 103,
+    "covered_v3": 107,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -856,7 +856,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 81,
+        "selections": 85,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1725,6 +1725,15 @@
       },
       {
         "season": "2026",
+        "game_id": "1ce059ad7e592e033a7efe38d7bc7352",
+        "kickoff_utc": "2026-11-14T22:00:00Z",
+        "matchup": "Southern Mississippi Golden Eagles at Louisiana Tech Bulldogs",
+        "status": "PASS",
+        "disagreement_points": "1.14848",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "f9b805187f3809fdadddfa08dfa2a089",
         "kickoff_utc": "2026-11-14T23:00:00Z",
         "matchup": "Oregon State Beavers at Boise State Broncos",
@@ -1775,6 +1784,33 @@
         "matchup": "Colorado State Rams at Washington State Cougars",
         "status": "PASS",
         "disagreement_points": "1.96757",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "0d8cfafd3da8fead51df5ec2e33e9382",
+        "kickoff_utc": "2026-11-18T00:00:00Z",
+        "matchup": "Eastern Michigan Eagles at Western Michigan Broncos",
+        "status": "PASS",
+        "disagreement_points": "2.14121",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "5840d479fc52ad2b83d7feb802d4dd23",
+        "kickoff_utc": "2026-11-18T00:00:00Z",
+        "matchup": "Ball State Cardinals at Ohio Bobcats",
+        "status": "PASS",
+        "disagreement_points": "0.94017",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "ef5f5ac74b2228e8521c289fdbc6af93",
+        "kickoff_utc": "2026-11-19T00:00:00Z",
+        "matchup": "Akron Zips at UMass Minutemen",
+        "status": "PASS",
+        "disagreement_points": "4.50212",
         "source": "same_capture_v3_frozen_quote"
       },
       {
