@@ -183,9 +183,9 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 170,
-      "COHORT_NOT_GENERATED": 2,
+      "COHORT_NOT_GENERATED": 3,
       "MISSING_V1": 38,
-      "MISSING_V1_AND_V2": 18,
+      "MISSING_V1_AND_V2": 17,
       "MISSING_V2": 25
     },
     "unclassified_details": [
@@ -698,7 +698,7 @@
         "game_id": "d466840e3c50d2fdad6fd7e799fdf921",
         "kickoff_utc": "2026-11-15T00:00:00Z",
         "matchup": "Minnesota Golden Gophers at Penn State Nittany Lions",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -834,7 +834,7 @@
         "game_id": "0d8cfafd3da8fead51df5ec2e33e9382",
         "kickoff_utc": "2026-11-18T00:00:00Z",
         "matchup": "Eastern Michigan Eagles at Western Michigan Broncos",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -858,7 +858,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 108,
+    "covered_v3": 111,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -873,7 +873,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 86,
+        "selections": 89,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1625,6 +1625,15 @@
       },
       {
         "season": "2026",
+        "game_id": "28a08b75e830f2fbaaeaa3b42c2ebb63",
+        "kickoff_utc": "2026-11-14T19:00:00Z",
+        "matchup": "Kansas State Wildcats at TCU Horned Frogs",
+        "status": "PASS",
+        "disagreement_points": "0.4669",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "d03caba2636ec407098ec3e1fe18fcf7",
         "kickoff_utc": "2026-11-14T19:00:00Z",
         "matchup": "Tulane Green Wave at Rice Owls",
@@ -1742,6 +1751,15 @@
       },
       {
         "season": "2026",
+        "game_id": "8ad669f4c9b70f38fdb057c114588776",
+        "kickoff_utc": "2026-11-14T21:15:00Z",
+        "matchup": "Ole Miss Rebels at Oklahoma Sooners",
+        "status": "PASS",
+        "disagreement_points": "0.23638",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "aa1c9ee516cf122de53e75ffec017edd",
         "kickoff_utc": "2026-11-14T21:15:00Z",
         "matchup": "Washington Huskies at Michigan State Spartans",
@@ -1774,6 +1792,15 @@
         "matchup": "Minnesota Golden Gophers at Penn State Nittany Lions",
         "status": "PASS",
         "disagreement_points": "4.81366",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "d9bfb4f5e7ba909febe2a83fc04d4f15",
+        "kickoff_utc": "2026-11-15T00:00:00Z",
+        "matchup": "San Jose State Spartans at Air Force Falcons",
+        "status": "PASS",
+        "disagreement_points": "0.59124",
         "source": "same_capture_v3_frozen_quote"
       },
       {
