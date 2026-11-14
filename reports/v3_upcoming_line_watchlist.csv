@@ -1,40 +1,46 @@
 kickoff_utc,away_team,home_team,sportsbook,sportsbook_key,first_home_spread,latest_home_spread,movement_points,severity,crossed_key_numbers,locked_decision,locked_selection,locked_spread,locked_edge,current_edge_at_same_book,edge_change,lock_status,latest_seen_utc
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,DraftKings,draftkings,3.5,-1.5,-5.0,MAJOR_5_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,DraftKings,draftkings,-9.5,-14.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,BetRivers,betrivers,-10.5,-14.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetRivers,betrivers,2.5,-1.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetUS,betus,2.5,-1.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,FanDuel,fanduel,2.5,-1.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,BetOnline.ag,betonlineag,-10.5,-14.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,LowVig.ag,lowvig,-10.5,-14.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,BetMGM,betmgm,-11.0,-14.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetMGM,betmgm,1.5,-1.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetOnline.ag,betonlineag,2.0,-1.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,Bovada,bovada,1.5,-1.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,FanDuel,fanduel,-10.5,-13.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,LowVig.ag,lowvig,2.0,-1.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetMGM,betmgm,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetOnline.ag,betonlineag,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetUS,betus,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,DraftKings,draftkings,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,LowVig.ag,lowvig,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetRivers,betrivers,19.5,14.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,Bovada,bovada,18.0,14.0,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,FanDuel,fanduel,18.5,14.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetRivers,betrivers,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,Bovada,bovada,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,DraftKings,draftkings,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,MyBookie.ag,mybookieag,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetMGM,betmgm,-10.0,-13.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetOnline.ag,betonlineag,-10.0,-13.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetUS,betus,-10.0,-13.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,LowVig.ag,lowvig,-10.0,-13.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T20:00:00Z,Tennessee Volunteers,Texas A&M Aggies,BetOnline.ag,betonlineag,3.5,0.0,-3.5,SIGNIFICANT_3_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T20:00:00Z,Tennessee Volunteers,Texas A&M Aggies,LowVig.ag,lowvig,3.5,0.0,-3.5,SIGNIFICANT_3_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T20:30:00Z,Nevada Wolf Pack,Northern Illinois Huskies,DraftKings,draftkings,10.5,5.5,-5.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T20:30:00Z,Michigan Wolverines,Oregon Ducks,DraftKings,draftkings,-5.5,-10.5,-5.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,DraftKings,draftkings,3.5,-1.5,-5.0,MAJOR_5_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetRivers,betrivers,2.5,-2.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,DraftKings,draftkings,-9.5,-14.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetUS,betus,2.5,-1.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,FanDuel,fanduel,2.5,-1.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,BetOnline.ag,betonlineag,-10.5,-14.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetOnline.ag,betonlineag,2.0,-1.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,BetRivers,betrivers,-10.5,-14.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,Bovada,bovada,1.5,-2.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,LowVig.ag,lowvig,-10.5,-14.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,LowVig.ag,lowvig,2.0,-1.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,BetMGM,betmgm,-11.0,-14.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Wake Forest Demon Deacons,SMU Mustangs,BetMGM,betmgm,1.5,-1.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,Bovada,bovada,-11.5,-14.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:00:00Z,Northwestern Wildcats,Ohio State Buckeyes,FanDuel,fanduel,-10.5,-13.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:30:00Z,Nebraska Cornhuskers,Rutgers Scarlet Knights,BetOnline.ag,betonlineag,12.5,16.0,3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:30:00Z,Nebraska Cornhuskers,Rutgers Scarlet Knights,LowVig.ag,lowvig,12.5,16.0,3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:30:00Z,Nebraska Cornhuskers,Rutgers Scarlet Knights,DraftKings,draftkings,12.5,15.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetMGM,betmgm,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetRivers,betrivers,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetUS,betus,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,DraftKings,draftkings,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,LowVig.ag,lowvig,19.5,14.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,BetOnline.ag,betonlineag,19.5,14.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,Bovada,bovada,18.0,14.0,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T17:45:00Z,Alabama Crimson Tide,Vanderbilt Commodores,FanDuel,fanduel,18.5,14.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,FanDuel,fanduel,-9.5,-13.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetMGM,betmgm,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetOnline.ag,betonlineag,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetRivers,betrivers,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,BetUS,betus,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,Bovada,bovada,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,DraftKings,draftkings,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,LowVig.ag,lowvig,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T19:00:00Z,Kansas State Wildcats,TCU Horned Frogs,MyBookie.ag,mybookieag,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T20:00:00Z,Tennessee Volunteers,Texas A&M Aggies,FanDuel,fanduel,3.5,-1.5,-5.0,MAJOR_5_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T20:00:00Z,Tennessee Volunteers,Texas A&M Aggies,BetOnline.ag,betonlineag,3.5,0.0,-3.5,SIGNIFICANT_3_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T20:00:00Z,Tennessee Volunteers,Texas A&M Aggies,LowVig.ag,lowvig,3.5,0.0,-3.5,SIGNIFICANT_3_PLUS,3.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T20:30:00Z,Nevada Wolf Pack,Northern Illinois Huskies,DraftKings,draftkings,10.5,6.0,-4.5,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T20:30:00Z,Michigan Wolverines,Oregon Ducks,DraftKings,draftkings,-5.5,-10.0,-4.5,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
 2026-11-14T20:30:00Z,Cincinnati Bearcats,Iowa State Cyclones,FanDuel,fanduel,1.5,-2.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-09T07:59:25Z
-2026-11-14T20:30:00Z,Nevada Wolf Pack,Northern Illinois Huskies,FanDuel,fanduel,9.5,6.5,-3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
+2026-11-14T20:30:00Z,Nevada Wolf Pack,Northern Illinois Huskies,FanDuel,fanduel,9.5,5.5,-4.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
 2026-11-14T21:15:00Z,Ole Miss Rebels,Oklahoma Sooners,BetRivers,betrivers,2.5,-2.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
 2026-11-14T21:15:00Z,Ole Miss Rebels,Oklahoma Sooners,Bovada,bovada,1.5,-3.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
 2026-11-14T21:15:00Z,Ole Miss Rebels,Oklahoma Sooners,MyBookie.ag,mybookieag,2.0,-2.5,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
@@ -42,29 +48,38 @@ kickoff_utc,away_team,home_team,sportsbook,sportsbook_key,first_home_spread,late
 2026-11-14T21:15:00Z,Ole Miss Rebels,Oklahoma Sooners,FanDuel,fanduel,1.5,-2.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
 2026-11-14T21:15:00Z,Ole Miss Rebels,Oklahoma Sooners,BetMGM,betmgm,1.5,-2.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-13T22:42:13Z
 2026-11-14T21:15:00Z,Ole Miss Rebels,Oklahoma Sooners,BetUS,betus,1.5,-1.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-13T22:42:13Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,DraftKings,draftkings,-4.5,-16.5,-12.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,FanDuel,fanduel,-5.5,-16.5,-11.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetOnline.ag,betonlineag,-10.5,-16.5,-6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,LowVig.ag,lowvig,-10.5,-16.5,-6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetMGM,betmgm,-10.5,-16.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetUS,betus,-10.5,-16.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,Bovada,bovada,-11.0,-16.5,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,MyBookie.ag,mybookieag,-11.0,-16.5,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetRivers,betrivers,-10.0,-15.0,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetOnline.ag,betonlineag,-7.5,-12.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,DraftKings,draftkings,-7.0,-11.5,-4.5,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,LowVig.ag,lowvig,-7.5,-12.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetRivers,betrivers,-7.0,-10.5,-3.5,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetMGM,betmgm,-8.5,-11.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetUS,betus,-9.0,-12.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetMGM,betmgm,-14.0,-17.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetOnline.ag,betonlineag,-14.0,-17.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetUS,betus,-14.0,-17.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,FanDuel,fanduel,-13.5,-16.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,LowVig.ag,lowvig,-14.0,-17.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,MyBookie.ag,mybookieag,-14.0,-17.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T02:00:00Z,North Texas Mean Green,UTSA Roadrunners,BetUS,betus,-1.0,2.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T03:00:00Z,Wyoming Cowboys,UTEP Miners,BetOnline.ag,betonlineag,10.0,7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T03:00:00Z,Wyoming Cowboys,UTEP Miners,DraftKings,draftkings,10.0,7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T03:00:00Z,Wyoming Cowboys,UTEP Miners,LowVig.ag,lowvig,10.0,7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
-2026-11-15T03:30:00Z,Colorado State Rams,Washington State Cougars,FanDuel,fanduel,-5.5,-8.5,-3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T07:38:16Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,DraftKings,draftkings,-4.5,-16.5,-12.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,FanDuel,fanduel,-5.5,-16.5,-11.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetMGM,betmgm,-10.5,-16.5,-6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetOnline.ag,betonlineag,-10.5,-16.5,-6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetUS,betus,-10.5,-16.5,-6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,LowVig.ag,lowvig,-10.5,-16.5,-6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,BetRivers,betrivers,-10.0,-15.5,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,Bovada,bovada,-11.0,-16.5,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-14T23:00:00Z,Oregon State Beavers,Boise State Broncos,MyBookie.ag,mybookieag,-11.0,-16.5,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetOnline.ag,betonlineag,-7.5,-13.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,DraftKings,draftkings,-7.0,-12.5,-5.5,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,LowVig.ag,lowvig,-7.5,-13.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetRivers,betrivers,-7.0,-12.0,-5.0,MAJOR_5_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetMGM,betmgm,-8.5,-13.0,-4.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,BetUS,betus,-9.0,-13.0,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,FanDuel,fanduel,-8.5,-12.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,MyBookie.ag,mybookieag,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,San Jose State Spartans,Air Force Falcons,BetOnline.ag,betonlineag,-11.5,-14.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,San Jose State Spartans,Air Force Falcons,Bovada,bovada,-11.0,-14.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,Minnesota Golden Gophers,Penn State Nittany Lions,Bovada,bovada,-9.5,-12.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:00:00Z,San Jose State Spartans,Air Force Falcons,LowVig.ag,lowvig,-11.5,-14.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetRivers,betrivers,-14.0,-18.0,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,FanDuel,fanduel,-13.5,-17.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetMGM,betmgm,-14.0,-17.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetOnline.ag,betonlineag,-14.0,-17.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,BetUS,betus,-14.0,-17.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,DraftKings,draftkings,-14.0,-17.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,LowVig.ag,lowvig,-14.0,-17.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,MyBookie.ag,mybookieag,-14.0,-17.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T00:30:00Z,UNLV Rebels,New Mexico Lobos,Bovada,bovada,-14.5,-17.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T02:00:00Z,North Texas Mean Green,UTSA Roadrunners,BetUS,betus,-1.0,2.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T03:00:00Z,Wyoming Cowboys,UTEP Miners,BetOnline.ag,betonlineag,10.0,7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T03:00:00Z,Wyoming Cowboys,UTEP Miners,DraftKings,draftkings,10.0,7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T03:00:00Z,Wyoming Cowboys,UTEP Miners,LowVig.ag,lowvig,10.0,7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
+2026-11-15T03:30:00Z,Colorado State Rams,Washington State Cougars,FanDuel,fanduel,-5.5,-8.5,-3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-14T15:50:55Z
