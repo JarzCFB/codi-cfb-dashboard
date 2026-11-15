@@ -7,31 +7,31 @@
   },
   "groups": {
     "PASS": {
-      "classified_games": 141,
-      "settled_games": 104,
-      "winner_correct": 68,
-      "within_7": 42,
-      "winner_accuracy": 0.653846,
-      "margin_mae": 11.922,
-      "within_7_rate": 0.403846
+      "classified_games": 151,
+      "settled_games": 115,
+      "winner_correct": 75,
+      "within_7": 44,
+      "winner_accuracy": 0.652174,
+      "margin_mae": 12.951,
+      "within_7_rate": 0.382609
     },
     "CAUTION": {
-      "classified_games": 23,
-      "settled_games": 19,
-      "winner_correct": 16,
-      "within_7": 7,
-      "winner_accuracy": 0.842105,
-      "margin_mae": 10.852,
-      "within_7_rate": 0.368421
+      "classified_games": 25,
+      "settled_games": 20,
+      "winner_correct": 17,
+      "within_7": 8,
+      "winner_accuracy": 0.85,
+      "margin_mae": 10.467,
+      "within_7_rate": 0.4
     },
     "UNSTABLE": {
       "classified_games": 34,
-      "settled_games": 26,
-      "winner_correct": 16,
-      "within_7": 14,
-      "winner_accuracy": 0.615385,
-      "margin_mae": 15.706,
-      "within_7_rate": 0.538462
+      "settled_games": 28,
+      "winner_correct": 18,
+      "within_7": 15,
+      "winner_accuracy": 0.642857,
+      "margin_mae": 15.433,
+      "within_7_rate": 0.535714
     }
   }
 }
