@@ -913,7 +913,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 131,
+    "covered_v3": 137,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -928,7 +928,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 109,
+        "selections": 114,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -938,7 +938,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 13,
+        "selections": 14,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1932,6 +1932,15 @@
       },
       {
         "season": "2026",
+        "game_id": "c62889a44c822eaf71b9cd24f4eee875",
+        "kickoff_utc": "2026-11-20T23:00:00Z",
+        "matchup": "Iowa State Cyclones at UCF Knights",
+        "status": "UNSTABLE",
+        "disagreement_points": "4.4029",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "a365d6d7dcd55eca42de4791543e3f80",
         "kickoff_utc": "2026-11-21T00:30:00Z",
         "matchup": "Bowling Green Falcons at Toledo Rockets",
@@ -1991,6 +2000,15 @@
         "matchup": "East Carolina Pirates at Army Black Knights",
         "status": "PASS",
         "disagreement_points": "2.58128",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "5c082e013b5328e3db1def552628765f",
+        "kickoff_utc": "2026-11-21T17:00:00Z",
+        "matchup": "Texas A&M Aggies at Oklahoma Sooners",
+        "status": "PASS",
+        "disagreement_points": "1.81557",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -2103,6 +2121,24 @@
       },
       {
         "season": "2026",
+        "game_id": "b40838a45d9aeb25fb42668402caae13",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "North Texas Mean Green at Tulane Green Wave",
+        "status": "PASS",
+        "disagreement_points": "0.80789",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "89e434722afd075e5488a6b9310325e9",
+        "kickoff_utc": "2026-11-22T00:00:00Z",
+        "matchup": "UNLV Rebels at San Jose State Spartans",
+        "status": "PASS",
+        "disagreement_points": "1.00898",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "4e40d05a5d98ac108cd15278646a545d",
         "kickoff_utc": "2026-11-22T00:30:00Z",
         "matchup": "Stanford Cardinal at California Golden Bears",
@@ -2126,6 +2162,24 @@
         "matchup": "SMU Mustangs at Notre Dame Fighting Irish",
         "status": "PASS",
         "disagreement_points": "4.97576",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "028f0fcc2f6411c4816e543bb7fa226c",
+        "kickoff_utc": "2026-11-22T02:30:00Z",
+        "matchup": "San Diego State Aztecs at Boise State Broncos",
+        "status": "PASS",
+        "disagreement_points": "1.29973",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "430ea047c8a027987881d51f810a6cf8",
+        "kickoff_utc": "2026-11-22T03:30:00Z",
+        "matchup": "Hawaii Rainbow Warriors at Nevada Wolf Pack",
+        "status": "PASS",
+        "disagreement_points": "0.5062",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
