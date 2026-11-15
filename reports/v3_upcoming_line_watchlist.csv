@@ -1,2 +1,3 @@
 kickoff_utc,away_team,home_team,sportsbook,sportsbook_key,first_home_spread,latest_home_spread,movement_points,severity,crossed_key_numbers,locked_decision,locked_selection,locked_spread,locked_edge,current_edge_at_same_book,edge_change,lock_status,latest_seen_utc
-2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,FanDuel,fanduel,9.5,15.5,6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-15T07:53:00Z
+2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,FanDuel,fanduel,9.5,16.5,7.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-15T16:23:17Z
+2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,DraftKings,draftkings,10.5,16.5,6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-15T16:23:17Z

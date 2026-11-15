@@ -834,7 +834,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 114,
+    "covered_v3": 131,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -849,7 +849,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 92,
+        "selections": 109,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1844,6 +1844,24 @@
       },
       {
         "season": "2026",
+        "game_id": "608ce68eb20e7e5201fb1b804ad26141",
+        "kickoff_utc": "2026-11-20T00:30:00Z",
+        "matchup": "Rice Owls at Temple Owls",
+        "status": "PASS",
+        "disagreement_points": "1.42366",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "a365d6d7dcd55eca42de4791543e3f80",
+        "kickoff_utc": "2026-11-21T00:30:00Z",
+        "matchup": "Bowling Green Falcons at Toledo Rockets",
+        "status": "PASS",
+        "disagreement_points": "1.47649",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "f247efd606eabe7d3d87504bc3af43b4",
         "kickoff_utc": "2026-11-21T00:30:00Z",
         "matchup": "Clemson Tigers at Duke Blue Devils",
@@ -1862,11 +1880,38 @@
       },
       {
         "season": "2026",
+        "game_id": "9cf7e21a18746ad426fd1d901bdd0a88",
+        "kickoff_utc": "2026-11-21T01:00:00Z",
+        "matchup": "UTEP Miners at Air Force Falcons",
+        "status": "PASS",
+        "disagreement_points": "2.26328",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "8d53f308424d388c9003e02cac8b4cf6",
         "kickoff_utc": "2026-11-21T16:00:00Z",
         "matchup": "Virginia Tech Hokies at Miami Hurricanes",
         "status": "PASS",
         "disagreement_points": "4.09878",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "01aaf98c4f62bba0a964a9b400666516",
+        "kickoff_utc": "2026-11-21T17:00:00Z",
+        "matchup": "Colorado Buffaloes at Cincinnati Bearcats",
+        "status": "PASS",
+        "disagreement_points": "0.07165",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "4336f3fcf7e287f1609c1822fef8f63d",
+        "kickoff_utc": "2026-11-21T17:00:00Z",
+        "matchup": "East Carolina Pirates at Army Black Knights",
+        "status": "PASS",
+        "disagreement_points": "2.58128",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -1880,11 +1925,119 @@
       },
       {
         "season": "2026",
+        "game_id": "9f3f8efae55dbb803964a5107350e263",
+        "kickoff_utc": "2026-11-21T17:00:00Z",
+        "matchup": "UTSA Roadrunners at UAB Blazers",
+        "status": "PASS",
+        "disagreement_points": "1.21931",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "af2b2232df20a470d516dbe474a63132",
+        "kickoff_utc": "2026-11-21T17:00:00Z",
+        "matchup": "Memphis Tigers at Navy Midshipmen",
+        "status": "PASS",
+        "disagreement_points": "1.49995",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "ce564e264da03668e25badeb960753cc",
+        "kickoff_utc": "2026-11-21T17:00:00Z",
+        "matchup": "Northwestern Wildcats at Minnesota Golden Gophers",
+        "status": "PASS",
+        "disagreement_points": "1.74079",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "75136fdcc4601e9e1208fe20146056dc",
+        "kickoff_utc": "2026-11-21T18:00:00Z",
+        "matchup": "Western Kentucky Hilltoppers at Liberty Flames",
+        "status": "PASS",
+        "disagreement_points": "2.14653",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "ba44f7b0a5535ae2369e8ea165fb287f",
+        "kickoff_utc": "2026-11-21T19:00:00Z",
+        "matchup": "Charlotte 49ers at Tulsa Golden Hurricane",
+        "status": "PASS",
+        "disagreement_points": "1.81672",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "d7b3c2454c6b34f734497049e744bab0",
+        "kickoff_utc": "2026-11-21T19:00:00Z",
+        "matchup": "Missouri State Bears at Jacksonville State Gamecocks",
+        "status": "PASS",
+        "disagreement_points": "1.44947",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "3099e24c0ab2767eb9c56f6ef5eeefc2",
+        "kickoff_utc": "2026-11-21T19:30:00Z",
+        "matchup": "South Florida Bulls at Florida Atlantic Owls",
+        "status": "PASS",
+        "disagreement_points": "4.00299",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "2851a39f971851008dbec9970da34737",
+        "kickoff_utc": "2026-11-21T20:00:00Z",
+        "matchup": "Coastal Carolina Chanticleers at Louisiana Ragin Cajuns",
+        "status": "PASS",
+        "disagreement_points": "1.0153",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "0cdac6d2b6c2cbfb0f734a8cdfbe086e",
         "kickoff_utc": "2026-11-21T20:30:00Z",
         "matchup": "LSU Tigers at Tennessee Volunteers",
         "status": "UNSTABLE",
         "disagreement_points": "0.135",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "44e73391c2ac535ab552aac4bdcfa3b3",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "Pittsburgh Panthers at Louisville Cardinals",
+        "status": "PASS",
+        "disagreement_points": "0.79279",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "7f9809c817e27ec2d9f8a24e8e19a8ff",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "NC State Wolfpack at Florida State Seminoles",
+        "status": "PASS",
+        "disagreement_points": "4.90579",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "4e40d05a5d98ac108cd15278646a545d",
+        "kickoff_utc": "2026-11-22T00:30:00Z",
+        "matchup": "Stanford Cardinal at California Golden Bears",
+        "status": "PASS",
+        "disagreement_points": "0.88333",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "a05c0d32b35dfd5cca63a61af28b9739",
+        "kickoff_utc": "2026-11-22T00:30:00Z",
+        "matchup": "Georgia Bulldogs at South Carolina Gamecocks",
+        "status": "PASS",
+        "disagreement_points": "1.65366",
         "source": "same_capture_v3_frozen_quote"
       },
       {
