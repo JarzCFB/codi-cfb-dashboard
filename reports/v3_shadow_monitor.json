@@ -183,8 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 186,
-      "MISSING_V1": 42,
-      "MISSING_V1_AND_V2": 19,
+      "MISSING_V1": 43,
+      "MISSING_V1_AND_V2": 18,
       "MISSING_V2": 29
     },
     "unclassified_details": [
@@ -857,7 +857,7 @@
         "game_id": "608ce68eb20e7e5201fb1b804ad26141",
         "kickoff_utc": "2026-11-20T00:30:00Z",
         "matchup": "Rice Owls at Temple Owls",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -913,7 +913,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 139,
+    "covered_v3": 142,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -928,7 +928,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 116,
+        "selections": 119,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2094,6 +2094,15 @@
       },
       {
         "season": "2026",
+        "game_id": "725c6205de38f91b507a880c139eda54",
+        "kickoff_utc": "2026-11-21T19:30:00Z",
+        "matchup": "Iowa Hawkeyes at Illinois Fighting Illini",
+        "status": "PASS",
+        "disagreement_points": "0.44921",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "2851a39f971851008dbec9970da34737",
         "kickoff_utc": "2026-11-21T20:00:00Z",
         "matchup": "Coastal Carolina Chanticleers at Louisiana Ragin Cajuns",
@@ -2130,6 +2139,15 @@
       },
       {
         "season": "2026",
+        "game_id": "ae9b81f4814e1d9dae835a13f4245ce3",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "UCLA Bruins at Michigan Wolverines",
+        "status": "PASS",
+        "disagreement_points": "2.78317",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "b40838a45d9aeb25fb42668402caae13",
         "kickoff_utc": "2026-11-21T20:30:00Z",
         "matchup": "North Texas Mean Green at Tulane Green Wave",
@@ -2144,6 +2162,15 @@
         "matchup": "Arkansas Razorbacks at Texas Longhorns",
         "status": "PASS",
         "disagreement_points": "2.17089",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "e17410526acddf2500fb788f40901b3f",
+        "kickoff_utc": "2026-11-21T21:00:00Z",
+        "matchup": "Georgia State Panthers at Marshall Thundering Herd",
+        "status": "PASS",
+        "disagreement_points": "4.96256",
         "source": "same_capture_v3_frozen_quote"
       },
       {
