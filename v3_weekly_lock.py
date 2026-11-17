@@ -13,7 +13,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from cfb_division_safety import model_allowed
-from cfb_team_matching import canonical_school
+from cfb_team_matching import canonical_school, match_rating
 from cfb_v2_experimental import build_v2, projected_margin
 from prospective_capture import V3_INTERCEPT, V3_SLOPE, V3_V2_WEIGHT, number
 from snapshot_capture import capture, fetch, ratings_from_prior_games, utc
@@ -36,7 +36,7 @@ def lock_window(now):
     end = start + timedelta(days=4 if local.weekday() == 1 else 1)
     label = "weekday" if local.weekday() == 1 else "saturday"
     if late and local.hour != 8:
-        label += "_late"
+        label += "_late_recovered"
     return (label,
             start.astimezone(timezone.utc), end.astimezone(timezone.utc))
 
@@ -44,10 +44,6 @@ def lock_window(now):
 def asof_rows(now, games, odds_rows, v2_ratings):
     label, start, end = lock_window(now)
     result = []
-    quotes = {}
-    for row in odds_rows:
-        key = (canonical_school(row["home_team"]), canonical_school(row["away_team"]))
-        quotes.setdefault(key, []).append(row)
     for game in games:
         kick = utc(game.get("startDate") or game.get("start_date"))
         if not kick or not start <= kick < end or kick <= now:
@@ -59,7 +55,9 @@ def asof_rows(now, games, odds_rows, v2_ratings):
         if not home or not away:
             continue
         h, a = canonical_school(home), canonical_school(away)
-        candidates = quotes.get((h, a), [])
+        candidates = [q for q in odds_rows
+                      if match_rating(q.get("home_team", ""), {h: 1})[0] is not None
+                      and match_rating(q.get("away_team", ""), {a: 1})[0] is not None]
         base = dict(lock_id=label, season=now.astimezone(CENTRAL).year,
                     game_id=str(game.get("id") or f"{kick.isoformat()}:{h}:{a}"),
                     kickoff_utc=kick.isoformat().replace("+00:00", "Z"),
