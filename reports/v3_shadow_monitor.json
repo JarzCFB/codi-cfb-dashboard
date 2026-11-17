@@ -3,9 +3,9 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 287,
+      "selections": 288,
       "settled": 250,
-      "pending": 37,
+      "pending": 38,
       "wins": 124,
       "losses": 123,
       "pushes": 3,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.069803
     },
     "UNCLASSIFIED": {
-      "selections": 97,
+      "selections": 98,
       "settled": 76,
-      "pending": 21,
+      "pending": 22,
       "wins": 34,
       "losses": 41,
       "pushes": 1,
@@ -137,9 +137,9 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 166,
+        "selections": 167,
         "settled": 129,
-        "pending": 37,
+        "pending": 38,
         "wins": 57,
         "losses": 71,
         "pushes": 1,
@@ -179,13 +179,13 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 97,
+  "unclassified_v3_count": 98,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 190,
       "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 44,
-      "MISSING_V1_AND_V2": 19,
+      "MISSING_V1_AND_V2": 20,
       "MISSING_V2": 33
     },
     "unclassified_details": [
@@ -963,6 +963,14 @@
         "kickoff_utc": "2026-11-21T21:00:00Z",
         "matchup": "Georgia State Panthers at Marshall Thundering Herd",
         "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "10cec4ab386b12694dd3cee93d870b47",
+        "kickoff_utc": "2026-11-19T00:30:00Z",
+        "matchup": "Central Michigan Chippewas at Buffalo Bulls",
+        "reason": "MISSING_V1_AND_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -2878,6 +2886,12 @@
       "game_id": "e17410526acddf2500fb788f40901b3f",
       "kickoff_utc": "2026-11-21T21:00:00Z",
       "matchup": "Georgia State Panthers at Marshall Thundering Herd"
+    },
+    {
+      "season": "2026",
+      "game_id": "10cec4ab386b12694dd3cee93d870b47",
+      "kickoff_utc": "2026-11-19T00:30:00Z",
+      "matchup": "Central Michigan Chippewas at Buffalo Bulls"
     }
   ],
   "future_pending_v3": [
@@ -3211,6 +3225,15 @@
       "spread": "0.0",
       "american_odds": "-106.0",
       "edge_points": "3.26634",
+      "sportsbook": "LowVig.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-19T00:30:00Z",
+      "selection": "Buffalo Bulls",
+      "spread": "-1.0",
+      "american_odds": "-108.0",
+      "edge_points": "3.07293",
       "sportsbook": "LowVig.ag",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }

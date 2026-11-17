@@ -13,25 +13,25 @@
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 285,
+      "selections": 286,
       "settled": 249,
       "wins": 128,
       "losses": 118,
       "pushes": 3,
       "net_units": -1.866131,
       "roi_per_settled_selection": -0.007495,
-      "pending": 36,
+      "pending": 37,
       "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 287,
+      "selections": 288,
       "settled": 250,
       "wins": 124,
       "losses": 123,
       "pushes": 3,
       "net_units": -10.494629,
       "roi_per_settled_selection": -0.041979,
-      "pending": 37,
+      "pending": 38,
       "invalid_or_ambiguous": 0
     }
   },
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 879,
+    "total_frozen_selections": 881,
     "settled": 770,
-    "pending": 109,
+    "pending": 111,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
