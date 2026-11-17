@@ -85,6 +85,27 @@ jobs:
               assert field in data, field
           PYCODE
 
+      - name: Check this week's immutable V3 locks
+        run: |
+          python - <<'PYLOCK'
+          from datetime import datetime, timedelta
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          import os
+          now = datetime.now(ZoneInfo('America/Chicago'))
+          tuesday = (now.date() - timedelta(days=(now.weekday()-1)%7))
+          saturday = tuesday + timedelta(days=4)
+          targets = [Path('locks') / str(tuesday.year) / f'{tuesday}_weekday.csv',
+                     Path('locks') / str(saturday.year) / f'{saturday}_saturday.csv']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('\\n## Current-week V3 lock readiness\\n')
+              for p in targets:
+                  state = 'PRESENT' if p.exists() else 'MISSING'
+                  f.write(f'- {p}: **{state}**\\n')
+                  if p.exists() and not p.with_suffix('.sha256').exists():
+                      f.write(f'  - WARNING: missing SHA256 integrity companion for {p}\\n')
+              f.write('Missing lock files must not be backdated or treated as official frozen picks.\\n')
+          PYLOCK
       - name: Summarize five-part research findings
         run: |
           python - <<'PYSUM'
