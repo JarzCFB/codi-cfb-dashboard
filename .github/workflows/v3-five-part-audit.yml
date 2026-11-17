@@ -1,0 +1,24 @@
+name: V3 five-part research audit
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 15 * * 2'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests
+        run: python -m unittest -v test_v3_five_part_audit.py
+      - name: Generate read-only report
+        run: python v3_five_part_audit.py
+      - name: Upload research report
+        uses: actions/upload-artifact@v4
+        with:
+          name: v3-five-part-audit
+          path: reports/v3_five_part_audit.json
