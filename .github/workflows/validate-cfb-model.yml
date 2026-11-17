@@ -84,3 +84,10 @@ jobs:
           for field in ('pregame_agreement', 'forward_shadow_comparison', 'classification_coverage'):
               assert field in data, field
           PYCODE
+
+      - name: Upload five-part V3 research report
+        uses: actions/upload-artifact@v4
+        with:
+          name: v3-five-part-audit
+          path: reports/v3_five_part_audit.json
+          retention-days: 30
