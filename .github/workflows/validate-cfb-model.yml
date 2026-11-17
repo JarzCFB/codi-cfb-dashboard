@@ -85,6 +85,27 @@ jobs:
               assert field in data, field
           PYCODE
 
+      - name: Summarize five-part research findings
+        run: |
+          python - <<'PYSUM'
+          import json, os
+          from pathlib import Path
+          d = json.loads(Path('reports/v3_five_part_audit.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('\\n## V3 five-part research audit (not live betting signals)\\n')
+              f.write('| Edge threshold | Settled | W-L-P | Units |\\n|---|---:|---|---:|\\n')
+              for k, v in d['part_1_thresholds'].items():
+                  f.write(f"| {k}+ | {v['settled']} | {v['wins']}-{v['losses']}-{v['pushes']} | {v['net_units']:+.2f} |\\n")
+              f.write('\\n### Quote verification\\n')
+              for k, v in sorted(d['part_2_line_validation']['status_counts'].items()):
+                  f.write(f'- {k}: {v}\\n')
+              f.write('\\n### Spread cohorts\\n')
+              for k, v in d['part_3_spread_buckets'].items():
+                  f.write(f"- {k}: {v['wins']}-{v['losses']}-{v['pushes']}, {v['net_units']:+.2f} units\\n")
+              c = d['part_5_closing_line_proxy']
+              f.write(f"\\nLast-observed same-book CLV proxy: {c['sample_size']} samples; mean {c['average_clv_points']} points. Not a verified closing line.\\n")
+              f.write('\\nRecent-weighting backtest: not run; requires point-in-time full-game ratings.\\n')
+          PYSUM
       - name: Upload five-part V3 research report
         uses: actions/upload-artifact@v4
         with:
