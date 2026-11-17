@@ -29,11 +29,15 @@ RULE = "v3_all_games_lock_v1_edge3"
 
 def lock_window(now):
     local = now.astimezone(CENTRAL)
-    if local.weekday() not in (1, 5) or local.hour != 8:
-        raise ValueError("Locks may run only Tuesday or Saturday at 8 AM America/Chicago")
+    late = os.environ.get("V3_MANUAL_LATE_LOCK") == "1"
+    if local.weekday() not in (1, 5) or (local.hour != 8 and not late):
+        raise ValueError("Locks may run only Tuesday or Saturday; scheduled locks require 8 AM Central")
     start = local.replace(hour=0, minute=0, second=0, microsecond=0)
     end = start + timedelta(days=4 if local.weekday() == 1 else 1)
-    return ("weekday" if local.weekday() == 1 else "saturday",
+    label = "weekday" if local.weekday() == 1 else "saturday"
+    if late and local.hour != 8:
+        label += "_late"
+    return (label,
             start.astimezone(timezone.utc), end.astimezone(timezone.utc))
 
 
