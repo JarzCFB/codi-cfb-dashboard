@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 190,
+      "COHORT_NOT_GENERATED": 1,
       "MISSING_V1": 44,
       "MISSING_V1_AND_V2": 19,
-      "MISSING_V2": 34
+      "MISSING_V2": 33
     },
     "unclassified_details": [
       {
@@ -961,7 +962,7 @@
         "game_id": "e17410526acddf2500fb788f40901b3f",
         "kickoff_utc": "2026-11-21T21:00:00Z",
         "matchup": "Georgia State Panthers at Marshall Thundering Herd",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -969,7 +970,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 142,
+    "covered_v3": 143,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -984,7 +985,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 119,
+        "selections": 120,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1975,6 +1976,15 @@
         "matchup": "Akron Zips at UMass Minutemen",
         "status": "PASS",
         "disagreement_points": "4.50212",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "10cec4ab386b12694dd3cee93d870b47",
+        "kickoff_utc": "2026-11-19T00:30:00Z",
+        "matchup": "Central Michigan Chippewas at Buffalo Bulls",
+        "status": "PASS",
+        "disagreement_points": "0.19528",
         "source": "same_capture_v3_frozen_quote"
       },
       {
