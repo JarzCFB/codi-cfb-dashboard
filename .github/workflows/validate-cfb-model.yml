@@ -8,6 +8,7 @@ on:
       - 'prospective_investigation.py'
       - 'v3_shadow_monitor.py'
       - 'v3_line_movement.py'
+      - 'v3_five_part_audit.py'
       - 'app.py'
       - 'tests/**'
       - 'test_*.py'
@@ -34,7 +35,7 @@ jobs:
       - name: Install model dependencies
         run: python -m pip install requests numpy pandas scipy streamlit
       - name: Compile modified modules
-        run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py v3_line_movement.py app.py
+        run: python -m py_compile prospective_capture.py prospective_investigation.py v3_shadow_monitor.py v3_line_movement.py v3_five_part_audit.py app.py
       - name: Run all regression tests
         run: |
           python -m unittest discover -v
@@ -67,6 +68,15 @@ jobs:
       - name: Validate V3 report offline
         run: |
           python v3_shadow_monitor.py
+          python v3_five_part_audit.py
+          python - <<'PYFIVE'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('reports/v3_five_part_audit.json').read_text())
+          assert d['official_v3_unchanged'] is True
+          assert all(k in d for k in ('part_1_thresholds', 'part_2_line_validation', 'part_3_spread_buckets', 'part_4_recent_weighting', 'part_5_closing_line_proxy'))
+          print('Five-part V3 research audit generated successfully')
+          PYFIVE
           python - <<'PYCODE'
           import json
           from pathlib import Path
