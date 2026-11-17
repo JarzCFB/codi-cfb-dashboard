@@ -1,6 +1,9 @@
 name: Lock V3 weekday and Saturday predictions
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/lock-v3-weekly.yml']
   schedule:
     # 8 AM Central is 13:00 UTC in daylight time, 14:00 UTC in standard time.
     # The Python timezone guard rejects the nonmatching hour and weekday.
@@ -21,20 +24,15 @@ jobs:
       - run: pip install requests numpy pandas scipy
       - name: Run lock unit tests
         run: python -m unittest -v test_v3_weekly_lock.py test_v3_upcoming_watchlist.py
-      - name: Manual test summary
-        if: github.event_name == 'workflow_dispatch'
-        run: echo 'Manual test completed; scheduled lock intentionally skipped outside Tuesday/Saturday 8 AM Central.' >> "$GITHUB_STEP_SUMMARY"
-      - name: Lock every scheduled game with PLAY or PASS
-        if: github.event_name == 'schedule'
+      - name: Lock upcoming games with as-of PLAY or PASS (late locks labeled separately)
         env:
+          V3_MANUAL_LATE_LOCK: ${{ github.event_name != 'schedule' && '1' || '0' }}
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: python v3_weekly_lock.py
       - name: Update current-week line movement watchlist
-        if: github.event_name == 'schedule'
         run: python v3_upcoming_watchlist.py
       - name: Commit immutable dated lock and hash
-        if: github.event_name == 'schedule'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
