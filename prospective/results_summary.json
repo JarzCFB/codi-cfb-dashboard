@@ -3,54 +3,54 @@
   "models": {
     "v1": {
       "selections": 307,
-      "settled": 271,
+      "settled": 272,
       "wins": 126,
-      "losses": 144,
+      "losses": 145,
       "pushes": 1,
-      "net_units": -29.564931,
-      "roi_per_settled_selection": -0.109096,
-      "pending": 36,
+      "net_units": -30.564931,
+      "roi_per_settled_selection": -0.112371,
+      "pending": 35,
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 286,
-      "settled": 249,
+      "selections": 287,
+      "settled": 251,
       "wins": 128,
-      "losses": 118,
+      "losses": 120,
       "pushes": 3,
-      "net_units": -1.866131,
-      "roi_per_settled_selection": -0.007495,
-      "pending": 37,
+      "net_units": -3.866131,
+      "roi_per_settled_selection": -0.015403,
+      "pending": 36,
       "invalid_or_ambiguous": 0
     },
     "v3": {
       "selections": 288,
-      "settled": 250,
+      "settled": 252,
       "wins": 124,
-      "losses": 123,
+      "losses": 125,
       "pushes": 3,
-      "net_units": -10.494629,
-      "roi_per_settled_selection": -0.041979,
-      "pending": 38,
+      "net_units": -12.494629,
+      "roi_per_settled_selection": -0.049582,
+      "pending": 36,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 160,
+      "settled": 161,
       "wins": 75,
-      "losses": 83,
+      "losses": 84,
       "pushes": 2,
-      "net_units": -15.111393,
-      "roi_per_settled_selection": -0.094446
+      "net_units": -16.111393,
+      "roi_per_settled_selection": -0.100071
     },
     "5_to_lt7": {
-      "settled": 60,
+      "settled": 61,
       "wins": 32,
-      "losses": 27,
+      "losses": 28,
       "pushes": 1,
-      "net_units": 2.089509,
-      "roi_per_settled_selection": 0.034825
+      "net_units": 1.089509,
+      "roi_per_settled_selection": 0.017861
     },
     "7_to_lt10": {
       "settled": 21,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 881,
-    "settled": 770,
-    "pending": 111,
+    "total_frozen_selections": 882,
+    "settled": 775,
+    "pending": 107,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
