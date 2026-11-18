@@ -1,35 +1,37 @@
 kickoff_utc,away_team,home_team,sportsbook,sportsbook_key,first_home_spread,latest_home_spread,movement_points,severity,crossed_key_numbers,locked_decision,locked_selection,locked_spread,locked_edge,current_edge_at_same_book,edge_change,lock_status,latest_seen_utc
-2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,BetRivers,betrivers,-7.5,-12.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,DraftKings,draftkings,-8.5,-13.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,BetMGM,betmgm,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,BetOnline.ag,betonlineag,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,LowVig.ag,lowvig,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,FanDuel,fanduel,-9.5,-12.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,BetOnline.ag,betonlineag,13.5,16.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,Bovada,bovada,14.0,17.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,DraftKings,draftkings,13.5,16.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,LowVig.ag,lowvig,13.5,16.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,BetOnline.ag,betonlineag,11.5,7.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,LowVig.ag,lowvig,11.5,7.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,DraftKings,draftkings,10.5,7.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,FanDuel,fanduel,10.5,7.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T19:00:00Z,Charlotte 49ers,Tulsa Golden Hurricane,FanDuel,fanduel,-17.5,-22.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T19:30:00Z,South Florida Bulls,Florida Atlantic Owls,BetOnline.ag,betonlineag,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T19:30:00Z,South Florida Bulls,Florida Atlantic Owls,DraftKings,draftkings,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T19:30:00Z,Iowa Hawkeyes,Illinois Fighting Illini,DraftKings,draftkings,5.5,8.5,3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T19:30:00Z,South Florida Bulls,Florida Atlantic Owls,FanDuel,fanduel,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T19:30:00Z,South Florida Bulls,Florida Atlantic Owls,LowVig.ag,lowvig,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T20:00:00Z,Coastal Carolina Chanticleers,Louisiana Ragin Cajuns,DraftKings,draftkings,-7.5,-10.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T20:30:00Z,UCLA Bruins,Michigan Wolverines,BetRivers,betrivers,7.5,4.5,-3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
+2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,BetRivers,betrivers,-7.5,-13.0,-5.5,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,DraftKings,draftkings,-8.5,-13.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,BetMGM,betmgm,-10.0,-13.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,BetOnline.ag,betonlineag,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,LowVig.ag,lowvig,-9.5,-13.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T00:30:00Z,Clemson Tigers,Duke Blue Devils,FanDuel,fanduel,-9.5,-12.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,BetMGM,betmgm,14.0,17.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,BetOnline.ag,betonlineag,13.5,16.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,Bovada,bovada,14.0,17.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,DraftKings,draftkings,13.5,16.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T01:00:00Z,Oregon Ducks,Michigan State Spartans,LowVig.ag,lowvig,13.5,16.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,BetOnline.ag,betonlineag,11.5,7.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,LowVig.ag,lowvig,11.5,7.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,DraftKings,draftkings,10.5,7.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T02:00:00Z,New Mexico Lobos,Wyoming Cowboys,FanDuel,fanduel,10.5,7.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T19:00:00Z,Charlotte 49ers,Tulsa Golden Hurricane,FanDuel,fanduel,-17.5,-22.5,-5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T19:30:00Z,South Florida Bulls,Florida Atlantic Owls,DraftKings,draftkings,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T19:30:00Z,Iowa Hawkeyes,Illinois Fighting Illini,DraftKings,draftkings,5.5,8.5,3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T19:30:00Z,South Florida Bulls,Florida Atlantic Owls,FanDuel,fanduel,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T20:00:00Z,Coastal Carolina Chanticleers,Louisiana Ragin Cajuns,DraftKings,draftkings,-7.5,-10.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T20:30:00Z,UCLA Bruins,Michigan Wolverines,BetRivers,betrivers,7.5,4.5,-3.0,SIGNIFICANT_3_PLUS,7.0,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
 2026-11-21T20:30:00Z,Arizona Wildcats,Kansas State Wildcats,DraftKings,draftkings,10.5,7.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-16T08:00:29Z
-2026-11-21T20:30:00Z,UCLA Bruins,Michigan Wolverines,DraftKings,draftkings,6.5,3.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T20:30:00Z,Rutgers Scarlet Knights,Penn State Nittany Lions,FanDuel,fanduel,-21.5,-24.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-21T21:00:00Z,Georgia State Panthers,Marshall Thundering Herd,DraftKings,draftkings,1.5,-1.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:00:00Z,Arkansas State Red Wolves,Louisiana Tech Bulldogs,DraftKings,draftkings,-16.5,-13.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,FanDuel,fanduel,9.5,16.5,7.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,DraftKings,draftkings,10.5,16.5,6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,DraftKings,draftkings,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,FanDuel,fanduel,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,BetOnline.ag,betonlineag,-17.5,-21.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,BetRivers,betrivers,-17.5,-21.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,LowVig.ag,lowvig,-17.5,-21.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T08:34:24Z
+2026-11-21T20:30:00Z,UCLA Bruins,Michigan Wolverines,DraftKings,draftkings,6.5,3.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T20:30:00Z,UCLA Bruins,Michigan Wolverines,FanDuel,fanduel,6.5,3.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T20:30:00Z,Rutgers Scarlet Knights,Penn State Nittany Lions,FanDuel,fanduel,-21.5,-24.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T21:00:00Z,Georgia State Panthers,Marshall Thundering Herd,FanDuel,fanduel,2.5,-1.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T21:00:00Z,Georgia State Panthers,Marshall Thundering Herd,BetMGM,betmgm,2.0,-1.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-21T21:00:00Z,Georgia State Panthers,Marshall Thundering Herd,DraftKings,draftkings,1.5,-1.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:00:00Z,Arkansas State Red Wolves,Louisiana Tech Bulldogs,DraftKings,draftkings,-16.5,-13.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,FanDuel,fanduel,9.5,16.5,7.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,DraftKings,draftkings,10.5,16.5,6.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,DraftKings,draftkings,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,FanDuel,fanduel,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,BetOnline.ag,betonlineag,-17.5,-21.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,LowVig.ag,lowvig,-17.5,-21.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z
+2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,BetRivers,betrivers,-17.5,-20.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-18T18:06:20Z

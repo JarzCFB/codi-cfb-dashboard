@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-18T08:34:30.741208Z",
+  "generated_at_utc": "2026-11-18T18:06:29.318506Z",
   "warning": "Earliest observed quote is not necessarily true opening line. Current edge uses frozen V3 margin and same sportsbook spread only; odds price eligibility is not revalidated.",
   "games": [
     {
@@ -9,8 +9,8 @@
       "sportsbook": "BetRivers",
       "sportsbook_key": "betrivers",
       "first_home_spread": -7.5,
-      "latest_home_spread": -12.5,
-      "movement_points": -5.0,
+      "latest_home_spread": -13.0,
+      "movement_points": -5.5,
       "severity": "MAJOR_5_PLUS",
       "crossed_key_numbers": "",
       "locked_decision": "",
@@ -20,7 +20,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -40,7 +40,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -60,7 +60,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -80,7 +80,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -100,7 +100,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -120,7 +120,27 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
+    },
+    {
+      "kickoff_utc": "2026-11-21T01:00:00Z",
+      "away_team": "Oregon Ducks",
+      "home_team": "Michigan State Spartans",
+      "sportsbook": "BetMGM",
+      "sportsbook_key": "betmgm",
+      "first_home_spread": 14.0,
+      "latest_home_spread": 17.0,
+      "movement_points": 3.0,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -140,7 +160,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -160,7 +180,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -180,7 +200,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -200,7 +220,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -220,7 +240,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -240,7 +260,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -260,7 +280,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -280,7 +300,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:00:00Z",
@@ -300,27 +320,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
-    },
-    {
-      "kickoff_utc": "2026-11-21T19:30:00Z",
-      "away_team": "South Florida Bulls",
-      "home_team": "Florida Atlantic Owls",
-      "sportsbook": "BetOnline.ag",
-      "sportsbook_key": "betonlineag",
-      "first_home_spread": -1.5,
-      "latest_home_spread": 1.5,
-      "movement_points": 3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:30:00Z",
@@ -340,7 +340,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:30:00Z",
@@ -360,7 +360,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:30:00Z",
@@ -380,27 +380,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
-    },
-    {
-      "kickoff_utc": "2026-11-21T19:30:00Z",
-      "away_team": "South Florida Bulls",
-      "home_team": "Florida Atlantic Owls",
-      "sportsbook": "LowVig.ag",
-      "sportsbook_key": "lowvig",
-      "first_home_spread": -1.5,
-      "latest_home_spread": 1.5,
-      "movement_points": 3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:00:00Z",
@@ -420,7 +400,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -440,7 +420,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -480,7 +460,27 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
+    },
+    {
+      "kickoff_utc": "2026-11-21T20:30:00Z",
+      "away_team": "UCLA Bruins",
+      "home_team": "Michigan Wolverines",
+      "sportsbook": "FanDuel",
+      "sportsbook_key": "fanduel",
+      "first_home_spread": 6.5,
+      "latest_home_spread": 3.5,
+      "movement_points": -3.0,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -500,7 +500,47 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
+    },
+    {
+      "kickoff_utc": "2026-11-21T21:00:00Z",
+      "away_team": "Georgia State Panthers",
+      "home_team": "Marshall Thundering Herd",
+      "sportsbook": "FanDuel",
+      "sportsbook_key": "fanduel",
+      "first_home_spread": 2.5,
+      "latest_home_spread": -1.5,
+      "movement_points": -4.0,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
+    },
+    {
+      "kickoff_utc": "2026-11-21T21:00:00Z",
+      "away_team": "Georgia State Panthers",
+      "home_team": "Marshall Thundering Herd",
+      "sportsbook": "BetMGM",
+      "sportsbook_key": "betmgm",
+      "first_home_spread": 2.0,
+      "latest_home_spread": -1.0,
+      "movement_points": -3.0,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -520,7 +560,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:00:00Z",
@@ -540,7 +580,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -560,7 +600,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -580,7 +620,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -600,7 +640,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -620,7 +660,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -640,27 +680,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
-    },
-    {
-      "kickoff_utc": "2026-11-22T00:30:00Z",
-      "away_team": "SMU Mustangs",
-      "home_team": "Notre Dame Fighting Irish",
-      "sportsbook": "BetRivers",
-      "sportsbook_key": "betrivers",
-      "first_home_spread": -17.5,
-      "latest_home_spread": -21.0,
-      "movement_points": -3.5,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -680,7 +700,27 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-18T08:34:24Z"
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
+    },
+    {
+      "kickoff_utc": "2026-11-22T00:30:00Z",
+      "away_team": "SMU Mustangs",
+      "home_team": "Notre Dame Fighting Irish",
+      "sportsbook": "BetRivers",
+      "sportsbook_key": "betrivers",
+      "first_home_spread": -17.5,
+      "latest_home_spread": -20.5,
+      "movement_points": -3.0,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-18T18:06:20Z"
     }
   ]
 }
