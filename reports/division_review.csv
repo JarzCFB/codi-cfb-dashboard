@@ -514,12 +514,15 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,af2b2232df20a470d516dbe474a63132,2026-11-21T17:00:00Z,Navy Midshipmen,Memphis Tigers,FBS vs FBS,navy,memphis
 2026,03a07ec7a62fbc2d6bf4748aafd30303,2026-11-21T17:00:00Z,Nebraska Cornhuskers,Ohio State Buckeyes,FBS vs FBS,nebraska,ohio state
 2026,5c082e013b5328e3db1def552628765f,2026-11-21T17:00:00Z,Oklahoma Sooners,Texas A&M Aggies,FBS vs FBS,oklahoma,texas a and m
+2026,79d5d7992b8c0600feda74e2225553fe,2026-11-21T17:00:00Z,Ole Miss Rebels,Wofford Terriers,Unverified division / FCS: model suppressed,ole miss,wofford terriers
 2026,d0761a1e0c66eaf4608f5c61ac79b3c2,2026-11-21T17:00:00Z,Purdue Boilermakers,Wisconsin Badgers,FBS vs FBS,purdue,wisconsin
 2026,7585fb8b12453a68ca1195319ae44c78,2026-11-21T17:00:00Z,TCU Horned Frogs,Utah Utes,FBS vs FBS,tcu,utah
 2026,9f3f8efae55dbb803964a5107350e263,2026-11-21T17:00:00Z,UAB Blazers,UTSA Roadrunners,FBS vs FBS,uab,utsa
 2026,6b40f07e146bab0dba574f0d3b07659e,2026-11-21T17:00:00Z,Washington Huskies,Indiana Hoosiers,FBS vs FBS,washington,indiana
 2026,1f59b6d72003ce254b32c815e73b252d,2026-11-21T17:30:00Z,Virginia Cavaliers,North Carolina Tar Heels,FBS vs FBS,virginia,north carolina
 2026,75136fdcc4601e9e1208fe20146056dc,2026-11-21T18:00:00Z,Liberty Flames,Western Kentucky Hilltoppers,FBS vs FBS,liberty,western kentucky
+2026,e4bb95111547a00a8c70a0459ffbd861,2026-11-21T18:00:00Z,Mississippi State Bulldogs,Tennessee Tech Golden Eagles,Unverified division / FCS: model suppressed,mississippi state,tennessee tech golden eagles
+2026,f45e59db6a335d4ffd3741f83a45327a,2026-11-21T19:00:00Z,Alabama Crimson Tide,Chattanooga Mocs,Unverified division / FCS: model suppressed,alabama,chattanooga mocs
 2026,d7b3c2454c6b34f734497049e744bab0,2026-11-21T19:00:00Z,Jacksonville State Gamecocks,Missouri State Bears,FBS vs FBS,jacksonville state,missouri state
 2026,347054d00e6c0020484eb64f1ad1b58d,2026-11-21T19:00:00Z,Sam Houston State Bearkats,Middle Tennessee Blue Raiders,FBS vs FBS,sam houston,middle tennessee
 2026,ba44f7b0a5535ae2369e8ea165fb287f,2026-11-21T19:00:00Z,Tulsa Golden Hurricane,Charlotte 49ers,FBS vs FBS,tulsa,charlotte
