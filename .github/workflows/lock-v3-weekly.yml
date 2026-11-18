@@ -1,9 +1,6 @@
 name: Lock V3 weekday and Saturday predictions
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/lock-v3-weekly.yml', 'v3_weekly_lock.py']
   schedule:
     # 8 AM Central is 13:00 UTC in daylight time, 14:00 UTC in standard time.
     # The Python timezone guard rejects the nonmatching hour and weekday.
