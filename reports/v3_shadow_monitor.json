@@ -183,7 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 191,
-      "MISSING_V1": 44,
+      "COHORT_NOT_GENERATED": 1,
+      "MISSING_V1": 43,
       "MISSING_V1_AND_V2": 20,
       "MISSING_V2": 33
     },
@@ -889,7 +890,7 @@
         "game_id": "af2b2232df20a470d516dbe474a63132",
         "kickoff_utc": "2026-11-21T17:00:00Z",
         "matchup": "Memphis Tigers at Navy Midshipmen",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -969,7 +970,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 148,
+    "covered_v3": 150,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -984,7 +985,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 124,
+        "selections": 126,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2249,6 +2250,15 @@
       },
       {
         "season": "2026",
+        "game_id": "cbe55180a8bee495fa1520fbc1df314b",
+        "kickoff_utc": "2026-11-21T23:00:00Z",
+        "matchup": "Washington State Cougars at Texas State Bobcats",
+        "status": "PASS",
+        "disagreement_points": "1.71312",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "89e434722afd075e5488a6b9310325e9",
         "kickoff_utc": "2026-11-22T00:00:00Z",
         "matchup": "UNLV Rebels at San Jose State Spartans",
@@ -2299,6 +2309,15 @@
         "matchup": "Hawaii Rainbow Warriors at Nevada Wolf Pack",
         "status": "PASS",
         "disagreement_points": "0.5062",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "4814277a6e26955eb1df064fed7a3bcb",
+        "kickoff_utc": "2026-11-25T00:00:00Z",
+        "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles",
+        "status": "PASS",
+        "disagreement_points": "1.33039",
         "source": "same_capture_v3_frozen_quote"
       },
       {

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-19T08:50:27.938313Z",
+  "generated_at_utc": "2026-11-19T18:18:50.031174Z",
   "warning": "Earliest observed quote is not necessarily true opening line. Current edge uses frozen V3 margin and same sportsbook spread only; odds price eligibility is not revalidated.",
   "games": [
     {
@@ -20,7 +20,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -40,7 +40,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -60,7 +60,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -80,7 +80,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -100,7 +100,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T00:30:00Z",
@@ -120,7 +120,47 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
+    },
+    {
+      "kickoff_utc": "2026-11-21T01:00:00Z",
+      "away_team": "Oregon Ducks",
+      "home_team": "Michigan State Spartans",
+      "sportsbook": "BetOnline.ag",
+      "sportsbook_key": "betonlineag",
+      "first_home_spread": 13.5,
+      "latest_home_spread": 17.0,
+      "movement_points": 3.5,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
+    },
+    {
+      "kickoff_utc": "2026-11-21T01:00:00Z",
+      "away_team": "Oregon Ducks",
+      "home_team": "Michigan State Spartans",
+      "sportsbook": "LowVig.ag",
+      "sportsbook_key": "lowvig",
+      "first_home_spread": 13.5,
+      "latest_home_spread": 17.0,
+      "movement_points": 3.5,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -140,16 +180,16 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
       "away_team": "Oregon Ducks",
       "home_team": "Michigan State Spartans",
-      "sportsbook": "BetOnline.ag",
-      "sportsbook_key": "betonlineag",
-      "first_home_spread": 13.5,
-      "latest_home_spread": 16.5,
+      "sportsbook": "BetRivers",
+      "sportsbook_key": "betrivers",
+      "first_home_spread": 14.0,
+      "latest_home_spread": 17.0,
       "movement_points": 3.0,
       "severity": "SIGNIFICANT_3_PLUS",
       "crossed_key_numbers": "",
@@ -160,17 +200,17 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
-      "away_team": "UTEP Miners",
-      "home_team": "Air Force Falcons",
-      "sportsbook": "BetRivers",
-      "sportsbook_key": "betrivers",
-      "first_home_spread": -20.5,
-      "latest_home_spread": -23.5,
-      "movement_points": -3.0,
+      "away_team": "Oregon Ducks",
+      "home_team": "Michigan State Spartans",
+      "sportsbook": "BetUS",
+      "sportsbook_key": "betus",
+      "first_home_spread": 14.0,
+      "latest_home_spread": 17.0,
+      "movement_points": 3.0,
       "severity": "SIGNIFICANT_3_PLUS",
       "crossed_key_numbers": "",
       "locked_decision": "",
@@ -180,7 +220,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -200,7 +240,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T01:00:00Z",
@@ -220,27 +260,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
-    },
-    {
-      "kickoff_utc": "2026-11-21T01:00:00Z",
-      "away_team": "Oregon Ducks",
-      "home_team": "Michigan State Spartans",
-      "sportsbook": "LowVig.ag",
-      "sportsbook_key": "lowvig",
-      "first_home_spread": 13.5,
-      "latest_home_spread": 16.5,
-      "movement_points": 3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -260,7 +280,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -280,7 +300,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -300,7 +320,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T02:00:00Z",
@@ -320,27 +340,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
-    },
-    {
-      "kickoff_utc": "2026-11-21T17:30:00Z",
-      "away_team": "North Carolina Tar Heels",
-      "home_team": "Virginia Cavaliers",
-      "sportsbook": "Bovada",
-      "sportsbook_key": "bovada",
-      "first_home_spread": 1.0,
-      "latest_home_spread": -2.0,
-      "movement_points": -3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:00:00Z",
@@ -360,7 +360,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:30:00Z",
@@ -380,7 +380,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:30:00Z",
@@ -400,7 +400,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T19:30:00Z",
@@ -420,7 +420,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:00:00Z",
@@ -440,7 +440,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -460,7 +460,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -500,7 +500,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -520,7 +520,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
@@ -540,7 +540,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -560,7 +560,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -580,7 +580,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -600,7 +600,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -620,7 +620,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -640,7 +640,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -660,7 +660,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -680,7 +680,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -700,7 +700,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-21T21:00:00Z",
@@ -720,27 +720,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
-    },
-    {
-      "kickoff_utc": "2026-11-22T00:00:00Z",
-      "away_team": "Arkansas State Red Wolves",
-      "home_team": "Louisiana Tech Bulldogs",
-      "sportsbook": "DraftKings",
-      "sportsbook_key": "draftkings",
-      "first_home_spread": -16.5,
-      "latest_home_spread": -13.5,
-      "movement_points": 3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -749,27 +729,7 @@
       "sportsbook": "FanDuel",
       "sportsbook_key": "fanduel",
       "first_home_spread": 9.5,
-      "latest_home_spread": 15.5,
-      "movement_points": 6.0,
-      "severity": "MAJOR_5_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
-    },
-    {
-      "kickoff_utc": "2026-11-22T00:30:00Z",
-      "away_team": "Georgia Bulldogs",
-      "home_team": "South Carolina Gamecocks",
-      "sportsbook": "DraftKings",
-      "sportsbook_key": "draftkings",
-      "first_home_spread": 10.5,
-      "latest_home_spread": 15.5,
+      "latest_home_spread": 14.5,
       "movement_points": 5.0,
       "severity": "MAJOR_5_PLUS",
       "crossed_key_numbers": "",
@@ -780,7 +740,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -800,7 +760,27 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
+    },
+    {
+      "kickoff_utc": "2026-11-22T00:30:00Z",
+      "away_team": "Georgia Bulldogs",
+      "home_team": "South Carolina Gamecocks",
+      "sportsbook": "DraftKings",
+      "sportsbook_key": "draftkings",
+      "first_home_spread": 10.5,
+      "latest_home_spread": 14.5,
+      "movement_points": 4.0,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -820,7 +800,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -840,7 +820,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -860,7 +840,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     },
     {
       "kickoff_utc": "2026-11-22T00:30:00Z",
@@ -880,7 +860,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-19T08:50:20Z"
+      "latest_seen_utc": "2026-11-19T18:18:41Z"
     }
   ]
 }
