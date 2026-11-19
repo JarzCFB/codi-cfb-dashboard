@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.361048
     },
     "PASS": {
-      "selections": 138,
+      "selections": 142,
       "settled": 125,
-      "pending": 13,
+      "pending": 17,
       "wins": 59,
       "losses": 64,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.084686
     },
     "UNCLASSIFIED": {
-      "selections": 104,
+      "selections": 100,
       "settled": 78,
-      "pending": 26,
+      "pending": 22,
       "wins": 35,
       "losses": 42,
       "pushes": 1,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 104,
+  "unclassified_v3_count": 100,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 191,
-      "COHORT_NOT_GENERATED": 4,
+      "CLASSIFIED": 195,
       "MISSING_V1": 44,
       "MISSING_V1_AND_V2": 21,
       "MISSING_V2": 35
@@ -887,14 +886,6 @@
       },
       {
         "season": "2026",
-        "game_id": "af2b2232df20a470d516dbe474a63132",
-        "kickoff_utc": "2026-11-21T17:00:00Z",
-        "matchup": "Memphis Tigers at Navy Midshipmen",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "ba44f7b0a5535ae2369e8ea165fb287f",
         "kickoff_utc": "2026-11-21T19:00:00Z",
         "matchup": "Charlotte 49ers at Tulsa Golden Hurricane",
@@ -975,22 +966,6 @@
       },
       {
         "season": "2026",
-        "game_id": "426658869d8f93e891cad97029725975",
-        "kickoff_utc": "2026-11-28T17:00:00Z",
-        "matchup": "Michigan Wolverines at Ohio State Buckeyes",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "735be3d0a18e8d57cc515971a6735c7d",
-        "kickoff_utc": "2026-11-28T17:00:00Z",
-        "matchup": "Louisville Cardinals at Kentucky Wildcats",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "ab91c66dfce2e452eb546cde1cf61879",
         "kickoff_utc": "2026-11-28T20:30:00Z",
         "matchup": "USC Trojans at UCLA Bruins",
@@ -1011,14 +986,6 @@
         "kickoff_utc": "2026-11-25T00:00:00Z",
         "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "cbe55180a8bee495fa1520fbc1df314b",
-        "kickoff_utc": "2026-11-21T23:00:00Z",
-        "matchup": "Washington State Cougars at Texas State Bobcats",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -2940,12 +2907,6 @@
     },
     {
       "season": "2026",
-      "game_id": "af2b2232df20a470d516dbe474a63132",
-      "kickoff_utc": "2026-11-21T17:00:00Z",
-      "matchup": "Memphis Tigers at Navy Midshipmen"
-    },
-    {
-      "season": "2026",
       "game_id": "ba44f7b0a5535ae2369e8ea165fb287f",
       "kickoff_utc": "2026-11-21T19:00:00Z",
       "matchup": "Charlotte 49ers at Tulsa Golden Hurricane"
@@ -3006,18 +2967,6 @@
     },
     {
       "season": "2026",
-      "game_id": "426658869d8f93e891cad97029725975",
-      "kickoff_utc": "2026-11-28T17:00:00Z",
-      "matchup": "Michigan Wolverines at Ohio State Buckeyes"
-    },
-    {
-      "season": "2026",
-      "game_id": "735be3d0a18e8d57cc515971a6735c7d",
-      "kickoff_utc": "2026-11-28T17:00:00Z",
-      "matchup": "Louisville Cardinals at Kentucky Wildcats"
-    },
-    {
-      "season": "2026",
       "game_id": "ab91c66dfce2e452eb546cde1cf61879",
       "kickoff_utc": "2026-11-28T20:30:00Z",
       "matchup": "USC Trojans at UCLA Bruins"
@@ -3033,12 +2982,6 @@
       "game_id": "4814277a6e26955eb1df064fed7a3bcb",
       "kickoff_utc": "2026-11-25T00:00:00Z",
       "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles"
-    },
-    {
-      "season": "2026",
-      "game_id": "cbe55180a8bee495fa1520fbc1df314b",
-      "kickoff_utc": "2026-11-21T23:00:00Z",
-      "matchup": "Washington State Cougars at Texas State Bobcats"
     }
   ],
   "future_pending_v3": [

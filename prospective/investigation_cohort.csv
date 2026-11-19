@@ -203,6 +203,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,561b0188c024ce49bdd77391f44dc605,2026-11-21T17:00:00Z,Boston College Eagles,Syracuse Orange,2026-11-16T19:38:21Z,-5.66949,-0.33028,,5.339,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,5c082e013b5328e3db1def552628765f,2026-11-21T17:00:00Z,Oklahoma Sooners,Texas A&M Aggies,2026-11-15T21:50:50Z,1.04017,2.85574,3.24272,1.816,true,PASS,V1/V2 agreement under 5 pts
 2026,9f3f8efae55dbb803964a5107350e263,2026-11-21T17:00:00Z,UAB Blazers,UTSA Roadrunners,2026-11-15T16:23:17Z,-1.80019,-3.01951,-2.45315,1.219,true,PASS,V1/V2 agreement under 5 pts
+2026,af2b2232df20a470d516dbe474a63132,2026-11-21T17:00:00Z,Navy Midshipmen,Memphis Tigers,2026-11-19T18:18:41Z,-5.56632,-7.07099,-6.88528,1.505,true,PASS,V1/V2 agreement under 5 pts
 2026,ce564e264da03668e25badeb960753cc,2026-11-21T17:00:00Z,Minnesota Golden Gophers,Northwestern Wildcats,2026-11-15T16:23:17Z,-6.70265,-8.44344,-8.3461,1.741,true,PASS,V1/V2 agreement under 5 pts
 2026,75136fdcc4601e9e1208fe20146056dc,2026-11-21T18:00:00Z,Liberty Flames,Western Kentucky Hilltoppers,2026-11-15T16:23:17Z,19.05148,21.19801,23.56978,2.147,true,PASS,V1/V2 agreement under 5 pts
 2026,725c6205de38f91b507a880c139eda54,2026-11-21T19:30:00Z,Illinois Fighting Illini,Iowa Hawkeyes,2026-11-16T19:38:21Z,-3.95439,-4.4036,-4.20829,0.449,true,PASS,V1/V2 agreement under 5 pts
@@ -211,6 +212,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,44e73391c2ac535ab552aac4bdcfa3b3,2026-11-21T20:30:00Z,Louisville Cardinals,Pittsburgh Panthers,2026-11-15T16:23:17Z,7.23048,8.02326,9.28001,0.793,true,PASS,V1/V2 agreement under 5 pts
 2026,c3b7f980521e9fb576ce8dbd49a9f7de,2026-11-21T20:30:00Z,Texas Longhorns,Arkansas Razorbacks,2026-11-15T07:53:00Z,14.2399,16.39622,,2.156,true,PASS,V1/V2 agreement under 5 pts
 2026,e17410526acddf2500fb788f40901b3f,2026-11-21T21:00:00Z,Marshall Thundering Herd,Georgia State Panthers,2026-11-17T09:14:39Z,-7.16739,-2.20451,-3.26634,4.963,true,PASS,V1/V2 agreement under 5 pts
+2026,cbe55180a8bee495fa1520fbc1df314b,2026-11-21T23:00:00Z,Texas State Bobcats,Washington State Cougars,2026-11-19T18:18:41Z,9.34962,7.64077,9.54687,1.709,true,PASS,V1/V2 agreement under 5 pts
 2026,89e434722afd075e5488a6b9310325e9,2026-11-22T00:00:00Z,San Jose State Spartans,UNLV Rebels,2026-11-16T08:00:29Z,-1.80638,-2.80919,-2.28443,1.003,true,PASS,V1/V2 agreement under 5 pts
 2026,9470f469f957e9eddae9392cb23b4623,2026-11-22T00:00:00Z,Kansas State Wildcats,Arizona Wildcats,2026-11-16T19:38:21Z,-6.3167,-10.26324,,3.947,true,PASS,V1/V2 agreement under 5 pts
 2026,a36fd3d086dffefb5fc58b14fb6255fc,2026-11-22T00:00:00Z,Louisiana Tech Bulldogs,Arkansas State Red Wolves,2026-11-15T16:23:17Z,12.9149,13.47021,,0.555,true,PASS,V1/V2 agreement under 5 pts
@@ -218,3 +220,5 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,f23bc59387b6db63ad3de8b6bcc541fc,2026-11-22T00:30:00Z,Fresno State Bulldogs,Colorado State Rams,2026-11-15T21:50:50Z,15.79956,17.8176,,2.018,true,PASS,V1/V2 agreement under 5 pts
 2026,fa98066b4b400fb6af0672e170cc584a,2026-11-22T00:30:00Z,Notre Dame Fighting Irish,SMU Mustangs,2026-11-15T07:53:00Z,12.39034,20.83432,18.53071,8.444,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,6e36f5c3c55edcb31749b0de4a146d14,2026-11-22T03:30:00Z,Oregon State Beavers,Utah State Aggies,2026-11-16T08:00:29Z,12.55328,7.36884,,5.184,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,426658869d8f93e891cad97029725975,2026-11-28T17:00:00Z,Ohio State Buckeyes,Michigan Wolverines,2026-11-19T08:50:20Z,15.22912,16.73533,18.77999,1.506,true,PASS,V1/V2 agreement under 5 pts
+2026,735be3d0a18e8d57cc515971a6735c7d,2026-11-28T17:00:00Z,Kentucky Wildcats,Louisville Cardinals,2026-11-19T08:50:20Z,-2.80215,-1.92819,-1.82084,0.874,true,PASS,V1/V2 agreement under 5 pts
