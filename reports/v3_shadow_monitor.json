@@ -3,29 +3,29 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 288,
-      "settled": 252,
-      "pending": 36,
-      "wins": 124,
-      "losses": 125,
+      "selections": 295,
+      "settled": 254,
+      "pending": 41,
+      "wins": 125,
+      "losses": 126,
       "pushes": 3,
-      "net_units": -12.494629,
-      "roi_per_settled_selection": -0.049582
+      "net_units": -12.568703,
+      "roi_per_settled_selection": -0.049483
     },
     "5": {
-      "selections": 99,
-      "settled": 91,
-      "pending": 8,
+      "selections": 101,
+      "settled": 92,
+      "pending": 9,
       "wins": 49,
-      "losses": 41,
+      "losses": 42,
       "pushes": 1,
-      "net_units": 3.616764,
-      "roi_per_settled_selection": 0.039745
+      "net_units": 2.616764,
+      "roi_per_settled_selection": 0.028443
     },
     "7": {
-      "selections": 31,
+      "selections": 32,
       "settled": 30,
-      "pending": 1,
+      "pending": 2,
       "wins": 17,
       "losses": 13,
       "pushes": 0,
@@ -56,23 +56,23 @@
     },
     "PASS": {
       "selections": 138,
-      "settled": 124,
-      "pending": 14,
+      "settled": 125,
+      "pending": 13,
       "wins": 59,
-      "losses": 63,
+      "losses": 64,
       "pushes": 2,
-      "net_units": -9.585745,
-      "roi_per_settled_selection": -0.077304
+      "net_units": -10.585745,
+      "roi_per_settled_selection": -0.084686
     },
     "UNCLASSIFIED": {
-      "selections": 97,
-      "settled": 77,
-      "pending": 20,
-      "wins": 34,
+      "selections": 104,
+      "settled": 78,
+      "pending": 26,
+      "wins": 35,
       "losses": 42,
       "pushes": 1,
-      "net_units": -11.086754,
-      "roi_per_settled_selection": -0.143984
+      "net_units": -10.160828,
+      "roi_per_settled_selection": -0.130267
     },
     "UNSTABLE": {
       "selections": 30,
@@ -87,7 +87,7 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-18T00:00:00Z",
+    "through_kickoff_utc": "2026-11-19T00:30:00Z",
     "edge_thresholds": {
       "3": {
         "selections": 73,
@@ -96,18 +96,18 @@
         "wins": 33,
         "losses": 40,
         "pushes": 0,
-        "net_units": -10.325397,
-        "roi_per_settled_selection": -0.141444
+        "net_units": -10.232804,
+        "roi_per_settled_selection": -0.140175
       },
       "5": {
-        "selections": 15,
-        "settled": 15,
+        "selections": 16,
+        "settled": 16,
         "pending": 0,
         "wins": 4,
-        "losses": 11,
+        "losses": 12,
         "pushes": 0,
-        "net_units": -7.39177,
-        "roi_per_settled_selection": -0.492785
+        "net_units": -8.39177,
+        "roi_per_settled_selection": -0.524486
       },
       "7": {
         "selections": 2,
@@ -137,29 +137,29 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 167,
-        "settled": 131,
-        "pending": 36,
-        "wins": 57,
-        "losses": 73,
+        "selections": 174,
+        "settled": 133,
+        "pending": 41,
+        "wins": 58,
+        "losses": 74,
         "pushes": 1,
-        "net_units": -21.483393,
-        "roi_per_settled_selection": -0.163995
+        "net_units": -21.557467,
+        "roi_per_settled_selection": -0.162086
       },
       "5": {
-        "selections": 41,
-        "settled": 33,
-        "pending": 8,
+        "selections": 43,
+        "settled": 34,
+        "pending": 9,
         "wins": 12,
-        "losses": 21,
+        "losses": 22,
         "pushes": 0,
-        "net_units": -10.122394,
-        "roi_per_settled_selection": -0.306739
+        "net_units": -11.122394,
+        "roi_per_settled_selection": -0.327129
       },
       "7": {
-        "selections": 9,
+        "selections": 10,
         "settled": 8,
-        "pending": 1,
+        "pending": 2,
         "wins": 4,
         "losses": 4,
         "pushes": 0,
@@ -179,14 +179,14 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 97,
+  "unclassified_v3_count": 104,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 191,
-      "COHORT_NOT_GENERATED": 1,
-      "MISSING_V1": 43,
-      "MISSING_V1_AND_V2": 20,
-      "MISSING_V2": 33
+      "COHORT_NOT_GENERATED": 4,
+      "MISSING_V1": 44,
+      "MISSING_V1_AND_V2": 21,
+      "MISSING_V2": 35
     },
     "unclassified_details": [
       {
@@ -963,6 +963,62 @@
         "kickoff_utc": "2026-11-19T00:30:00Z",
         "matchup": "Central Michigan Chippewas at Buffalo Bulls",
         "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "1a3e1206e330ec66aa9a0549b4d3409c",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "Texas Tech Red Raiders at Baylor Bears",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "426658869d8f93e891cad97029725975",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "Michigan Wolverines at Ohio State Buckeyes",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "735be3d0a18e8d57cc515971a6735c7d",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "Louisville Cardinals at Kentucky Wildcats",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "ab91c66dfce2e452eb546cde1cf61879",
+        "kickoff_utc": "2026-11-28T20:30:00Z",
+        "matchup": "USC Trojans at UCLA Bruins",
+        "reason": "MISSING_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "f825e4c4d512e1c0a6db6ac7d8bc0326",
+        "kickoff_utc": "2026-11-29T02:00:00Z",
+        "matchup": "Arizona State Sun Devils at Arizona Wildcats",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "4814277a6e26955eb1df064fed7a3bcb",
+        "kickoff_utc": "2026-11-25T00:00:00Z",
+        "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "cbe55180a8bee495fa1520fbc1df314b",
+        "kickoff_utc": "2026-11-21T23:00:00Z",
+        "matchup": "Washington State Cougars at Texas State Bobcats",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -2941,6 +2997,48 @@
       "game_id": "10cec4ab386b12694dd3cee93d870b47",
       "kickoff_utc": "2026-11-19T00:30:00Z",
       "matchup": "Central Michigan Chippewas at Buffalo Bulls"
+    },
+    {
+      "season": "2026",
+      "game_id": "1a3e1206e330ec66aa9a0549b4d3409c",
+      "kickoff_utc": "2026-11-21T20:30:00Z",
+      "matchup": "Texas Tech Red Raiders at Baylor Bears"
+    },
+    {
+      "season": "2026",
+      "game_id": "426658869d8f93e891cad97029725975",
+      "kickoff_utc": "2026-11-28T17:00:00Z",
+      "matchup": "Michigan Wolverines at Ohio State Buckeyes"
+    },
+    {
+      "season": "2026",
+      "game_id": "735be3d0a18e8d57cc515971a6735c7d",
+      "kickoff_utc": "2026-11-28T17:00:00Z",
+      "matchup": "Louisville Cardinals at Kentucky Wildcats"
+    },
+    {
+      "season": "2026",
+      "game_id": "ab91c66dfce2e452eb546cde1cf61879",
+      "kickoff_utc": "2026-11-28T20:30:00Z",
+      "matchup": "USC Trojans at UCLA Bruins"
+    },
+    {
+      "season": "2026",
+      "game_id": "f825e4c4d512e1c0a6db6ac7d8bc0326",
+      "kickoff_utc": "2026-11-29T02:00:00Z",
+      "matchup": "Arizona State Sun Devils at Arizona Wildcats"
+    },
+    {
+      "season": "2026",
+      "game_id": "4814277a6e26955eb1df064fed7a3bcb",
+      "kickoff_utc": "2026-11-25T00:00:00Z",
+      "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles"
+    },
+    {
+      "season": "2026",
+      "game_id": "cbe55180a8bee495fa1520fbc1df314b",
+      "kickoff_utc": "2026-11-21T23:00:00Z",
+      "matchup": "Washington State Cougars at Texas State Bobcats"
     }
   ],
   "future_pending_v3": [
@@ -2968,15 +3066,6 @@
       "spread": "-15.5",
       "american_odds": "-110.0",
       "edge_points": "3.03071",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-19T00:00:00Z",
-      "selection": "UMass Minutemen",
-      "spread": "-2.5",
-      "american_odds": "-110.0",
-      "edge_points": "6.95605",
       "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
@@ -3260,12 +3349,66 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-19T00:30:00Z",
-      "selection": "Buffalo Bulls",
-      "spread": "-1.0",
-      "american_odds": "-108.0",
-      "edge_points": "3.07293",
-      "sportsbook": "LowVig.ag",
+      "kickoff_utc": "2026-11-21T20:30:00Z",
+      "selection": "Baylor Bears",
+      "spread": "4.5",
+      "american_odds": "-113.0",
+      "edge_points": "3.14009",
+      "sportsbook": "BetRivers",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-28T17:00:00Z",
+      "selection": "Ohio State Buckeyes",
+      "spread": "-10.5",
+      "american_odds": "100.0",
+      "edge_points": "8.27999",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-28T17:00:00Z",
+      "selection": "Louisville Cardinals",
+      "spread": "1.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.32084",
+      "sportsbook": "DraftKings",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-28T20:30:00Z",
+      "selection": "UCLA Bruins",
+      "spread": "-2.5",
+      "american_odds": "-110.0",
+      "edge_points": "4.32458",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-29T02:00:00Z",
+      "selection": "Arizona Wildcats",
+      "spread": "-8.5",
+      "american_odds": "-110.0",
+      "edge_points": "6.17691",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-25T00:00:00Z",
+      "selection": "Eastern Michigan Eagles",
+      "spread": "-5.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.36209",
+      "sportsbook": "FanDuel",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-21T23:00:00Z",
+      "selection": "Washington State Cougars",
+      "spread": "13.0",
+      "american_odds": "-110.0",
+      "edge_points": "3.45313",
+      "sportsbook": "BetUS",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
