@@ -3,14 +3,14 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 295,
-      "settled": 254,
+      "selections": 296,
+      "settled": 255,
       "pending": 41,
       "wins": 125,
-      "losses": 126,
+      "losses": 127,
       "pushes": 3,
-      "net_units": -12.568703,
-      "roi_per_settled_selection": -0.049483
+      "net_units": -13.568703,
+      "roi_per_settled_selection": -0.053211
     },
     "5": {
       "selections": 101,
@@ -45,9 +45,9 @@
   },
   "frozen_cohorts": {
     "CAUTION": {
-      "selections": 23,
+      "selections": 24,
       "settled": 21,
-      "pending": 2,
+      "pending": 3,
       "wins": 15,
       "losses": 6,
       "pushes": 0,
@@ -66,13 +66,13 @@
     },
     "UNCLASSIFIED": {
       "selections": 100,
-      "settled": 78,
-      "pending": 22,
+      "settled": 79,
+      "pending": 21,
       "wins": 35,
-      "losses": 42,
+      "losses": 43,
       "pushes": 1,
-      "net_units": -10.160828,
-      "roi_per_settled_selection": -0.130267
+      "net_units": -11.160828,
+      "roi_per_settled_selection": -0.141276
     },
     "UNSTABLE": {
       "selections": 30,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-19T00:30:00Z",
+    "through_kickoff_utc": "2026-11-20T00:30:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 73,
-        "settled": 73,
+        "selections": 74,
+        "settled": 74,
         "pending": 0,
         "wins": 33,
-        "losses": 40,
+        "losses": 41,
         "pushes": 0,
-        "net_units": -10.232804,
-        "roi_per_settled_selection": -0.140175
+        "net_units": -11.232804,
+        "roi_per_settled_selection": -0.151795
       },
       "5": {
         "selections": 16,
@@ -137,14 +137,14 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 174,
-        "settled": 133,
+        "selections": 175,
+        "settled": 134,
         "pending": 41,
         "wins": 58,
-        "losses": 74,
+        "losses": 75,
         "pushes": 1,
-        "net_units": -21.557467,
-        "roi_per_settled_selection": -0.162086
+        "net_units": -22.557467,
+        "roi_per_settled_selection": -0.168339
       },
       "5": {
         "selections": 43,
@@ -182,7 +182,7 @@
   "unclassified_v3_count": 100,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 195,
+      "CLASSIFIED": 196,
       "MISSING_V1": 44,
       "MISSING_V1_AND_V2": 21,
       "MISSING_V2": 35
@@ -3103,15 +3103,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-20T00:30:00Z",
-      "selection": "Temple Owls",
-      "spread": "-3.0",
-      "american_odds": "-111.0",
-      "edge_points": "3.70874",
-      "sportsbook": "LowVig.ag",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-21T18:00:00Z",
       "selection": "Liberty Flames",
       "spread": "-14.5",
@@ -3361,6 +3352,15 @@
       "american_odds": "-110.0",
       "edge_points": "3.45313",
       "sportsbook": "BetUS",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-21T20:30:00Z",
+      "selection": "Rutgers Scarlet Knights",
+      "spread": "26.5",
+      "american_odds": "-112.0",
+      "edge_points": "3.71728",
+      "sportsbook": "DraftKings",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
