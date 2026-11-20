@@ -993,12 +993,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 150,
+    "covered_v3": 151,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 9,
+        "selections": 10,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2215,6 +2215,15 @@
         "matchup": "Texas Tech Red Raiders at Baylor Bears",
         "status": "UNSTABLE",
         "disagreement_points": "3.64254",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "3a5bb507e8305c5de6aa0b6c1e43e638",
+        "kickoff_utc": "2026-11-21T20:30:00Z",
+        "matchup": "Rutgers Scarlet Knights at Penn State Nittany Lions",
+        "status": "CAUTION",
+        "disagreement_points": "5.10022",
         "source": "same_capture_v3_frozen_quote"
       },
       {
