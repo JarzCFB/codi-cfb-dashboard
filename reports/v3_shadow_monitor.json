@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.361048
     },
     "PASS": {
-      "selections": 142,
+      "selections": 144,
       "settled": 128,
-      "pending": 14,
+      "pending": 16,
       "wins": 60,
       "losses": 66,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.091591
     },
     "UNCLASSIFIED": {
-      "selections": 100,
+      "selections": 98,
       "settled": 85,
-      "pending": 15,
+      "pending": 13,
       "wins": 37,
       "losses": 46,
       "pushes": 2,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 100,
+  "unclassified_v3_count": 98,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 196,
-      "COHORT_NOT_GENERATED": 2,
+      "CLASSIFIED": 198,
       "MISSING_V1": 44,
       "MISSING_V1_AND_V2": 21,
       "MISSING_V2": 33
@@ -847,14 +846,6 @@
       },
       {
         "season": "2026",
-        "game_id": "4e40d05a5d98ac108cd15278646a545d",
-        "kickoff_utc": "2026-11-22T00:30:00Z",
-        "matchup": "Stanford Cardinal at California Golden Bears",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "608ce68eb20e7e5201fb1b804ad26141",
         "kickoff_utc": "2026-11-20T00:30:00Z",
         "matchup": "Rice Owls at Temple Owls",
@@ -963,14 +954,6 @@
         "kickoff_utc": "2026-11-21T20:30:00Z",
         "matchup": "Texas Tech Red Raiders at Baylor Bears",
         "reason": "MISSING_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "ab91c66dfce2e452eb546cde1cf61879",
-        "kickoff_utc": "2026-11-28T20:30:00Z",
-        "matchup": "USC Trojans at UCLA Bruins",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -2887,12 +2870,6 @@
     },
     {
       "season": "2026",
-      "game_id": "4e40d05a5d98ac108cd15278646a545d",
-      "kickoff_utc": "2026-11-22T00:30:00Z",
-      "matchup": "Stanford Cardinal at California Golden Bears"
-    },
-    {
-      "season": "2026",
       "game_id": "608ce68eb20e7e5201fb1b804ad26141",
       "kickoff_utc": "2026-11-20T00:30:00Z",
       "matchup": "Rice Owls at Temple Owls"
@@ -2974,12 +2951,6 @@
       "game_id": "1a3e1206e330ec66aa9a0549b4d3409c",
       "kickoff_utc": "2026-11-21T20:30:00Z",
       "matchup": "Texas Tech Red Raiders at Baylor Bears"
-    },
-    {
-      "season": "2026",
-      "game_id": "ab91c66dfce2e452eb546cde1cf61879",
-      "kickoff_utc": "2026-11-28T20:30:00Z",
-      "matchup": "USC Trojans at UCLA Bruins"
     },
     {
       "season": "2026",
