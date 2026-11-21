@@ -4,23 +4,23 @@
   "edge_thresholds": {
     "3": {
       "selections": 296,
-      "settled": 255,
-      "pending": 41,
-      "wins": 125,
-      "losses": 127,
-      "pushes": 3,
-      "net_units": -13.568703,
-      "roi_per_settled_selection": -0.053211
+      "settled": 264,
+      "pending": 32,
+      "wins": 128,
+      "losses": 132,
+      "pushes": 4,
+      "net_units": -15.873301,
+      "roi_per_settled_selection": -0.060126
     },
     "5": {
       "selections": 101,
-      "settled": 92,
-      "pending": 9,
-      "wins": 49,
-      "losses": 42,
+      "settled": 94,
+      "pending": 7,
+      "wins": 50,
+      "losses": 43,
       "pushes": 1,
-      "net_units": 2.616764,
-      "roi_per_settled_selection": 0.028443
+      "net_units": 2.450097,
+      "roi_per_settled_selection": 0.026065
     },
     "7": {
       "selections": 32,
@@ -56,23 +56,23 @@
     },
     "PASS": {
       "selections": 142,
-      "settled": 125,
-      "pending": 17,
-      "wins": 59,
-      "losses": 64,
+      "settled": 128,
+      "pending": 14,
+      "wins": 60,
+      "losses": 66,
       "pushes": 2,
-      "net_units": -10.585745,
-      "roi_per_settled_selection": -0.084686
+      "net_units": -11.723676,
+      "roi_per_settled_selection": -0.091591
     },
     "UNCLASSIFIED": {
       "selections": 100,
-      "settled": 79,
-      "pending": 21,
-      "wins": 35,
-      "losses": 43,
-      "pushes": 1,
-      "net_units": -11.160828,
-      "roi_per_settled_selection": -0.141276
+      "settled": 85,
+      "pending": 15,
+      "wins": 37,
+      "losses": 46,
+      "pushes": 2,
+      "net_units": -12.327495,
+      "roi_per_settled_selection": -0.145029
     },
     "UNSTABLE": {
       "selections": 30,
@@ -87,36 +87,36 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-20T00:30:00Z",
+    "through_kickoff_utc": "2026-11-21T20:30:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 74,
-        "settled": 74,
+        "selections": 60,
+        "settled": 60,
         "pending": 0,
-        "wins": 33,
-        "losses": 41,
-        "pushes": 0,
-        "net_units": -11.232804,
-        "roi_per_settled_selection": -0.151795
+        "wins": 27,
+        "losses": 32,
+        "pushes": 1,
+        "net_units": -7.678344,
+        "roi_per_settled_selection": -0.127972
       },
       "5": {
-        "selections": 16,
-        "settled": 16,
+        "selections": 12,
+        "settled": 12,
         "pending": 0,
-        "wins": 4,
-        "losses": 12,
+        "wins": 2,
+        "losses": 10,
         "pushes": 0,
-        "net_units": -8.39177,
-        "roi_per_settled_selection": -0.524486
+        "net_units": -8.297102,
+        "roi_per_settled_selection": -0.691425
       },
       "7": {
-        "selections": 2,
-        "settled": 2,
+        "selections": 1,
+        "settled": 1,
         "pending": 0,
         "wins": 0,
-        "losses": 2,
+        "losses": 1,
         "pushes": 0,
-        "net_units": -2.0,
+        "net_units": -1.0,
         "roi_per_settled_selection": -1.0
       },
       "10": {
@@ -138,23 +138,23 @@
     "thresholds": {
       "3": {
         "selections": 175,
-        "settled": 134,
-        "pending": 41,
-        "wins": 58,
-        "losses": 75,
-        "pushes": 1,
-        "net_units": -22.557467,
-        "roi_per_settled_selection": -0.168339
+        "settled": 143,
+        "pending": 32,
+        "wins": 61,
+        "losses": 80,
+        "pushes": 2,
+        "net_units": -24.862065,
+        "roi_per_settled_selection": -0.173861
       },
       "5": {
         "selections": 43,
-        "settled": 34,
-        "pending": 9,
-        "wins": 12,
-        "losses": 22,
+        "settled": 36,
+        "pending": 7,
+        "wins": 13,
+        "losses": 23,
         "pushes": 0,
-        "net_units": -11.122394,
-        "roi_per_settled_selection": -0.327129
+        "net_units": -11.289061,
+        "roi_per_settled_selection": -0.313585
       },
       "7": {
         "selections": 10,
@@ -3023,39 +3023,12 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-21T01:00:00Z",
-      "selection": "Michigan State Spartans",
-      "spread": "14.5",
-      "american_odds": "-110.0",
-      "edge_points": "4.05682",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-21T17:00:00Z",
       "selection": "Kansas Jayhawks",
       "spread": "7.5",
       "american_odds": "-110.0",
       "edge_points": "3.19524",
       "sportsbook": "DraftKings",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-21T00:30:00Z",
-      "selection": "Duke Blue Devils",
-      "spread": "-7.5",
-      "american_odds": "-112.0",
-      "edge_points": "6.7204",
-      "sportsbook": "BetRivers",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-21T17:00:00Z",
-      "selection": "Cincinnati Bearcats",
-      "spread": "-2.5",
-      "american_odds": "-116.0",
-      "edge_points": "4.62469",
-      "sportsbook": "LowVig.ag",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -3073,15 +3046,6 @@
       "spread": "1.5",
       "american_odds": "-111.0",
       "edge_points": "4.38248",
-      "sportsbook": "LowVig.ag",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-21T17:00:00Z",
-      "selection": "Army Black Knights",
-      "spread": "-4.5",
-      "american_odds": "-106.0",
-      "edge_points": "3.73602",
       "sportsbook": "LowVig.ag",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
@@ -3122,15 +3086,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-21T01:00:00Z",
-      "selection": "Air Force Falcons",
-      "spread": "-20.5",
-      "american_odds": "-120.0",
-      "edge_points": "5.69369",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-21T17:00:00Z",
       "selection": "UAB Blazers",
       "spread": "6.5",
@@ -3146,15 +3101,6 @@
       "american_odds": "-117.0",
       "edge_points": "4.4414",
       "sportsbook": "BetRivers",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-21T00:30:00Z",
-      "selection": "Toledo Rockets",
-      "spread": "-14.5",
-      "american_odds": "100.0",
-      "edge_points": "4.27422",
-      "sportsbook": "FanDuel",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -3231,38 +3177,11 @@
     },
     {
       "kickoff_utc": "2026-11-21T20:30:00Z",
-      "selection": "North Texas Mean Green",
-      "spread": "-6.5",
-      "american_odds": "-120.0",
-      "edge_points": "3.12959",
-      "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-20T23:00:00Z",
-      "selection": "Iowa State Cyclones",
-      "spread": "2.0",
-      "american_odds": "-106.0",
-      "edge_points": "3.43927",
-      "sportsbook": "LowVig.ag",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-21T20:30:00Z",
       "selection": "Arkansas Razorbacks",
       "spread": "21.5",
       "american_odds": "-120.0",
       "edge_points": "3.15031",
       "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-21T02:00:00Z",
-      "selection": "New Mexico Lobos",
-      "spread": "-7.0",
-      "american_odds": "-115.0",
-      "edge_points": "3.96288",
-      "sportsbook": "Bovada",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
