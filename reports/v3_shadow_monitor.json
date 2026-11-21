@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 196,
+      "COHORT_NOT_GENERATED": 2,
       "MISSING_V1": 44,
       "MISSING_V1_AND_V2": 21,
-      "MISSING_V2": 35
+      "MISSING_V2": 33
     },
     "unclassified_details": [
       {
@@ -849,7 +850,7 @@
         "game_id": "4e40d05a5d98ac108cd15278646a545d",
         "kickoff_utc": "2026-11-22T00:30:00Z",
         "matchup": "Stanford Cardinal at California Golden Bears",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -969,7 +970,7 @@
         "game_id": "ab91c66dfce2e452eb546cde1cf61879",
         "kickoff_utc": "2026-11-28T20:30:00Z",
         "matchup": "USC Trojans at UCLA Bruins",
-        "reason": "MISSING_V2",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
