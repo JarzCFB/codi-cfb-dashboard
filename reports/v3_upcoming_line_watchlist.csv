@@ -1,34 +1,7 @@
 kickoff_utc,away_team,home_team,sportsbook,sportsbook_key,first_home_spread,latest_home_spread,movement_points,severity,crossed_key_numbers,locked_decision,locked_selection,locked_spread,locked_edge,current_edge_at_same_book,edge_change,lock_status,latest_seen_utc
-2026-11-21T23:00:00Z,Washington State Cougars,Texas State Bobcats,Bovada,bovada,-10.5,-14.0,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-21T23:00:00Z,Washington State Cougars,Texas State Bobcats,BetMGM,betmgm,-11.0,-14.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,BetMGM,betmgm,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,BetOnline.ag,betonlineag,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,BetUS,betus,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,Bovada,bovada,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,DraftKings,draftkings,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,FanDuel,fanduel,7.5,10.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,LowVig.ag,lowvig,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:00:00Z,Arizona Wildcats,Kansas State Wildcats,MyBookie.ag,mybookieag,7.0,10.0,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,FanDuel,fanduel,9.5,14.5,5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,DraftKings,draftkings,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,Georgia Bulldogs,South Carolina Gamecocks,DraftKings,draftkings,10.5,14.5,4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,FanDuel,fanduel,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,BetOnline.ag,betonlineag,-17.5,-20.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,BetRivers,betrivers,-17.5,-20.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T00:30:00Z,SMU Mustangs,Notre Dame Fighting Irish,LowVig.ag,lowvig,-17.5,-20.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T01:00:00Z,UTSA Roadrunners,UAB Blazers,FanDuel,fanduel,6.5,3.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,BetMGM,betmgm,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,BetRivers,betrivers,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,DraftKings,draftkings,-16.5,-20.5,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,MyBookie.ag,mybookieag,-17.0,-21.0,-4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,BetUS,betus,-17.0,-20.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,Bovada,bovada,-17.0,-20.5,-3.5,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,BetOnline.ag,betonlineag,-17.0,-20.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,FanDuel,fanduel,-17.5,-20.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T02:30:00Z,San Diego State Aztecs,Boise State Broncos,LowVig.ag,lowvig,-17.0,-20.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T03:30:00Z,Hawaii Rainbow Warriors,Nevada Wolf Pack,BetMGM,betmgm,-4.0,-7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T03:30:00Z,Hawaii Rainbow Warriors,Nevada Wolf Pack,BetOnline.ag,betonlineag,-4.0,-7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T03:30:00Z,Hawaii Rainbow Warriors,Nevada Wolf Pack,BetRivers,betrivers,-4.0,-7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T03:30:00Z,Hawaii Rainbow Warriors,Nevada Wolf Pack,BetUS,betus,-4.0,-7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T03:30:00Z,Hawaii Rainbow Warriors,Nevada Wolf Pack,LowVig.ag,lowvig,-4.0,-7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
-2026-11-22T03:30:00Z,Hawaii Rainbow Warriors,Nevada Wolf Pack,MyBookie.ag,mybookieag,-4.0,-7.0,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-21T22:11:44Z
+2026-11-28T00:30:00Z,Texas Longhorns,Texas A&M Aggies,FanDuel,fanduel,7.5,10.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-22T08:00:09Z
+2026-11-28T17:00:00Z,Notre Dame Fighting Irish,Syracuse Orange,FanDuel,fanduel,19.5,24.5,5.0,MAJOR_5_PLUS,,,,,,,,NOT_LOCKED,2026-11-22T08:00:09Z
+2026-11-28T17:00:00Z,Notre Dame Fighting Irish,Syracuse Orange,DraftKings,draftkings,20.5,24.5,4.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-22T08:00:09Z
+2026-11-28T17:00:00Z,Louisville Cardinals,Kentucky Wildcats,DraftKings,draftkings,-1.5,1.5,3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-22T08:00:09Z
+2026-11-28T20:30:00Z,Duke Blue Devils,Wake Forest Demon Deacons,DraftKings,draftkings,-10.5,-13.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-22T08:00:09Z
+2026-11-28T20:30:00Z,Duke Blue Devils,Wake Forest Demon Deacons,FanDuel,fanduel,-10.5,-13.5,-3.0,SIGNIFICANT_3_PLUS,,,,,,,,NOT_LOCKED,2026-11-22T08:00:09Z

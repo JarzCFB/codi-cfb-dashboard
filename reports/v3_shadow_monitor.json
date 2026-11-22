@@ -184,8 +184,8 @@
     "counts": {
       "CLASSIFIED": 198,
       "MISSING_V1": 44,
-      "MISSING_V1_AND_V2": 21,
-      "MISSING_V2": 33
+      "MISSING_V1_AND_V2": 20,
+      "MISSING_V2": 34
     },
     "unclassified_details": [
       {
@@ -969,7 +969,7 @@
         "game_id": "4814277a6e26955eb1df064fed7a3bcb",
         "kickoff_utc": "2026-11-25T00:00:00Z",
         "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -977,7 +977,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 151,
+    "covered_v3": 159,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -992,7 +992,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 126,
+        "selections": 133,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1002,7 +1002,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 15,
+        "selections": 16,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2338,6 +2338,51 @@
       },
       {
         "season": "2026",
+        "game_id": "5b00e6b226dce4274d819d5d1818e703",
+        "kickoff_utc": "2026-11-27T17:00:00Z",
+        "matchup": "Mississippi State Bulldogs at Ole Miss Rebels",
+        "status": "PASS",
+        "disagreement_points": "1.34306",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "6a08fbc3f2fce16533f36dccc4dce347",
+        "kickoff_utc": "2026-11-27T20:30:00Z",
+        "matchup": "Florida Gators at Florida State Seminoles",
+        "status": "PASS",
+        "disagreement_points": "0.39958",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "e6a3c909a8cfc7b2c666252e246418c7",
+        "kickoff_utc": "2026-11-28T00:30:00Z",
+        "matchup": "Minnesota Golden Gophers at Wisconsin Badgers",
+        "status": "PASS",
+        "disagreement_points": "1.18051",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "7da02c5fd7efe20c2f61f665def9cbef",
+        "kickoff_utc": "2026-11-28T16:00:00Z",
+        "matchup": "South Carolina Gamecocks at Clemson Tigers",
+        "status": "UNSTABLE",
+        "disagreement_points": "2.16518",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "f6a2121d820ed6135db2f9ea131c3115",
+        "kickoff_utc": "2026-11-28T16:00:00Z",
+        "matchup": "Virginia Cavaliers at Virginia Tech Hokies",
+        "status": "PASS",
+        "disagreement_points": "0.48151",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "426658869d8f93e891cad97029725975",
         "kickoff_utc": "2026-11-28T17:00:00Z",
         "matchup": "Michigan Wolverines at Ohio State Buckeyes",
@@ -2356,11 +2401,38 @@
       },
       {
         "season": "2026",
+        "game_id": "f670302d6ba6369545091e20bac24107",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "Boston College Eagles at Miami Hurricanes",
+        "status": "PASS",
+        "disagreement_points": "0.16681",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "591a88cc16d9c5830bef16d7f522bc8a",
+        "kickoff_utc": "2026-11-28T17:30:00Z",
+        "matchup": "Illinois Fighting Illini at Northwestern Wildcats",
+        "status": "PASS",
+        "disagreement_points": "0.05123",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "ab91c66dfce2e452eb546cde1cf61879",
         "kickoff_utc": "2026-11-28T20:30:00Z",
         "matchup": "USC Trojans at UCLA Bruins",
         "status": "PASS",
         "disagreement_points": "3.40906",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "a61934112cd5b5c35c2887f1365af5ec",
+        "kickoff_utc": "2026-11-29T00:30:00Z",
+        "matchup": "Pittsburgh Panthers at California Golden Bears",
+        "status": "PASS",
+        "disagreement_points": "0.9809",
         "source": "same_capture_v3_frozen_quote"
       },
       {
