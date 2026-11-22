@@ -2,63 +2,63 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 318,
-      "settled": 279,
-      "wins": 127,
-      "losses": 151,
+      "selections": 337,
+      "settled": 310,
+      "wins": 141,
+      "losses": 168,
       "pushes": 1,
-      "net_units": -35.702862,
-      "roi_per_settled_selection": -0.127967,
-      "pending": 39,
+      "net_units": -39.862072,
+      "roi_per_settled_selection": -0.128587,
+      "pending": 27,
       "invalid_or_ambiguous": 0
     },
     "v2": {
-      "selections": 293,
-      "settled": 258,
-      "wins": 130,
-      "losses": 125,
-      "pushes": 3,
-      "net_units": -7.170729,
-      "roi_per_settled_selection": -0.027794,
-      "pending": 35,
+      "selections": 311,
+      "settled": 289,
+      "wins": 145,
+      "losses": 140,
+      "pushes": 4,
+      "net_units": -8.593409,
+      "roi_per_settled_selection": -0.029735,
+      "pending": 22,
       "invalid_or_ambiguous": 0
     },
     "v3": {
-      "selections": 296,
-      "settled": 264,
-      "wins": 128,
-      "losses": 132,
+      "selections": 316,
+      "settled": 291,
+      "wins": 138,
+      "losses": 149,
       "pushes": 4,
-      "net_units": -15.873301,
-      "roi_per_settled_selection": -0.060126,
-      "pending": 32,
+      "net_units": -23.664766,
+      "roi_per_settled_selection": -0.081322,
+      "pending": 25,
       "invalid_or_ambiguous": 0
     }
   },
   "v3_edge_buckets": {
     "3_to_lt5": {
-      "settled": 170,
-      "wins": 78,
-      "losses": 89,
+      "settled": 192,
+      "wins": 86,
+      "losses": 103,
       "pushes": 3,
-      "net_units": -18.323398,
-      "roi_per_settled_selection": -0.107785
+      "net_units": -24.933045,
+      "roi_per_settled_selection": -0.12986
     },
     "5_to_lt7": {
-      "settled": 64,
-      "wins": 33,
-      "losses": 30,
+      "settled": 68,
+      "wins": 34,
+      "losses": 33,
       "pushes": 1,
-      "net_units": -0.077158,
-      "roi_per_settled_selection": -0.001206
+      "net_units": -2.168067,
+      "roi_per_settled_selection": -0.031883
     },
     "7_to_lt10": {
-      "settled": 21,
-      "wins": 14,
+      "settled": 22,
+      "wins": 15,
       "losses": 7,
       "pushes": 0,
-      "net_units": 5.713402,
-      "roi_per_settled_selection": 0.272067
+      "net_units": 6.622493,
+      "roi_per_settled_selection": 0.301022
     },
     "10_plus": {
       "settled": 9,
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 907,
-    "settled": 801,
-    "pending": 106,
+    "total_frozen_selections": 964,
+    "settled": 890,
+    "pending": 74,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
