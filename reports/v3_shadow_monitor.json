@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.349331
     },
     "PASS": {
-      "selections": 144,
+      "selections": 153,
       "settled": 141,
-      "pending": 3,
+      "pending": 12,
       "wins": 64,
       "losses": 75,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.120481
     },
     "UNCLASSIFIED": {
-      "selections": 118,
+      "selections": 108,
       "settled": 96,
-      "pending": 22,
+      "pending": 12,
       "wins": 41,
       "losses": 53,
       "pushes": 2,
@@ -75,9 +75,9 @@
       "roi_per_settled_selection": -0.163092
     },
     "UNSTABLE": {
-      "selections": 30,
+      "selections": 31,
       "settled": 30,
-      "pending": 0,
+      "pending": 1,
       "wins": 16,
       "losses": 14,
       "pushes": 0,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 118,
+  "unclassified_v3_count": 108,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 198,
-      "COHORT_NOT_GENERATED": 10,
+      "CLASSIFIED": 208,
       "MISSING_V1": 46,
       "MISSING_V1_AND_V2": 27,
       "MISSING_V2": 35
@@ -975,66 +974,10 @@
       },
       {
         "season": "2026",
-        "game_id": "591a88cc16d9c5830bef16d7f522bc8a",
-        "kickoff_utc": "2026-11-28T17:30:00Z",
-        "matchup": "Illinois Fighting Illini at Northwestern Wildcats",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "5b00e6b226dce4274d819d5d1818e703",
-        "kickoff_utc": "2026-11-27T17:00:00Z",
-        "matchup": "Mississippi State Bulldogs at Ole Miss Rebels",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "6a08fbc3f2fce16533f36dccc4dce347",
-        "kickoff_utc": "2026-11-27T20:30:00Z",
-        "matchup": "Florida Gators at Florida State Seminoles",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "7da02c5fd7efe20c2f61f665def9cbef",
-        "kickoff_utc": "2026-11-28T16:00:00Z",
-        "matchup": "South Carolina Gamecocks at Clemson Tigers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "a61934112cd5b5c35c2887f1365af5ec",
-        "kickoff_utc": "2026-11-29T00:30:00Z",
-        "matchup": "Pittsburgh Panthers at California Golden Bears",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "e6a3c909a8cfc7b2c666252e246418c7",
-        "kickoff_utc": "2026-11-28T00:30:00Z",
-        "matchup": "Minnesota Golden Gophers at Wisconsin Badgers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "f670302d6ba6369545091e20bac24107",
         "kickoff_utc": "2026-11-28T17:00:00Z",
         "matchup": "Boston College Eagles at Miami Hurricanes",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "f6a2121d820ed6135db2f9ea131c3115",
-        "kickoff_utc": "2026-11-28T16:00:00Z",
-        "matchup": "Virginia Cavaliers at Virginia Tech Hokies",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1071,14 +1014,6 @@
       },
       {
         "season": "2026",
-        "game_id": "7e42ee2b96752d8e1bc6fab8c0ad998f",
-        "kickoff_utc": "2026-11-28T20:00:00Z",
-        "matchup": "UAB Blazers at North Texas Mean Green",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "a0fe49c990d1497e1cb34eb9c2b73ef1",
         "kickoff_utc": "2026-11-28T19:00:00Z",
         "matchup": "Liberty Flames at Missouri State Bears",
@@ -1107,22 +1042,6 @@
         "kickoff_utc": "2026-11-27T17:00:00Z",
         "matchup": "Temple Owls at Memphis Tigers",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "c424e58ad3ce3e391a33c0495aa52690",
-        "kickoff_utc": "2026-11-28T19:00:00Z",
-        "matchup": "Louisiana Ragin Cajuns at Georgia State Panthers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "e82b8ac931ff74f03744aa4ae6072a51",
-        "kickoff_utc": "2026-11-28T19:00:00Z",
-        "matchup": "UCF Knights at Colorado Buffaloes",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -3307,51 +3226,9 @@
     },
     {
       "season": "2026",
-      "game_id": "591a88cc16d9c5830bef16d7f522bc8a",
-      "kickoff_utc": "2026-11-28T17:30:00Z",
-      "matchup": "Illinois Fighting Illini at Northwestern Wildcats"
-    },
-    {
-      "season": "2026",
-      "game_id": "5b00e6b226dce4274d819d5d1818e703",
-      "kickoff_utc": "2026-11-27T17:00:00Z",
-      "matchup": "Mississippi State Bulldogs at Ole Miss Rebels"
-    },
-    {
-      "season": "2026",
-      "game_id": "6a08fbc3f2fce16533f36dccc4dce347",
-      "kickoff_utc": "2026-11-27T20:30:00Z",
-      "matchup": "Florida Gators at Florida State Seminoles"
-    },
-    {
-      "season": "2026",
-      "game_id": "7da02c5fd7efe20c2f61f665def9cbef",
-      "kickoff_utc": "2026-11-28T16:00:00Z",
-      "matchup": "South Carolina Gamecocks at Clemson Tigers"
-    },
-    {
-      "season": "2026",
-      "game_id": "a61934112cd5b5c35c2887f1365af5ec",
-      "kickoff_utc": "2026-11-29T00:30:00Z",
-      "matchup": "Pittsburgh Panthers at California Golden Bears"
-    },
-    {
-      "season": "2026",
-      "game_id": "e6a3c909a8cfc7b2c666252e246418c7",
-      "kickoff_utc": "2026-11-28T00:30:00Z",
-      "matchup": "Minnesota Golden Gophers at Wisconsin Badgers"
-    },
-    {
-      "season": "2026",
       "game_id": "f670302d6ba6369545091e20bac24107",
       "kickoff_utc": "2026-11-28T17:00:00Z",
       "matchup": "Boston College Eagles at Miami Hurricanes"
-    },
-    {
-      "season": "2026",
-      "game_id": "f6a2121d820ed6135db2f9ea131c3115",
-      "kickoff_utc": "2026-11-28T16:00:00Z",
-      "matchup": "Virginia Cavaliers at Virginia Tech Hokies"
     },
     {
       "season": "2026",
@@ -3379,12 +3256,6 @@
     },
     {
       "season": "2026",
-      "game_id": "7e42ee2b96752d8e1bc6fab8c0ad998f",
-      "kickoff_utc": "2026-11-28T20:00:00Z",
-      "matchup": "UAB Blazers at North Texas Mean Green"
-    },
-    {
-      "season": "2026",
       "game_id": "a0fe49c990d1497e1cb34eb9c2b73ef1",
       "kickoff_utc": "2026-11-28T19:00:00Z",
       "matchup": "Liberty Flames at Missouri State Bears"
@@ -3406,18 +3277,6 @@
       "game_id": "a750f21dccb9df459196adc8dcf5ffe4",
       "kickoff_utc": "2026-11-27T17:00:00Z",
       "matchup": "Temple Owls at Memphis Tigers"
-    },
-    {
-      "season": "2026",
-      "game_id": "c424e58ad3ce3e391a33c0495aa52690",
-      "kickoff_utc": "2026-11-28T19:00:00Z",
-      "matchup": "Louisiana Ragin Cajuns at Georgia State Panthers"
-    },
-    {
-      "season": "2026",
-      "game_id": "e82b8ac931ff74f03744aa4ae6072a51",
-      "kickoff_utc": "2026-11-28T19:00:00Z",
-      "matchup": "UCF Knights at Colorado Buffaloes"
     },
     {
       "season": "2026",
