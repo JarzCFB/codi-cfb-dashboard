@@ -1057,12 +1057,12 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 171,
+    "covered_v3": 177,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
       "CAUTION": {
-        "selections": 10,
+        "selections": 11,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1072,7 +1072,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 145,
+        "selections": 150,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2436,6 +2436,15 @@
       },
       {
         "season": "2026",
+        "game_id": "e0b30f1dada22d4a2565ce663bc0741a",
+        "kickoff_utc": "2026-11-27T17:00:00Z",
+        "matchup": "Buffalo Bulls at Akron Zips",
+        "status": "PASS",
+        "disagreement_points": "3.75919",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "a72c11afb95ca2c2eb057c7f2a8e376b",
         "kickoff_utc": "2026-11-27T20:00:00Z",
         "matchup": "Appalachian State Mountaineers at South Alabama Jaguars",
@@ -2490,6 +2499,15 @@
       },
       {
         "season": "2026",
+        "game_id": "483beae9e865229fff02f961536b181e",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "Georgia Tech Yellow Jackets at Georgia Bulldogs",
+        "status": "PASS",
+        "disagreement_points": "4.13943",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "735be3d0a18e8d57cc515971a6735c7d",
         "kickoff_utc": "2026-11-28T17:00:00Z",
         "matchup": "Louisville Cardinals at Kentucky Wildcats",
@@ -2504,6 +2522,24 @@
         "matchup": "NC State Wolfpack at North Carolina Tar Heels",
         "status": "PASS",
         "disagreement_points": "1.46203",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "bdf272babe96ca5f2c4ad03eea790eb2",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "Navy Midshipmen at Charlotte 49ers",
+        "status": "PASS",
+        "disagreement_points": "1.51968",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "c58a68d46da0d0748169156702f9b4d5",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "Notre Dame Fighting Irish at Syracuse Orange",
+        "status": "CAUTION",
+        "disagreement_points": "8.2528",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -2616,6 +2652,15 @@
       },
       {
         "season": "2026",
+        "game_id": "6f8b860fa7f8ce3ef4dd841450840e5f",
+        "kickoff_utc": "2026-11-28T23:30:00Z",
+        "matchup": "San Diego State Aztecs at Washington State Cougars",
+        "status": "PASS",
+        "disagreement_points": "0.98962",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "a61934112cd5b5c35c2887f1365af5ec",
         "kickoff_utc": "2026-11-29T00:30:00Z",
         "matchup": "Pittsburgh Panthers at California Golden Bears",
@@ -2630,6 +2675,15 @@
         "matchup": "Arizona State Sun Devils at Arizona Wildcats",
         "status": "PASS",
         "disagreement_points": "3.5176",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "3ed1c65f3b2b8392d0ca7c806c559898",
+        "kickoff_utc": "2026-11-29T02:30:00Z",
+        "matchup": "Baylor Bears at Houston Cougars",
+        "status": "PASS",
+        "disagreement_points": "1.83679",
         "source": "same_capture_v3_frozen_quote"
       }
     ],

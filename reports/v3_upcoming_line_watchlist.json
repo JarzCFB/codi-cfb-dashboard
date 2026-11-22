@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-22T17:10:44.512526Z",
+  "generated_at_utc": "2026-11-22T22:28:47.710837Z",
   "warning": "Earliest observed quote is not necessarily true opening line. Current edge uses frozen V3 margin and same sportsbook spread only; odds price eligibility is not revalidated.",
   "games": [
     {
@@ -20,7 +20,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     },
     {
       "kickoff_utc": "2026-11-28T00:30:00Z",
@@ -40,7 +40,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     },
     {
       "kickoff_utc": "2026-11-28T17:00:00Z",
@@ -60,7 +60,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     },
     {
       "kickoff_utc": "2026-11-28T17:00:00Z",
@@ -69,7 +69,47 @@
       "sportsbook": "DraftKings",
       "sportsbook_key": "draftkings",
       "first_home_spread": 20.5,
-      "latest_home_spread": 24.5,
+      "latest_home_spread": 25.5,
+      "movement_points": 5.0,
+      "severity": "MAJOR_5_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
+    },
+    {
+      "kickoff_utc": "2026-11-28T17:00:00Z",
+      "away_team": "Louisville Cardinals",
+      "home_team": "Kentucky Wildcats",
+      "sportsbook": "DraftKings",
+      "sportsbook_key": "draftkings",
+      "first_home_spread": -1.5,
+      "latest_home_spread": 3.0,
+      "movement_points": 4.5,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "3.0",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
+    },
+    {
+      "kickoff_utc": "2026-11-28T17:00:00Z",
+      "away_team": "Louisville Cardinals",
+      "home_team": "Kentucky Wildcats",
+      "sportsbook": "FanDuel",
+      "sportsbook_key": "fanduel",
+      "first_home_spread": -1.5,
+      "latest_home_spread": 2.5,
       "movement_points": 4.0,
       "severity": "SIGNIFICANT_3_PLUS",
       "crossed_key_numbers": "",
@@ -80,47 +120,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
-    },
-    {
-      "kickoff_utc": "2026-11-28T17:00:00Z",
-      "away_team": "Louisville Cardinals",
-      "home_team": "Kentucky Wildcats",
-      "sportsbook": "DraftKings",
-      "sportsbook_key": "draftkings",
-      "first_home_spread": -1.5,
-      "latest_home_spread": 1.5,
-      "movement_points": 3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
-    },
-    {
-      "kickoff_utc": "2026-11-28T17:00:00Z",
-      "away_team": "Louisville Cardinals",
-      "home_team": "Kentucky Wildcats",
-      "sportsbook": "FanDuel",
-      "sportsbook_key": "fanduel",
-      "first_home_spread": -1.5,
-      "latest_home_spread": 1.5,
-      "movement_points": 3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     },
     {
       "kickoff_utc": "2026-11-28T20:30:00Z",
@@ -140,7 +140,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     },
     {
       "kickoff_utc": "2026-11-28T20:30:00Z",
@@ -160,27 +160,7 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
-    },
-    {
-      "kickoff_utc": "2026-11-28T20:30:00Z",
-      "away_team": "Duke Blue Devils",
-      "home_team": "Wake Forest Demon Deacons",
-      "sportsbook": "DraftKings",
-      "sportsbook_key": "draftkings",
-      "first_home_spread": -10.5,
-      "latest_home_spread": -13.5,
-      "movement_points": -3.0,
-      "severity": "SIGNIFICANT_3_PLUS",
-      "crossed_key_numbers": "",
-      "locked_decision": "",
-      "locked_selection": "",
-      "locked_spread": "",
-      "locked_edge": "",
-      "current_edge_at_same_book": "",
-      "edge_change": "",
-      "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     },
     {
       "kickoff_utc": "2026-11-28T20:30:00Z",
@@ -189,8 +169,8 @@
       "sportsbook": "FanDuel",
       "sportsbook_key": "fanduel",
       "first_home_spread": -10.5,
-      "latest_home_spread": -13.5,
-      "movement_points": -3.0,
+      "latest_home_spread": -14.5,
+      "movement_points": -4.0,
       "severity": "SIGNIFICANT_3_PLUS",
       "crossed_key_numbers": "",
       "locked_decision": "",
@@ -200,7 +180,27 @@
       "current_edge_at_same_book": "",
       "edge_change": "",
       "lock_status": "NOT_LOCKED",
-      "latest_seen_utc": "2026-11-22T17:10:35Z"
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
+    },
+    {
+      "kickoff_utc": "2026-11-28T20:30:00Z",
+      "away_team": "Duke Blue Devils",
+      "home_team": "Wake Forest Demon Deacons",
+      "sportsbook": "DraftKings",
+      "sportsbook_key": "draftkings",
+      "first_home_spread": -10.5,
+      "latest_home_spread": -14.0,
+      "movement_points": -3.5,
+      "severity": "SIGNIFICANT_3_PLUS",
+      "crossed_key_numbers": "",
+      "locked_decision": "",
+      "locked_selection": "",
+      "locked_spread": "",
+      "locked_edge": "",
+      "current_edge_at_same_book": "",
+      "edge_change": "",
+      "lock_status": "NOT_LOCKED",
+      "latest_seen_utc": "2026-11-22T22:28:41Z"
     }
   ]
 }
