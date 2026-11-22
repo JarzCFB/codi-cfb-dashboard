@@ -1,68 +1,66 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,03a07ec7a62fbc2d6bf4748aafd30303,2026-11-21T16:59:00Z,Nebraska Cornhuskers,Ohio State Buckeyes,not_final_in_cfbd
-2026,561b0188c024ce49bdd77391f44dc605,2026-11-21T17:00:00Z,Boston College Eagles,Syracuse Orange,not_final_in_cfbd
-2026,01aaf98c4f62bba0a964a9b400666516,2026-11-21T17:00:00Z,Cincinnati Bearcats,Colorado Buffaloes,not_final_in_cfbd
-2026,8e40a0e75da5dc1e30817debee95239d,2026-11-21T17:00:00Z,Florida Gators,Vanderbilt Commodores,not_final_in_cfbd
-2026,ffbcf81433c3067468208b6d5b91aa83,2026-11-21T17:00:00Z,Georgia Tech Yellow Jackets,Wake Forest Demon Deacons,not_final_in_cfbd
-2026,606426f36cb32d1843f6abbe6f683b76,2026-11-21T17:00:00Z,Kansas Jayhawks,BYU Cougars,not_final_in_cfbd
-2026,ce564e264da03668e25badeb960753cc,2026-11-21T17:00:00Z,Minnesota Golden Gophers,Northwestern Wildcats,not_final_in_cfbd
-2026,af2b2232df20a470d516dbe474a63132,2026-11-21T17:00:00Z,Navy Midshipmen,Memphis Tigers,not_final_in_cfbd
-2026,d0761a1e0c66eaf4608f5c61ac79b3c2,2026-11-21T17:00:00Z,Purdue Boilermakers,Wisconsin Badgers,not_final_in_cfbd
-2026,1f59b6d72003ce254b32c815e73b252d,2026-11-21T17:30:00Z,Virginia Cavaliers,North Carolina Tar Heels,not_final_in_cfbd
-2026,75136fdcc4601e9e1208fe20146056dc,2026-11-21T18:00:00Z,Liberty Flames,Western Kentucky Hilltoppers,not_final_in_cfbd
-2026,329bbea44b2c7efcbb9243e25099495e,2026-11-21T18:00:00Z,West Virginia Mountaineers,Houston Cougars,not_final_in_cfbd
-2026,d7b3c2454c6b34f734497049e744bab0,2026-11-21T19:00:00Z,Jacksonville State Gamecocks,Missouri State Bears,not_final_in_cfbd
-2026,347054d00e6c0020484eb64f1ad1b58d,2026-11-21T19:00:00Z,Sam Houston State Bearkats,Middle Tennessee Blue Raiders,not_final_in_cfbd
-2026,ba44f7b0a5535ae2369e8ea165fb287f,2026-11-21T19:00:00Z,Tulsa Golden Hurricane,Charlotte 49ers,not_final_in_cfbd
-2026,bd9d4f32b0b91c0140a3dd9574f8ae13,2026-11-21T19:30:00Z,Appalachian State Mountaineers,UL Monroe Warhawks,not_final_in_cfbd
-2026,3099e24c0ab2767eb9c56f6ef5eeefc2,2026-11-21T19:30:00Z,Florida Atlantic Owls,South Florida Bulls,not_final_in_cfbd
-2026,725c6205de38f91b507a880c139eda54,2026-11-21T19:30:00Z,Illinois Fighting Illini,Iowa Hawkeyes,not_final_in_cfbd
-2026,b3f08ccb712c2c765cc2d55b4608a3dd,2026-11-21T20:00:00Z,Kennesaw State Owls,Florida International Panthers,not_final_in_cfbd
-2026,2851a39f971851008dbec9970da34737,2026-11-21T20:00:00Z,Louisiana Ragin Cajuns,Coastal Carolina Chanticleers,not_final_in_cfbd
-2026,96d5698a996feb547e098ba4b2178c0c,2026-11-21T20:00:00Z,New Mexico State Aggies,Delaware Blue Hens,not_final_in_cfbd
-2026,1a3e1206e330ec66aa9a0549b4d3409c,2026-11-21T20:30:00Z,Baylor Bears,Texas Tech Red Raiders,not_final_in_cfbd
-2026,7f9809c817e27ec2d9f8a24e8e19a8ff,2026-11-21T20:30:00Z,Florida State Seminoles,NC State Wolfpack,not_final_in_cfbd
-2026,ae9b81f4814e1d9dae835a13f4245ce3,2026-11-21T20:30:00Z,Michigan Wolverines,UCLA Bruins,not_final_in_cfbd
-2026,3a5bb507e8305c5de6aa0b6c1e43e638,2026-11-21T20:30:00Z,Penn State Nittany Lions,Rutgers Scarlet Knights,not_final_in_cfbd
-2026,0cdac6d2b6c2cbfb0f734a8cdfbe086e,2026-11-21T20:30:00Z,Tennessee Volunteers,LSU Tigers,not_final_in_cfbd
-2026,c3b7f980521e9fb576ce8dbd49a9f7de,2026-11-21T20:30:00Z,Texas Longhorns,Arkansas Razorbacks,not_final_in_cfbd
-2026,59e78be3159c6fdb928c6737f6ff68e4,2026-11-21T20:30:00Z,UConn Huskies,Old Dominion Monarchs,not_final_in_cfbd
-2026,6b40f07e146bab0dba574f0d3b07659e,2026-11-21T20:30:00Z,Washington Huskies,Indiana Hoosiers,not_final_in_cfbd
-2026,5c082e013b5328e3db1def552628765f,2026-11-21T20:45:00Z,Oklahoma Sooners,Texas A&M Aggies,not_final_in_cfbd
-2026,e17410526acddf2500fb788f40901b3f,2026-11-21T21:00:00Z,Marshall Thundering Herd,Georgia State Panthers,not_final_in_cfbd
-2026,6d977752327ee29e19d3e1856683efee,2026-11-21T21:00:00Z,Southern Mississippi Golden Eagles,South Alabama Jaguars,not_final_in_cfbd
-2026,0a1a6c2630e51e32d24695f02c0b3f23,2026-11-21T21:00:00Z,Troy Trojans,Georgia Southern Eagles,not_final_in_cfbd
-2026,cbe55180a8bee495fa1520fbc1df314b,2026-11-21T23:00:00Z,Texas State Bobcats,Washington State Cougars,not_final_in_cfbd
-2026,37f01277971fbdbe6d2b8f77fa63dd52,2026-11-21T23:15:00Z,USC Trojans,Maryland Terrapins,not_final_in_cfbd
-2026,9470f469f957e9eddae9392cb23b4623,2026-11-22T00:00:00Z,Kansas State Wildcats,Arizona Wildcats,not_final_in_cfbd
-2026,a36fd3d086dffefb5fc58b14fb6255fc,2026-11-22T00:00:00Z,Louisiana Tech Bulldogs,Arkansas State Red Wolves,not_final_in_cfbd
-2026,8d53f308424d388c9003e02cac8b4cf6,2026-11-22T00:00:00Z,Miami Hurricanes,Virginia Tech Hokies,not_final_in_cfbd
-2026,89e434722afd075e5488a6b9310325e9,2026-11-22T00:00:00Z,San Jose State Spartans,UNLV Rebels,not_final_in_cfbd
-2026,4e40d05a5d98ac108cd15278646a545d,2026-11-22T00:30:00Z,California Golden Bears,Stanford Cardinal,not_final_in_cfbd
-2026,f23bc59387b6db63ad3de8b6bcc541fc,2026-11-22T00:30:00Z,Fresno State Bulldogs,Colorado State Rams,not_final_in_cfbd
-2026,44e73391c2ac535ab552aac4bdcfa3b3,2026-11-22T00:30:00Z,Louisville Cardinals,Pittsburgh Panthers,not_final_in_cfbd
-2026,0bb0c3e15e4a8004f708162c14c5575d,2026-11-22T00:30:00Z,Missouri Tigers,Kentucky Wildcats,not_final_in_cfbd
-2026,fa98066b4b400fb6af0672e170cc584a,2026-11-22T00:30:00Z,Notre Dame Fighting Irish,SMU Mustangs,not_final_in_cfbd
-2026,a05c0d32b35dfd5cca63a61af28b9739,2026-11-22T00:30:00Z,South Carolina Gamecocks,Georgia Bulldogs,not_final_in_cfbd
-2026,9f3f8efae55dbb803964a5107350e263,2026-11-22T01:00:00Z,UAB Blazers,UTSA Roadrunners,not_final_in_cfbd
-2026,7585fb8b12453a68ca1195319ae44c78,2026-11-22T02:00:00Z,TCU Horned Frogs,Utah Utes,not_final_in_cfbd
-2026,028f0fcc2f6411c4816e543bb7fa226c,2026-11-22T02:30:00Z,Boise State Broncos,San Diego State Aztecs,not_final_in_cfbd
-2026,ecfec2fe1db57f88e603f9947add1e26,2026-11-22T03:15:00Z,Arizona State Sun Devils,Oklahoma State Cowboys,not_final_in_cfbd
-2026,430ea047c8a027987881d51f810a6cf8,2026-11-22T03:30:00Z,Nevada Wolf Pack,Hawaii Rainbow Warriors,not_final_in_cfbd
-2026,6e36f5c3c55edcb31749b0de4a146d14,2026-11-22T03:30:00Z,Oregon State Beavers,Utah State Aggies,not_final_in_cfbd
 2026,4814277a6e26955eb1df064fed7a3bcb,2026-11-25T00:00:00Z,Eastern Michigan Eagles,Kent State Golden Flashes,not_final_in_cfbd
 2026,a82769fe54a0f8c714667b8720b67449,2026-11-25T00:00:00Z,Western Michigan Broncos,Miami (OH) RedHawks,not_final_in_cfbd
 2026,b39108d2cfcd62d29954aee80bbf7b51,2026-11-27T01:00:00Z,Texas Tech Red Raiders,TCU Horned Frogs,not_final_in_cfbd
 2026,e0b30f1dada22d4a2565ce663bc0741a,2026-11-27T17:00:00Z,Akron Zips,Buffalo Bulls,not_final_in_cfbd
 2026,8fc8552ec633bb09ca2bcb9b15cb6896,2026-11-27T17:00:00Z,Iowa Hawkeyes,Nebraska Cornhuskers,not_final_in_cfbd
+2026,a750f21dccb9df459196adc8dcf5ffe4,2026-11-27T17:00:00Z,Memphis Tigers,Temple Owls,not_final_in_cfbd
+2026,58cd1284193cd30679325c8494f546e6,2026-11-27T17:00:00Z,Ohio Bobcats,Toledo Rockets,not_final_in_cfbd
+2026,5b00e6b226dce4274d819d5d1818e703,2026-11-27T17:00:00Z,Ole Miss Rebels,Mississippi State Bulldogs,not_final_in_cfbd
+2026,1f0a9e7f76830b196133518ae01bb113,2026-11-27T17:00:00Z,UTSA Roadrunners,Tulsa Golden Hurricane,not_final_in_cfbd
+2026,a72c11afb95ca2c2eb057c7f2a8e376b,2026-11-27T20:00:00Z,South Alabama Jaguars,Appalachian State Mountaineers,not_final_in_cfbd
+2026,6a08fbc3f2fce16533f36dccc4dce347,2026-11-27T20:30:00Z,Florida State Seminoles,Florida Gators,not_final_in_cfbd
+2026,45d4d87e236a38e2feb11f57820ff03f,2026-11-27T21:30:00Z,New Mexico Lobos,Air Force Falcons,not_final_in_cfbd
 2026,4c69ecf41bb2d36dfeedeae23acc5b86,2026-11-28T00:30:00Z,Texas A&M Aggies,Texas Longhorns,not_final_in_cfbd
-2026,6474599b7377102869153e25af140533,2026-11-28T16:00:00Z,Oregon Ducks,Washington Huskies,not_final_in_cfbd
+2026,e6a3c909a8cfc7b2c666252e246418c7,2026-11-28T00:30:00Z,Wisconsin Badgers,Minnesota Golden Gophers,not_final_in_cfbd
+2026,bee4ea7a231be77b1ee52ddf3755592f,2026-11-28T02:00:00Z,Utah Utes,West Virginia Mountaineers,not_final_in_cfbd
+2026,c074c1d28d172e0eb521dbb9d530462f,2026-11-28T17:00:00Z,Ball State Cardinals,Central Michigan Chippewas,not_final_in_cfbd
+2026,bdf272babe96ca5f2c4ad03eea790eb2,2026-11-28T17:00:00Z,Charlotte 49ers,Navy Midshipmen,not_final_in_cfbd
+2026,483beae9e865229fff02f961536b181e,2026-11-28T17:00:00Z,Georgia Bulldogs,Georgia Tech Yellow Jackets,not_final_in_cfbd
+2026,2c9b4d03409441b9f41fed25a4801d2b,2026-11-28T17:00:00Z,Georgia Southern Eagles,Louisiana Tech Bulldogs,not_final_in_cfbd
 2026,735be3d0a18e8d57cc515971a6735c7d,2026-11-28T17:00:00Z,Kentucky Wildcats,Louisville Cardinals,not_final_in_cfbd
-2026,f77049eaeb5b3c0945c4bc2790dda6e6,2026-11-28T17:00:00Z,Missouri Tigers,Oklahoma Sooners,not_final_in_cfbd
+2026,f670302d6ba6369545091e20bac24107,2026-11-28T17:00:00Z,Miami Hurricanes,Boston College Eagles,not_final_in_cfbd
+2026,a35f041e96e693eba5737ef05a57c4db,2026-11-28T17:00:00Z,North Carolina Tar Heels,NC State Wolfpack,not_final_in_cfbd
 2026,426658869d8f93e891cad97029725975,2026-11-28T17:00:00Z,Ohio State Buckeyes,Michigan Wolverines,not_final_in_cfbd
 2026,c58a68d46da0d0748169156702f9b4d5,2026-11-28T17:00:00Z,Syracuse Orange,Notre Dame Fighting Irish,not_final_in_cfbd
+2026,57d6254e2054bb1e269219b1ef8b6ab7,2026-11-28T17:00:00Z,Wyoming Cowboys,UConn Huskies,not_final_in_cfbd
+2026,591a88cc16d9c5830bef16d7f522bc8a,2026-11-28T17:30:00Z,Northwestern Wildcats,Illinois Fighting Illini,not_final_in_cfbd
+2026,c8b7cbe64e2914e579ab55c34db57da2,2026-11-28T17:45:00Z,Arkansas Razorbacks,LSU Tigers,not_final_in_cfbd
+2026,2981442fcc9375220d0f7959bcd9c084,2026-11-28T18:00:00Z,East Carolina Pirates,Florida Atlantic Owls,not_final_in_cfbd
+2026,a89bafbbfbc300c0005e20bfb7acfb90,2026-11-28T18:00:00Z,Old Dominion Monarchs,Southern Mississippi Golden Eagles,not_final_in_cfbd
+2026,b59311f602e67a25e81604f9b895a8b1,2026-11-28T18:00:00Z,UL Monroe Warhawks,Marshall Thundering Herd,not_final_in_cfbd
+2026,1dc37c1023af4b0f098c76640445ae2e,2026-11-28T18:00:00Z,Western Kentucky Hilltoppers,Kennesaw State Owls,not_final_in_cfbd
+2026,e82b8ac931ff74f03744aa4ae6072a51,2026-11-28T19:00:00Z,Colorado Buffaloes,UCF Knights,not_final_in_cfbd
+2026,6530923d9380b559b3c0b49b4f770e5f,2026-11-28T19:00:00Z,Florida International Panthers,Sam Houston State Bearkats,not_final_in_cfbd
+2026,c424e58ad3ce3e391a33c0495aa52690,2026-11-28T19:00:00Z,Georgia State Panthers,Louisiana Ragin Cajuns,not_final_in_cfbd
+2026,61a2b3c7f905b33b86e1ea178a885325,2026-11-28T19:00:00Z,Iowa State Cyclones,Kansas State Wildcats,not_final_in_cfbd
+2026,7ce20f289047e13b13c4a6517b10a4c2,2026-11-28T19:00:00Z,James Madison Dukes,Coastal Carolina Chanticleers,not_final_in_cfbd
+2026,200466f41d944b2706e404635298ebf6,2026-11-28T19:00:00Z,Middle Tennessee Blue Raiders,New Mexico State Aggies,not_final_in_cfbd
+2026,a0fe49c990d1497e1cb34eb9c2b73ef1,2026-11-28T19:00:00Z,Missouri State Bears,Liberty Flames,not_final_in_cfbd
+2026,559227d3ba70769111dd09490258af44,2026-11-28T19:00:00Z,Rice Owls,Army Black Knights,not_final_in_cfbd
+2026,5f57756fa0d07d889a7a6727b6f5da2d,2026-11-28T20:00:00Z,Arkansas State Red Wolves,Troy Trojans,not_final_in_cfbd
+2026,7da02c5fd7efe20c2f61f665def9cbef,2026-11-28T20:00:00Z,Clemson Tigers,South Carolina Gamecocks,not_final_in_cfbd
+2026,7e42ee2b96752d8e1bc6fab8c0ad998f,2026-11-28T20:00:00Z,North Texas Mean Green,UAB Blazers,not_final_in_cfbd
+2026,f6a2121d820ed6135db2f9ea131c3115,2026-11-28T20:00:00Z,Virginia Tech Hokies,Virginia Cavaliers,not_final_in_cfbd
+2026,5f74ef6944e660a91381ecf388633c69,2026-11-28T20:30:00Z,Alabama Crimson Tide,Auburn Tigers,not_final_in_cfbd
+2026,7677bcc8f40717d8275f5fe3b5f5fb0e,2026-11-28T20:30:00Z,BYU Cougars,Cincinnati Bearcats,not_final_in_cfbd
+2026,b34efc2b710eb260f25df93e02c86a0e,2026-11-28T20:30:00Z,Bowling Green Falcons,UMass Minutemen,not_final_in_cfbd
+2026,be399d75e553dc20697cf8f734b0f233,2026-11-28T20:30:00Z,Delaware Blue Hens,Jacksonville State Gamecocks,not_final_in_cfbd
+2026,a57feac04a5d9404de66cd40c004fa51,2026-11-28T20:30:00Z,Maryland Terrapins,Penn State Nittany Lions,not_final_in_cfbd
+2026,eb0172d64d648f5f0697ee382c039564,2026-11-28T20:30:00Z,Northern Illinois Huskies,UTEP Miners,not_final_in_cfbd
+2026,20a5e90b65e1fec4a7be4a08260234a4,2026-11-28T20:30:00Z,South Florida Bulls,Tulane Green Wave,not_final_in_cfbd
+2026,e55fde0bfbebc4cfd4ccc010b0e858b4,2026-11-28T20:30:00Z,Stanford Cardinal,SMU Mustangs,not_final_in_cfbd
 2026,ab91c66dfce2e452eb546cde1cf61879,2026-11-28T20:30:00Z,UCLA Bruins,USC Trojans,not_final_in_cfbd
 2026,4a15b4432ef52d1717887e5badfdc0e3,2026-11-28T20:30:00Z,Wake Forest Demon Deacons,Duke Blue Devils,not_final_in_cfbd
+2026,f77049eaeb5b3c0945c4bc2790dda6e6,2026-11-28T21:15:00Z,Missouri Tigers,Oklahoma Sooners,not_final_in_cfbd
+2026,0ebe196ce469f86aba61ded8de5fe9a8,2026-11-28T21:15:00Z,Rutgers Scarlet Knights,Michigan State Spartans,not_final_in_cfbd
+2026,2e180a350fe1c67db1b12cf36a1c1324,2026-11-28T23:15:00Z,Oklahoma State Cowboys,Kansas Jayhawks,not_final_in_cfbd
 2026,7f3768e75aa0ea31e6a30cff6cf631be,2026-11-29T00:00:00Z,Indiana Hoosiers,Purdue Boilermakers,not_final_in_cfbd
-2026,5f74ef6944e660a91381ecf388633c69,2026-11-29T00:30:00Z,Alabama Crimson Tide,Auburn Tigers,not_final_in_cfbd
+2026,0a1027a4edb364b492a3fee67086e8bc,2026-11-29T00:00:00Z,Vanderbilt Commodores,Tennessee Volunteers,not_final_in_cfbd
+2026,a61934112cd5b5c35c2887f1365af5ec,2026-11-29T00:30:00Z,California Golden Bears,Pittsburgh Panthers,not_final_in_cfbd
+2026,6474599b7377102869153e25af140533,2026-11-29T00:30:00Z,Oregon Ducks,Washington Huskies,not_final_in_cfbd
 2026,f825e4c4d512e1c0a6db6ac7d8bc0326,2026-11-29T02:00:00Z,Arizona Wildcats,Arizona State Sun Devils,not_final_in_cfbd
+2026,a2ecd43208cb856c8d882906463fdbec,2026-11-29T02:00:00Z,UNLV Rebels,Nevada Wolf Pack,not_final_in_cfbd
+2026,3ed1c65f3b2b8392d0ca7c806c559898,2026-11-29T02:30:00Z,Houston Cougars,Baylor Bears,not_final_in_cfbd
+2026,a91ec7ebf1a48ebc073c185bcc4feff5,2026-12-05T01:00:00Z,Boise State Broncos,San Diego State Aztecs,not_final_in_cfbd
+2026,7343d0c535f8836e761813fdfa88c9f1,2026-12-05T17:00:00Z,Miami Hurricanes,Wake Forest Demon Deacons,not_final_in_cfbd
