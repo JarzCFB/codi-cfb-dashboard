@@ -183,8 +183,8 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 208,
-      "MISSING_V1": 46,
-      "MISSING_V1_AND_V2": 27,
+      "MISSING_V1": 47,
+      "MISSING_V1_AND_V2": 26,
       "MISSING_V2": 35
     },
     "unclassified_details": [
@@ -1025,7 +1025,7 @@
         "game_id": "a35f041e96e693eba5737ef05a57c4db",
         "kickoff_utc": "2026-11-28T17:00:00Z",
         "matchup": "NC State Wolfpack at North Carolina Tar Heels",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V1",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1057,7 +1057,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 177,
+    "covered_v3": 180,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -1072,7 +1072,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 150,
+        "selections": 153,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2508,6 +2508,15 @@
       },
       {
         "season": "2026",
+        "game_id": "57d6254e2054bb1e269219b1ef8b6ab7",
+        "kickoff_utc": "2026-11-28T17:00:00Z",
+        "matchup": "UConn Huskies at Wyoming Cowboys",
+        "status": "PASS",
+        "disagreement_points": "3.71",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "735be3d0a18e8d57cc515971a6735c7d",
         "kickoff_utc": "2026-11-28T17:00:00Z",
         "matchup": "Louisville Cardinals at Kentucky Wildcats",
@@ -2567,6 +2576,15 @@
         "matchup": "New Mexico State Aggies at Middle Tennessee Blue Raiders",
         "status": "PASS",
         "disagreement_points": "0.62612",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "61a2b3c7f905b33b86e1ea178a885325",
+        "kickoff_utc": "2026-11-28T19:00:00Z",
+        "matchup": "Kansas State Wildcats at Iowa State Cyclones",
+        "status": "PASS",
+        "disagreement_points": "2.01203",
         "source": "same_capture_v3_frozen_quote"
       },
       {
@@ -2639,6 +2657,15 @@
         "matchup": "USC Trojans at UCLA Bruins",
         "status": "PASS",
         "disagreement_points": "3.40906",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "be399d75e553dc20697cf8f734b0f233",
+        "kickoff_utc": "2026-11-28T20:30:00Z",
+        "matchup": "Jacksonville State Gamecocks at Delaware Blue Hens",
+        "status": "PASS",
+        "disagreement_points": "0.27013",
         "source": "same_capture_v3_frozen_quote"
       },
       {
