@@ -37,6 +37,19 @@ class WeeklyLockTests(unittest.TestCase):
         self.assertEqual(rows[0]["decision"], "PASS")
         self.assertEqual(rows[0]["reason"], "inside_six_hour_cutoff")
 
+    def test_stale_quote_fails_closed(self):
+        games = [{"id": 43, "startDate": "2026-11-18T01:00:00Z",
+                  "homeTeam": "Toledo", "awayTeam": "Akron", "seasonType": "regular"}]
+        quote = {"home_team": "Toledo", "away_team": "Akron",
+                 "selection": "Toledo", "spread": -2.5, "american_odds": -110,
+                 "projected_home_margin": 15, "captured_at_utc": "2026-11-17T13:00:00Z",
+                 "market_last_update_utc": "2026-11-17T13:00:00Z",
+                 "bookmaker_last_update_utc": "2026-11-17T13:00:00Z"}
+        with patch("v3_weekly_lock.projected_margin", return_value=15):
+            rows = asof_rows(TUES, games, [quote], {})
+        self.assertEqual(rows[0]["decision"], "PASS")
+        self.assertEqual(rows[0]["reason"], "missing_model_or_eligible_quote")
+
     def test_append_only_lock(self):
         rows = [dict(game_id="1", kickoff_utc="2026-11-18T01:00:00Z",
                      decision="PASS")]
