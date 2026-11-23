@@ -29,6 +29,14 @@ class WeeklyLockTests(unittest.TestCase):
         self.assertTrue(all(r["decision"] == "PASS" for r in rows))
         self.assertTrue(all(r["reason"] == "no_live_spread_quote" for r in rows))
 
+    def test_inside_six_hours_is_explicit_pass(self):
+        games = [{"id": 42, "startDate": "2026-11-17T18:00:00Z",
+                  "homeTeam": "Toledo", "awayTeam": "Akron", "seasonType": "regular"}]
+        rows = asof_rows(TUES, games, [], {})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["decision"], "PASS")
+        self.assertEqual(rows[0]["reason"], "inside_six_hour_cutoff")
+
     def test_append_only_lock(self):
         rows = [dict(game_id="1", kickoff_utc="2026-11-18T01:00:00Z",
                      decision="PASS")]
