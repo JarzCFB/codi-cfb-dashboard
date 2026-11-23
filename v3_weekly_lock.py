@@ -57,7 +57,9 @@ def asof_rows(now, games, odds_rows, v2_ratings):
         h, a = canonical_school(home), canonical_school(away)
         candidates = [q for q in odds_rows
                       if match_rating(q.get("home_team", ""), {h: 1})[0] is not None
-                      and match_rating(q.get("away_team", ""), {a: 1})[0] is not None]
+                      and match_rating(q.get("away_team", ""), {a: 1})[0] is not None
+                      and utc(q.get("kickoff_utc")) is not None
+                      and abs(utc(q["kickoff_utc"]) - kick) <= timedelta(minutes=30)]
         base = dict(lock_id=label, season=now.astimezone(CENTRAL).year,
                     game_id=str(game.get("id") or f"{kick.isoformat()}:{h}:{a}"),
                     kickoff_utc=kick.isoformat().replace("+00:00", "Z"),
