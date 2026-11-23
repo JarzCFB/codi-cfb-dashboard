@@ -67,7 +67,9 @@ def asof_rows(now, games, odds_rows, v2_ratings):
                     spread="", american_odds="", v3_projected_home_margin="",
                     edge_points="", reason="", quote_captured_at_utc="",
                     market_last_update_utc="", v1_v2_inputs_sha256="")
-        if not model_allowed(home, away):
+        if kick - now < timedelta(hours=6):
+            base["reason"] = "inside_six_hour_cutoff"
+        elif not model_allowed(home, away):
             base["reason"] = "unsupported_division"
         elif not candidates:
             base["reason"] = "no_live_spread_quote"
