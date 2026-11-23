@@ -79,9 +79,12 @@ def asof_rows(now, games, odds_rows, v2_ratings):
                 spread, price = number(q.get("spread")), number(q.get("american_odds"))
                 market = utc(q.get("market_last_update_utc"))
                 book = utc(q.get("bookmaker_last_update_utc"))
+                captured = utc(q.get("captured_at_utc"))
                 if (spread is None or price is None or price == 0 or not -200 <= price <= 200
                         or q.get("selection") not in (q.get("home_team"), q.get("away_team"))
-                        or (market and market > now) or (book and book > now)):
+                        or captured is None or not now - timedelta(minutes=30) <= captured <= now
+                        or market is None or not now - timedelta(minutes=30) <= market <= now
+                        or book is None or not now - timedelta(minutes=30) <= book <= now):
                     continue
                 v1 = number(q.get("projected_home_margin"))
                 v2 = projected_margin(q["home_team"], q["away_team"], v2_ratings)
