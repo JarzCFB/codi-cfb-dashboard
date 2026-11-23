@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 208,
-      "MISSING_V1": 47,
-      "MISSING_V1_AND_V2": 26,
-      "MISSING_V2": 35
+      "COHORT_NOT_GENERATED": 1,
+      "MISSING_V1": 46,
+      "MISSING_V1_AND_V2": 25,
+      "MISSING_V2": 36
     },
     "unclassified_details": [
       {
@@ -993,7 +994,7 @@
         "game_id": "20a5e90b65e1fec4a7be4a08260234a4",
         "kickoff_utc": "2026-11-28T20:30:00Z",
         "matchup": "Tulane Green Wave at South Florida Bulls",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1049,7 +1050,7 @@
         "game_id": "eb0172d64d648f5f0697ee382c039564",
         "kickoff_utc": "2026-11-28T20:30:00Z",
         "matchup": "UTEP Miners at Northern Illinois Huskies",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
