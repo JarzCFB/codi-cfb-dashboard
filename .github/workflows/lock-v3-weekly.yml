@@ -1,5 +1,10 @@
 name: Lock V3 weekday and Saturday predictions
 on:
+  pull_request:
+    paths:
+      - "v3_weekly_lock.py"
+      - "test_v3_weekly_lock.py"
+      - ".github/workflows/lock-v3-weekly.yml"
   workflow_dispatch:
   schedule:
     # 8 AM Central is 13:00 UTC in daylight time, 14:00 UTC in standard time.
@@ -11,8 +16,19 @@ concurrency:
   group: v3-all-games-lock
   cancel-in-progress: false
 jobs:
-  lock:
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests numpy pandas scipy
+      - run: python -m unittest -v test_v3_weekly_lock.py test_v3_upcoming_watchlist.py
+  lock:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
