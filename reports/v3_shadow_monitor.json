@@ -184,8 +184,8 @@
     "counts": {
       "CLASSIFIED": 214,
       "MISSING_V1": 49,
-      "MISSING_V1_AND_V2": 26,
-      "MISSING_V2": 36
+      "MISSING_V1_AND_V2": 25,
+      "MISSING_V2": 37
     },
     "unclassified_details": [
       {
@@ -1009,7 +1009,7 @@
         "game_id": "7ce20f289047e13b13c4a6517b10a4c2",
         "kickoff_utc": "2026-11-28T19:00:00Z",
         "matchup": "Coastal Carolina Chanticleers at James Madison Dukes",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
