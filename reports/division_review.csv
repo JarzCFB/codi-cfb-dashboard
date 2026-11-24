@@ -617,12 +617,17 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,ab91c66dfce2e452eb546cde1cf61879,2026-11-28T20:30:00Z,UCLA Bruins,USC Trojans,FBS vs FBS,ucla,usc
 2026,4a15b4432ef52d1717887e5badfdc0e3,2026-11-28T20:30:00Z,Wake Forest Demon Deacons,Duke Blue Devils,FBS vs FBS,wake forest,duke
 2026,0ebe196ce469f86aba61ded8de5fe9a8,2026-11-28T21:15:00Z,Rutgers Scarlet Knights,Michigan State Spartans,FBS vs FBS,rutgers,michigan state
+2026,fc256824e407a09580ec73661749dc2e,2026-11-28T23:00:00Z,Colorado State Rams,Boise State Broncos,FBS vs FBS,colorado state,boise state
 2026,2e180a350fe1c67db1b12cf36a1c1324,2026-11-28T23:15:00Z,Oklahoma State Cowboys,Kansas Jayhawks,FBS vs FBS,oklahoma state,kansas
+2026,8e7c8bc1e0c6b7514f811010faaec76d,2026-11-28T23:30:00Z,Utah State Aggies,Texas State Bobcats,FBS vs FBS,utah state,texas state
+2026,6f8b860fa7f8ce3ef4dd841450840e5f,2026-11-28T23:30:00Z,Washington State Cougars,San Diego State Aztecs,FBS vs FBS,washington state,san diego state
+2026,59c0c40d83de9865c9f8da6344349353,2026-11-29T00:00:00Z,Fresno State Bulldogs,Oregon State Beavers,FBS vs FBS,fresno state,oregon state
 2026,7f3768e75aa0ea31e6a30cff6cf631be,2026-11-29T00:00:00Z,Indiana Hoosiers,Purdue Boilermakers,FBS vs FBS,indiana,purdue
 2026,5f74ef6944e660a91381ecf388633c69,2026-11-29T00:30:00Z,Alabama Crimson Tide,Auburn Tigers,FBS vs FBS,alabama,auburn
 2026,a61934112cd5b5c35c2887f1365af5ec,2026-11-29T00:30:00Z,California Golden Bears,Pittsburgh Panthers,FBS vs FBS,california,pittsburgh
 2026,f825e4c4d512e1c0a6db6ac7d8bc0326,2026-11-29T02:00:00Z,Arizona Wildcats,Arizona State Sun Devils,FBS vs FBS,arizona,arizona state
 2026,a2ecd43208cb856c8d882906463fdbec,2026-11-29T02:00:00Z,UNLV Rebels,Nevada Wolf Pack,FBS vs FBS,unlv,nevada
 2026,3ed1c65f3b2b8392d0ca7c806c559898,2026-11-29T02:30:00Z,Houston Cougars,Baylor Bears,FBS vs FBS,houston,baylor
+2026,bf095bfbd7595f50c6a6062add4655f6,2026-11-29T04:00:00Z,Hawaii Rainbow Warriors,Sacramento State Hornets,Season-specific FBS status requires verification,hawaii,sacramento state
 2026,a91ec7ebf1a48ebc073c185bcc4feff5,2026-12-05T01:00:00Z,Boise State Broncos,San Diego State Aztecs,FBS vs FBS,boise state,san diego state
 2026,7343d0c535f8836e761813fdfa88c9f1,2026-12-05T17:00:00Z,Miami Hurricanes,Wake Forest Demon Deacons,FBS vs FBS,miami,wake forest
