@@ -29,6 +29,41 @@ class WeeklyLockTests(unittest.TestCase):
         self.assertTrue(all(r["decision"] == "PASS" for r in rows))
         self.assertTrue(all(r["reason"] == "no_live_spread_quote" for r in rows))
 
+    def test_inside_six_hours_is_explicit_pass(self):
+        games = [{"id": 42, "startDate": "2026-11-17T18:00:00Z",
+                  "homeTeam": "Toledo", "awayTeam": "Akron", "seasonType": "regular"}]
+        rows = asof_rows(TUES, games, [], {})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["decision"], "PASS")
+        self.assertEqual(rows[0]["reason"], "inside_six_hour_cutoff")
+
+    def test_stale_quote_fails_closed(self):
+        games = [{"id": 43, "startDate": "2026-11-18T01:00:00Z",
+                  "homeTeam": "Toledo", "awayTeam": "Akron", "seasonType": "regular"}]
+        quote = {"home_team": "Toledo", "away_team": "Akron",
+                 "selection": "Toledo", "spread": -2.5, "american_odds": -110,
+                 "projected_home_margin": 15, "kickoff_utc": "2026-11-18T01:00:00Z",
+                 "captured_at_utc": "2026-11-17T13:00:00Z",
+                 "market_last_update_utc": "2026-11-17T13:00:00Z",
+                 "bookmaker_last_update_utc": "2026-11-17T13:00:00Z"}
+        with patch("v3_weekly_lock.projected_margin", return_value=15):
+            rows = asof_rows(TUES, games, [quote], {})
+        self.assertEqual(rows[0]["decision"], "PASS")
+        self.assertEqual(rows[0]["reason"], "missing_model_or_eligible_quote")
+
+    def test_wrong_kickoff_quote_is_rejected(self):
+        games = [{"id": 44, "startDate": "2026-11-18T01:00:00Z",
+                  "homeTeam": "Toledo", "awayTeam": "Akron", "seasonType": "regular"}]
+        quote = {"home_team": "Toledo", "away_team": "Akron",
+                 "kickoff_utc": "2026-11-19T01:00:00Z", "selection": "Toledo",
+                 "spread": -2.5, "american_odds": -110,
+                 "projected_home_margin": 15, "captured_at_utc": "2026-11-17T14:00:00Z",
+                 "market_last_update_utc": "2026-11-17T14:00:00Z",
+                 "bookmaker_last_update_utc": "2026-11-17T14:00:00Z"}
+        rows = asof_rows(TUES, games, [quote], {})
+        self.assertEqual(rows[0]["decision"], "PASS")
+        self.assertEqual(rows[0]["reason"], "no_live_spread_quote")
+
     def test_append_only_lock(self):
         rows = [dict(game_id="1", kickoff_utc="2026-11-18T01:00:00Z",
                      decision="PASS")]
