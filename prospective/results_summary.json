@@ -2,14 +2,14 @@
   "method": "frozen first qualifying prospective selection per game and model; hypothetical one-unit flat stake",
   "models": {
     "v1": {
-      "selections": 346,
+      "selections": 347,
       "settled": 310,
       "wins": 141,
       "losses": 168,
       "pushes": 1,
       "net_units": -39.862072,
       "roi_per_settled_selection": -0.128587,
-      "pending": 36,
+      "pending": 37,
       "invalid_or_ambiguous": 0
     },
     "v2": {
@@ -70,9 +70,9 @@
     }
   },
   "pipeline_health": {
-    "total_frozen_selections": 991,
+    "total_frozen_selections": 992,
     "settled": 890,
-    "pending": 101,
+    "pending": 102,
     "invalid_selection": 0,
     "ambiguous_result": 0,
     "missing_price": 0,
