@@ -45,9 +45,9 @@
   },
   "frozen_cohorts": {
     "CAUTION": {
-      "selections": 24,
+      "selections": 25,
       "settled": 24,
-      "pending": 0,
+      "pending": 1,
       "wins": 17,
       "losses": 7,
       "pushes": 0,
@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.349331
     },
     "PASS": {
-      "selections": 155,
+      "selections": 158,
       "settled": 141,
-      "pending": 14,
+      "pending": 17,
       "wins": 64,
       "losses": 75,
       "pushes": 2,
@@ -65,9 +65,9 @@
       "roi_per_settled_selection": -0.120481
     },
     "UNCLASSIFIED": {
-      "selections": 115,
+      "selections": 111,
       "settled": 96,
-      "pending": 19,
+      "pending": 15,
       "wins": 41,
       "losses": 53,
       "pushes": 2,
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 115,
+  "unclassified_v3_count": 111,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 210,
-      "COHORT_NOT_GENERATED": 4,
+      "CLASSIFIED": 214,
       "MISSING_V1": 49,
       "MISSING_V1_AND_V2": 26,
       "MISSING_V2": 36
@@ -1047,42 +1046,10 @@
       },
       {
         "season": "2026",
-        "game_id": "eb0172d64d648f5f0697ee382c039564",
-        "kickoff_utc": "2026-11-28T20:30:00Z",
-        "matchup": "UTEP Miners at Northern Illinois Huskies",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
         "game_id": "3ed1c65f3b2b8392d0ca7c806c559898",
         "kickoff_utc": "2026-11-29T02:30:00Z",
         "matchup": "Baylor Bears at Houston Cougars",
         "reason": "MISSING_V1",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "6f8b860fa7f8ce3ef4dd841450840e5f",
-        "kickoff_utc": "2026-11-28T23:30:00Z",
-        "matchup": "San Diego State Aztecs at Washington State Cougars",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "bdf272babe96ca5f2c4ad03eea790eb2",
-        "kickoff_utc": "2026-11-28T17:00:00Z",
-        "matchup": "Navy Midshipmen at Charlotte 49ers",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "c58a68d46da0d0748169156702f9b4d5",
-        "kickoff_utc": "2026-11-28T17:00:00Z",
-        "matchup": "Notre Dame Fighting Irish at Syracuse Orange",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -3418,33 +3385,9 @@
     },
     {
       "season": "2026",
-      "game_id": "eb0172d64d648f5f0697ee382c039564",
-      "kickoff_utc": "2026-11-28T20:30:00Z",
-      "matchup": "UTEP Miners at Northern Illinois Huskies"
-    },
-    {
-      "season": "2026",
       "game_id": "3ed1c65f3b2b8392d0ca7c806c559898",
       "kickoff_utc": "2026-11-29T02:30:00Z",
       "matchup": "Baylor Bears at Houston Cougars"
-    },
-    {
-      "season": "2026",
-      "game_id": "6f8b860fa7f8ce3ef4dd841450840e5f",
-      "kickoff_utc": "2026-11-28T23:30:00Z",
-      "matchup": "San Diego State Aztecs at Washington State Cougars"
-    },
-    {
-      "season": "2026",
-      "game_id": "bdf272babe96ca5f2c4ad03eea790eb2",
-      "kickoff_utc": "2026-11-28T17:00:00Z",
-      "matchup": "Navy Midshipmen at Charlotte 49ers"
-    },
-    {
-      "season": "2026",
-      "game_id": "c58a68d46da0d0748169156702f9b4d5",
-      "kickoff_utc": "2026-11-28T17:00:00Z",
-      "matchup": "Notre Dame Fighting Irish at Syracuse Orange"
     },
     {
       "season": "2026",
