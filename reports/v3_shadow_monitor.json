@@ -184,8 +184,8 @@
     "counts": {
       "CLASSIFIED": 214,
       "MISSING_V1": 49,
-      "MISSING_V1_AND_V2": 25,
-      "MISSING_V2": 37
+      "MISSING_V1_AND_V2": 24,
+      "MISSING_V2": 38
     },
     "unclassified_details": [
       {
@@ -1017,7 +1017,7 @@
         "game_id": "a0fe49c990d1497e1cb34eb9c2b73ef1",
         "kickoff_utc": "2026-11-28T19:00:00Z",
         "matchup": "Liberty Flames at Missouri State Bears",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1081,7 +1081,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 180,
+    "covered_v3": 182,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -1096,7 +1096,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 153,
+        "selections": 154,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -1106,7 +1106,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 16,
+        "selections": 17,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2496,6 +2496,15 @@
       },
       {
         "season": "2026",
+        "game_id": "bee4ea7a231be77b1ee52ddf3755592f",
+        "kickoff_utc": "2026-11-28T02:00:00Z",
+        "matchup": "West Virginia Mountaineers at Utah Utes",
+        "status": "PASS",
+        "disagreement_points": "3.91109",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "7da02c5fd7efe20c2f61f665def9cbef",
         "kickoff_utc": "2026-11-28T16:00:00Z",
         "matchup": "South Carolina Gamecocks at Clemson Tigers",
@@ -2591,6 +2600,15 @@
         "matchup": "Illinois Fighting Illini at Northwestern Wildcats",
         "status": "PASS",
         "disagreement_points": "0.05123",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "2981442fcc9375220d0f7959bcd9c084",
+        "kickoff_utc": "2026-11-28T18:00:00Z",
+        "matchup": "Florida Atlantic Owls at East Carolina Pirates",
+        "status": "UNSTABLE",
+        "disagreement_points": "2.70078",
         "source": "same_capture_v3_frozen_quote"
       },
       {
