@@ -1,6 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,4814277a6e26955eb1df064fed7a3bcb,2026-11-25T00:00:00Z,Eastern Michigan Eagles,Kent State Golden Flashes,not_final_in_cfbd
-2026,a82769fe54a0f8c714667b8720b67449,2026-11-25T00:00:00Z,Western Michigan Broncos,Miami (OH) RedHawks,not_final_in_cfbd
 2026,b39108d2cfcd62d29954aee80bbf7b51,2026-11-27T01:00:00Z,Texas Tech Red Raiders,TCU Horned Frogs,not_final_in_cfbd
 2026,e0b30f1dada22d4a2565ce663bc0741a,2026-11-27T17:00:00Z,Akron Zips,Buffalo Bulls,not_final_in_cfbd
 2026,8fc8552ec633bb09ca2bcb9b15cb6896,2026-11-27T17:00:00Z,Iowa Hawkeyes,Nebraska Cornhuskers,not_final_in_cfbd

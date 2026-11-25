@@ -1,20 +1,20 @@
 {
   "ambiguous_score_match": 0,
   "awaiting_score_feed": 0,
-  "excluded_unverified_division": 7926,
-  "graded_games": 523,
-  "graded_quotes": 9468,
-  "input_rows": 211270,
+  "excluded_unverified_division": 7998,
+  "graded_games": 525,
+  "graded_quotes": 9504,
+  "input_rows": 213722,
   "invalid_or_post_kickoff": 130,
-  "losses": 4617,
+  "losses": 4635,
   "missing_prediction_or_price": 1606,
   "no_matching_cfbd_game": 0,
-  "not_final_in_cfbd": 1226,
+  "not_final_in_cfbd": 1190,
   "pushes": 234,
-  "ungraded_not_final_or_ambiguous": 1226,
+  "ungraded_not_final_or_ambiguous": 1190,
   "unique_games_division_suppressed": 40,
   "unique_games_in_snapshots": 632,
   "unique_latest_quotes": 10694,
   "upcoming_game": 0,
-  "wins": 4617
+  "wins": 4635
 }
