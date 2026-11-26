@@ -222,6 +222,7 @@ season,game_id,kickoff_utc,home_team,away_team,classified_at_utc,v1_margin,v2_ma
 2026,f23bc59387b6db63ad3de8b6bcc541fc,2026-11-22T00:30:00Z,Fresno State Bulldogs,Colorado State Rams,2026-11-15T21:50:50Z,15.79956,17.8176,,2.018,true,PASS,V1/V2 agreement under 5 pts
 2026,fa98066b4b400fb6af0672e170cc584a,2026-11-22T00:30:00Z,Notre Dame Fighting Irish,SMU Mustangs,2026-11-15T07:53:00Z,12.39034,20.83432,18.53071,8.444,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,6e36f5c3c55edcb31749b0de4a146d14,2026-11-22T03:30:00Z,Oregon State Beavers,Utah State Aggies,2026-11-16T08:00:29Z,12.55328,7.36884,,5.184,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
+2026,b39108d2cfcd62d29954aee80bbf7b51,2026-11-27T01:00:00Z,Texas Tech Red Raiders,TCU Horned Frogs,2026-11-26T09:32:30Z,6.84312,12.73824,,5.895,true,CAUTION,moderate V1/V2 disagreement (5-9.9 pts)
 2026,5b00e6b226dce4274d819d5d1818e703,2026-11-27T17:00:00Z,Ole Miss Rebels,Mississippi State Bulldogs,2026-11-22T08:00:09Z,11.79539,13.13845,14.82124,1.343,true,PASS,V1/V2 agreement under 5 pts
 2026,6a08fbc3f2fce16533f36dccc4dce347,2026-11-27T20:30:00Z,Florida State Seminoles,Florida Gators,2026-11-22T08:00:09Z,-2.25759,-1.85801,-1.61069,0.4,true,PASS,V1/V2 agreement under 5 pts
 2026,e6a3c909a8cfc7b2c666252e246418c7,2026-11-28T00:30:00Z,Wisconsin Badgers,Minnesota Golden Gophers,2026-11-22T08:00:09Z,10.63678,11.81729,13.39572,1.181,true,PASS,V1/V2 agreement under 5 pts
