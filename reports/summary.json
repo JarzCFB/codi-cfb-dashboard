@@ -1,10 +1,10 @@
 {
   "ambiguous_score_match": 0,
   "awaiting_score_feed": 0,
-  "excluded_unverified_division": 7998,
+  "excluded_unverified_division": 8034,
   "graded_games": 525,
   "graded_quotes": 9504,
-  "input_rows": 213722,
+  "input_rows": 214928,
   "invalid_or_post_kickoff": 130,
   "losses": 4635,
   "missing_prediction_or_price": 1606,
