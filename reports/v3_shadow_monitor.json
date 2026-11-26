@@ -184,8 +184,8 @@
     "counts": {
       "CLASSIFIED": 215,
       "MISSING_V1": 49,
-      "MISSING_V1_AND_V2": 26,
-      "MISSING_V2": 38
+      "MISSING_V1_AND_V2": 25,
+      "MISSING_V2": 39
     },
     "unclassified_details": [
       {
@@ -1041,7 +1041,7 @@
         "game_id": "a750f21dccb9df459196adc8dcf5ffe4",
         "kickoff_utc": "2026-11-27T17:00:00Z",
         "matchup": "Temple Owls at Memphis Tigers",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
