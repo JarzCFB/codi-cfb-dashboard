@@ -1,10 +1,4 @@
 season,game_id,kickoff_utc,home_team,away_team,reason
-2026,b39108d2cfcd62d29954aee80bbf7b51,2026-11-27T01:00:00Z,Texas Tech Red Raiders,TCU Horned Frogs,not_final_in_cfbd
-2026,e0b30f1dada22d4a2565ce663bc0741a,2026-11-27T17:00:00Z,Akron Zips,Buffalo Bulls,not_final_in_cfbd
-2026,8fc8552ec633bb09ca2bcb9b15cb6896,2026-11-27T17:00:00Z,Iowa Hawkeyes,Nebraska Cornhuskers,not_final_in_cfbd
-2026,58cd1284193cd30679325c8494f546e6,2026-11-27T17:00:00Z,Ohio Bobcats,Toledo Rockets,not_final_in_cfbd
-2026,5b00e6b226dce4274d819d5d1818e703,2026-11-27T17:00:00Z,Ole Miss Rebels,Mississippi State Bulldogs,not_final_in_cfbd
-2026,1f0a9e7f76830b196133518ae01bb113,2026-11-27T17:00:00Z,UTSA Roadrunners,Tulsa Golden Hurricane,not_final_in_cfbd
 2026,a72c11afb95ca2c2eb057c7f2a8e376b,2026-11-27T20:00:00Z,South Alabama Jaguars,Appalachian State Mountaineers,not_final_in_cfbd
 2026,6a08fbc3f2fce16533f36dccc4dce347,2026-11-27T20:30:00Z,Florida State Seminoles,Florida Gators,not_final_in_cfbd
 2026,a750f21dccb9df459196adc8dcf5ffe4,2026-11-27T20:30:00Z,Memphis Tigers,Temple Owls,not_final_in_cfbd
@@ -65,4 +59,6 @@ season,game_id,kickoff_utc,home_team,away_team,reason
 2026,8e7c8bc1e0c6b7514f811010faaec76d,2026-11-29T02:30:00Z,Utah State Aggies,Texas State Bobcats,not_final_in_cfbd
 2026,59c0c40d83de9865c9f8da6344349353,2026-11-29T03:00:00Z,Fresno State Bulldogs,Oregon State Beavers,not_final_in_cfbd
 2026,a91ec7ebf1a48ebc073c185bcc4feff5,2026-12-05T01:00:00Z,Boise State Broncos,San Diego State Aztecs,not_final_in_cfbd
+2026,f88bd531ffad85e814601239984360c9,2026-12-05T01:00:00Z,Utah Utes,Texas Tech Red Raiders,not_final_in_cfbd
+2026,b068208fbe9e48086225135cd7490938,2026-12-05T17:00:00Z,Buffalo Bulls,Toledo Rockets,upcoming_game
 2026,7343d0c535f8836e761813fdfa88c9f1,2026-12-05T17:00:00Z,Miami Hurricanes,Wake Forest Demon Deacons,not_final_in_cfbd

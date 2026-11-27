@@ -630,4 +630,6 @@ season,game_id,kickoff_utc,home_team,away_team,division_status,home_canonical,aw
 2026,3ed1c65f3b2b8392d0ca7c806c559898,2026-11-29T02:30:00Z,Houston Cougars,Baylor Bears,FBS vs FBS,houston,baylor
 2026,bf095bfbd7595f50c6a6062add4655f6,2026-11-29T04:00:00Z,Hawaii Rainbow Warriors,Sacramento State Hornets,Season-specific FBS status requires verification,hawaii,sacramento state
 2026,a91ec7ebf1a48ebc073c185bcc4feff5,2026-12-05T01:00:00Z,Boise State Broncos,San Diego State Aztecs,FBS vs FBS,boise state,san diego state
+2026,f88bd531ffad85e814601239984360c9,2026-12-05T01:00:00Z,Utah Utes,Texas Tech Red Raiders,FBS vs FBS,utah,texas tech
+2026,b068208fbe9e48086225135cd7490938,2026-12-05T17:00:00Z,Buffalo Bulls,Toledo Rockets,FBS vs FBS,buffalo,toledo
 2026,7343d0c535f8836e761813fdfa88c9f1,2026-12-05T17:00:00Z,Miami Hurricanes,Wake Forest Demon Deacons,FBS vs FBS,miami,wake forest
