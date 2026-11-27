@@ -1098,7 +1098,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 185,
+    "covered_v3": 187,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -1113,7 +1113,7 @@
         "roi_per_settled_selection": null
       },
       "PASS": {
-        "selections": 156,
+        "selections": 158,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2639,6 +2639,15 @@
       },
       {
         "season": "2026",
+        "game_id": "b59311f602e67a25e81604f9b895a8b1",
+        "kickoff_utc": "2026-11-28T18:00:00Z",
+        "matchup": "Marshall Thundering Herd at UL Monroe Warhawks",
+        "status": "PASS",
+        "disagreement_points": "1.99125",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
         "game_id": "200466f41d944b2706e404635298ebf6",
         "kickoff_utc": "2026-11-28T19:00:00Z",
         "matchup": "New Mexico State Aggies at Middle Tennessee Blue Raiders",
@@ -2797,6 +2806,15 @@
         "matchup": "Texas Tech Red Raiders at Utah Utes",
         "status": "PASS",
         "disagreement_points": "0.86463",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "b068208fbe9e48086225135cd7490938",
+        "kickoff_utc": "2026-12-05T17:00:00Z",
+        "matchup": "Toledo Rockets at Buffalo Bulls",
+        "status": "PASS",
+        "disagreement_points": "0.31389",
         "source": "same_capture_v3_frozen_quote"
       }
     ],
