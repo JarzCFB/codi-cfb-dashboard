@@ -1097,7 +1097,7 @@
   },
   "pregame_agreement": {
     "method": "independent pregame same-capture V1/V2 margins for newly frozen V3 picks",
-    "covered_v3": 183,
+    "covered_v3": 184,
     "uncovered_v3": 145,
     "rejected_evidence": 0,
     "status_performance": {
@@ -1122,7 +1122,7 @@
         "roi_per_settled_selection": null
       },
       "UNSTABLE": {
-        "selections": 17,
+        "selections": 18,
         "settled": 0,
         "pending": 0,
         "wins": 0,
@@ -2454,6 +2454,15 @@
         "matchup": "Kent State Golden Flashes at Eastern Michigan Eagles",
         "status": "PASS",
         "disagreement_points": "1.33039",
+        "source": "same_capture_v3_frozen_quote"
+      },
+      {
+        "season": "2026",
+        "game_id": "1f0a9e7f76830b196133518ae01bb113",
+        "kickoff_utc": "2026-11-27T17:00:00Z",
+        "matchup": "Tulsa Golden Hurricane at UTSA Roadrunners",
+        "status": "UNSTABLE",
+        "disagreement_points": "2.18085",
         "source": "same_capture_v3_frozen_quote"
       },
       {
