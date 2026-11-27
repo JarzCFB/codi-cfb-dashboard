@@ -55,9 +55,9 @@
       "roi_per_settled_selection": 0.349331
     },
     "PASS": {
-      "selections": 159,
+      "selections": 160,
       "settled": 142,
-      "pending": 17,
+      "pending": 18,
       "wins": 64,
       "losses": 76,
       "pushes": 2,
@@ -65,24 +65,24 @@
       "roi_per_settled_selection": -0.126674
     },
     "UNCLASSIFIED": {
-      "selections": 117,
-      "settled": 99,
-      "pending": 18,
-      "wins": 42,
+      "selections": 115,
+      "settled": 98,
+      "pending": 17,
+      "wins": 41,
       "losses": 54,
       "pushes": 3,
-      "net_units": -15.71343,
-      "roi_per_settled_selection": -0.158722
+      "net_units": -16.656826,
+      "roi_per_settled_selection": -0.169968
     },
     "UNSTABLE": {
-      "selections": 31,
-      "settled": 30,
+      "selections": 32,
+      "settled": 31,
       "pending": 1,
-      "wins": 16,
+      "wins": 17,
       "losses": 14,
       "pushes": 0,
-      "net_units": 0.595867,
-      "roi_per_settled_selection": 0.019862
+      "net_units": 1.539263,
+      "roi_per_settled_selection": 0.049654
     }
   },
   "recent_settled_window": {
@@ -179,11 +179,10 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 117,
+  "unclassified_v3_count": 115,
   "classification_coverage": {
     "counts": {
-      "CLASSIFIED": 215,
-      "COHORT_NOT_GENERATED": 2,
+      "CLASSIFIED": 217,
       "MISSING_V1": 50,
       "MISSING_V1_AND_V2": 25,
       "MISSING_V2": 40
@@ -1083,22 +1082,6 @@
         "kickoff_utc": "2026-11-28T18:00:00Z",
         "matchup": "Florida Atlantic Owls at East Carolina Pirates",
         "reason": "MISSING_V1_AND_V2",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "559227d3ba70769111dd09490258af44",
-        "kickoff_utc": "2026-11-28T19:00:00Z",
-        "matchup": "Army Black Knights at Rice Owls",
-        "reason": "COHORT_NOT_GENERATED",
-        "note": "V1/V2 selection absence does not imply a missing model rating"
-      },
-      {
-        "season": "2026",
-        "game_id": "1f0a9e7f76830b196133518ae01bb113",
-        "kickoff_utc": "2026-11-27T17:00:00Z",
-        "matchup": "Tulsa Golden Hurricane at UTSA Roadrunners",
-        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -3524,18 +3507,6 @@
       "game_id": "2981442fcc9375220d0f7959bcd9c084",
       "kickoff_utc": "2026-11-28T18:00:00Z",
       "matchup": "Florida Atlantic Owls at East Carolina Pirates"
-    },
-    {
-      "season": "2026",
-      "game_id": "559227d3ba70769111dd09490258af44",
-      "kickoff_utc": "2026-11-28T19:00:00Z",
-      "matchup": "Army Black Knights at Rice Owls"
-    },
-    {
-      "season": "2026",
-      "game_id": "1f0a9e7f76830b196133518ae01bb113",
-      "kickoff_utc": "2026-11-27T17:00:00Z",
-      "matchup": "Tulsa Golden Hurricane at UTSA Roadrunners"
     },
     {
       "season": "2026",
