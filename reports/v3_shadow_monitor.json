@@ -3,24 +3,24 @@
   "warning": "Retrospective performance is exploratory; no threshold is validated or applied to official V3",
   "edge_thresholds": {
     "3": {
-      "selections": 328,
-      "settled": 292,
-      "pending": 36,
-      "wins": 138,
-      "losses": 150,
-      "pushes": 4,
-      "net_units": -24.664766,
-      "roi_per_settled_selection": -0.084468
+      "selections": 332,
+      "settled": 295,
+      "pending": 37,
+      "wins": 139,
+      "losses": 151,
+      "pushes": 5,
+      "net_units": -24.72137,
+      "roi_per_settled_selection": -0.083801
     },
     "5": {
       "selections": 105,
-      "settled": 99,
-      "pending": 6,
+      "settled": 100,
+      "pending": 5,
       "wins": 52,
-      "losses": 46,
+      "losses": 47,
       "pushes": 1,
-      "net_units": 1.268279,
-      "roi_per_settled_selection": 0.012811
+      "net_units": 0.268279,
+      "roi_per_settled_selection": 0.002683
     },
     "7": {
       "selections": 34,
@@ -56,23 +56,23 @@
     },
     "PASS": {
       "selections": 159,
-      "settled": 141,
-      "pending": 18,
+      "settled": 142,
+      "pending": 17,
       "wins": 64,
-      "losses": 75,
+      "losses": 76,
       "pushes": 2,
-      "net_units": -16.987758,
-      "roi_per_settled_selection": -0.120481
+      "net_units": -17.987758,
+      "roi_per_settled_selection": -0.126674
     },
     "UNCLASSIFIED": {
-      "selections": 113,
-      "settled": 97,
-      "pending": 16,
-      "wins": 41,
+      "selections": 117,
+      "settled": 99,
+      "pending": 18,
+      "wins": 42,
       "losses": 54,
-      "pushes": 2,
-      "net_units": -16.656826,
-      "roi_per_settled_selection": -0.17172
+      "pushes": 3,
+      "net_units": -15.71343,
+      "roi_per_settled_selection": -0.158722
     },
     "UNSTABLE": {
       "selections": 31,
@@ -87,17 +87,17 @@
   },
   "recent_settled_window": {
     "window_days": 14,
-    "through_kickoff_utc": "2026-11-25T00:00:00Z",
+    "through_kickoff_utc": "2026-11-27T17:00:00Z",
     "edge_thresholds": {
       "3": {
-        "selections": 79,
-        "settled": 79,
+        "selections": 78,
+        "settled": 78,
         "pending": 0,
-        "wins": 32,
+        "wins": 30,
         "losses": 46,
-        "pushes": 1,
-        "net_units": -16.9917,
-        "roi_per_settled_selection": -0.215085
+        "pushes": 2,
+        "net_units": -18.557213,
+        "roi_per_settled_selection": -0.237913
       },
       "5": {
         "selections": 15,
@@ -137,24 +137,24 @@
     "warning": "Descriptive shadow comparison, not a betting recommendation or a change to official V3",
     "thresholds": {
       "3": {
-        "selections": 207,
-        "settled": 171,
-        "pending": 36,
-        "wins": 71,
-        "losses": 98,
-        "pushes": 2,
-        "net_units": -33.65353,
-        "roi_per_settled_selection": -0.196804
+        "selections": 211,
+        "settled": 174,
+        "pending": 37,
+        "wins": 72,
+        "losses": 99,
+        "pushes": 3,
+        "net_units": -33.710134,
+        "roi_per_settled_selection": -0.193736
       },
       "5": {
         "selections": 47,
-        "settled": 41,
-        "pending": 6,
+        "settled": 42,
+        "pending": 5,
         "wins": 15,
-        "losses": 26,
+        "losses": 27,
         "pushes": 0,
-        "net_units": -12.470879,
-        "roi_per_settled_selection": -0.304168
+        "net_units": -13.470879,
+        "roi_per_settled_selection": -0.320735
       },
       "7": {
         "selections": 12,
@@ -179,14 +179,14 @@
     }
   },
   "research_guardrail": "Recent windows are descriptive and end at the latest settled kickoff. Do not choose or change an official threshold based on in-sample results.",
-  "unclassified_v3_count": 113,
+  "unclassified_v3_count": 117,
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 215,
-      "COHORT_NOT_GENERATED": 1,
-      "MISSING_V1": 49,
-      "MISSING_V1_AND_V2": 24,
-      "MISSING_V2": 39
+      "COHORT_NOT_GENERATED": 2,
+      "MISSING_V1": 50,
+      "MISSING_V1_AND_V2": 25,
+      "MISSING_V2": 40
     },
     "unclassified_details": [
       {
@@ -1091,6 +1091,38 @@
         "kickoff_utc": "2026-11-28T19:00:00Z",
         "matchup": "Army Black Knights at Rice Owls",
         "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "1f0a9e7f76830b196133518ae01bb113",
+        "kickoff_utc": "2026-11-27T17:00:00Z",
+        "matchup": "Tulsa Golden Hurricane at UTSA Roadrunners",
+        "reason": "COHORT_NOT_GENERATED",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "f88bd531ffad85e814601239984360c9",
+        "kickoff_utc": "2026-12-05T01:00:00Z",
+        "matchup": "Texas Tech Red Raiders at Utah Utes",
+        "reason": "MISSING_V1_AND_V2",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "b068208fbe9e48086225135cd7490938",
+        "kickoff_utc": "2026-12-05T17:00:00Z",
+        "matchup": "Toledo Rockets at Buffalo Bulls",
+        "reason": "MISSING_V1",
+        "note": "V1/V2 selection absence does not imply a missing model rating"
+      },
+      {
+        "season": "2026",
+        "game_id": "b59311f602e67a25e81604f9b895a8b1",
+        "kickoff_utc": "2026-11-28T18:00:00Z",
+        "matchup": "Marshall Thundering Herd at UL Monroe Warhawks",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       }
     ],
@@ -3498,6 +3530,30 @@
       "game_id": "559227d3ba70769111dd09490258af44",
       "kickoff_utc": "2026-11-28T19:00:00Z",
       "matchup": "Army Black Knights at Rice Owls"
+    },
+    {
+      "season": "2026",
+      "game_id": "1f0a9e7f76830b196133518ae01bb113",
+      "kickoff_utc": "2026-11-27T17:00:00Z",
+      "matchup": "Tulsa Golden Hurricane at UTSA Roadrunners"
+    },
+    {
+      "season": "2026",
+      "game_id": "f88bd531ffad85e814601239984360c9",
+      "kickoff_utc": "2026-12-05T01:00:00Z",
+      "matchup": "Texas Tech Red Raiders at Utah Utes"
+    },
+    {
+      "season": "2026",
+      "game_id": "b068208fbe9e48086225135cd7490938",
+      "kickoff_utc": "2026-12-05T17:00:00Z",
+      "matchup": "Toledo Rockets at Buffalo Bulls"
+    },
+    {
+      "season": "2026",
+      "game_id": "b59311f602e67a25e81604f9b895a8b1",
+      "kickoff_utc": "2026-11-28T18:00:00Z",
+      "matchup": "Marshall Thundering Herd at UL Monroe Warhawks"
     }
   ],
   "future_pending_v3": [
@@ -3544,15 +3600,6 @@
       "american_odds": "-114.0",
       "edge_points": "4.9387",
       "sportsbook": "FanDuel",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
-      "kickoff_utc": "2026-11-27T17:00:00Z",
-      "selection": "Mississippi State Bulldogs",
-      "spread": "20.5",
-      "american_odds": "-110.0",
-      "edge_points": "5.67876",
-      "sportsbook": "DraftKings",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
@@ -3763,15 +3810,6 @@
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     },
     {
-      "kickoff_utc": "2026-11-27T17:00:00Z",
-      "selection": "Buffalo Bulls",
-      "spread": "-8.0",
-      "american_odds": "-112.0",
-      "edge_points": "3.00969",
-      "sportsbook": "BetRivers",
-      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
-    },
-    {
       "kickoff_utc": "2026-11-28T17:00:00Z",
       "selection": "Wyoming Cowboys",
       "spread": "4.0",
@@ -3823,6 +3861,33 @@
       "american_odds": "-109.0",
       "edge_points": "3.00383",
       "sportsbook": "LowVig.ag",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-12-05T01:00:00Z",
+      "selection": "Utah Utes",
+      "spread": "-2.5",
+      "american_odds": "-110.0",
+      "edge_points": "3.39365",
+      "sportsbook": "DraftKings",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-12-05T17:00:00Z",
+      "selection": "Buffalo Bulls",
+      "spread": "6.0",
+      "american_odds": "-110.0",
+      "edge_points": "3.34237",
+      "sportsbook": "DraftKings",
+      "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
+    },
+    {
+      "kickoff_utc": "2026-11-28T18:00:00Z",
+      "selection": "UL Monroe Warhawks",
+      "spread": "6.5",
+      "american_odds": "-108.0",
+      "edge_points": "3.1796",
+      "sportsbook": "DraftKings",
       "verification": "FROZEN QUOTE ONLY - current price and QB/injury status not verified"
     }
   ]
