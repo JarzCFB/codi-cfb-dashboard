@@ -29,13 +29,13 @@ class WeeklyLockTests(unittest.TestCase):
         self.assertTrue(all(r["decision"] == "PASS" for r in rows))
         self.assertTrue(all(r["reason"] == "no_live_spread_quote" for r in rows))
 
-    def test_inside_six_hours_is_explicit_pass(self):
+    def test_early_game_is_evaluated(self):
         games = [{"id": 42, "startDate": "2026-11-17T18:00:00Z",
                   "homeTeam": "Toledo", "awayTeam": "Akron", "seasonType": "regular"}]
         rows = asof_rows(TUES, games, [], {})
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["decision"], "PASS")
-        self.assertEqual(rows[0]["reason"], "inside_six_hour_cutoff")
+        self.assertEqual(rows[0]["reason"], "no_live_spread_quote")
 
     def test_stale_quote_fails_closed(self):
         games = [{"id": 43, "startDate": "2026-11-18T01:00:00Z",
