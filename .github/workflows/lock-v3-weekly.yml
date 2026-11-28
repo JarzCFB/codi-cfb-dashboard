@@ -6,11 +6,12 @@ on:
       - "test_v3_weekly_lock.py"
       - ".github/workflows/lock-v3-weekly.yml"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/lock-v3-weekly.yml']
   schedule:
-    - cron: '0 8 * * 2,6'
-      timezone: America/Chicago
-    - cron: '17,37 8,9,10 * * 2,6'
-      timezone: America/Chicago
+    # UTC union of CST and CDT lock windows; local guard skips early runs.
+    - cron: '0,17,37 13-16 * * 2,6'
 permissions:
   contents: write
 concurrency:
@@ -43,7 +44,12 @@ jobs:
           V3_MANUAL_LATE_LOCK: '1'
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
-        run: python v3_weekly_lock.py
+        run: |
+          if [ "$(TZ=America/Chicago date +%H)" -lt 8 ] || ! [[ "$(TZ=America/Chicago date +%u)" =~ ^(2|6)$ ]]; then
+            echo 'Outside Central lock window; skipping'
+            exit 0
+          fi
+          python v3_weekly_lock.py
       - name: Commit immutable dated lock and hash
         run: |
           git config user.name 'github-actions[bot]'
