@@ -183,9 +183,10 @@
   "classification_coverage": {
     "counts": {
       "CLASSIFIED": 217,
-      "MISSING_V1": 50,
-      "MISSING_V1_AND_V2": 25,
-      "MISSING_V2": 40
+      "COHORT_NOT_GENERATED": 1,
+      "MISSING_V1": 49,
+      "MISSING_V1_AND_V2": 24,
+      "MISSING_V2": 41
     },
     "unclassified_details": [
       {
@@ -1089,7 +1090,7 @@
         "game_id": "f88bd531ffad85e814601239984360c9",
         "kickoff_utc": "2026-12-05T01:00:00Z",
         "matchup": "Texas Tech Red Raiders at Utah Utes",
-        "reason": "MISSING_V1_AND_V2",
+        "reason": "MISSING_V2",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
@@ -1097,7 +1098,7 @@
         "game_id": "b068208fbe9e48086225135cd7490938",
         "kickoff_utc": "2026-12-05T17:00:00Z",
         "matchup": "Toledo Rockets at Buffalo Bulls",
-        "reason": "MISSING_V1",
+        "reason": "COHORT_NOT_GENERATED",
         "note": "V1/V2 selection absence does not imply a missing model rating"
       },
       {
