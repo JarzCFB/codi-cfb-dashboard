@@ -30,7 +30,7 @@ RULE = "v3_all_games_lock_v1_edge3"
 def lock_window(now):
     local = now.astimezone(CENTRAL)
     late = os.environ.get("V3_MANUAL_LATE_LOCK") == "1"
-    if local.weekday() not in (1, 5) or (local.hour != 8 and not late):
+    if local.weekday() not in (1, 5) or (local.hour < 8 or (local.hour != 8 and not late)):
         raise ValueError("Locks may run only Tuesday or Saturday; scheduled locks require 8 AM Central")
     start = local.replace(hour=0, minute=0, second=0, microsecond=0)
     end = start + timedelta(days=4 if local.weekday() == 1 else 1)
@@ -69,9 +69,7 @@ def asof_rows(now, games, odds_rows, v2_ratings):
                     spread="", american_odds="", v3_projected_home_margin="",
                     edge_points="", reason="", quote_captured_at_utc="",
                     market_last_update_utc="", v1_v2_inputs_sha256="")
-        if kick - now < timedelta(hours=6):
-            base["reason"] = "inside_six_hour_cutoff"
-        elif not model_allowed(home, away):
+        if not model_allowed(home, away):
             base["reason"] = "unsupported_division"
         elif not candidates:
             base["reason"] = "no_live_spread_quote"
@@ -143,7 +141,9 @@ def main():
     label, _, _ = lock_window(now)
     year = now.astimezone(CENTRAL).year
     path = Path("locks") / str(year) / (now.astimezone(CENTRAL).date().isoformat() + "_" + label + ".csv")
-    if path.exists():
+    official = path.with_name(path.name.replace("_late_recovered", ""))
+    recovered = official.with_name(official.stem + "_late_recovered.csv")
+    if official.exists() or recovered.exists():
         print(f"Existing lock preserved: {path}")
         return
     key = os.environ["CFBD_API_KEY"]
